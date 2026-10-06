@@ -48,7 +48,10 @@ const qs = (params) => {
 
 export const api = {
   meta: () => request('/api/meta'),
-  health: () => request('/api/health'),
+  // `deep` adds a real round trip to the MCP so the status pill can show a
+  // latency. Left off by default because platform health checks poll this URL
+  // every few seconds and must never wait on a Python subprocess.
+  health: (deep = false) => request(`/api/health${deep ? '?deep=1' : ''}`),
   indicators: () => request('/api/indicators'),
 
   candles: (symbol, timeframe, opts = {}) =>

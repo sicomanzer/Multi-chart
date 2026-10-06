@@ -41,11 +41,88 @@ npm.cmd start
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `PORT` | `8787` | HTTP port |
-| `HOST` | `127.0.0.1` | Bind address |
-| `TVMCP_PYTHON` | auto | Python executable used to start the MCP server |
+| `PORT` | `8787` | HTTP port. Setting it also switches the bind address to `0.0.0.0`, which is what a container platform expects |
+| `HOST` | `127.0.0.1` | Bind address, if you need to override the above |
+| `DATA_DIR` | `./data` | Where `workspaces.json` is written. Point it at a mounted volume to keep boards across deploys |
+| `TVMCP_PYTHON` | auto | Python executable used to start the MCP server. Resolved against `PATH`, so `python3`-only Linux images work |
+| `DECK_PASSWORD` | *(unset)* | When set, every route needs HTTP Basic auth as `DECK_USER` (default `deck`). Off by default so local use is unchanged |
+| `DECK_USER` | `deck` | Username for the above |
 
 ---
+
+## Deploying
+
+**It has to run on a host that can hold a Python process, not on static
+hosting.** Three things make that non-negotiable:
+
+1. `/vendor/lightweight-charts.js` is served from `node_modules/` by Express
+   (`server/index.js`), it is not a file inside `public/`.
+2. Every data route is `/api/*` on that same Express server.
+3. Quotes and the ratio strip come from Python processes — the MCP server and
+   the `fundamentals.py` sidecar — which hold a websocket session open to
+   TradingView. Serverless functions are stateless and short-lived; they cannot
+   keep that session, so each cold start would reconnect from scratch and the
+   quotes would never settle.
+
+Verified against a live Vercel deployment of this repository: `/` and
+`/js/main.js` return 200 while `/vendor/lightweight-charts.js` and every
+`/api/*` return 404, so the page renders an empty board and the console reports
+`Cannot destructure property 'createChart' of 'window.LightweightCharts'`. The
+candle source itself cannot be called from a browser either — Yahoo sends no
+`Access-Control-Allow-Origin` — so a static-only build would need a proxy for
+candles *and* would still have no MCP.
+
+### Render
+
+The repo contains a `render.yaml` blueprint, so this is the short path:
+
+1. Render → **New → Blueprint** → pick `sicomanzer/Multi-chart`.
+2. Render asks for `DECK_PASSWORD` because the blueprint marks it
+   `sync: false`. Set one — see the warning below.
+3. Deploy. The first build installs Python 3, `tradingview-mcp-server` and the
+   npm dependencies, which takes a few minutes.
+
+### Railway
+
+1. **New Project → Deploy from GitHub repo** → `sicomanzer/Multi-chart`.
+2. Railway's default builder is Nixpacks, which does *not* read the Dockerfile.
+   Set **Settings → Build → Builder** to `Dockerfile`, or the deploy will fail
+   with no `python3` in the image and the board will load candles but never a
+   quote.
+3. Add the `DECK_PASSWORD` variable.
+4. Generate a domain: the app must see `PORT` in the environment, which Railway
+   sets automatically, and that is what flips the bind address to `0.0.0.0`.
+
+Fly.io, any VPS, or `docker compose` on your own machine work too — the image
+is self-contained:
+
+```bash
+docker build -t multi-chart-desk .
+docker run -p 8787:8787 -e DECK_PASSWORD=choose-something multi-chart-desk
+```
+
+`data/workspaces.json` is deliberately *not* in `.dockerignore`, so a fresh
+container opens with the 15-chart SET board rather than an empty grid. Override
+it with `-e DATA_DIR=/some/volume/path` once boards need to survive a deploy.
+
+### Before you expose it
+
+**Set `DECK_PASSWORD`.** This app has no authentication of its own: the MCP
+console can call any of the 37 upstream tools, and boards can be created,
+rewritten and deleted by anyone who loads the page. On a laptop bound to
+loopback that is fine, which is why the default is off. On a public URL it is
+not, and Basic auth over HTTPS is the minimum — put it behind a real identity
+provider if it matters.
+
+### What a free tier changes
+
+- **The filesystem is wiped on every deploy**, so boards go back to whatever is
+  committed in `data/workspaces.json`. Attach a disk and set `DATA_DIR` to its
+  mount path (Render: paid plans only; Railway and Fly: any volume) to keep them.
+- **The service sleeps** after a period without traffic, and the first request
+  pays for Node and the MCP starting up again.
+- The SSE quote stream reconnects on its own, so a sleeping instance recovers
+  without a page reload.
 
 ## What the board does
 
@@ -277,8 +354,9 @@ mismatch. Override the sample with `SYMBOL=NASDAQ:AAPL TIMEFRAME=1h npm run veri
   arrive by polling, not a websocket feed), alert/notification firing (price
   levels are drawn, they do not notify), custom formula indicators (the 23 in the
   catalog are the supported set), broker connectivity and order placement
-  (read-only), and any authentication — the server binds to `127.0.0.1`, so put
-  it behind a reverse proxy with auth before exposing it to a network.
+  (read-only), and real user accounts — `DECK_PASSWORD` is a single shared
+  Basic-auth password, which is a door, not an identity system. Put a real
+  authenticating proxy in front of it before it matters.
 - Cosmetic: the Ichimoku cloud uses a single tint rather than up/down colouring,
   and bounded oscillator panes (RSI, Stoch, %R) autoscale with their reference
   lines drawn, because lightweight-charts cannot pin a pane's min/max.

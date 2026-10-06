@@ -16,7 +16,7 @@
 import { spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
 import { existsSync } from 'node:fs';
-import { delimiter } from 'node:path';
+import { delimiter, join } from 'node:path';
 
 const PROTOCOL_VERSION = '2024-11-05';
 
@@ -374,7 +374,15 @@ export class McpClient extends EventEmitter {
   }
 }
 
-/** Best-effort resolution of the Python command at boot. */
+/**
+ * Resolve a runnable Python command at boot.
+ *
+ * A bare name has to be looked up on PATH: returning the first name
+ * unconditionally means a Linux box that only ships `python3` (Debian, the
+ * python:3 slim images, every modern distro) would be handed `python`, the
+ * spawn would fail, and the MCP would report itself offline for a reason that
+ * has nothing to do with the MCP.
+ */
 export function detectPython() {
   const candidates = [];
   if (process.env.TVMCP_PYTHON) candidates.push(process.env.TVMCP_PYTHON);
@@ -384,8 +392,29 @@ export function detectPython() {
     ? 'C:\\Python313\\python.exe'
     : '/usr/bin/python3';
 
-  return candidates.find((c) => {
-    if (c.includes(delimiter) || c.includes('/')) return existsSync(c);
-    return true;
-  }) ?? localPython;
+  for (const candidate of candidates) {
+    if (candidate.includes(delimiter) || candidate.includes('/')) {
+      if (existsSync(candidate)) return candidate;
+      continue;
+    }
+    if (isOnPath(candidate)) return candidate;
+  }
+  return localPython;
+}
+
+/** Is `name` an executable we could actually spawn, searching PATH? */
+function isOnPath(name) {
+  const dirs = (process.env.PATH ?? '').split(delimiter).filter(Boolean);
+  // On Windows the executable carries an extension; elsewhere it does not.
+  const suffixes = process.platform === 'win32'
+    ? (process.env.PATHEXT ?? '.EXE;.CMD;.BAT').split(';')
+    : [''];
+  for (const dir of dirs) {
+    for (const suffix of suffixes) {
+      const full = join(dir, name + suffix.toLowerCase());
+      const alt = suffix === '' ? null : join(dir, name + suffix);
+      if (existsSync(full) || (alt && existsSync(alt))) return true;
+    }
+  }
+  return false;
 }

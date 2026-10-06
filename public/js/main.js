@@ -112,7 +112,8 @@ async function boot() {
     board.flushSave();
   });
 
-  api.health()
+  // One deep probe at boot, purely so the pill can show a latency number.
+  api.health(true)
     .then((h) => updateStatusPill(board, h))
     .catch(() => updateStatusPill(board, null));
 }

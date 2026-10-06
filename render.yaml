@@ -1,0 +1,40 @@
+# Render blueprint — "New → Blueprint" and point it at this repository.
+#
+# Render builds the Dockerfile: the app needs Python alongside Node, and the
+# native Node runtime cannot install both reliably.
+#
+# Free plan caveats, stated up front because they are the two things that bite:
+#   * the container filesystem is wiped on every deploy, so `data/workspaces.json`
+#     goes back to the board that ships in the repo unless you attach a disk
+#     (paid plans only — uncomment the `disk:` block below)
+#   * the service spins down after ~15 min without traffic; the first request
+#     after that takes a few seconds while Node and the MCP start again
+services:
+  - type: web
+    name: multi-chart-desk
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # This app has no authentication of its own: the MCP console can call any
+      # of the 37 upstream tools and boards can be written or deleted. Set a
+      # password before exposing the URL — `sync: false` keeps it out of git and
+      # out of this file. Sign in as the user `deck`.
+      - key: DECK_PASSWORD
+        sync: false
+      - key: DECK_USER
+        value: deck
+      # Boards are written to this path inside the container.
+      - key: DATA_DIR
+        value: /app/data
+
+    # Uncomment on a paid plan to keep boards across deploys.
+    # disk:
+    #   name: desk-data
+    #   mountPath: /app/data
+    #   sizeGB: 1

@@ -19,7 +19,7 @@
  */
 import { fileURLToPath } from 'node:url';
 import { dirname, join, normalize, resolve } from 'node:path';
-import { randomUUID } from 'node:crypto';
+import { randomUUID, timingSafeEqual } from 'node:crypto';
 
 import express from 'express';
 
@@ -40,13 +40,54 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
 
 const PORT = Number(process.env.PORT ?? 8787);
-const HOST = process.env.HOST ?? '127.0.0.1';
+// PaaS platforms (Render, Railway, Fly) hand us PORT and expect the socket on
+// every interface; the local default stays on loopback so a stray `npm start`
+// is not reachable from the network.
+const HOST = process.env.HOST ?? (process.env.PORT ? '0.0.0.0' : '127.0.0.1');
+// Boards are persisted here. Containers and PaaS mounts are writable but
+// ephemeral, so point DATA_DIR at a mounted volume to keep them across deploys.
+const DATA_DIR = process.env.DATA_DIR ?? join(ROOT, 'data');
 /** Fallback quote-push interval when a client does not ask for one. */
 const DEFAULT_POLL_MS = 20_000;
 
 const app = express();
 app.disable('x-powered-by');
+// Behind Render/Railway the socket is terminated by a proxy, so the client IP
+// arrives in X-Forwarded-For. Nothing here is cookie-bound, but rate limiting
+// and logging read req.ip, so let Express trust the hop.
+app.set('trust proxy', true);
 app.use(express.json({ limit: '2mb' }));
+
+// ── Optional password ────────────────────────────────────────────────────────
+//
+// Off unless DECK_PASSWORD is set, which keeps `npm start` on a laptop exactly
+// as open as it was. It exists because this app is otherwise unauthenticated:
+// the MCP console can call any of the 37 upstream tools, and boards can be
+// written and deleted. Deploying it to a public URL without a password hands all
+// of that to anyone who loads the page.
+//
+// It has to sit above the first route: Express runs middleware in registration
+// order and a route that answers never calls next(), so anything registered
+// after /api/meta would never see a request for it.
+
+const DECK_PASSWORD = process.env.DECK_PASSWORD ?? '';
+const DECK_USER = process.env.DECK_USER ?? 'deck';
+
+if (DECK_PASSWORD) {
+  const expected = Buffer.from(`${DECK_USER}:${DECK_PASSWORD}`);
+  app.use((req, res, next) => {
+    // The platform health check cannot send credentials.
+    if (req.path === '/api/health') return next();
+    const given = Buffer.from(req.headers.authorization?.replace(/^Basic /i, '') ?? '', 'base64');
+    // timingSafeEqual throws on a length mismatch, hence the guard.
+    if (given.length === expected.length && timingSafeEqual(given, expected)) return next();
+    res.setHeader('WWW-Authenticate', 'Basic realm="Trading Desk", charset="UTF-8"');
+    res.status(401).json({ error: { code: 'UNAUTHORIZED', message: 'password required' } });
+  });
+  console.log('[auth] DECK_PASSWORD is set — every route except /api/health needs credentials');
+} else {
+  console.log('[auth] no DECK_PASSWORD set — listening without authentication');
+}
 
 // ── Wiring ───────────────────────────────────────────────────────────────────
 
@@ -56,7 +97,7 @@ mcp.on('status', (s) => {
   console.log(`[mcp] ${flag}${s.pid ? ` pid=${s.pid}` : ''}${s.lastError ? ` (${s.lastError})` : ''}`);
 });
 
-const store = new WorkspaceStore(join(ROOT, 'data', 'workspaces.json'));
+const store = new WorkspaceStore(join(DATA_DIR, 'workspaces.json'));
 await store.load();
 
 // Fundamentals (P/E, P/BV, D/E, dividend yield) are not exposed by any MCP
@@ -82,12 +123,21 @@ const asyncRoute = (fn) => (req, res, next) =>
 
 // ── Meta / health ────────────────────────────────────────────────────────────
 
-app.get('/api/health', asyncRoute(async (_req, res) => {
-  const ping = await mcp.ping();
+/**
+ * Liveness. Deliberately does *not* touch the MCP: a platform health check
+ * polls this every few seconds and would either block on a Python subprocess or
+ * kill the process during a slow boot. `?deep=1` adds the round trip for the
+ * status pill, which asks for it once.
+ */
+app.get('/api/health', asyncRoute(async (req, res) => {
+  const deep = req.query.deep === '1' || req.query.deep === 'true';
   res.json({
     status: 'ok',
     uptimeSeconds: Math.round(process.uptime()),
-    mcp: { ...mcp.status(), ping },
+    // "ready" means the socket is up and the app can serve the board. The MCP
+    // may still be starting; candles load without it, quotes do not.
+    ready: true,
+    mcp: deep ? { ...mcp.status(), ping: await mcp.ping() } : mcp.status(),
     fundamentals: fundamentals.status(),
     realtime: hub.status(),
     caches: { cleared: false },
@@ -488,9 +538,12 @@ app.use((err, req, res, _next) => {
 // ── Boot ─────────────────────────────────────────────────────────────────────
 
 const server = app.listen(PORT, HOST, () => {
-  console.log(`\n  Multi-chart trading desk  ->  http://${HOST}:${PORT}\n`);
+  // 0.0.0.0 is not an address you can visit; show the loopback form instead.
+  const shown = HOST === '0.0.0.0' ? '127.0.0.1' : HOST;
+  console.log(`\n  Multi-chart trading desk  ->  http://${shown}:${PORT}\n`);
   console.log(`  MCP command: ${mcp.config.command} ${mcp.config.args.join(' ')}`);
-  console.log(`  Workspaces: ${store.filePath}\n`);
+  console.log(`  Workspaces: ${store.filePath}`);
+  console.log(`  Data dir:   ${DATA_DIR}${process.env.DATA_DIR ? ' (DATA_DIR)' : ''}\n`);
   mcp.ensureStarted().catch((err) => console.warn(`[mcp] initial start failed: ${err.message}`));
 });
 

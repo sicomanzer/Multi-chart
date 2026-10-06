@@ -1,0 +1,19 @@
+# Keep the build context small and never let host state into the image.
+node_modules
+.git
+.gitignore
+.env
+.env.*
+Dockerfile
+.dockerignore
+render.yaml
+
+# data/ ships on purpose: workspaces.json is the board the app opens with, and
+# on a fresh container there is no other way to seed it. Only the runtime logs
+# and scratch files are left out — at runtime DATA_DIR may well point at a
+# mounted volume instead.
+data/*.log
+data/*.err
+data/*.tmp
+*.log
+*.err
