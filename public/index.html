@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-chart trading desk</title>
+<meta name="description" content="Real-time multi-chart board with editable indicators, powered by the tradingview-mcp server.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d1117'/><path d='M6 22l5-7 4 4 5-9 6 5' stroke='%232f6df6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="stylesheet" href="/css/app.css">
+<!-- Vendored from node_modules: no CDN, so the board runs on an offline box. -->
+<script src="/vendor/lightweight-charts.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__row">
+    <div class="topbar__brand">
+      <span class="topbar__logo" aria-hidden="true"></span>
+      <div>
+        <h1>Trading Desk</h1>
+        <p id="workspaceName">Loading…</p>
+      </div>
+    </div>
+
+    <div class="topbar__group topbar__group--actions">
+      <button class="btn btn--primary" id="addChartBtn" title="Add a chart to the board">+ Chart</button>
+      <button class="btn" id="addIndicatorBtn" title="Add an indicator to every chart">ƒx All</button>
+      <div class="zoom-group" role="group" aria-label="Zoom every chart at once">
+        <button class="btn btn--zoom" id="zoomOutBtn" title="Zoom out — every chart (−)" aria-label="Zoom out all charts">−</button>
+        <button class="btn btn--zoom" id="zoomInBtn" title="Zoom in — every chart (+)" aria-label="Zoom in all charts">+</button>
+        <button class="btn btn--zoom" id="zoomResetBtn" title="Reset zoom to the full range (0)" aria-label="Reset zoom">⤢</button>
+      </div>
+      <button class="btn" id="fitBtn" title="Fit every chart on screen">Fit</button>
+      <button class="btn" id="settingsBtn" title="Board settings">Settings</button>
+      <button class="btn" id="mcpBtn" title="Run tradingview-mcp tools">MCP</button>
+      <button class="btn btn--ghost" id="themeBtn" title="Toggle theme">◐</button>
+      <select class="input input--select" id="workspaceSelect" title="Saved boards"></select>
+      <button class="btn btn--ghost" id="saveBtn" title="Save this board">Save</button>
+      <span class="status-pill" id="statusPill" title="MCP + stream status">
+        <i class="dot"></i><span>connecting…</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="topbar__row topbar__row--tools">
+    <div class="topbar__group" id="timeframeBar" role="group" aria-label="Timeframe for all charts"></div>
+    <span class="topbar__hint">Timeframe applies to every chart · click the active one to reload</span>
+  </div>
+</header>
+
+<main class="board" id="grid"></main>
+
+<div class="board__empty" id="emptyState" hidden>
+  <h2>No charts yet</h2>
+  <p>Add a symbol to start watching the board.</p>
+  <button class="btn btn--primary" id="emptyAddBtn">+ Add first chart</button>
+</div>
+
+<footer class="statusbar">
+  <span id="statCharts">0 charts</span>
+  <span id="statIndicators">0 indicators</span>
+  <span id="statLastTick">quotes: —</span>
+  <span class="spacer"></span>
+  <span id="statLayout" title="How the charts are sized to fit the screen"></span>
+  <span id="statSource" title="Where the numbers come from">quotes: tradingview-mcp · candles: Yahoo chart API</span>
+  <span id="statSaved">saved</span>
+</footer>
+
+<div id="modal-root"></div>
+<div id="toast-root" class="toast-root"></div>
+
+<script type="module" src="/js/main.js"></script>
+<noscript>
+  <p style="padding:2rem;color:#8b93a7">This dashboard needs JavaScript.</p>
+</noscript>
+</body>
+</html>

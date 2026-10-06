@@ -1,0 +1,5 @@
+# Normalise line endings in the repository itself, but keep Windows scripts in
+# CRLF: a .cmd with LF-only endings breaks on some shells.
+* text=auto
+*.cmd text eol=crlf
+*.bat text eol=crlf

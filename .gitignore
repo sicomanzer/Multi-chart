@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Runtime state
+data/*.tmp
+data/server.log
+data/server.err
+*.log
+
+# Secrets — nothing in this project needs one, but keep them out if that changes
+.env
+.env.*
+!.env.example
+
+# Python (the fundamentals sidecar is a script, not an import, but be safe)
+__pycache__/
+*.py[cod]
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local overrides
+*.local

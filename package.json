@@ -1,0 +1,21 @@
+{
+  "name": "multi-chart-trading-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Real-time multi-chart trading desk. Quotes/TA/screeners come from the tradingview-mcp server (stdio JSON-RPC); OHLC candles come from the same Yahoo Finance chart endpoint the MCP itself uses, so indicators can be added and edited client-side.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "verify": "node scripts/verify-indicators.mjs",
+    "check": "node --check server/index.js && node --check server/mcp-client.js && node --check server/market.js && node --check server/realtime.js && node --check server/symbols.js && node --check server/workspace-store.js && node --check server/indicator-catalog.js && node --check public/js/ta.js && node --check public/js/board.js && node --check public/js/chart-tile.js && node --check public/js/main.js && node --check public/js/ui.js && node --check public/js/api.js && node --check public/js/stream.js && node --check public/js/format.js && node --check public/js/dialogs/indicator-dialog.js && node --check public/js/dialogs/chart-dialog.js && node --check public/js/dialogs/board-settings-dialog.js && node --check public/js/dialogs/mcp-console.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "lightweight-charts": "^5.2.1"
+  }
+}
