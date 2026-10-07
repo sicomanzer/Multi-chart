@@ -15,6 +15,13 @@ browser ──HTTP/SSE──▶ Node/Express ──stdio JSON-RPC──▶ pytho
                           └──OHLCV history──▶ Yahoo Finance chart API (same endpoint the MCP uses)
 ```
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sicomanzer/Multi-chart)
+
+The button opens the Render blueprint for this repository — it builds the
+Dockerfile in the root and asks for a `DECK_PASSWORD` before deploying. Read
+[Deploying](#deploying) first: this app needs a host that can run Python, not a
+static host, and it has no authentication of its own.
+
 ---
 
 ## Quick start
@@ -74,9 +81,11 @@ candles *and* would still have no MCP.
 
 ### Render
 
-The repo contains a `render.yaml` blueprint, so this is the short path:
+The repo contains a `render.yaml` blueprint and a deploy button at the top of
+this file, so this is the short path:
 
-1. Render → **New → Blueprint** → pick `sicomanzer/Multi-chart`.
+1. Click the button, or go to Render → **New → Blueprint** → pick
+   `sicomanzer/Multi-chart`.
 2. Render asks for `DECK_PASSWORD` because the blueprint marks it
    `sync: false`. Set one — see the warning below.
 3. Deploy. The first build installs Python 3, `tradingview-mcp-server` and the
