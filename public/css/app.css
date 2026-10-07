@@ -629,6 +629,24 @@ select {
 .ind-card__name { font-size: 11px; }
 .ind-card__meta { font-size: 9px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.4px; }
 
+/* Board-wide indicator edit: the scope is the whole point of this dialog, so it
+   gets a banner rather than a line of fine print. */
+.scope-banner {
+  display: grid;
+  gap: 2px;
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text-dim);
+  border: 1px solid var(--accent);
+  border-left-width: 3px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+}
+
+.scope-banner strong { color: var(--text); font-weight: 600; }
+
 /* ── Symbol search ─────────────────────────────────────────────────────────── */
 
 .symbol-results { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow: auto; margin-top: 6px; }

@@ -169,6 +169,22 @@ Per indicator you control the parameters, the colours and line width, whether
 it renders as an **overlay on the price chart** or in **its own pane** below it,
 and the pane height. Enable/disable and delete from the same dialog.
 
+Two toolbar buttons work across the whole board, and they do different things:
+
+| Button | Does |
+| --- | --- |
+| `ƒx All` | **Adds** the indicator to every chart on the board |
+| `ƒx Edit All` | **Edits** one existing indicator's settings on every chart at once |
+
+`ƒx Edit All` lists what is actually on the board, with a chart count per
+indicator, and opens the normal editor in a board-wide scope: change one value
+and every chart carrying that indicator redraws immediately. The dialog says so
+in a banner and in the button labels (`Apply on 15 charts`) rather than letting
+you believe you changed a single chart. If some charts hold different settings
+for that indicator, the banner names how many will be overwritten. Charts
+*without* the indicator are left alone — this changes settings, it does not add
+studies; that is what `ƒx All` is for.
+
 **Live quotes.** The server polls the MCP `stock_prices` screener once per
 interval for the union of symbols on screen (one upstream request carries up to
 2000 tickers, so a 24-chart board costs the same as a 3-chart one) and pushes

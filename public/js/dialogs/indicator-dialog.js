@@ -79,7 +79,87 @@ export function openIndicatorPicker({ catalog, groups, onAdd, current = [] }) {
   });
 }
 
-export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onToggle }) {
+/**
+ * Board-wide indicator settings.
+ *
+ * `usage` is one entry per indicator *type* present on the board, with the number
+ * of charts carrying it — clicking one opens the normal editor, but in "all
+ * charts" scope, so one dialog changes every chart at once.
+ */
+export function openBoardIndicatorPicker({ catalog, usage, totalCharts, onPick }) {
+  const definitions = Array.isArray(catalog) ? catalog : Object.values(catalog ?? {});
+
+  if (!usage.length) {
+    toast('No indicators on the board yet — add one first.', { type: 'info' });
+    return;
+  }
+
+  const api = modal({
+    title: 'Indicator settings',
+    subtitle: `Pick one to edit it on every chart at once · ${totalCharts} chart${totalCharts === 1 ? '' : 's'} on this board`,
+    size: 'lg',
+    render(body) {
+      const search = document.createElement('input');
+      search.className = 'input input--search';
+      search.placeholder = 'Filter indicators…';
+      body.appendChild(search);
+
+      const listHost = document.createElement('div');
+      listHost.className = 'ind-list';
+      body.appendChild(listHost);
+
+      const render = (filter = '') => {
+        const q = filter.trim().toLowerCase();
+        listHost.innerHTML = '';
+        const items = usage.filter(({ type }) => {
+          const def = catalog[type] ?? definitions.find((d) => d.type === type);
+          if (!def) return false;
+          return !q || def.name.toLowerCase().includes(q)
+            || def.short.toLowerCase().includes(q)
+            || type.includes(q);
+        });
+
+        if (!items.length) {
+          listHost.innerHTML = '<p class="section__hint">No indicator matches that filter.</p>';
+          return;
+        }
+
+        const sec = document.createElement('div');
+        sec.className = 'ind-list__group';
+        sec.innerHTML = '<h4>On this board</h4>';
+        const grid = document.createElement('div');
+        grid.className = 'ind-list__grid';
+
+        for (const entry of items) {
+          const def = catalog[entry.type] ?? definitions.find((d) => d.type === entry.type);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'ind-card';
+          const everywhere = entry.charts === totalCharts;
+          btn.innerHTML = `
+            <span class="ind-card__short">${escape(def.short)}</span>
+            <span class="ind-card__name">${escape(def.name)}</span>
+            <span class="ind-card__meta">on ${entry.charts} chart${entry.charts === 1 ? '' : 's'}${everywhere ? ' · all' : ''}${entry.differing ? ' · mixed settings' : ''}</span>
+          `;
+          btn.addEventListener('click', () => {
+            // Close first: the editor is a second modal, and two stacked
+            // dialogs leave the picker sitting behind the one being used.
+            api.close();
+            onPick(entry.type);
+          });
+          grid.appendChild(btn);
+        }
+        sec.appendChild(grid);
+        listHost.appendChild(sec);
+      };
+
+      render();
+      search.addEventListener('input', () => render(search.value));
+    },
+  });
+}
+
+export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onToggle, scope = null }) {
   const def = catalog[instance.type];
   if (!def) {
     toast(`Unknown indicator "${instance.type}"`, { type: 'error' });
@@ -94,7 +174,21 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
     subtitle: `${def.short} · ${def.params.length} setting${def.params.length === 1 ? '' : 's'}`,
     size: 'md',
     render(body) {
-      body.appendChild(section('Calculation', 'Changing a setting redraws this pane immediately.'));
+      // Scope banner: the same dialog edits one instance or the whole board, and
+      // overwriting differing settings silently would be the surprising kind.
+      if (scope) {
+        const banner = document.createElement('div');
+        banner.className = 'scope-banner';
+        banner.innerHTML = scope.differing
+          ? `<strong>Applies to all ${scope.charts} charts</strong> that have this indicator.
+             ${scope.differing} of them ${scope.differing === 1 ? 'uses' : 'use'} different settings — applying overwrites ${scope.differing === 1 ? 'it' : 'them'} with what is shown here.`
+          : `<strong>Applies to all ${scope.charts} charts</strong> that have this indicator.`;
+        body.appendChild(banner);
+      }
+
+      body.appendChild(section('Calculation', scope
+        ? 'Changing a setting redraws every chart with this indicator.'
+        : 'Changing a setting redraws this pane immediately.'));
 
       const formHost = document.createElement('div');
       formHost.className = 'form-grid';
@@ -144,12 +238,15 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
       });
     },
     footer(foot, { close }) {
+      // Name the scope in the buttons, so it is impossible to save a board-wide
+      // change believing it was one chart.
+      const scopeNote = scope ? ` on ${scope.charts} charts` : '';
       foot.innerHTML = `
-        <button class="btn btn--ghost" data-act="toggle">${instance.enabled === false ? 'Enable' : 'Disable'}</button>
-        <button class="btn btn--danger" data-act="delete">Remove</button>
+        <button class="btn btn--ghost" data-act="toggle">${instance.enabled === false ? 'Enable' : 'Disable'}${scopeNote}</button>
+        <button class="btn btn--danger" data-act="delete">Remove${scopeNote}</button>
         <span class="spacer"></span>
         <button class="btn" data-close>Cancel</button>
-        <button class="btn btn--primary" data-act="save">Apply</button>
+        <button class="btn btn--primary" data-act="save">Apply${scopeNote}</button>
       `;
       foot.querySelector('[data-act="save"]').addEventListener('click', () => {
         onSave({ ...readState(), enabled: instance.enabled !== false });

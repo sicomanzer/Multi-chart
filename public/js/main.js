@@ -31,6 +31,7 @@ const el = {
   addChartBtn: document.getElementById('addChartBtn'),
   emptyAddBtn: document.getElementById('emptyAddBtn'),
   addIndicatorBtn: document.getElementById('addIndicatorBtn'),
+  editIndicatorsBtn: document.getElementById('editIndicatorsBtn'),
   settingsBtn: document.getElementById('settingsBtn'),
   fitBtn: document.getElementById('fitBtn'),
   zoomInBtn: document.getElementById('zoomInBtn'),
@@ -175,6 +176,10 @@ function wireTopbar(board) {
       onAdd: (type) => board.addIndicatorToAll(type),
     });
   });
+
+  // One dialog, one indicator, every chart — the counterpart to "ƒx All", which
+  // adds a study board-wide.
+  el.editIndicatorsBtn.addEventListener('click', () => board.openBoardIndicatorEditor());
 
   el.themeBtn.addEventListener('click', () => {
     const next = board.workspace.settings.theme === 'dark' ? 'light' : 'dark';

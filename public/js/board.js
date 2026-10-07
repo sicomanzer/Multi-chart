@@ -15,7 +15,9 @@ import { api } from './api.js';
 import { ChartTile } from './chart-tile.js';
 import { QuoteStream } from './stream.js';
 import { modal, section, escape, toast, selectField, checkbox } from './ui.js';
-import { openIndicatorPicker, openIndicatorEditor } from './dialogs/indicator-dialog.js';
+import {
+  openIndicatorPicker, openIndicatorEditor, openBoardIndicatorPicker,
+} from './dialogs/indicator-dialog.js';
 import { openChartSettings } from './dialogs/chart-dialog.js';
 import { openBoardSettings } from './dialogs/board-settings-dialog.js';
 import { openMcpConsole } from './dialogs/mcp-console.js';
@@ -30,6 +32,26 @@ const MIN_TILE_W = 240;
 const MIN_TILE_H = 150;
 /** Width-to-height a chart reads best at: a little wider than tall. */
 const TARGET_ASPECT = 1.45;
+
+/**
+ * Do two indicator instances carry the same settings?
+ *
+ * Key order must not matter — the catalog's defaults are built as an object, so
+ * two instances built the same way can serialise in a different order. Numbers
+ * are compared as numbers so `14` from a number input and `14` loaded from JSON
+ * are not treated as different.
+ */
+function sameParams(a, b) {
+  const ka = Object.keys(a ?? {}).sort();
+  const kb = Object.keys(b ?? {}).sort();
+  if (ka.length !== kb.length || ka.some((k, i) => k !== kb[i])) return false;
+  return ka.every((k) => {
+    const va = a[k];
+    const vb = b[k];
+    if (typeof va === 'number' || typeof vb === 'number') return Number(va) === Number(vb);
+    return va === vb;
+  });
+}
 
 export class Board extends EventTarget {
   constructor({ gridEl, meta, catalog, groups, metricLabels, metricCatalog }) {
@@ -506,6 +528,89 @@ export class Board extends EventTarget {
       this.patchChart(tile.config.id, { indicators: [...tile.config.indicators, instance] });
     }
     toast(`${def.name} added to ${this.tiles.size} chart${this.tiles.size === 1 ? '' : 's'}`);
+  }
+
+  /**
+   * Every indicator type on the board, with how many charts carry it.
+   *
+   * `differing` counts the charts whose parameters do not match the first
+   * instance's, which is what a board-wide edit would overwrite.
+   */
+  indicatorUsage() {
+    const byType = new Map();
+    for (const tile of this.tiles.values()) {
+      for (const instance of tile.config.indicators ?? []) {
+        const entry = byType.get(instance.type) ?? { type: instance.type, charts: 0, differing: 0, first: instance };
+        entry.charts += 1;
+        if (entry.first !== instance && !sameParams(entry.first.params, instance.params)) entry.differing += 1;
+        byType.set(instance.type, entry);
+      }
+    }
+    // Most widely used first: on a board where every chart has RSI, that is the
+    // one people want.
+    return [...byType.values()].sort((a, b) => b.charts - a.charts || a.type.localeCompare(b.type));
+  }
+
+  /** Toolbar entry point: pick an indicator, then edit it everywhere at once. */
+  openBoardIndicatorEditor() {
+    openBoardIndicatorPicker({
+      catalog: this.catalog,
+      usage: this.indicatorUsage(),
+      totalCharts: this.tiles.size,
+      onPick: (type) => this.editIndicatorOnAll(type),
+    });
+  }
+
+  /**
+   * Edit one indicator type across every chart that has it.
+   *
+   * Charts without the indicator are left alone — this changes settings, it does
+   * not add studies. Use "ƒx All" for that.
+   */
+  editIndicatorOnAll(type) {
+    const targets = [];
+    for (const tile of this.tiles.values()) {
+      const instance = (tile.config.indicators ?? []).find((i) => i.type === type);
+      if (instance) targets.push({ tile, instance });
+    }
+    if (!targets.length) {
+      toast(`No chart on this board has ${this.catalog[type]?.name ?? type}`, { type: 'info' });
+      return;
+    }
+
+    const template = targets[0].instance;
+    const differing = targets.filter(({ instance }) => !sameParams(template.params, instance.params)).length;
+    const missing = this.tiles.size - targets.length;
+
+    const writeAll = (mutate) => {
+      for (const { tile, instance } of targets) {
+        mutate(instance);
+        this.patchChart(tile.config.id, { indicators: [...tile.config.indicators] });
+      }
+    };
+
+    openIndicatorEditor({
+      catalog: this.catalog,
+      instance: template,
+      scope: { charts: targets.length, differing },
+      onSave: (patch) => {
+        writeAll((instance) => Object.assign(instance, patch));
+        const tail = missing ? ` · ${missing} chart${missing === 1 ? '' : 's'} without it left alone` : '';
+        toast(`${this.catalog[type]?.name ?? type} updated on ${targets.length} chart${targets.length === 1 ? '' : 's'}${tail}`);
+      },
+      onDelete: () => {
+        for (const { tile } of targets) {
+          const kept = (tile.config.indicators ?? []).filter((i) => i.type !== type);
+          this.patchChart(tile.config.id, { indicators: kept });
+        }
+        toast(`${this.catalog[type]?.name ?? type} removed from ${targets.length} chart${targets.length === 1 ? '' : 's'}`);
+      },
+      onToggle: () => {
+        const enable = template.enabled === false;
+        writeAll((instance) => { instance.enabled = enable; });
+        toast(`${this.catalog[type]?.name ?? type} ${enable ? 'enabled' : 'disabled'} on ${targets.length} chart${targets.length === 1 ? '' : 's'}`);
+      },
+    });
   }
 
   // ── Dialogs ────────────────────────────────────────────────────────────────
