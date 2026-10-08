@@ -38,16 +38,37 @@ const DEFAULTS = {
 export const METRIC_CATALOG = [
   { key: 'pe', label: 'P/E', hint: 'price / trailing earnings' },
   { key: 'pbv', label: 'P/BV', hint: 'price / book value' },
+  { key: 'pfcf', label: 'P/FCF', hint: 'price / free cash flow — 1÷this is the FCF yield' },
+  { key: 'ps', label: 'P/S', hint: 'price / sales' },
+  { key: 'pcf', label: 'P/CF', hint: 'price / operating cash flow' },
+  { key: 'evEbitda', label: 'EV/EBITDA', hint: 'enterprise value / EBITDA' },
   { key: 'de', label: 'D/E', hint: 'total debt / equity' },
+  { key: 'quickRatio', label: 'Quick', hint: 'quick ratio (acid test)' },
+  { key: 'currentRatio', label: 'Curr.R', hint: 'current ratio' },
   { key: 'dividendYield', label: 'Y%', hint: 'dividend yield' },
   { key: 'roe', label: 'ROE', hint: 'return on equity' },
+  { key: 'roic', label: 'ROIC', hint: 'return on invested capital' },
   { key: 'roa', label: 'ROA', hint: 'return on assets' },
-  { key: 'ps', label: 'P/S', hint: 'price / sales' },
-  { key: 'evEbitda', label: 'EV/EBITDA', hint: 'enterprise value / EBITDA' },
-  { key: 'currentRatio', label: 'Curr.R', hint: 'current ratio' },
+  { key: 'epsGrowth', label: 'EPS g', hint: 'earnings per share, year on year' },
+  { key: 'revenueGrowth', label: 'Rev g', hint: 'revenue, year on year' },
 ];
 
 export const DEFAULT_METRICS = ['pe', 'pbv', 'de', 'dividendYield'];
+
+/**
+ * The set written to the daily history file.
+ *
+ * Wider than what the footer shows on purpose: the point of recording is to
+ * build the series that trend features will need later, and a field that is not
+ * tracked from day one cannot be recovered retroactively. All of them are
+ * scale-free for the reason explained above.
+ */
+export const TRACKED_METRICS = [
+  'pe', 'pbv', 'pfcf', 'ps', 'pcf', 'evEbitda',
+  'de', 'quickRatio', 'currentRatio',
+  'dividendYield', 'roe', 'roic', 'roa',
+  'epsGrowth', 'revenueGrowth',
+];
 
 const METRICS_KEYS = new Set(METRIC_CATALOG.map((m) => m.key));
 

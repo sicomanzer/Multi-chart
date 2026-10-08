@@ -25,7 +25,8 @@ import express from 'express';
 
 import { McpClient, McpError, detectPython } from './mcp-client.js';
 import { RealtimeHub } from './realtime.js';
-import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS } from './fundamentals.js';
+import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS, TRACKED_METRICS } from './fundamentals.js';
+import { FundamentalsHistory } from './history.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
@@ -105,6 +106,39 @@ await store.load();
 // tradingview-screener package the MCP itself uses.
 const fundamentals = new FundamentalsClient({ command: detectPython() });
 
+// Daily record of the same ratios, because a screener only ever reports the
+// current value and the trend features need the series. Recording starts the day
+// this ships; it cannot be back-filled later.
+const history = new FundamentalsHistory(join(DATA_DIR, 'fundamentals-history.jsonl'));
+await history.load();
+
+/**
+ * Snapshot these symbols' ratios into the history file.
+ *
+ * Deliberately fire-and-forget: the board must not wait on a write, and a failed
+ * write is a missing day rather than a broken page. `refresh` forces an upstream
+ * fetch so the manual button picks up a freshly reported quarter instead of the
+ * half-hour cache.
+ */
+async function snapshot(symbols, { refresh = false, force = false } = {}) {
+  if (!symbols?.length) return null;
+  try {
+    const result = await fundamentals.get(symbols, {
+      metrics: TRACKED_METRICS,
+      refresh,
+    });
+    if (result.error) return { written: 0, error: result.error };
+    const { written, skipped, error } = await history.record(result.data, {
+      metrics: TRACKED_METRICS,
+      force,
+    });
+    return { written, skipped, error };
+  } catch (err) {
+    console.warn(`[history] snapshot failed: ${err.message}`);
+    return null;
+  }
+}
+
 const hub = new RealtimeHub({
   mcp,
   fetchQuotes: (symbols) => getQuotes(mcp, symbols),
@@ -139,6 +173,7 @@ app.get('/api/health', asyncRoute(async (req, res) => {
     ready: true,
     mcp: deep ? { ...mcp.status(), ping: await mcp.ping() } : mcp.status(),
     fundamentals: fundamentals.status(),
+    history: history.summary(),
     realtime: hub.status(),
     caches: { cleared: false },
   });
@@ -276,12 +311,66 @@ app.get('/api/fundamentals', asyncRoute(async (req, res) => {
     metrics: metrics.length ? metrics : DEFAULT_METRICS,
     refresh,
   });
+  // Keep the trend series going on every board load. It runs on the tracked set
+  // regardless of which metrics the footer asked for, otherwise the recorded
+  // shape would depend on who looked at the board.
+  snapshot(symbols).catch(() => {});
   res.json({ ...result, metrics: metrics.length ? metrics : DEFAULT_METRICS });
 }));
 
 app.get('/api/fundamentals/metrics', (_req, res) => {
-  res.json({ metrics: METRIC_CATALOG, defaults: DEFAULT_METRICS, status: fundamentals.status() });
+  res.json({
+    metrics: METRIC_CATALOG,
+    defaults: DEFAULT_METRICS,
+    tracked: TRACKED_METRICS,
+    status: fundamentals.status(),
+  });
 });
+
+/**
+ * The recorded series, and the shape of what has been recorded so far.
+ *
+ * `from`/`to` are YYYY-MM-DD. A symbol with no history returns an empty list
+ * rather than an error — a name added to the board today has no past yet, which
+ * is the normal case for the first weeks.
+ */
+app.get('/api/fundamentals/history', (req, res) => {
+  const symbol = normalizeSymbol(req.query.symbol);
+  if (!symbol) {
+    return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbol is required' } });
+  }
+  const metrics = String(req.query.metrics ?? '')
+    .split(',').map((m) => m.trim())
+    .filter((m) => METRIC_CATALOG.some((c) => c.key === m));
+
+  return res.json({
+    symbol,
+    tracked: TRACKED_METRICS,
+    points: history.series(symbol, {
+      from: req.query.from ? String(req.query.from) : undefined,
+      to: req.query.to ? String(req.query.to) : undefined,
+      metrics: metrics.length ? metrics : undefined,
+    }),
+    summary: history.summary(),
+  });
+});
+
+app.get('/api/fundamentals/history/summary', (_req, res) => {
+  res.json({ ...history.summary(), tracked: TRACKED_METRICS });
+});
+
+app.post('/api/fundamentals/history/snapshot', asyncRoute(async (req, res) => {
+  const symbols = parseSymbolList(req.body?.symbols);
+  if (symbols.length === 0) {
+    return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbols is required' } });
+  }
+  // force + refresh: the user asked for it now, so take today's numbers even if
+  // today's row exists — a company may have reported since the board loaded.
+  const result = await snapshot(symbols.slice(0, 200), { refresh: true, force: true });
+  // `tracked` lives on the module, not on the store, so add it here or the UI
+  // renders "× 0 ratios".
+  res.json({ ...result, summary: { ...history.summary(), tracked: TRACKED_METRICS } });
+}));
 
 app.post('/api/fundamentals/cache/clear', (_req, res) => {
   fundamentals.clearCache();

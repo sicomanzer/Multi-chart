@@ -30,8 +30,7 @@ import json
 import sys
 
 # key -> (tradingview field, kind)
-#   kind drives formatting: "ratio" -> 2 decimals, "percent" -> 1 decimal + %,
-#   "money" -> compact (not currently used — see the note below), "number"
+#   kind drives formatting: "ratio" -> 2 decimals, "percent" -> 1 decimal + %
 #
 # Only scale-free fields are exposed: ratios and percentages. Absolute currency
 # columns are deliberately excluded because the direct-ticker scan returns them
@@ -39,6 +38,14 @@ import sys
 # exactly 33.3x too small for all 15 SET names, `dividends_per_share_fq` and
 # `market_cap_basic` were off by a similar order. Ratios and percentages are
 # unit-free, so they survive that quirk intact; absolute amounts do not.
+#
+# Each name here was verified to return a value for real SET tickers by
+# `scripts/probe-fundamental-fields.py`; names that the scanner rejects (margins,
+# payout ratio, interest coverage, net debt/EBITDA, operating cash flow, forward
+# P/E, share count) are absent because they do not exist on this endpoint.
+#
+# `pfcf` matters more than it looks: price/FCF is a ratio, so its reciprocal is
+# a free-cash-flow yield without ever touching a currency amount.
 METRICS = {
     "pe": ("price_earnings_ttm", "ratio"),
     "pbv": ("price_book_fq", "ratio"),
@@ -47,6 +54,12 @@ METRICS = {
     "roe": ("return_on_equity_fq", "percent"),
     "roa": ("return_on_assets_fq", "percent"),
     "ps": ("price_sales_current", "ratio"),
+    "pcf": ("price_cash_flow_current", "ratio"),
+    "pfcf": ("price_free_cash_flow_current", "ratio"),
+    "roic": ("return_on_invested_capital_fq", "percent"),
+    "epsGrowth": ("earnings_per_share_diluted_yoy_growth_ttm", "percent"),
+    "revenueGrowth": ("total_revenue_yoy_growth_ttm", "percent"),
+    "quickRatio": ("quick_ratio", "ratio"),
     "evEbitda": ("enterprise_value_ebitda_ttm", "ratio"),
     "currentRatio": ("current_ratio", "ratio"),
     # Cross-checkable but not displayed: `earnings_per_share_diluted_ttm`,

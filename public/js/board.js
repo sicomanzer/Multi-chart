@@ -104,6 +104,9 @@ export class Board extends EventTarget {
     this.resubscribe();
     // Fundamentals are a slow-moving extra: one request, cached server-side.
     this.refreshFundamentals().catch(() => {});
+    // Fetched separately so Settings can say what has been recorded before the
+    // user has triggered a ratio refresh.
+    api.fundamentalsHistorySummary().then((s) => { this.historyStatus = s; }).catch(() => {});
 
     this.dispatchEvent(new CustomEvent('workspace', { detail: ws }));
   }
@@ -310,6 +313,9 @@ export class Board extends EventTarget {
     for (const tile of this.tiles.values()) {
       tile.setFundamentals(result.data?.[tile.config.symbol] ?? null, { pending: false });
     }
+    // Keep the settings dialog's "recorded history" line current; the server
+    // writes the snapshot as a side effect of this same request.
+    api.fundamentalsHistorySummary().then((s) => { this.historyStatus = s; }).catch(() => {});
     this.dispatchEvent(new CustomEvent('fundamentals', { detail: result }));
     return result;
   }
@@ -637,6 +643,15 @@ export class Board extends EventTarget {
       mcpStatus: this.mcpStatus,
       metricCatalog: this.metricCatalog ?? [],
       onRefreshRatios: () => this.refreshFundamentals({ refresh: true }),
+      historyStatus: this.historyStatus,
+      onSnapshotHistory: async () => {
+        const symbols = this.workspace.charts.map((c) => c.symbol).filter(Boolean);
+        if (symbols.length === 0) return null;
+        const result = await api.snapshotHistory(symbols);
+        this.historyStatus = result.summary ?? null;
+        toast(`Recorded ${result.written ?? 0} symbol${result.written === 1 ? '' : 's'} for today`);
+        return result;
+      },
       onSave: (settings) => {
         const previous = this.workspace.settings;
         const metricsChanged = (previous.footerMetrics ?? []).join(',') !== (settings.footerMetrics ?? []).join(',');

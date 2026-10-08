@@ -212,6 +212,25 @@ feel as TradingView's wheel, applied to the board. Three details worth knowing:
 `⤢` resets to the full loaded range and puts every chart back into auto-fit
 mode. Zoom is not saved with the board — a reload always starts fitted.
 
+**Fundamentals history — the trend series.** The screener only ever reports the
+*current* value of each ratio, but a value-investing view needs the line, not the
+point: is ROE holding up, is this P/E cheap against its own five years, did the
+reason I bought still hold. So every board load writes today's ratios to
+`data/fundamentals-history.jsonl` — one JSON line per symbol per day, appended
+and never rewritten, fifteen ratios plus the price.
+
+It starts the day this ships and **cannot be back-filled**; the first weeks are
+one row per symbol, and any trend read off that would be noise. Settings shows
+what exists so far and has a button to record today by hand (useful the day a
+company reports). Missing a day is normal — nothing schedules itself in here,
+the file grows when you look at a board.
+
+```bash
+# the recorded series, as JSON
+curl 'http://127.0.0.1:8787/api/fundamentals/history?symbol=SET:TU&metrics=pe,roe'
+curl 'http://127.0.0.1:8787/api/fundamentals/history/summary'
+```
+
 **Everything else.** Global timeframe switch, crosshair mirroring across
 charts, optional linked zoom, light/dark theme, price levels (alert/target
 lines), symbol search backed by the screener, saved boards (rename/duplicate/
@@ -262,16 +281,30 @@ footer*:
 | Indicator values only | the live indicator readings, click to edit |
 | Both | ratios on top, indicators below |
 
-Pick any subset of nine metrics (P/E, P/BV, D/E, Y%, ROE, ROA, P/S, EV/EBITDA,
-current ratio). A narrow chart shows as many as fit and names the rest in the
-tooltip rather than clipping them silently.
+Pick any subset of fifteen metrics (P/E, P/BV, P/FCF, P/S, P/CF, EV/EBITDA, D/E,
+Quick, current ratio, Y%, ROE, ROIC, ROA, EPS growth, revenue growth). A narrow
+chart shows as many as fit and names the rest in the tooltip rather than clipping
+them silently.
 
 **What is verified and what is not.** Ratios and percentages are exposed;
 absolute-currency columns are not. On this endpoint `earnings_per_share_diluted_ttm`
 comes back exactly **33.3× too small** (checked against P/E for all 15 SET names,
 identical factor every time), and `dividends_per_share_fq` / `market_cap_basic`
 are off by a similar order — so they are deliberately omitted rather than shown
-wrong. The four metrics the strip defaults to were checked two ways:
+wrong. `scripts/probe-fundamental-fields.py` probes 37 candidate columns one at a
+time against real SET tickers and reports which exist, which are only partly
+populated, and which are currency amounts; 15 names (margins, payout ratio,
+interest coverage, net debt/EBITDA, operating cash flow, forward P/E, share
+count) are rejected by the screener outright.
+
+Because the endpoint will not hand over a trustworthy absolute amount, **there
+is no DCF, no owner-earnings number and no price target** — a valuation figure
+built on it would be wrong in a way that looks authoritative. `P/FCF` is the
+workaround: it is a ratio, so its reciprocal is a free-cash-flow *yield* with no
+currency amount involved at all. A DCF you enter yourself is the other honest
+option.
+
+The four metrics the strip defaults to were checked two ways:
 
 - the price inside every screener row matches the live MCP quote to 0.000%
 - the accounting identity `P/BV = price / (price ÷ P/E ÷ ROE)` reproduces the

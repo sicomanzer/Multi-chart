@@ -70,6 +70,19 @@ export const api = {
     })}`,
   ),
   fundamentalsMeta: () => request('/api/fundamentals/metrics'),
+  fundamentalsHistory: (symbol, { from, to, metrics } = {}) => request(
+    `/api/fundamentals/history${qs({
+      symbol,
+      from,
+      to,
+      metrics: metrics?.length ? metrics.join(',') : undefined,
+    })}`,
+  ),
+  fundamentalsHistorySummary: () => request('/api/fundamentals/history/summary'),
+  snapshotHistory: (symbols) => request('/api/fundamentals/history/snapshot', {
+    method: 'POST',
+    body: { symbols },
+  }),
 
   symbols: (q, country = 'thailand', limit = 25) =>
     request(`/api/symbols${qs({ q, country, limit })}`),

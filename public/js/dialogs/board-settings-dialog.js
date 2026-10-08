@@ -3,10 +3,28 @@
  */
 import { modal, section, selectField, checkbox, escape } from '../ui.js';
 
-export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [], onSave, onRefreshRatios }) {
+export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [], onSave, onRefreshRatios, onSnapshotHistory, historyStatus = null }) {
   const next = { ...settings };
   next.footerMetrics = [...(settings.footerMetrics ?? [])];
   let read = () => ({ ...next, footerMetrics: [...next.footerMetrics] });
+
+  // How much of a series exists yet. Worth saying plainly: in the first weeks
+  // this is one row per symbol, and no trend feature can honestly run on it.
+  const renderHistoryNote = (node, status) => {
+    if (!status) {
+      node.textContent = 'Loading…';
+      return;
+    }
+    const { symbols = 0, days = 0, lastDate = null } = status;
+    if (days === 0) {
+      node.textContent = 'Nothing recorded yet. Ratios are written automatically each time the board loads; it starts now and cannot be back-filled.';
+      return;
+    }
+    const tracked = status.tracked?.length ?? 0;
+    node.textContent = `${symbols} symbol${symbols === 1 ? '' : 's'} × ${tracked} ratios, ${days} day${days === 1 ? '' : 's'} recorded`
+      + ` (since ${status.since ?? '—'}, last ${lastDate ?? '—'})`
+      + (days < 30 ? '. Too few days yet for any trend to mean much.' : '.');
+  };
 
   const POLL_CHOICES = [
     { value: '5', label: '5 seconds (aggressive)' },
@@ -76,6 +94,34 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
       refreshField.className = 'field';
       refreshField.innerHTML = '<span class="field__label">Fundamentals</span>';
       refreshField.appendChild(refreshBtn);
+
+      // What the history file holds, and a way to fill today's gap by hand.
+      // Recording is automatic; this is only here so the series is not an
+      // invisible thing the app does on its own.
+      const historyField = document.createElement('div');
+      historyField.className = 'field';
+      historyField.innerHTML = '<span class="field__label">Recorded history</span>';
+      const historyNote = document.createElement('p');
+      historyNote.className = 'section__hint';
+      historyField.appendChild(historyNote);
+      const snapshotBtn = document.createElement('button');
+      snapshotBtn.className = 'btn';
+      snapshotBtn.type = 'button';
+      snapshotBtn.textContent = 'Record today now';
+      snapshotBtn.title = 'Write today\'s ratios for every chart on this board, replacing today\'s row';
+      snapshotBtn.addEventListener('click', async () => {
+        snapshotBtn.disabled = true;
+        snapshotBtn.textContent = 'Recording…';
+        // The returned summary is the fresh one; the dialog's own copy of
+        // `historyStatus` was captured when it opened.
+        const result = await onSnapshotHistory?.();
+        renderHistoryNote(historyNote, result?.summary ?? null);
+        snapshotBtn.disabled = false;
+        snapshotBtn.textContent = 'Record today now';
+      });
+      historyField.appendChild(snapshotBtn);
+      renderHistoryNote(historyNote, historyStatus);
+      body.appendChild(historyField);
 
       const metricsWrap = document.createElement('div');
       metricsWrap.className = 'field';
