@@ -28,6 +28,7 @@ import { RealtimeHub } from './realtime.js';
 import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS, TRACKED_METRICS } from './fundamentals.js';
 import { FundamentalsHistory } from './history.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
+import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
   TIMEFRAMES, DEFAULT_TIMEFRAME, getCandles, getCandlesBatch,
@@ -100,6 +101,13 @@ mcp.on('status', (s) => {
 
 const store = new WorkspaceStore(join(DATA_DIR, 'workspaces.json'));
 await store.load();
+
+// Watchlists are named symbol lists, kept deliberately apart from boards: a
+// research list ("AI", "dividend", "what I am watching") should outlive any
+// particular grid layout and be loadable onto any board in one click. There is
+// no cap on how many may exist — see `watchlist-store.js`.
+const watchlists = new WatchlistStore(join(DATA_DIR, 'watchlists.json'));
+await watchlists.load();
 
 // Fundamentals (P/E, P/BV, D/E, dividend yield) are not exposed by any MCP
 // tool, so they come from a small local sidecar that drives the same
@@ -174,6 +182,7 @@ app.get('/api/health', asyncRoute(async (req, res) => {
     mcp: deep ? { ...mcp.status(), ping: await mcp.ping() } : mcp.status(),
     fundamentals: fundamentals.status(),
     history: history.summary(),
+    watchlists: watchlists.summary(),
     realtime: hub.status(),
     caches: { cleared: false },
   });
@@ -197,6 +206,10 @@ app.get('/api/meta', (_req, res) => {
     countries: availableCountries(),
     defaultSettings: DEFAULT_SETTINGS,
     maxCharts: 60,
+    // Watchlist counts are deliberately unbounded; only the length of a single
+    // list is capped, and the UI says so rather than implying a quota exists.
+    maxWatchlists: null,
+    maxWatchlistSymbols: MAX_SYMBOLS_PER_LIST,
   });
 });
 
@@ -231,8 +244,18 @@ app.post('/api/indicators/resolve', (req, res) => {
 // ── Symbols ──────────────────────────────────────────────────────────────────
 
 function parseSymbolList(raw) {
-  if (Array.isArray(raw)) return uniqueSymbols(raw);
-  return uniqueSymbols(String(raw ?? '').split(/[,;\s]+/));
+  // Split every entry, not just a plain string: a caller sending
+  // `{ symbols: ['SCB, KBANK'] }` means the same as `['SCB', 'KBANK']`, and the
+  // difference should not leak into whatever the route does with the result.
+  const entries = Array.isArray(raw) ? raw : [raw];
+  const parts = [];
+  for (const entry of entries) {
+    if (entry === null || entry === undefined) continue;
+    for (const piece of String(entry).split(/[,;\s]+/)) {
+      if (piece) parts.push(piece);
+    }
+  }
+  return uniqueSymbols(parts);
 }
 
 app.get('/api/symbols', asyncRoute(async (req, res) => {
@@ -387,15 +410,38 @@ app.get('/api/workspaces/:id', (req, res) => {
   res.json(ws);
 });
 
-/** Shared write path for POST / PUT / PATCH on a board. */
-function saveWorkspace(req, res, { id } = {}) {
+/**
+ * Shared write path for POST / PUT / PATCH on a board.
+ *
+ * `merge: true` folds the body onto the stored board instead of replacing it.
+ * That distinction is not cosmetic: `sanitizeWorkspace` reads `raw.charts` and
+ * `raw.settings`, and falls back to `[]` / `DEFAULT_SETTINGS` when they are
+ * missing. A full replace is therefore only correct when the body really is the
+ * whole board — so a `PATCH` of `{ name }` would come back with every chart
+ * deleted and every setting reset, written straight back to disk.
+ *
+ * PUT keeps replace semantics; POST is what the board's own autosave uses and
+ * always sends a complete `snapshot()`.
+ */
+function saveWorkspace(req, res, { id, merge = false } = {}) {
   const body = req.body ?? {};
   const known = id ? store.get(id) : null;
   if (id && !known) {
     return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such workspace' } });
   }
 
-  const result = store.save({ ...body, id: known?.id }, {
+  const payload = merge && known
+    ? {
+      ...known,
+      ...body,
+      // Settings are a flat bag of scalars plus `footerMetrics`, so a partial
+      // patch may legitimately carry only the one key the caller changed.
+      settings: { ...known.settings, ...(body.settings ?? {}) },
+      id: known.id,
+    }
+    : { ...body, id: known?.id };
+
+  const result = store.save(payload, {
     id: known?.id,
     baseRevision: body.baseRevision,
   });
@@ -428,7 +474,8 @@ app.post('/api/workspaces', (req, res) => {
 
 app.put('/api/workspaces/:id', (req, res) => saveWorkspace(req, res, { id: req.params.id }));
 
-app.patch('/api/workspaces/:id', (req, res) => saveWorkspace(req, res, { id: req.params.id }));
+app.patch('/api/workspaces/:id', (req, res) =>
+  saveWorkspace(req, res, { id: req.params.id, merge: true }));
 
 app.post('/api/workspaces/:id/duplicate', (req, res) => {
   const ws = store.duplicate(req.params.id);
@@ -441,6 +488,78 @@ app.delete('/api/workspaces/:id', (req, res) => {
   // (two tabs can easily race here).
   const removed = store.remove(req.params.id);
   res.status(204).json({ ok: true, removed });
+});
+
+// ── Watchlists ───────────────────────────────────────────────────────────────
+//
+// Named symbol lists, independent of any board. Every route is plain CRUD plus
+// two symbol sub-resources, because "add these three tickers" and "drop these
+// two" are the actions that actually happen while researching — making the
+// client send a whole list back for each would lose concurrent edits.
+
+app.get('/api/watchlists', (_req, res) => {
+  res.json({ watchlists: watchlists.list(), summary: watchlists.summary() });
+});
+
+app.post('/api/watchlists', (req, res) => {
+  const { name, symbols } = req.body ?? {};
+  const wl = watchlists.create({ name, symbols });
+  console.log(`[watchlist] "${wl.name}" created with ${wl.symbols.length} symbol(s)`);
+  res.status(201).json(wl);
+});
+
+app.post('/api/watchlists/from-board', (req, res) => {
+  const symbols = parseSymbolList(req.body?.symbols);
+  if (!symbols.length) {
+    return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbols is required' } });
+  }
+  const wl = watchlists.fromSymbols(symbols, req.body?.name);
+  console.log(`[watchlist] "${wl.name}" seeded from the board with ${wl.symbols.length} symbol(s)`);
+  res.status(201).json(wl);
+});
+
+app.get('/api/watchlists/:id', (req, res) => {
+  const wl = watchlists.get(req.params.id);
+  if (!wl) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such watchlist' } });
+  res.json(wl);
+});
+
+/** PUT replaces; PATCH folds the body onto the stored list. */
+app.put('/api/watchlists/:id', (req, res) => {
+  const wl = watchlists.save(req.params.id, { ...(req.body ?? {}), id: req.params.id });
+  if (!wl) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such watchlist' } });
+  res.json(wl);
+});
+
+app.patch('/api/watchlists/:id', (req, res) => {
+  const wl = watchlists.save(req.params.id, req.body ?? {}, { merge: true });
+  if (!wl) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such watchlist' } });
+  res.json(wl);
+});
+
+app.delete('/api/watchlists/:id', (req, res) => {
+  // Idempotent, like board deletion.
+  res.status(204).json({ ok: true, removed: watchlists.remove(req.params.id) });
+});
+
+app.post('/api/watchlists/:id/duplicate', (req, res) => {
+  const wl = watchlists.duplicate(req.params.id);
+  if (!wl) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such watchlist' } });
+  res.status(201).json(wl);
+});
+
+app.post('/api/watchlists/:id/symbols', (req, res) => {
+  // The raw body, not `parseSymbolList`: the store owns how a symbol list is
+  // split and cleaned, and running both would split on whitespace twice.
+  const result = watchlists.addSymbols(req.params.id, req.body?.symbols);
+  if (!result) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such watchlist' } });
+  res.json(result);
+});
+
+app.delete('/api/watchlists/:id/symbols', (req, res) => {
+  const result = watchlists.removeSymbols(req.params.id, req.body?.symbols);
+  if (!result) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such watchlist' } });
+  res.json(result);
 });
 
 // ── Generic MCP passthrough ──────────────────────────────────────────────────
@@ -644,6 +763,7 @@ async function shutdown(signal) {
   hub.stop();
   server.close();
   await store.flush().catch(() => {});
+  await watchlists.flush().catch(() => {});
   await Promise.allSettled([mcp.stop(), fundamentals.stop()]);
   process.exit(0);
 }

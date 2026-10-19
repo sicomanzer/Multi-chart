@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
+    "test": "node scripts/run-tests.mjs",
     "verify": "node scripts/verify-indicators.mjs",
     "check": "node --check server/index.js && node --check server/mcp-client.js && node --check server/market.js && node --check server/realtime.js && node --check server/symbols.js && node --check server/workspace-store.js && node --check server/indicator-catalog.js && node --check public/js/ta.js && node --check public/js/board.js && node --check public/js/chart-tile.js && node --check public/js/main.js && node --check public/js/ui.js && node --check public/js/api.js && node --check public/js/stream.js && node --check public/js/format.js && node --check public/js/dialogs/indicator-dialog.js && node --check public/js/dialogs/chart-dialog.js && node --check public/js/dialogs/board-settings-dialog.js && node --check public/js/dialogs/mcp-console.js"
   },

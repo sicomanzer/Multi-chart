@@ -11,8 +11,10 @@
  */
 import { api } from './api.js';
 import { Board } from './board.js';
-import { toast, escape } from './ui.js';
+import { toast, escape, askText } from './ui.js';
 import { openIndicatorPicker } from './dialogs/indicator-dialog.js';
+import { openWatchlists } from './dialogs/watchlist-dialog.js';
+import { openOversoldList } from './dialogs/oversold-dialog.js';
 
 const LOCAL_KEY = 'mctd:last-workspace';
 
@@ -24,11 +26,20 @@ const LOCAL_KEY = 'mctd:last-workspace';
 const ZOOM_IN = 1.25;
 const ZOOM_OUT = 1 / ZOOM_IN;
 
+/**
+ * Value prefix that tells the board dropdown an option is a watchlist rather
+ * than a board. Both live in the one `<select>` so a user can jump between a
+ * layout and a saved symbol list without reaching for a second control.
+ */
+const WATCHLIST_PREFIX = 'wl:';
+
 const el = {
   grid: document.getElementById('grid'),
   empty: document.getElementById('emptyState'),
   timeframeBar: document.getElementById('timeframeBar'),
   addChartBtn: document.getElementById('addChartBtn'),
+  watchlistBtn: document.getElementById('watchlistBtn'),
+  oversoldBtn: document.getElementById('oversoldBtn'),
   emptyAddBtn: document.getElementById('emptyAddBtn'),
   addIndicatorBtn: document.getElementById('addIndicatorBtn'),
   editIndicatorsBtn: document.getElementById('editIndicatorsBtn'),
@@ -41,6 +52,7 @@ const el = {
   themeBtn: document.getElementById('themeBtn'),
   saveBtn: document.getElementById('saveBtn'),
   workspaceSelect: document.getElementById('workspaceSelect'),
+  filterChip: document.getElementById('filterChip'),
   workspaceName: document.getElementById('workspaceName'),
   statusPill: document.getElementById('statusPill'),
   statCharts: document.getElementById('statCharts'),
@@ -144,6 +156,41 @@ function wireTopbar(board) {
 
   el.addChartBtn.addEventListener('click', () => board.openAddChart());
   el.emptyAddBtn.addEventListener('click', () => board.openAddChart());
+  el.watchlistBtn.addEventListener('click', () =>
+    openWatchlists({ board, onChanged: () => refreshWorkspaceList(board) }));
+
+  // The board re-publishes the oversold set whenever any chart rebuilds its
+  // indicators. The button is only a summary — it says how many are under
+  // water, and the dialog answers which ones.
+  let oversoldHits = [];
+
+  const paintOversold = (hits) => {
+    oversoldHits = hits;
+    const n = hits.length;
+    el.oversoldBtn.hidden = n === 0;
+    if (n === 0) return;
+    // Thresholds can differ per chart, so name the highest line in play rather
+    // than implying one number applies to the whole board.
+    const line = Math.max(...hits.map((h) => h.threshold));
+    el.oversoldBtn.textContent = `● ${n} below ${line}`;
+    el.oversoldBtn.title = hits
+      .map((h) => `${h.symbol} RSI ${h.value.toFixed(1)} < ${h.threshold}`)
+      .join('\n');
+  };
+
+  board.addEventListener('oversold', (event) => paintOversold(event.detail ?? []));
+
+  // The board's first scan is queued during `loadWorkspace`, which finishes
+  // before this listener exists, so seed the button from a scan of its own
+  // rather than waiting a minute for the intraday tick to say anything.
+  paintOversold(board.collectOversold());
+
+  el.oversoldBtn.addEventListener('click', () => openOversoldList({ board, hits: oversoldHits }));
+
+  el.filterChip.addEventListener('click', () => {
+    board.clearFilter();
+    toast('Showing every chart again', { type: 'info', timeout: 2200 });
+  });
   el.settingsBtn.addEventListener('click', () => board.openSettings());
   el.mcpBtn.addEventListener('click', () => board.openMcp());
 
@@ -195,15 +242,54 @@ function wireTopbar(board) {
   });
 
   el.workspaceSelect.addEventListener('change', async () => {
-    const id = el.workspaceSelect.value;
-    if (!id || id === board.workspace.id) return;
+    const raw = el.workspaceSelect.value;
+    if (!raw) return;
+
+    // One dropdown holds two kinds of thing: a board is a layout, a watchlist
+    // is a set of symbols applied to whatever layout is on screen. The value
+    // prefix says which was picked.
+    const kind = raw.startsWith(WATCHLIST_PREFIX) ? 'watchlist' : 'board';
+    const id = raw.slice(raw.indexOf(':') + 1);
+
     try {
+      if (kind === 'watchlist') {
+        const wl = await api.watchlist(id);
+        const symbols = new Set(wl.symbols ?? []);
+        if (!symbols.size) {
+          toast(`"${wl.name}" has no symbols yet`, { type: 'info' });
+        } else {
+          board.setFilter(symbols, wl.name, wl.id);
+          const onBoard = board.visibleCount();
+          toast(onBoard
+            ? `Showing ${onBoard} chart${onBoard === 1 ? '' : 's'} from "${wl.name}"`
+            : `None of "${wl.name}"'s symbols are on this board — use Watchlists → Load`,
+            { type: onBoard ? 'success' : 'error', timeout: 5000 });
+        }
+        return;
+      }
+
+      if (id === board.workspace.id) {
+        // Re-picking the board that is already loaded means "show me the whole
+        // board". Without this the select would snap back to the watchlist
+        // option and look like a dead control, because a filter is holding
+        // the board option unticked.
+        if (board.filterSymbols) {
+          board.clearFilter();
+          toast(`Showing all ${board.tiles.size} charts`, { type: 'info', timeout: 2400 });
+        }
+        // The filter event re-syncs the dropdown; nothing to do here.
+        return;
+      }
       const ws = await api.workspace(id);
+      // A different board holds different charts; a filter carried over would
+      // hide most of it for no reason the user asked for.
+      if (board.filterSymbols) board.clearFilter();
       await board.loadWorkspace(ws);
       markTimeframe(ws.settings.defaultTimeframe);
       await refreshWorkspaceList(board);
     } catch (err) {
-      toast(`Could not open board: ${err.message}`, { type: 'error' });
+      toast(`Could not open ${kind}: ${err.message}`, { type: 'error' });
+      await refreshWorkspaceList(board);
     }
   });
 }
@@ -261,9 +347,31 @@ board.addEventListener('reidentified', (e) => {
       el.statLayout.textContent = `${board.workspace.settings.columns} columns · scrolling`;
       return;
     }
-    el.statLayout.textContent = r.fits
-      ? `fit: ${r.cols} × ${r.rows} · ${Math.round(r.tileW)}×${Math.round(r.tileH)}px`
-      : `${r.charts ?? board.tiles.size} charts · too many to fit, scrolling`;
+    if (!r.fits) {
+      el.statLayout.textContent = `${r.charts ?? board.visibleCount()} charts · cannot fit, scrolling`;
+      return;
+    }
+    const size = `${Math.round(r.tileW)}×${Math.round(r.tileH)}px`;
+    // "Compact" is not an apology — it says the board chose small tiles on
+    // purpose so that everything stays on one screen, which is a different
+    // situation from a board that overflowed and has to be scrolled.
+    el.statLayout.textContent = r.compact
+      ? `fit: ${r.cols} × ${r.rows} · ${size} · compact`
+      : `fit: ${r.cols} × ${r.rows} · ${size}`;
+  });
+
+  // The filter chip appears only while a watchlist is narrowing the board, and
+  // clearing it is one click — the hidden charts were never removed. The
+  // dropdown has to follow too, or it keeps showing a list that is no longer
+  // applied.
+  board.addEventListener('filter', (e) => {
+    const f = e.detail ?? {};
+    el.filterChip.hidden = !f.name;
+    if (f.name) {
+      el.filterChip.querySelector('b').textContent = f.name;
+      el.filterChip.querySelector('i').textContent = `${f.visible} shown · ${f.hidden} hidden`;
+    }
+    refreshWorkspaceList(board);
   });
 
   board.addEventListener('stream', (e) => updateStatusPill(board, null, e.detail));
@@ -325,16 +433,54 @@ function updateStatusPill(board, health = null, stream = null) {
   }
 }
 
+/**
+ * Fill the board dropdown.
+ *
+ * Boards and watchlists share one `<select>`, separated into two `<optgroup>`s:
+ * a board is a whole layout, a watchlist is a set of symbols applied to the
+ * layout already on screen. Keeping them in one place is the point — otherwise
+ * switching between "the grid I built" and "these twenty names" costs a trip to
+ * a different dialog.
+ *
+ * The selection follows state rather than the other way round: whichever board
+ * is loaded stays ticked, and a watchlist is ticked only while its filter is
+ * actually applied.
+ */
 async function refreshWorkspaceList(board) {
   try {
-    const { workspaces } = await api.workspaces();
+    // Both are needed; a failure on the watchlist side must not blank the board
+    // list, which is the control people actually use to switch layouts.
+    const [boardData, listData] = await Promise.all([
+      api.workspaces(),
+      api.watchlists().catch(() => ({ watchlists: [] })),
+    ]);
+    const { workspaces } = boardData;
+    const watchlists = listData.watchlists ?? [];
+
     el.workspaceSelect.innerHTML = '';
+
+    const boardGroup = document.createElement('optgroup');
+    boardGroup.label = 'Boards';
     for (const ws of workspaces) {
       const opt = document.createElement('option');
       opt.value = ws.id;
       opt.textContent = `${ws.name} (${ws.chartCount})`;
-      opt.selected = ws.id === board.workspace?.id;
-      el.workspaceSelect.appendChild(opt);
+      opt.selected = !board.filterSymbols && ws.id === board.workspace?.id;
+      boardGroup.appendChild(opt);
+    }
+    el.workspaceSelect.appendChild(boardGroup);
+
+    if (watchlists.length) {
+      const listGroup = document.createElement('optgroup');
+      listGroup.label = 'Watchlists';
+      for (const wl of watchlists) {
+        const opt = document.createElement('option');
+        opt.value = `${WATCHLIST_PREFIX}${wl.id}`;
+        opt.textContent = `${wl.name} (${wl.count})`;
+        opt.selected = wl.id === board.filterListId;
+        listGroup.appendChild(opt);
+      }
+      el.workspaceSelect.appendChild(listGroup);
     }
 
     // Rename / duplicate / delete live behind the select, so the list stays
@@ -351,13 +497,25 @@ async function refreshWorkspaceList(board) {
         `;
         el.workspaceSelect.parentElement.appendChild(actions);
 
+        // No `window.prompt` / `window.confirm` here. They are blocked outright
+        // in plenty of contexts, and a blocked one returns null instead of
+        // throwing — so `if (!name) return;` turned Rename into a button that
+        // did nothing, with nothing on screen to explain why. See the same fix
+        // in dialogs/watchlist-dialog.js.
+        let armedDelete = false;
+
         actions.addEventListener('click', async (e) => {
           const act = e.target.dataset?.act;
           const id = board.workspace?.id;
           if (!act || !id) return;
+          const del = actions.querySelector('[data-act="delete"]');
           try {
             if (act === 'rename') {
-              const name = prompt('Board name', board.workspace.name);
+              const name = await askText({
+                title: 'Rename board',
+                value: board.workspace.name,
+                submitLabel: 'Save',
+              });
               if (!name) return;
               await api.patchWorkspace(id, { name });
               await board.loadWorkspace(await api.workspace(id));
@@ -366,7 +524,20 @@ async function refreshWorkspaceList(board) {
               const ws = await copy.json();
               await board.loadWorkspace(ws);
             } else if (act === 'delete') {
-              if (!confirm(`Delete board "${board.workspace.name}"?`)) return;
+              // Two clicks rather than a confirmation dialog: deleting a board
+              // is not recoverable, and arming is explicit without depending on
+              // a dialog that may not be able to open.
+              if (!armedDelete) {
+                armedDelete = true;
+                del.textContent = 'Confirm delete';
+                del.classList.add('is-armed');
+                setTimeout(() => {
+                  armedDelete = false;
+                  del.textContent = 'Delete';
+                  del.classList.remove('is-armed');
+                }, 4000);
+                return;
+              }
               await api.deleteWorkspace(id);
               const { workspaces } = await api.workspaces();
               const next = workspaces[0];
@@ -376,6 +547,7 @@ async function refreshWorkspaceList(board) {
               } else {
                 await board.loadWorkspace(await api.workspace(next.id));
               }
+              toast('Board deleted', { type: 'info' });
             }
             await refreshWorkspaceList(board);
           } catch (err) {

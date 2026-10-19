@@ -213,6 +213,20 @@ export class ChartTile {
       this._resizeObserver = new ResizeObserver(() => {
         clearTimeout(this._resizeTimer);
         this._resizeTimer = setTimeout(() => {
+          // Refit whenever the tile changes size and nobody asked for a
+          // particular zoom.
+          //
+          // This is not just about zero-width tiles. The time scale keeps the
+          // bar *spacing* it had, so when a tile gets wider — filtering a
+          // 32-chart board down to 15 drops it from 7 columns to 4 and every
+          // tile roughly doubles — the same spacing now spans more bars than
+          // there is data for, and the candles stop short of the right edge.
+          // Refitting is what puts them back.
+          //
+          // `_maybeFit` returns early once the user has zoomed or panned this
+          // chart by hand (`zoomSpacing` records that), so a deliberate view
+          // survives a window resize the same way it survives a data refresh.
+          this._maybeFit();
           this._applyPaneHeights();
           if (this.fundamentals) this.renderFooter();
         }, 60);
@@ -254,27 +268,65 @@ export class ChartTile {
       }
     }
 
-    // Update the forming candle in place so intraday boards move without a
-    // full refetch.
+    // Extend the forming bar in place so intraday boards move without a refetch.
     if (quote.price != null && this.bars.length) {
       const last = this.bars[this.bars.length - 1];
-      const live = this._isLiveBar(last);
-      if (live) {
-        last.close = quote.price;
-        last.high = Math.max(last.high, quote.price);
-        last.low = Math.min(last.low, quote.price);
-        this._mainSeries?.update({
-          time: last.time,
-          open: last.open,
-          high: last.high,
-          low: last.low,
-          close: last.close,
-        });
-        // Indicator series are left alone: they are derived from whole bars and
-        // only change on a candle refresh (see `refreshIntraday` in the board).
-        // Re-pushing individual points here fights the library's update rules.
-      }
+      if (this._isLiveBar(last)) this._pushLivePoint(last, quote.price);
     }
+  }
+
+  /**
+   * Write one quote into the main series, in the shape that series expects.
+   *
+   * Only the price series moves. Indicator series are deliberately left alone:
+   * they are derived from whole bars and the library is fed complete candles
+   * for them, so pushing single points between candle closes would fight its
+   * update rules and put the pane out of step with the legend.
+   *
+   * Three things went wrong when this was done inline:
+   *
+   *  - it mutated `this.bars[n-1]`, so the raw close was permanently rewritten
+   *    for every later indicator recompute in the session;
+   *  - it always sent OHLC, but line, area and baseline series hold
+   *    `{time, value}` — the update was rejected and the forming bar froze;
+   *  - on a Heikin-Ashi chart it sent the *raw* bar, silently replacing the
+   *    smoothed candle with a plain one on the first tick.
+   *
+   * `bar` is never modified; everything here is derived.
+   */
+  _pushLivePoint(bar, price) {
+    const series = this._mainSeries;
+    if (!series) return;
+
+    if (this._mainIsLineLike) {
+      series.update({ time: bar.time, value: price });
+      return;
+    }
+
+    if (this.config.chartType === 'heikin') {
+      // Same four formulas as `barsToHeikinAshi`, seeded from the previous
+      // smoothed candle so one tick costs nothing.
+      const close = (bar.open + bar.high + bar.low + price) / 4;
+      const open = this._haSeed
+        ? (this._haSeed.open + this._haSeed.close) / 2
+        : (bar.open + price) / 2;
+      series.update({
+        time: bar.time,
+        open,
+        high: Math.max(bar.high, open, close),
+        low: Math.min(bar.low, open, close),
+        close,
+      });
+      return;
+    }
+
+    series.update({
+      time: bar.time,
+      open: bar.open,
+      high: Math.max(bar.high, price),
+      low: Math.min(bar.low, price),
+      close: price,
+    });
   }
 
   _computeChangePct(quote) {
@@ -284,7 +336,13 @@ export class ChartTile {
 
   /** True when the last bar is still forming for this timeframe. */
   _isLiveBar(bar) {
-    const secs = { '1m': 60, '5m': 300, '15m': 900, '30m': 1800, '1h': 3600, '4h': 14400, '1d': 86400, '1w': 604800 }[this.config.timeframe];
+    // Mirrors `TIMEFRAMES[*].seconds` in server/market.js. Monthly bars were
+    // missing here, so a 1M chart never showed a forming candle — harmless in
+    // practice, but a gap between two tables that are supposed to agree.
+    const secs = {
+      '1m': 60, '5m': 300, '15m': 900, '30m': 1800,
+      '1h': 3600, '4h': 14400, '1d': 86400, '1w': 604800, '1M': 2592000,
+    }[this.config.timeframe];
     if (!secs) return false;
     return Date.now() / 1000 - bar.time < secs * 1.2;
   }
@@ -409,6 +467,10 @@ export class ChartTile {
       const bars = this.config.chartType === 'heikin'
         ? barsToHeikinAshi(this.bars)
         : this.bars;
+      // Remember the smoothing seed so a live quote can extend the series in
+      // O(1) without re-deriving every bar.
+      const prevHa = bars.length > 1 ? bars[bars.length - 2] : null;
+      this._haSeed = prevHa ? { open: prevHa.open, close: prevHa.close } : null;
       Object.assign(options, {
         upColor: '#26a69a',
         downColor: '#ef5350',
@@ -453,6 +515,12 @@ export class ChartTile {
     }
 
     this.seriesRefs.push({ series: this._mainSeries, pane: MAIN_PANE, kind: 'price' });
+    // Recorded so `setQuote` knows which payload shape this series accepts.
+    // Line, area and baseline series hold {time, value}; everything else holds
+    // OHLC. Feeding one to the other either does nothing or leaves a hole.
+    this._mainIsLineLike = definition === LineSeries
+      || definition === AreaSeries
+      || definition === BaselineSeries;
     this._mainSeries.applyOptions({ priceScaleMode: this.config.logScale ? PriceScaleMode.Logarithmic : PriceScaleMode.Normal });
 
     if (s.showWatermark && this.bars.length) {
@@ -496,6 +564,11 @@ export class ChartTile {
     this._paneHeights = [];
     const legendRows = [];
 
+    // Cleared first: a chart that just lost its RSI pane, had it disabled, or
+    // lost its candles must stop counting towards the oversold alert rather
+    // than keep answering with whatever it last computed.
+    this.rsi = null;
+
     for (const instance of this.config.indicators ?? []) {
       if (instance.enabled === false) continue;
       const def = this.catalog[instance.type];
@@ -503,6 +576,22 @@ export class ChartTile {
 
       const result = computeIndicator(instance.type, this.bars, instance.params);
       if (!result) continue;
+
+      // The board's oversold alert needs the current RSI and the line this
+      // particular chart was configured to fire at. `oversold` is a per-
+      // instance parameter, so a chart somebody deliberately set to 20 is not
+      // reported at the same time as one left on the default 30.
+      if (instance.type === 'rsi') {
+        const value = lastPlotValue(result);
+        if (value != null) {
+          this.rsi = {
+            value,
+            threshold: Number(instance.params?.oversold) || 30,
+            length: Number(instance.params?.length) || 14,
+          };
+          this.callbacks.onIndicatorsChanged?.(this);
+        }
+      }
 
       const wantsOwnPane = (instance.placement ?? def.placement) === 'pane';
       const paneIndex = wantsOwnPane ? this._ensurePane(instance, def) : MAIN_PANE;
@@ -543,53 +632,101 @@ export class ChartTile {
       }
 
       if (result.fixed) this._pinScale(paneIndex);
+      // Oscillator zones. Drawn after the pane exists so the flat series land
+      // in the right pane, and after the band fills so a band on the same pane
+      // still sits underneath.
+      this._addZoneFills(result, paneIndex);
     }
 
     this._applyPaneHeights();
     this._renderLegend(legendRows);
+    // Fires for every indicator rebuild, including the ones that leave `rsi`
+    // null — the board needs to learn that a chart stopped qualifying, not only
+    // when one starts.
+    this.callbacks.onIndicatorsChanged?.(this);
   }
 
   /**
    * Shaded region between two plot lines.
    *
    * lightweight-charts has no polygon primitive, so the band is faked with two
-   * stacked area series: the upper line fills downward with the band colour, and
-   * the lower line paints the same region again with the pane background. What
-   * survives is a fill strictly between the two lines.
+   * stacked area series: the upper line fills downward with the band colour,
+   * and the lower line fills downward with the same translucent colour. Between
+   * the two the tints overlap and read as a denser band; below the lower line a
+   * single faint tint remains, which is what makes the shape legible.
+   *
+   * The lower fill used to be painted in the opaque tile background, which is
+   * the obvious way to cut the band off cleanly — but a series added after the
+   * price series draws over it, so the candles vanished under every Bollinger,
+   * Keltner, Donchian and Ichimoku chart. Translucency costs a little
+   * precision at the lower edge and buys back the price series.
    */
   _addBandFills(result, paneIndex) {
-    const bg = getComputedStyle(this.host).backgroundColor || '#0e121c';
     for (const band of result.bands ?? []) {
       const upper = result.plots.find((p) => p.key === band.upper);
       const lower = result.plots.find((p) => p.key === band.lower);
       if (!upper?.data?.length || !lower?.data?.length) continue;
+      this._fillBetween(paneIndex, upper.data, lower.data, band.color);
+    }
+  }
 
-      const fill = withAlpha(band.color, 0.14);
+  /**
+   * Shade the region between two data series.
+   *
+   * Shared by indicator bands and by oscillator zones (the overbought and
+   * oversold strips of RSI). Both are bounded, which is what makes the two-area
+   * trick work — an unbounded region would have to be filled to the pane edge,
+   * and the pane's range moves.
+   */
+  _fillBetween(paneIndex, upperData, lowerData, color) {
+    const fill = translucent(color, 0.08);
 
-      const fillTop = this.chart.addSeries(AreaSeries, {
-        lineColor: 'transparent',
-        lineWidth: 0,
-        topColor: fill,
-        bottomColor: fill,
-        priceLineVisible: false,
-        lastValueVisible: false,
-        crosshairMarkerVisible: false,
-      }, paneIndex);
-      fillTop.setData(upper.data);
+    const fillTop = this.chart.addSeries(AreaSeries, {
+      lineColor: 'transparent',
+      lineWidth: 0,
+      topColor: fill,
+      bottomColor: fill,
+      priceLineVisible: false,
+      lastValueVisible: false,
+      crosshairMarkerVisible: false,
+    }, paneIndex);
+    fillTop.setData(upperData);
 
-      const fillBottom = this.chart.addSeries(AreaSeries, {
-        lineColor: 'transparent',
-        lineWidth: 0,
-        topColor: bg,
-        bottomColor: bg,
-        priceLineVisible: false,
-        lastValueVisible: false,
-        crosshairMarkerVisible: false,
-      }, paneIndex);
-      fillBottom.setData(lower.data);
+    const fillBottom = this.chart.addSeries(AreaSeries, {
+      lineColor: 'transparent',
+      lineWidth: 0,
+      topColor: fill,
+      bottomColor: fill,
+      priceLineVisible: false,
+      lastValueVisible: false,
+      crosshairMarkerVisible: false,
+    }, paneIndex);
+    fillBottom.setData(lowerData);
 
-      this.seriesRefs.push({ series: fillTop, pane: paneIndex, kind: 'bandfill' });
-      this.seriesRefs.push({ series: fillBottom, pane: paneIndex, kind: 'bandfill' });
+    this.seriesRefs.push({ series: fillTop, pane: paneIndex, kind: 'bandfill' });
+    this.seriesRefs.push({ series: fillBottom, pane: paneIndex, kind: 'bandfill' });
+  }
+
+  /**
+   * Flat shaded strips, as used by RSI's overbought and oversold regions.
+   *
+   * `ta.js` emits each zone as a bounded `from`/`to` pair, so the same
+   * between-two-lines fill applies; the only thing missing is a pair of flat
+   * series spanning the pane's time range. Until this existed the checkbox did
+   * nothing at all.
+   */
+  _addZoneFills(result, paneIndex) {
+    const zones = result.zones ?? [];
+    if (!zones.length) return;
+    const span = result.plots[0]?.data ?? [];
+    if (!span.length) return;
+
+    const flat = (value) => span.map((point) => ({ time: point.time, value }));
+    for (const zone of zones) {
+      const from = Number(zone.from);
+      const to = Number(zone.to);
+      if (!Number.isFinite(from) || !Number.isFinite(to) || from === to) continue;
+      this._fillBetween(paneIndex, flat(to), flat(from), zone.color ?? '#2962ff');
     }
   }
 
@@ -811,9 +948,44 @@ export class ChartTile {
     return this.zoomSpacing ?? this.chart.timeScale().options().barSpacing ?? null;
   }
 
+  /**
+   * Force every right-hand price scale in this chart to at least `px` wide.
+   *
+   * The library sizes a price scale to its widest label, so two tiles of equal
+   * width can still end their plots at different x positions. `minimumWidth`
+   * only ever raises the width, which is the useful direction: give every tile
+   * the same floor and the plot areas line up. Any scale whose own content
+   * needs more than the floor still wins — the board takes the maximum, so in
+   * practice this settles on the widest requirement present.
+   */
+  setPriceScaleWidth(px) {
+    const panes = this.chart?.panes?.().length ?? 0;
+    for (let i = 0; i < panes; i += 1) {
+      try {
+        this.chart.priceScale('right', i).applyOptions({ minimumWidth: px });
+      } catch { /* pane gone */ }
+    }
+  }
+
   /** Drop the manual zoom and show the whole loaded history. */
   fitContent() {
     this.zoomSpacing = null;
+
+    // Fitting needs a width to divide the data span by. A tile that has just
+    // been mounted, or one hidden by the watchlist filter, reports zero — and
+    // `fitContent()` on a zero-width chart returns a range many times wider
+    // than the data, which then survives every later resize.
+    //
+    // The library will not fix it: on resize it re-derives bar spacing and
+    // clamps it to `minBarSpacing`, which shrinks the range but still leaves
+    // the last candle sitting well short of the right edge. Deferring and
+    // refitting once the tile is measurable avoids that entirely.
+    if ((this.el.panes?.clientWidth ?? 0) <= 0) {
+      this._pendingFit = true;
+      return;
+    }
+    this._pendingFit = false;
+
     try {
       this.chart.timeScale().fitContent();
     } catch { /* no data yet */ }
@@ -821,8 +993,11 @@ export class ChartTile {
 
   _maybeFit() {
     // `autoscale` governs the price axis; a manual zoom is about time and must
-    // survive data refreshes until the symbol or timeframe changes.
+    // survive data refreshes and resizes until the symbol or timeframe changes.
     if (this.config.autoscale === false || this.zoomSpacing != null) return;
+    // Nothing to fit against — a fit on an empty series is meaningless, and
+    // `fitContent` would just defer again.
+    if (!this.bars.length) return;
     this.fitContent();
   }
 
@@ -900,6 +1075,25 @@ export class ChartTile {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
+/**
+ * The most recent plotted value in an indicator result, or null.
+ *
+ * Series are emitted without their warm-up slots rather than padded with null,
+ * so the last entry is normally the current bar — but the scan is there so a
+ * trailing NaN cannot make an alert read as "no data" when a real number sits
+ * just behind it.
+ */
+function lastPlotValue(result) {
+  for (const plot of result.plots ?? []) {
+    const data = plot?.data;
+    for (let i = (data?.length ?? 0) - 1; i >= 0; i -= 1) {
+      const v = data[i]?.value;
+      if (Number.isFinite(v)) return v;
+    }
+  }
+  return null;
+}
+
 const gridColor = (theme, alpha) =>
   (theme === 'dark' ? `rgba(139,147,167,${alpha})` : `rgba(74,85,104,${alpha})`);
 
@@ -921,6 +1115,21 @@ function withAlpha(color, alpha) {
 
 const toCandle = (b) => ({ time: b.time, open: b.open, high: b.high, low: b.low, close: b.close });
 const toValue = (b) => ({ time: b.time, value: b.close });
+
+/**
+ * A colour made translucent, keeping an alpha the caller already chose.
+ *
+ * Ichimoku's cloud defaults to `rgba(38,166,154,0.18)` and RSI's zones to
+ * `rgba(...,0.08)`; both are author choices with a deliberate opacity. Running
+ * them through `withAlpha` unconditionally threw that away and forced one flat
+ * value, which is why picking a custom cloud opacity had no visible effect.
+ */
+function translucent(color, alpha) {
+  const s = String(color ?? '').trim();
+  if (/^rgba?\(/i.test(s) && s.split(',').length >= 4) return s;
+  if (/^#[0-9a-f]{8}$/i.test(s)) return s;
+  return withAlpha(s, alpha);
+}
 
 /** Heikin-Ashi smoothing, matching the desktop terminal's rendering. */
 function barsToHeikinAshi(bars) {

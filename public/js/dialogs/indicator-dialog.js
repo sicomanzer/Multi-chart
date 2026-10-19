@@ -206,7 +206,7 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
       body.appendChild(placementHost);
 
       let placement = instance.placement ?? def.placement;
-      const paneHeight = instance.paneHeight ?? def.defaultPaneHeight ?? 110;
+      let paneHeight = instance.paneHeight ?? def.defaultPaneHeight ?? 110;
 
       const heightWrap = document.createElement('div');
       placementHost.appendChild(selectField('Where', placement, [
@@ -227,6 +227,15 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
       heightInput.step = '10';
       heightInput.value = paneHeight;
       heightField.appendChild(heightInput);
+      // Read back on every change, not on Apply: an emptied or half-typed field
+      // has to fall back to something sane, and `readState` cannot distinguish
+      // "left at 110" from "never touched the spinner".
+      heightInput.addEventListener('input', () => {
+        const n = Number(heightInput.value);
+        paneHeight = Number.isFinite(n)
+          ? Math.min(600, Math.max(60, Math.round(n)))
+          : (def.defaultPaneHeight ?? 110);
+      });
       heightWrap.appendChild(heightField);
       heightWrap.style.display = placement === 'pane' ? '' : 'none';
       placementHost.appendChild(heightWrap);

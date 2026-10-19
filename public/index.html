@@ -23,6 +23,8 @@
 
     <div class="topbar__group topbar__group--actions">
       <button class="btn btn--primary" id="addChartBtn" title="Add a chart to the board">+ Chart</button>
+      <button class="btn" id="watchlistBtn" title="Named symbol lists — load one onto the board in a click">Watchlists</button>
+      <button class="btn btn--alert" id="oversoldBtn" title="Charts whose RSI is under its oversold line" hidden>oversold</button>
       <button class="btn" id="addIndicatorBtn" title="Add an indicator to every chart">ƒx All</button>
       <button class="btn" id="editIndicatorsBtn" title="Edit one indicator's settings on every chart at once">ƒx Edit All</button>
       <div class="zoom-group" role="group" aria-label="Zoom every chart at once">
@@ -35,6 +37,9 @@
       <button class="btn" id="mcpBtn" title="Run tradingview-mcp tools">MCP</button>
       <button class="btn btn--ghost" id="themeBtn" title="Toggle theme">◐</button>
       <select class="input input--select" id="workspaceSelect" title="Saved boards"></select>
+      <button class="btn btn--filter" id="filterChip" title="Showing only these symbols — click to show every chart" hidden>
+        filter: <b></b><i></i> ✕
+      </button>
       <button class="btn btn--ghost" id="saveBtn" title="Save this board">Save</button>
       <span class="status-pill" id="statusPill" title="MCP + stream status">
         <i class="dot"></i><span>connecting…</span>

@@ -47,7 +47,7 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
         { value: 'auto', label: 'Auto fit to screen' },
         { value: 'fixed', label: 'Fixed columns (scroll if needed)' },
       ], (v) => { next.layoutFit = v; }));
-      layout.appendChild(selectField('Columns', String(next.columns), [1, 2, 3, 4, 5, 6].map((n) => ({
+      layout.appendChild(selectField('Columns', String(next.columns), [1, 2, 3, 4, 5].map((n) => ({
         value: String(n), label: `${n} column${n > 1 ? 's' : ''}`,
       })), (v) => { next.columns = Number(v); }));
       layout.appendChild(selectField('Theme', next.theme, [
@@ -162,6 +162,22 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
       live.appendChild(checkbox('Show grid lines', next.showGrid, (v) => { next.showGrid = v; }));
       live.appendChild(checkbox('Show last-price marker inside the chart', next.showWatermark, (v) => { next.showWatermark = v; }));
       body.appendChild(live);
+
+      body.appendChild(section(
+        'Oversold alert',
+        'Flags any chart whose RSI is under the oversold line configured on that chart. '
+        + 'It refreshes whenever candles reload — on board load, on every intraday tick, '
+        + 'and after an indicator edit. Not on every quote tick, so it never disagrees '
+        + 'with the number drawn in the pane.',
+      ));
+      const alert = document.createElement('div');
+      alert.className = 'form-grid';
+      alert.appendChild(checkbox(
+        'Show a green alert button when a chart is oversold',
+        next.oversoldAlert !== false,
+        (v) => { next.oversoldAlert = v; },
+      ));
+      body.appendChild(alert);
 
       body.appendChild(section('Connection'));
       const status = document.createElement('pre');

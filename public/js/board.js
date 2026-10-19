@@ -34,6 +34,39 @@ const MIN_TILE_H = 150;
 const TARGET_ASPECT = 1.45;
 
 /**
+ * How many columns the board will ever use.
+ *
+ * A hard ceiling rather than a preference: past five the tiles stop being
+ * readable at any sensible board size, and a 32-chart board at 7 columns
+ * produces a grid of postage stamps. Auto-fit searches this range and fixed
+ * mode is clamped to it, so the two modes can never disagree about how wide a
+ * column is allowed to get.
+ */
+const MAX_COLUMNS = 5;
+
+/**
+ * Reduce a symbol to the canonical `EXCHANGE:TICKER` the rest of the app speaks.
+ *
+ * The full normaliser lives on the server (`server/symbols.js`) and every
+ * watchlist write already goes through it, so a list arrives here already
+ * canonical. This is the belt-and-braces pass for symbols typed straight into
+ * the board: without it `CPF` and `SET:CPF` would be two different charts and
+ * the "already on the board" check would miss.
+ *
+ * Only the parts the UI can plausibly produce are handled here — an unprefixed
+ * ticker gets the default exchange, and a Yahoo suffix is stripped. Anything
+ * more exotic belongs on the server, where `normalizeSymbol` has the full
+ * exchange table.
+ */
+function canonicalSymbol(raw) {
+  const s = String(raw ?? '').trim().toUpperCase().replace(/\s+/g, '');
+  if (!s) return '';
+  if (s.includes(':')) return s;
+  if (s.endsWith('.BK')) return `SET:${s.slice(0, -3)}`;
+  return `SET:${s.replace(/^\^/, '')}`;
+}
+
+/**
  * Do two indicator instances carry the same settings?
  *
  * Key order must not matter — the catalog's defaults are built as an object, so
@@ -150,30 +183,51 @@ export class Board extends EventTarget {
     // unload is what used to clobber edits made from another tab or the CLI.
     if (!this.dirty && !force) return;
 
-    const ws = this.snapshot();
-    if (!ws) return;
-    try {
-      const saved = await api.saveWorkspace(ws, { keepalive: this.unloading });
-      // The server mints a new id when the board we were editing no longer
-      // exists there; adopt it so the next save updates the same board.
-      if (saved?.id && saved.id !== this.workspace.id) {
-        this.workspace.id = saved.id;
-        this.dispatchEvent(new CustomEvent('reidentified', { detail: saved.id }));
-      }
-      if (Number.isFinite(saved?.revision)) this.workspace.revision = saved.revision;
-      this.dirty = false;
-      this.dispatchEvent(new CustomEvent('saved', { detail: saved ?? ws }));
-    } catch (err) {
-      if (err.code === 'REVISION_CONFLICT') {
-        // The board changed underneath us (another tab, or the CLI). Reload the
-        // server's copy instead of silently overwriting someone's work.
+    /**
+     * Save exactly once at a time.
+     *
+     * Clearing the debounce above is not enough: the autosave may already be in
+     * flight when the Save button — or an unload — asks for one more. Both
+     * requests then quote the same `baseRevision`, and the loser comes back 409,
+     * which the conflict handler reports as "this board was changed elsewhere".
+     * That is a self-inflicted race dressed up as somebody else's edit, and it
+     * drops the local changes along with the reload.
+     *
+     * Chaining instead means the second save runs after the first resolves,
+     * reading `snapshot()` at that moment — so it carries the newer revision and
+     * the newest state, and a burst of edits collapses into one extra request
+     * rather than a conflict.
+     */
+    const run = async () => {
+      const ws = this.snapshot();
+      if (!ws) return;
+      try {
+        const saved = await api.saveWorkspace(ws, { keepalive: this.unloading });
+        // The server mints a new id when the board we were editing no longer
+        // exists there; adopt it so the next save updates the same board.
+        if (saved?.id && saved.id !== this.workspace.id) {
+          this.workspace.id = saved.id;
+          this.dispatchEvent(new CustomEvent('reidentified', { detail: saved.id }));
+        }
+        if (Number.isFinite(saved?.revision)) this.workspace.revision = saved.revision;
         this.dirty = false;
-        this.dispatchEvent(new CustomEvent('conflict', { detail: err.current }));
-        return;
+        this.dispatchEvent(new CustomEvent('saved', { detail: saved ?? ws }));
+      } catch (err) {
+        if (err.code === 'REVISION_CONFLICT') {
+          // The board changed underneath us (another tab, or the CLI). Reload the
+          // server's copy instead of silently overwriting someone's work.
+          this.dirty = false;
+          this.dispatchEvent(new CustomEvent('conflict', { detail: err.current }));
+          return;
+        }
+        console.warn('[board] autosave failed', err);
+        toast(`Could not save layout: ${err.message}`, { type: 'error' });
       }
-      console.warn('[board] autosave failed', err);
-      toast(`Could not save layout: ${err.message}`, { type: 'error' });
-    }
+    };
+
+    // `then(run, run)` so one failure does not poison the chain for the next.
+    this._saveChain = (this._saveChain ?? Promise.resolve()).then(run, run);
+    return this._saveChain;
   }
 
   // ── Tiles ──────────────────────────────────────────────────────────────────
@@ -195,6 +249,7 @@ export class Board extends EventTarget {
       onFocus: (t) => this.toggleFocus(t),
       onRemove: (t) => this.removeChart(t),
       onEditIndicator: (t, id) => this.editIndicator(t, id),
+      onIndicatorsChanged: () => this.scheduleOversoldScan(),
       onCrosshair: (t, param) => this._onCrosshair(t, param),
       onTimeClick: (t, time) => this._onTimeClick(t, time),
     });
@@ -211,6 +266,9 @@ export class Board extends EventTarget {
 
     this.gridEl.classList.toggle('is-empty', this.tiles.size === 0);
     this.updateFooterStats();
+    // Tiles are brand new objects; an active filter has to be re-applied or
+    // switching board or timeframe would reveal everything it was hiding.
+    this.applyFilter();
     this.linkTimeScales();
     this.applyLayout();
   }
@@ -260,6 +318,66 @@ export class Board extends EventTarget {
 
     await Promise.all(jobs);
     for (const tile of this.tiles.values()) tile.setLoading(false);
+    // Prices have just arrived, so every tile now knows how wide its price
+    // axis wants to be.
+    this.schedulePriceScaleAlign();
+  }
+
+  /**
+   * Align price axes over the next few moments rather than once, right now.
+   *
+   * A tile's scale width is only final after it has been laid out and drawn,
+   * which happens after the fetch resolves — measuring at that instant sees a
+   * stale, too-narrow width for the charts that have not painted yet, and the
+   * board ends up with two different plot widths.
+   *
+   * Re-running is harmless because `minimumWidth` is a ratchet: it only ever
+   * raises a width, so repeated passes converge upwards and cannot oscillate.
+   * Three passes cover "already painted", "painted next frame" and "painted
+   * after the layout pass", which is where the last stragglers settle.
+   */
+  schedulePriceScaleAlign() {
+    for (const timer of this._alignTimers ?? []) clearTimeout(timer);
+    this._alignTimers = [0, 120, 600].map((delay) =>
+      setTimeout(() => this.alignPriceScales(), delay));
+  }
+
+  /**
+   * Make every chart's price axis the same width.
+   *
+   * lightweight-charts sizes the right-hand price scale to the widest label it
+   * has to draw, and that width varies with the instrument: a 7.20 quote needs
+   * 48px, a 1,234.56 quote needs more. Tiles are all the same width, but their
+   * *plot areas* end at different x positions — 220, 224 or 230px in the same
+   * row — so the board reads as ragged and the candles do not line up across
+   * tiles.
+   *
+   * `minimumWidth` only raises a scale's width, never lowers it, which is
+   * exactly the direction needed: take the widest scale on the board and force
+   * it on every tile. A chart that wanted less now has a little slack, which
+   * is invisible; a chart that wanted more no longer pushes its neighbours
+   * around.
+   *
+   * Hidden tiles are skipped when measuring — a `display: none` tile reports
+   * zero and would drag the target down — but they do receive the width, so
+   * they are aligned by the time the filter reveals them.
+   */
+  alignPriceScales() {
+    let target = 0;
+    for (const tile of this.tiles.values()) {
+      if (tile.host.offsetParent === null) continue;
+      const panes = tile.chart?.panes?.().length ?? 0;
+      for (let i = 0; i < panes; i += 1) {
+        try {
+          const w = tile.chart.priceScale('right', i).width();
+          if (w > target) target = w;
+        } catch { /* pane not laid out yet */ }
+      }
+    }
+    if (!target) return 0;
+
+    for (const tile of this.tiles.values()) tile.setPriceScaleWidth(target);
+    return target;
   }
 
   async loadCandleFor(tile) {
@@ -272,6 +390,9 @@ export class Board extends EventTarget {
       tile.setError(`${tile.config.symbol}: ${err.message}`);
     } finally {
       tile.setLoading(false);
+      // One chart arriving on its own still shifts the price-axis target when
+      // it is the widest label on the board, so the board re-aligns.
+      this.schedulePriceScaleAlign();
     }
   }
 
@@ -351,6 +472,128 @@ export class Board extends EventTarget {
     this.dispatchEvent(new CustomEvent('quotes', { detail: payload }));
   }
 
+  // ── Oversold alert ─────────────────────────────────────────────────────────
+
+  /**
+   * Charts whose RSI sits under their own oversold line.
+   *
+   * Each chart is judged against the `oversold` parameter of its own RSI rather
+   * than one board-wide number: a chart somebody deliberately configured to
+   * fire at 20 should not be flagged at the same moment as one left on the
+   * default 30, and a chart with no RSI pane at all has no opinion to offer.
+   *
+   * Ordering is by RSI ascending, so the most oversold chart is the first one
+   * the user sees.
+   */
+  collectOversold() {
+    if (this.workspace?.settings?.oversoldAlert === false) return [];
+    const hits = [];
+    for (const tile of this.tiles.values()) {
+      const rsi = tile.rsi;
+      if (!rsi || rsi.value == null) continue;
+      if (rsi.value >= rsi.threshold) continue;
+      hits.push({
+        id: tile.config.id,
+        symbol: tile.config.symbol,
+        timeframe: tile.config.timeframe,
+        value: rsi.value,
+        threshold: rsi.threshold,
+        length: rsi.length,
+      });
+    }
+    return hits.sort((a, b) => a.value - b.value);
+  }
+
+  /**
+   * Re-scan after the current batch of tiles finishes drawing.
+   *
+   * `render()` mounts every tile in one synchronous loop and each one rebuilds
+   * its indicators, so scanning per tile would report a half-built board. A
+   * microtask collapses the burst: the last scheduled callback wins, by which
+   * time every tile in the batch has published its own `rsi`.
+   */
+  scheduleOversoldScan() {
+    if (this._oversoldScanQueued) return;
+    this._oversoldScanQueued = true;
+    queueMicrotask(() => {
+      this._oversoldScanQueued = false;
+      if (this.destroyed) return;
+      this.dispatchEvent(new CustomEvent('oversold', { detail: this.collectOversold() }));
+    });
+  }
+
+  // ── Watchlist filter ──────────────────────────────────────────────────────
+
+  /**
+   * Show only the charts whose symbol is in `symbols`, hiding the rest.
+   *
+   * This is a view, not an edit: nothing is removed from `workspace.charts`, so
+   * clearing the filter brings every chart back with its indicators, price
+   * levels and zoom exactly as they were. Dropping the tiles and rebuilding
+   * them would look identical and quietly discard that state.
+   *
+   * Hidden tiles keep loading candles and keep their SSE subscription. That is
+   * deliberate — re-fetching on every filter change would be slower and would
+   * make the tiles flash, and a hidden chart costing one cached fetch is not
+   * worth the complexity of unsubscribing mid-session.
+   *
+   * @param {Set<string>|null} symbols null clears the filter
+   * @param {string} [name] shown in the status bar and the toolbar chip
+   * @param {string} [id] watchlist id, so the board picker can show which
+   *   list is applied without having to match on its name
+   */
+  setFilter(symbols, name = '', id = '') {
+    this.filterSymbols = symbols ? new Set(symbols) : null;
+    this.filterName = this.filterSymbols ? name : '';
+    this.filterListId = this.filterSymbols ? id : '';
+    this.applyFilter();
+    // The visible count is what the grid has to fit, so the layout has to be
+    // recomputed — filtering four charts onto a 32-chart board changes the
+    // answer completely.
+    this.applyLayout();
+    this.schedulePriceScaleAlign();
+    this.dispatchEvent(new CustomEvent('filter', {
+      detail: {
+        name: this.filterName,
+        visible: this.visibleCount(),
+        hidden: this.tiles.size - this.visibleCount(),
+      },
+    }));
+    return this.filterSymbols;
+  }
+
+  /** Toggling the same list twice is how a user says "let me see everything". */
+  toggleFilter(symbols, name, id) {
+    if (!symbols) return this.setFilter(null);
+    const key = [...symbols].sort().join('|');
+    if (this.filterSymbols && this.filterSymbols.size === symbols.size
+      && [...this.filterSymbols].sort().join('|') === key) {
+      return this.setFilter(null);
+    }
+    return this.setFilter(symbols, name, id);
+  }
+
+  clearFilter() {
+    return this.setFilter(null);
+  }
+
+  applyFilter() {
+    for (const tile of this.tiles.values()) {
+      const hidden = Boolean(this.filterSymbols) && !this.filterSymbols.has(tile.config.symbol);
+      tile.host.classList.toggle('is-filtered-out', hidden);
+    }
+  }
+
+  /** Charts currently on screen, ignoring any watchlist filter. */
+  visibleCount() {
+    if (!this.filterSymbols) return this.tiles.size;
+    let n = 0;
+    for (const tile of this.tiles.values()) {
+      if (this.filterSymbols.has(tile.config.symbol)) n += 1;
+    }
+    return n;
+  }
+
   // ── Chart mutations ────────────────────────────────────────────────────────
 
   addChart({ symbol, timeframe, indicators = [] } = {}) {
@@ -371,6 +614,7 @@ export class Board extends EventTarget {
     // other tile's candles until they were refetched.
     const tile = this._mountTile(config);
     this.gridEl.classList.toggle('is-empty', this.tiles.size === 0);
+    this.applyFilter();
     this.updateFooterStats();
     this.applyLayout();
     this.loadCandleFor(tile);
@@ -378,6 +622,106 @@ export class Board extends EventTarget {
     this.resubscribe();
     this.commit();
     return id;
+  }
+
+  /**
+   * A fresh RSI instance, matching what the "+ Chart" dialog starts with.
+   *
+   * Each chart needs its own `id` and its own params object: sharing one would
+   * mean editing the RSI on one tile silently retunes every other tile that was
+   * cloned from the same defaults.
+   */
+  defaultIndicatorInstances() {
+    const rsi = this.catalog?.rsi;
+    if (!rsi) return [];
+    return [{
+      id: `ind_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`,
+      type: 'rsi',
+      enabled: true,
+      placement: 'pane',
+      params: Object.fromEntries(rsi.params.map((p) => [p.id, p.default])),
+      paneHeight: 100,
+    }];
+  }
+
+  /**
+   * Add many symbols at once — the path a watchlist takes onto the board.
+   *
+   * Unlike a loop over `addChart`, the layout pass, the footer stats, the SSE
+   * resubscribe, the fundamentals refresh and the save all happen once at the
+   * end rather than per symbol, so dropping twenty names onto a board is one
+   * reflow and one request instead of twenty.
+   *
+   * Every skip is reported rather than swallowed, because "already on the
+   * board", "repeated in the list" and "the board is full" are three different
+   * situations and the caller has to be able to say which one happened.
+   *
+   * @returns {{added:string[], alreadyOnBoard:string[], duplicates:string[], full:number}}
+   */
+  addCharts(symbols, { timeframe, indicators, withRsi = true } = {}) {
+    const tf = timeframe ?? this.workspace.settings.defaultTimeframe;
+    const present = new Set(this.workspace.charts.map((c) => c.symbol));
+    const maxCharts = this.meta?.maxCharts ?? 60;
+    const settings = this.workspace.settings;
+
+    const added = [];
+    const alreadyOnBoard = [];
+    const duplicates = [];
+    const overCapacity = [];
+    const seen = new Set();
+    const mounted = [];
+
+    for (const raw of Array.isArray(symbols) ? symbols : []) {
+      const symbol = canonicalSymbol(raw);
+      if (!symbol) continue;
+      if (seen.has(symbol)) { duplicates.push(symbol); continue; }
+      seen.add(symbol);
+      if (present.has(symbol)) { alreadyOnBoard.push(symbol); continue; }
+      if (this.workspace.charts.length >= maxCharts) {
+        overCapacity.push(symbol);
+        continue;
+      }
+
+      const config = {
+        id: `ch_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`,
+        symbol,
+        timeframe: tf,
+        chartType: settings.candleStyle,
+        logScale: false,
+        autoscale: true,
+        priceLines: [],
+        // Deep-copied per chart so each tile owns its params object.
+        indicators: (indicators ?? (withRsi ? this.defaultIndicatorInstances() : []))
+          .map((ind) => ({ ...ind, id: `ind_${Math.random().toString(36).slice(2, 8)}`, params: { ...ind.params } })),
+      };
+      this.workspace.charts.push(config);
+      present.add(symbol);
+      added.push(symbol);
+      mounted.push(this._mountTile(config));
+    }
+
+    if (added.length) {
+      this.gridEl.classList.toggle('is-empty', this.tiles.size === 0);
+      // A symbol outside the active filter stays hidden — loading a list while
+      // filtered should not silently break the view the user is looking at.
+      this.applyFilter();
+      this.updateFooterStats();
+      this.applyLayout();
+      // Fire the fetches together rather than in sequence: a 20-chart list
+      // should take as long as its slowest upstream call, not twenty of them.
+      for (const tile of mounted) this.loadCandleFor(tile);
+      this.refreshFundamentals().catch(() => {});
+      this.resubscribe();
+      this.commit();
+    }
+
+    return {
+      added,
+      alreadyOnBoard,
+      duplicates,
+      overCapacity,
+      limit: maxCharts,
+    };
   }
 
   removeChart(tile) {
@@ -389,6 +733,9 @@ export class Board extends EventTarget {
     this.applyLayout();
     this.resubscribe();
     this.commit();
+    // The tile is gone from the map, so nothing else would re-scan and the
+    // alert would keep counting a chart that is no longer on the board.
+    this.scheduleOversoldScan();
   }
 
   /** Global timeframe switch across every tile. */
@@ -891,7 +1238,7 @@ export class Board extends EventTarget {
    * through the returned result so the footer can say so.
    */
   fitToViewport() {
-    const count = this.tiles.size;
+    const count = this.visibleCount();
     if (count === 0) {
       this.gridEl.classList.remove('is-fit');
       return null;
@@ -901,24 +1248,42 @@ export class Board extends EventTarget {
     const width = this.gridEl.clientWidth || window.innerWidth;
     const height = this.gridEl.clientHeight || window.innerHeight;
 
-    let best = null;
-    for (let cols = 1; cols <= Math.min(8, count); cols += 1) {
+    const consider = (cols, compact) => {
       const rows = Math.ceil(count / cols);
       const tileW = (width - 2 * GRID_PAD - (cols - 1) * gap) / cols;
       const tileH = (height - 2 * GRID_PAD - (rows - 1) * gap) / rows;
-      if (tileW < MIN_TILE_W || tileH < MIN_TILE_H) continue;
+      if (tileW <= 0 || tileH <= 0) return null;
 
       // Prefer tiles a bit wider than tall, and prefer fewer wasted cells in
       // the final row (5 charts in 4 columns leaves a hole).
       const aspectPenalty = Math.abs(tileW / tileH - TARGET_ASPECT);
       const holePenalty = ((cols * rows) - count) / count * 0.35;
-      const smallPenalty = (tileW < 240 ? 0.6 : 0) + (tileH < 190 ? 0.6 : 0);
-      const score = aspectPenalty + holePenalty + smallPenalty;
-      if (!best || score < best.score) best = { cols, rows, tileW, tileH, score };
+      const smallPenalty = (tileW < MIN_TILE_W ? 0.6 : 0) + (tileH < 190 ? 0.6 : 0);
+      return { cols, rows, tileW, tileH, score: aspectPenalty + holePenalty + smallPenalty, compact };
+    };
+
+    // Pass one: every layout that keeps tiles comfortably readable. This tier
+    // wins outright when it has a candidate, even if a compact arrangement
+    // would have scored marginally better on aspect.
+    let best = null;
+    for (let cols = 1; cols <= Math.min(MAX_COLUMNS, count); cols += 1) {
+      const candidate = consider(cols, false);
+      if (!candidate || candidate.tileW < MIN_TILE_W || candidate.tileH < MIN_TILE_H) continue;
+      if (!best || candidate.score < best.score) best = candidate;
+    }
+
+    // Pass two: nothing is comfortable at this chart count, so take the best
+    // arrangement that still fills the screen without scrolling. The column
+    // ceiling still applies — a chart smaller than that is not a chart.
+    if (!best) {
+      for (let cols = 1; cols <= Math.min(MAX_COLUMNS, count); cols += 1) {
+        const candidate = consider(cols, true);
+        if (!candidate) continue;
+        if (!best || candidate.score < best.score) best = candidate;
+      }
     }
 
     if (!best) {
-      // Too many charts for this screen: keep the saved column count and scroll.
       this.gridEl.classList.remove('is-fit');
       this.setColumns(this.workspace.settings.columns);
       return { fits: false, charts: count };
@@ -930,7 +1295,7 @@ export class Board extends EventTarget {
     // scrollbar, so round down and leave a pixel of slack.
     this.gridEl.style.setProperty('--row-h', `${Math.floor(best.tileH)}px`);
     this.gridEl.style.setProperty('--columns', String(best.cols));
-    return { fits: true, ...best, charts: count };
+    return { fits: true, ...best, charts: count, total: this.tiles.size };
   }
 
   /** Recompute the layout now and whenever the window changes size. */
@@ -942,7 +1307,7 @@ export class Board extends EventTarget {
       this.gridEl.classList.remove('is-fit');
       this.gridEl.style.removeProperty('--row-h');
       this.setColumns(this.workspace.settings.columns);
-      result = { fits: false, fixed: true, charts: this.tiles.size };
+      result = { fits: false, fixed: true, charts: this.visibleCount(), total: this.tiles.size };
     }
     // Both branches report, so the footer never shows a stale layout.
     this.dispatchEvent(new CustomEvent('layout', { detail: result }));

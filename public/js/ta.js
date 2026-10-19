@@ -198,26 +198,47 @@ function shift(values, offset) {
 
 // ── Indicators ───────────────────────────────────────────────────────────────
 
+/**
+ * A reference line at the series' most recent value, when the user asked for one.
+ *
+ * Backs the catalog's "Show last value" on SMA and EMA. That flag used to be
+ * returned as a bare boolean and then dropped during normalisation, so the
+ * checkbox did nothing; a horizontal line at the current average is both what
+ * the label promises and a genuinely useful read — it shows at a glance where
+ * price sits relative to the average.
+ */
+function lastValueLevel(series, show, color) {
+  if (!show) return [];
+  for (let i = series.length - 1; i >= 0; i -= 1) {
+    if (isNum(series[i])) {
+      return [{ value: series[i], color: color ?? '#2962ff', lineStyle: 'solid', width: 1 }];
+    }
+  }
+  return [];
+}
+
 const REGISTRY = {
   sma(bars, p) {
     const s = src(bars, p.source);
+    const out = sma(s, p.length);
     return {
       plots: [{
         key: 'sma', label: `SMA ${p.length}`, type: 'line',
-        color: p.color, lineWidth: p.width, data: toData(bars, sma(s, p.length)),
+        color: p.color, lineWidth: p.width, data: toData(bars, out),
       }],
-      last: p.showLast,
+      levels: lastValueLevel(out, p.showLast, p.color),
     };
   },
 
   ema(bars, p) {
     const s = src(bars, p.source);
+    const out = ema(s, p.length);
     return {
       plots: [{
         key: 'ema', label: `EMA ${p.length}`, type: 'line',
-        color: p.color, lineWidth: p.width, data: toData(bars, ema(s, p.length)),
+        color: p.color, lineWidth: p.width, data: toData(bars, out),
       }],
-      last: p.showLast,
+      levels: lastValueLevel(out, p.showLast, p.color),
     };
   },
 
@@ -743,6 +764,14 @@ const REGISTRY = {
       levels: p.showZero
         ? [{ value: 0, color: '#787b86', lineStyle: 'solid', width: 1 }]
         : [],
+      // The upper/lower reference lines were declared in the catalog and shown
+      // in the editor but never read, so the two number inputs did nothing.
+      // Both are opt-in: a zero value means "no line here", which keeps a user
+      // who cleared the field from getting a stray line at zero.
+      reference: [
+        ...(p.upper ? [{ value: p.upper, color: '#787b86', lineStyle: 'dashed', width: 1 }] : []),
+        ...(p.lower ? [{ value: p.lower, color: '#787b86', lineStyle: 'dashed', width: 1 }] : []),
+      ],
     };
   },
 
@@ -871,7 +900,7 @@ export function computeIndicator(type, bars, params) {
     const result = fn(bars, params ?? {});
     return {
       plots: result.plots ?? [],
-      levels: result.levels ?? [],
+      levels: [...(result.levels ?? []), ...(result.reference ?? [])],
       bands: result.bands ?? [],
       zones: result.zones ?? [],
       fixed: result.fixed ?? null,

@@ -163,6 +163,64 @@ export function buildForm(host, schema, values) {
   };
 }
 
+/**
+ * Ask for a single line of text in a modal.
+ *
+ * Replaces `window.prompt`, which is blocked outright in embedded frames,
+ * automation and some in-app browsers. A blocked prompt resolves to null
+ * rather than throwing, so the usual `if (!answer) return;` guard turns the
+ * failure into a button that silently does nothing — indistinguishable, from
+ * the user's side, from cancelling. A modal cannot fail that way, and it can
+ * be styled to match.
+ *
+ * @returns {Promise<string|null>} the trimmed text, or null if cancelled
+ */
+export function askText({ title, subtitle = '', value = '', placeholder = '', submitLabel = 'Save', maxLength = 80 }) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (result) => {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+    };
+
+    // Hoisted so the footer button and the Enter key can reach it.
+    let input;
+    const submit = () => {
+      const text = input.value.trim();
+      handle.close();
+      finish(text || null);
+    };
+
+    const handle = modal({
+      title,
+      subtitle,
+      size: 'sm',
+      render(body) {
+        input = document.createElement('input');
+        input.className = 'input';
+        input.value = value;
+        input.placeholder = placeholder;
+        input.maxLength = maxLength;
+        input.spellcheck = false;
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); submit(); }
+        });
+        body.appendChild(input);
+        requestAnimationFrame(() => { input.focus(); input.select(); });
+      },
+      footer(foot) {
+        foot.innerHTML = `
+          <span class="spacer"></span>
+          <button class="btn" data-close>Cancel</button>
+          <button class="btn btn--primary" data-act="ok">${escape(submitLabel)}</button>`;
+        foot.querySelector('[data-act="ok"]').addEventListener('click', submit);
+      },
+      onClose: () => finish(null),
+    });
+  });
+}
+
 function toHex(value) {
   const s = String(value ?? '');
   if (/^#[0-9a-f]{6}$/i.test(s)) return s;

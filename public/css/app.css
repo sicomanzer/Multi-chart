@@ -331,6 +331,14 @@ select {
 }
 
 .tile-host.is-focused { grid-column: 1 / -1; min-height: 70vh; }
+/* Focus has to out-rank the auto-fit row height, or maximising a tile in fit
+   mode spans the full width while keeping the row height computed for the whole
+   grid. Both rules set min-height, so specificity is the whole battle: this one
+   is two classes, `.board.is-fit .tile-host` is three. */
+.board.is-fit .tile-host.is-focused { min-height: 70vh; }
+/* With one tile filling the view, re-deriving the layout would only shrink it
+   back to a share of the screen, so a focused board opts out of fit sizing. */
+.board.has-focus { grid-auto-rows: auto; }
 
 .tile {
   display: grid;
@@ -345,7 +353,9 @@ select {
   min-height: 0;
 }
 
-.tile.is-loading { opacity: 0.65; }
+/* Loading dim. The class is toggled on `.tile-host` (the grid child the board
+   holds a reference to), not on `.tile`, so the selector has to match that. */
+.tile-host.is-loading { opacity: 0.65; }
 
 .tile__bar {
   display: flex;
@@ -813,3 +823,290 @@ select {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+/* ============================================================================
+   Watchlists — two-pane picker inside the `lg` modal.
+
+   The list column is deliberately narrow and fixed: it is a navigator, not a
+   data table, and letting it flex would make the membership chips below jump
+   every time a long list name wraps.
+   ========================================================================== */
+
+.btn--sm { padding: 4px 9px; font-size: 11px; }
+
+.wl-layout {
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr);
+  gap: 12px;
+  min-height: 380px;
+}
+
+.wl-pane {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-tile);
+  padding: 10px;
+  overflow: auto;
+  max-height: 62vh;
+}
+
+.wl-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.wl-head h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wl-head .btn { flex: none; }
+
+/* ── list column ── */
+
+.wl-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "name count" "preview preview";
+  gap: 2px 8px;
+  width: 100%;
+  text-align: left;
+  padding: 7px 8px;
+  margin-bottom: 4px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+}
+.wl-list:hover { background: var(--bg-input); border-color: var(--border-strong); }
+.wl-list.is-active { border-color: var(--accent); background: var(--accent-soft); }
+.wl-list b { grid-area: name; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wl-list__count {
+  grid-area: count;
+  font: 600 10px var(--mono);
+  color: var(--text-dim);
+  background: var(--bg-input);
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+.wl-list.is-active .wl-list__count { color: var(--accent); }
+.wl-list__preview {
+  grid-area: preview;
+  font: 10px var(--mono);
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wl-seed { width: 100%; margin-top: 8px; justify-content: center; }
+.wl-seed:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── membership chips ── */
+
+.wl-symbols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 4px;
+  max-height: 168px;
+  overflow: auto;
+}
+
+.wl-symbol {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 4px 3px 7px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font: 11px var(--mono);
+}
+.wl-symbol b { font-weight: 600; color: var(--text); }
+.wl-symbol span { font-size: 9px; color: var(--text-faint); }
+
+/* The dot is only meaningful for symbols already drawn, so it stays hidden
+   otherwise — an always-on dot would read as a state nobody set. */
+.wl-symbol__on { display: none; font-style: normal; font-size: 8px; color: var(--up); }
+.wl-symbol.is-on-board .wl-symbol__on { display: inline; }
+
+.wl-symbol__x { padding: 0 5px; font-size: 11px; line-height: 1; }
+
+/* ── load options ── */
+
+.wl-load {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+.wl-load .input--select { min-width: 240px; }
+.wl-load .btn--primary { margin-top: 2px; }
+
+@media (max-width: 760px) {
+  .wl-layout { grid-template-columns: minmax(0, 1fr); }
+  .wl-pane { max-height: none; }
+}
+
+/* ============================================================================
+   Oversold alert.
+
+   Green is the "under water, possibly interesting" state, which is the opposite
+   of the red the price badges use for a falling quote — the same board can show
+   a red header price on a chart the green alert is pointing at, and that is the
+   point: a chart can be down on the day and oversold at the same time.
+   ========================================================================== */
+
+/* `.btn` sets a display, which would otherwise beat the `[hidden]` default. */
+.btn[hidden] { display: none; }
+
+.btn--alert {
+  background: var(--up);
+  border-color: var(--up);
+  color: #04140f;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.btn--alert:hover {
+  background: var(--up);
+  border-color: var(--up);
+  filter: brightness(1.1);
+  color: #04140f;
+}
+.btn--alert:focus-visible { outline-color: var(--up); }
+
+.os-list {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 8px;
+}
+
+.os-row {
+  display: grid;
+  grid-template-columns: minmax(64px, auto) 46px 40px minmax(60px, 1fr) 50px 48px;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--bg-tile);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--up);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.os-row:hover { background: var(--bg-input); border-color: var(--up); }
+
+.os-row__sym { font: 600 12px var(--mono); }
+.os-row__ex, .os-row__tf { font: 10px var(--mono); color: var(--text-faint); }
+
+/* Depth below the line, capped at the line itself: a deeply oversold chart and
+   a marginally one both read as "green", but the bar still ranks them. */
+.os-row__bar {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.os-row__bar i { display: block; height: 100%; background: var(--up); }
+
+.os-row__val { font: 600 12px var(--mono); color: var(--up); text-align: right; }
+.os-row__line { font: 10px var(--mono); color: var(--text-faint); text-align: right; }
+
+@media (max-width: 560px) {
+  .os-row { grid-template-columns: minmax(56px, auto) 40px minmax(40px, 1fr) 48px 44px; }
+  .os-row__tf { display: none; }
+}
+
+/* ── inline name editor (replaces window.prompt) ── */
+
+.wl-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.wl-edit .input { flex: 1 1 100px; min-width: 0; }
+
+/* Inside the detail header it shares the row with the other actions. */
+.wl-head .wl-edit { flex: 1; margin-bottom: 0; }
+
+/* A delete that has been armed waits for a second, deliberate click. */
+.btn--danger.is-armed {
+  background: var(--down);
+  border-color: var(--down);
+  color: #fff;
+  animation: wl-arm 1.1s ease-in-out infinite;
+}
+.wl-armed-note {
+  font: 10px var(--mono);
+  color: var(--down);
+  white-space: nowrap;
+}
+
+@keyframes wl-arm {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* Motion is decoration here, never information. */
+@media (prefers-reduced-motion: reduce) {
+  .btn--danger.is-armed { animation: none; }
+}
+
+/* ============================================================================
+   Watchlist filter — hide charts that are not in the selected list.
+
+   `display: none` rather than a class that only dims, so the grid drops the
+   hidden tiles from layout entirely and auto-fit sees only what is on screen.
+   The charts themselves stay mounted, so clearing the filter restores their
+   candles, indicators and zoom exactly as they were.
+   ========================================================================== */
+
+.tile-host.is-filtered-out { display: none; }
+
+.btn--filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.btn--filter:hover { border-color: var(--accent); color: var(--accent); }
+.btn--filter b { font-weight: 600; }
+.btn--filter i {
+  font-style: normal;
+  font: 10px var(--mono);
+  color: var(--text-dim);
+}
+.btn--filter::after { content: "✕"; font-size: 10px; opacity: 0.75; }
+.btn--filter.btn--sm::after { content: none; }
+.btn--filter.btn--sm { gap: 0; }
+
+/* A focused tile that the filter has hidden would leave the board blank with
+   no way back, so the focus toggle refuses to hide the only visible chart. */
+.board.has-focus .tile-host.is-filtered-out { display: none; }
+
+/* ============================================================================
+   Board dropdown holding both boards and watchlists.
+
+   The two groups read as separate sections without any extra chrome, and the
+   native select keeps its platform look. Width is clamped so a long watchlist
+   name cannot push the toolbar actions off screen.
+   ========================================================================== */
+
+#workspaceSelect { max-width: 220px; }
+
+#workspaceSelect optgroup {
+  font-style: normal;
+  color: var(--text-faint);
+}
+#workspaceSelect optgroup > option { color: var(--text); }

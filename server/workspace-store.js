@@ -38,6 +38,9 @@ export const DEFAULT_SETTINGS = {
   syncTimeScale: false,
   showGrid: true,
   showWatermark: false,
+  // Flag charts whose RSI is under their own oversold line. On by default
+  // because it is the whole point of the board, and easy to switch off.
+  oversoldAlert: true,
   priceFormat: 'auto',
   candleStyle: 'candles',
   confirmClose: true,
@@ -55,6 +58,73 @@ const newId = (prefix) =>
   `${prefix}_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
 
 const isPlainObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+// ── Chart detail fields ──────────────────────────────────────────────────────
+//
+// `sanitizeWorkspace` rebuilds each chart and indicator from scratch, which
+// makes the literal below a *persistence contract*: a field is only saved if it
+// is written here. Two fields were missing and were silently dropped on every
+// save, so a pane height or a price level set in the dialog existed for the
+// session and then vanished on reload.
+
+/** Bounds of the pane-height spinner in the indicator editor. */
+const PANE_HEIGHT_MIN = 60;
+const PANE_HEIGHT_MAX = 600;
+
+/** The editor has no cap on price levels; the saved board should have one. */
+const MAX_PRICE_LINES = 12;
+
+/** Default price-level colour, matching `chart-tile._attachPriceLines`. */
+const PRICE_LINE_COLOR = '#f7a600';
+
+// Same rule `sanitizeParams` applies to a `color` parameter.
+const COLOR_RE = /^(#[0-9a-fA-F]{3,8}|rgba?\([\d.\s,%]+\))$/;
+
+const clampInt = (value, min, max, fallback) => {
+  const n = Math.round(Number(value));
+  return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
+};
+
+/**
+ * The pane height to store for one indicator instance.
+ *
+ * Always resolves to a number rather than leaving it undefined, because the
+ * value written here must match what `chart-tile` and the indicator editor
+ * would otherwise compute for themselves — otherwise a reload would resize the
+ * pane from a value that no longer agrees with the one it fell back to.
+ */
+function paneHeightOf(raw, def) {
+  const n = Number(raw);
+  if (Number.isFinite(n)) return clampInt(n, PANE_HEIGHT_MIN, PANE_HEIGHT_MAX, 110);
+  return def.defaultPaneHeight ?? 110;
+}
+
+/**
+ * Saved price levels (target / alert lines).
+ *
+ * The key names are fixed by `_attachPriceLines`, which reads `value`, `color`,
+ * `width`, `style`, `label` and `title`. A level whose price is not a finite
+ * number cannot be drawn, so it is dropped here rather than restored as a
+ * blank line the editor would show as an empty row.
+ */
+function sanitizePriceLines(input) {
+  if (!Array.isArray(input)) return [];
+  const out = [];
+  for (const raw of input.slice(0, MAX_PRICE_LINES)) {
+    const value = Number(raw?.value);
+    if (!Number.isFinite(value)) continue;
+    const color = String(raw?.color ?? PRICE_LINE_COLOR);
+    out.push({
+      value,
+      color: COLOR_RE.test(color) ? color : PRICE_LINE_COLOR,
+      width: clampInt(raw?.width, 1, 4, 1),
+      style: ['solid', 'dashed', 'dotted'].includes(raw?.style) ? raw.style : 'solid',
+      label: raw?.label !== false,
+      title: String(raw?.title ?? '').slice(0, 16),
+    });
+  }
+  return out;
+}
 
 /**
  * Repair anything structurally wrong. Saved layouts travel through localStorage
@@ -75,7 +145,9 @@ export function sanitizeWorkspace(input, { fallbackName = 'Workspace' } = {}) {
       if (Number.isFinite(n)) settings[key] = Math.min(200, Math.max(1, Math.round(n)));
     } else settings[key] = String(v);
   }
-  settings.columns = Math.min(6, Math.max(1, settings.columns));
+  // Kept in step with MAX_COLUMNS in public/js/board.js: a board saved with six
+  // columns (from before the cap) must not come back at six after a reload.
+  settings.columns = Math.min(5, Math.max(1, settings.columns));
   settings.layoutFit = settings.layoutFit === 'fixed' ? 'fixed' : 'auto';
   settings.footerMode = ['fundamentals', 'indicators', 'both'].includes(settings.footerMode)
     ? settings.footerMode
@@ -103,6 +175,7 @@ export function sanitizeWorkspace(input, { fallbackName = 'Workspace' } = {}) {
             ? inst.placement
             : def.placement,
           params: sanitizeParams(def.type, inst.params),
+          paneHeight: paneHeightOf(inst.paneHeight, def),
         }];
       });
 
@@ -116,6 +189,7 @@ export function sanitizeWorkspace(input, { fallbackName = 'Workspace' } = {}) {
       logScale: Boolean(c?.logScale),
       autoscale: c?.autoscale !== false,
       indicators,
+      priceLines: sanitizePriceLines(c?.priceLines),
     }];
   });
 

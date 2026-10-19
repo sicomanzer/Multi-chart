@@ -96,6 +96,28 @@ export const api = {
   patchWorkspace: (id, patch) => request(`/api/workspaces/${id}`, { method: 'PATCH', body: patch }),
   deleteWorkspace: (id) => request(`/api/workspaces/${id}`, { method: 'DELETE' }),
 
+  // ── Watchlists ────────────────────────────────────────────────────────────
+  // Symbol add/remove have their own routes so that ticking one ticker off a
+  // long list does not require sending the whole list back and racing whatever
+  // else changed it in the meantime.
+  watchlists: () => request('/api/watchlists'),
+  watchlist: (id) => request(`/api/watchlists/${id}`),
+  createWatchlist: (name, symbols) =>
+    request('/api/watchlists', { method: 'POST', body: { name, symbols } }),
+  watchlistFromSymbols: (symbols, name) =>
+    request('/api/watchlists/from-board', { method: 'POST', body: { symbols, name } }),
+  renameWatchlist: (id, name) =>
+    request(`/api/watchlists/${id}`, { method: 'PATCH', body: { name } }),
+  setWatchlist: (id, symbols) =>
+    request(`/api/watchlists/${id}`, { method: 'PUT', body: { symbols } }),
+  deleteWatchlist: (id) => request(`/api/watchlists/${id}`, { method: 'DELETE' }),
+  duplicateWatchlist: (id) =>
+    request(`/api/watchlists/${id}/duplicate`, { method: 'POST' }),
+  addWatchlistSymbols: (id, symbols) =>
+    request(`/api/watchlists/${id}/symbols`, { method: 'POST', body: { symbols } }),
+  removeWatchlistSymbols: (id, symbols) =>
+    request(`/api/watchlists/${id}/symbols`, { method: 'DELETE', body: { symbols } }),
+
   mcpTools: () => request('/api/mcp/tools'),
   mcpCall: (name, args, timeoutMs) =>
     request(`/api/mcp/tools/${name}`, { method: 'POST', body: { arguments: args, timeoutMs } }),
