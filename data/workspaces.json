@@ -5,8 +5,8 @@
       "id": "ws_muwbkjs4v9x4w",
       "name": "SET board",
       "createdAt": 1791269432356,
-      "updatedAt": 1792383549028,
-      "revision": 49,
+      "updatedAt": 1792383652567,
+      "revision": 50,
       "settings": {
         "theme": "light",
         "columns": 3,
@@ -452,12 +452,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -479,12 +479,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -506,12 +506,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -533,12 +533,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -560,12 +560,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -587,12 +587,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -614,12 +614,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -641,12 +641,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -668,12 +668,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -695,12 +695,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -722,12 +722,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -749,12 +749,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -776,12 +776,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -803,12 +803,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -830,12 +830,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -857,12 +857,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
@@ -884,12 +884,12 @@
               "enabled": true,
               "placement": "pane",
               "params": {
-                "length": 14,
+                "length": 5,
                 "source": "close",
                 "color": "#7e57c2",
                 "width": 2,
-                "overbought": 70,
-                "oversold": 30,
+                "overbought": 80,
+                "oversold": 20,
                 "fillBands": true
               },
               "paneHeight": 100
