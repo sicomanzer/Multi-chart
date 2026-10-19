@@ -33,6 +33,32 @@ const MIN_TILE_H = 150;
 /** Width-to-height a chart reads best at: a little wider than tall. */
 const TARGET_ASPECT = 1.45;
 
+/** Timeframes whose bars change continuously within a session. */
+const INTRADAY_TIMEFRAMES = ['1m', '5m', '15m', '30m', '1h', '4h'];
+
+/** Timeframes whose bars settle once per session; see `refreshDaily`. */
+const DAILY_TIMEFRAMES = ['1d', '1w', '1M'];
+
+/**
+ * Run tasks with a cap on how many are in flight at once.
+ *
+ * A 60-chart board would otherwise open 60 sockets to Yahoo in the same
+ * millisecond, which is exactly the shape of traffic that gets throttled.
+ * Six at a time sits well inside what the endpoint is happy with and still
+ * clears a large board in a couple of seconds.
+ */
+async function pooled(tasks, limit = 6) {
+  const queue = [...tasks];
+  if (!queue.length) return;
+  const runners = Array.from({ length: Math.min(limit, queue.length) }, async () => {
+    while (queue.length) {
+      const task = queue.shift();
+      try { await task(); } catch { /* each tile surfaces its own error */ }
+    }
+  });
+  await Promise.all(runners);
+}
+
 /**
  * How many columns the board will ever use.
  *
@@ -396,13 +422,29 @@ export class Board extends EventTarget {
     }
   }
 
-  /** Refresh only the intraday tiles — daily+ bars barely move intraday. */
+  /** Refresh only the intraday tiles. */
   async refreshIntraday() {
-    const intraday = ['1m', '5m', '15m', '30m', '1h', '4h'];
     const jobs = [...this.tiles.values()]
-      .filter((t) => intraday.includes(t.config.timeframe))
+      .filter((t) => INTRADAY_TIMEFRAMES.includes(t.config.timeframe))
       .map((t) => this.loadCandleFor(t).catch(() => {}));
-    if (jobs.length) await Promise.all(jobs);
+    await pooled(jobs);
+  }
+
+  /**
+   * Refresh the daily-and-up tiles so the forming bar is not frozen until a
+   * manual reload.
+   *
+   * Deliberately much slower than the intraday pass. A daily bar changes once,
+   * so a one-minute refetch buys almost nothing and would put every chart on the
+   * board into Yahoo's rate limiter — the previous behaviour, where a daily
+   * board only updated on F5, was the wrong end of that trade. Five minutes
+   * keeps the last candle honest at a request rate the endpoint tolerates.
+   */
+  async refreshDaily() {
+    const jobs = [...this.tiles.values()]
+      .filter((t) => DAILY_TIMEFRAMES.includes(t.config.timeframe))
+      .map((t) => this.loadCandleFor(t).catch(() => {}));
+    await pooled(jobs);
   }
 
   /**

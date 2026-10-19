@@ -5,8 +5,8 @@
       "id": "ws_muwbkjs4v9x4w",
       "name": "SET board",
       "createdAt": 1791269432356,
-      "updatedAt": 1792382523240,
-      "revision": 48,
+      "updatedAt": 1792383549028,
+      "revision": 49,
       "settings": {
         "theme": "light",
         "columns": 3,
@@ -21,7 +21,7 @@
           "evEbitda"
         ],
         "defaultTimeframe": "1w",
-        "pollSeconds": 20,
+        "pollSeconds": 10,
         "liveQuotes": true,
         "syncCrosshair": true,
         "syncTimeScale": false,

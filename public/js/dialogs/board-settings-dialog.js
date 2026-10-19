@@ -27,9 +27,9 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
   };
 
   const POLL_CHOICES = [
-    { value: '5', label: '5 seconds (aggressive)' },
-    { value: '10', label: '10 seconds' },
-    { value: '20', label: '20 seconds (default)' },
+    { value: '5', label: '5 seconds (fastest)' },
+    { value: '10', label: '10 seconds (default)' },
+    { value: '20', label: '20 seconds' },
     { value: '30', label: '30 seconds' },
     { value: '60', label: '60 seconds (relaxed)' },
     { value: '120', label: '2 minutes (background)' },

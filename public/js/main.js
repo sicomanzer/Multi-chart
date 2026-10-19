@@ -110,6 +110,14 @@ async function boot() {
     if (document.visibilityState === 'visible') board.refreshIntraday();
   }, 60_000);
 
+  // Daily bars and up move once a session, but the forming bar still ticks, so
+  // they need a pass of their own — at a much slower cadence than intraday, or
+  // a 60-chart board would refetch all sixty bars every minute and the upstream
+  // would throttle the lot.
+  setInterval(() => {
+    if (document.visibilityState === 'visible') board.refreshDaily();
+  }, 300_000);
+
   // Auto-fit depends on the viewport, so recompute when it changes. Debounced:
   // dragging a window edge fires a burst of resizes.
   let resizeTimer = null;

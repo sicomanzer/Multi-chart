@@ -32,7 +32,11 @@ export const DEFAULT_SETTINGS = {
   // Which fundamentals to display, in order.
   footerMetrics: ['pe', 'pbv', 'de', 'dividendYield'],
   defaultTimeframe: DEFAULT_TIMEFRAME,
-  pollSeconds: 20,
+  // The screener poll is one upstream request for the whole board, whatever the
+  // chart count, so this costs the same on 3 charts as on 60. Ten seconds is
+  // responsive without crowding a throttled upstream; 5 is there for anyone who
+  // wants it.
+  pollSeconds: 10,
   liveQuotes: true,
   syncCrosshair: true,
   syncTimeScale: false,
