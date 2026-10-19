@@ -93,6 +93,7 @@ export class ChartTile {
         <button class="tile__title" type="button" title="Change symbol / settings">
           <span class="tile__badge">${ex}</span>
           <span class="tile__symbol">${escapeHtml(badge)}</span>
+          <i class="tile__dot" data-role="oversold" hidden></i>
           <span class="tile__name" data-role="name"></span>
         </button>
         <div class="tile__price">
@@ -125,6 +126,7 @@ export class ChartTile {
       legend: this.root.querySelector('[data-role="legend"]'),
       fundamentals: this.root.querySelector('[data-role="fundamentals"]'),
       tf: this.root.querySelector('[data-role="tf"]'),
+      dot: this.root.querySelector('[data-role="oversold"]'),
     };
 
     this.root.querySelector('[data-act="indicators"]')
@@ -640,10 +642,38 @@ export class ChartTile {
 
     this._applyPaneHeights();
     this._renderLegend(legendRows);
+    this._paintOversoldDot();
     // Fires for every indicator rebuild, including the ones that leave `rsi`
     // null — the board needs to learn that a chart stopped qualifying, not only
     // when one starts.
     this.callbacks.onIndicatorsChanged?.(this);
+  }
+
+  /**
+   * Mark the symbol in the header when this chart's RSI is under its line.
+   *
+   * Same rule as the board's aggregate alert — that chart's own `oversold`
+   * parameter, not one number for the board — so the dot and the toolbar button
+   * can never disagree. Repainted on every indicator rebuild, which is what
+   * makes it clear again when an RSI crosses back.
+   *
+   * It lives inside the title button rather than beside it: a button cannot
+   * contain a button, and the title is already the way into this chart's
+   * settings, where the RSI editor is one click away.
+   *
+   * The board's `oversoldAlert` switch hides these too. A user who has turned
+   * the feature off does not want the board dotted over either.
+   */
+  _paintOversoldDot() {
+    const dot = this.el.dot;
+    if (!dot) return;
+    const rsi = this.rsi;
+    const enabled = this.config.settings?.oversoldAlert !== false;
+    const hit = enabled && rsi && rsi.value != null && rsi.value < rsi.threshold;
+    dot.hidden = !hit;
+    if (hit) {
+      dot.title = `RSI ${rsi.value.toFixed(1)} is below its ${rsi.threshold} line`;
+    }
   }
 
   /**

@@ -1110,3 +1110,32 @@ select {
   color: var(--text-faint);
 }
 #workspaceSelect optgroup > option { color: var(--text); }
+
+/* ============================================================================
+   Oversold marker on the symbol.
+
+   Green here is the same "under water" state the toolbar button uses, and it
+   is deliberately not red: a chart can be down on the day (red price badge)
+   and oversold at the same time, and those are different statements.
+   ========================================================================== */
+
+.tile__dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  align-self: center;
+  border-radius: 50%;
+  background: var(--up);
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+}
+/* `hidden` is what the tile actually toggles; without this a bare `display`
+   would win and the dot would never go away. */
+.tile__dot[hidden] { display: none; }
+
+/* The dot is the last thing to go on a narrow tile: the company name drops
+   first at 470px, so by the time this matters the marker is all that is left
+   saying the chart is interesting. */
+@container tile (max-width: 470px) {
+  .tile__dot { outline-color: var(--bg-elevated); }
+}
