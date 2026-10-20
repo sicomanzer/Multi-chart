@@ -8,6 +8,7 @@
  * pane height.
  */
 import { modal, buildForm, section, selectField, escape, toast } from '../ui.js';
+import { t, tp, paramKey } from '../i18n.js';
 
 export function openIndicatorPicker({ catalog, groups, onAdd, current = [] }) {
   // Accept either the catalog array or the board's type-keyed map.
@@ -18,13 +19,13 @@ export function openIndicatorPicker({ catalog, groups, onAdd, current = [] }) {
   const used = new Set(current.map((i) => i.type));
 
   modal({
-    title: 'Add indicator',
-    subtitle: 'Pick a study — every parameter stays editable afterwards.',
+    title: t('ind.addTitle'),
+    subtitle: t('ind.addSub'),
     size: 'lg',
     render(body) {
       const search = document.createElement('input');
       search.className = 'input input--search';
-      search.placeholder = 'Filter indicators…';
+      search.placeholder = t('ind.filter');
       body.appendChild(search);
 
       const listHost = document.createElement('div');
@@ -54,13 +55,13 @@ export function openIndicatorPicker({ catalog, groups, onAdd, current = [] }) {
             btn.innerHTML = `
               <span class="ind-card__short">${escape(ind.short)}</span>
               <span class="ind-card__name">${escape(ind.name)}</span>
-              <span class="ind-card__meta">${ind.placement === 'pane' ? 'own pane' : 'overlay'}${used.has(ind.type) ? ' · already added' : ''}</span>
+              <span class="ind-card__meta">${ind.placement === 'pane' ? escape(t('cd.ownPane')) : escape(t('cd.overlay'))}${used.has(ind.type) ? escape(t('ind.alreadyAdded')) : ''}</span>
             `;
             btn.addEventListener('click', () => {
               onAdd(ind.type);
               btn.classList.add('is-added');
               const meta = btn.querySelector('.ind-card__meta');
-              meta.textContent = 'added';
+              meta.textContent = t('ind.added');
               used.add(ind.type);
             });
             grid.appendChild(btn);
@@ -69,7 +70,7 @@ export function openIndicatorPicker({ catalog, groups, onAdd, current = [] }) {
           listHost.appendChild(sec);
         }
         if (!listHost.children.length) {
-          listHost.innerHTML = '<p class="section__hint">No indicator matches that filter.</p>';
+          listHost.innerHTML = `<p class="section__hint">${escape(t('ind.noMatch'))}</p>`;
         }
       };
 
@@ -90,18 +91,18 @@ export function openBoardIndicatorPicker({ catalog, usage, totalCharts, onPick }
   const definitions = Array.isArray(catalog) ? catalog : Object.values(catalog ?? {});
 
   if (!usage.length) {
-    toast('No indicators on the board yet — add one first.', { type: 'info' });
+    toast(t('ind.emptyToast'), { type: 'info' });
     return;
   }
 
   const api = modal({
-    title: 'Indicator settings',
-    subtitle: `Pick one to edit it on every chart at once · ${totalCharts} chart${totalCharts === 1 ? '' : 's'} on this board`,
+    title: t('ind.boardTitle'),
+    subtitle: tp('ind.boardSub', totalCharts),
     size: 'lg',
     render(body) {
       const search = document.createElement('input');
       search.className = 'input input--search';
-      search.placeholder = 'Filter indicators…';
+      search.placeholder = t('ind.filter');
       body.appendChild(search);
 
       const listHost = document.createElement('div');
@@ -120,13 +121,13 @@ export function openBoardIndicatorPicker({ catalog, usage, totalCharts, onPick }
         });
 
         if (!items.length) {
-          listHost.innerHTML = '<p class="section__hint">No indicator matches that filter.</p>';
+          listHost.innerHTML = `<p class="section__hint">${escape(t('ind.noMatch'))}</p>`;
           return;
         }
 
         const sec = document.createElement('div');
         sec.className = 'ind-list__group';
-        sec.innerHTML = '<h4>On this board</h4>';
+        sec.innerHTML = `<h4>${escape(t('ind.onThisBoard'))}</h4>`;
         const grid = document.createElement('div');
         grid.className = 'ind-list__grid';
 
@@ -139,7 +140,7 @@ export function openBoardIndicatorPicker({ catalog, usage, totalCharts, onPick }
           btn.innerHTML = `
             <span class="ind-card__short">${escape(def.short)}</span>
             <span class="ind-card__name">${escape(def.name)}</span>
-            <span class="ind-card__meta">on ${entry.charts} chart${entry.charts === 1 ? '' : 's'}${everywhere ? ' · all' : ''}${entry.differing ? ' · mixed settings' : ''}</span>
+            <span class="ind-card__meta">${escape(tp('ind.onCharts', entry.charts))}${everywhere ? escape(t('ind.all')) : ''}${entry.differing ? escape(t('ind.mixed')) : ''}</span>
           `;
           btn.addEventListener('click', () => {
             // Close first: the editor is a second modal, and two stacked
@@ -162,7 +163,7 @@ export function openBoardIndicatorPicker({ catalog, usage, totalCharts, onPick }
 export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onToggle, scope = null }) {
   const def = catalog[instance.type];
   if (!def) {
-    toast(`Unknown indicator "${instance.type}"`, { type: 'error' });
+    toast(t('ind.unknown', { type: instance.type }), { type: 'error' });
     return;
   }
 
@@ -171,7 +172,7 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
 
   modal({
     title: def.name,
-    subtitle: `${def.short} · ${def.params.length} setting${def.params.length === 1 ? '' : 's'}`,
+    subtitle: tp('ind.sub', def.params.length, { short: def.short }),
     size: 'md',
     render(body) {
       // Scope banner: the same dialog edits one instance or the whole board, and
@@ -179,16 +180,16 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
       if (scope) {
         const banner = document.createElement('div');
         banner.className = 'scope-banner';
+        const head = `<strong>${escape(t('ind.scopeStrong', { n: scope.charts }))}</strong> ${escape(t('ind.scopeTail'))}`;
         banner.innerHTML = scope.differing
-          ? `<strong>Applies to all ${scope.charts} charts</strong> that have this indicator.
-             ${scope.differing} of them ${scope.differing === 1 ? 'uses' : 'use'} different settings — applying overwrites ${scope.differing === 1 ? 'it' : 'them'} with what is shown here.`
-          : `<strong>Applies to all ${scope.charts} charts</strong> that have this indicator.`;
+          ? `${head} ${escape(tp('ind.scopeDiff', scope.differing))}`
+          : head;
         body.appendChild(banner);
       }
 
-      body.appendChild(section('Calculation', scope
-        ? 'Changing a setting redraws every chart with this indicator.'
-        : 'Changing a setting redraws this pane immediately.'));
+      body.appendChild(section(t('ind.calc'), scope
+        ? t('ind.calcScope')
+        : t('ind.calcOne')));
 
       const formHost = document.createElement('div');
       formHost.className = 'form-grid';
@@ -197,9 +198,9 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
       const form = def.params.length
         ? buildForm(formHost, def.params, instance.params ?? {})
         : null;
-      if (!form) formHost.innerHTML = '<p class="section__hint">This indicator has no settings.</p>';
+      if (!form) formHost.innerHTML = `<p class="section__hint">${escape(t('ind.noSettings'))}</p>`;
 
-      body.appendChild(section('Placement', 'A pane indicator stacks its own sub-chart under the candles.'));
+      body.appendChild(section(t('ind.placement'), t('ind.placementHint')));
 
       const placementHost = document.createElement('div');
       placementHost.className = 'form-grid';
@@ -209,9 +210,9 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
       let paneHeight = instance.paneHeight ?? def.defaultPaneHeight ?? 110;
 
       const heightWrap = document.createElement('div');
-      placementHost.appendChild(selectField('Where', placement, [
-        { value: 'pane', label: 'Own pane (below the price chart)' },
-        { value: 'overlay', label: 'Overlay on the price chart' },
+      placementHost.appendChild(selectField(t('ind.where'), placement, [
+        { value: 'pane', label: t('ind.wherePane') },
+        { value: 'overlay', label: t('ind.whereOverlay') },
       ], (value) => {
         placement = value;
         heightWrap.style.display = value === 'pane' ? '' : 'none';
@@ -219,7 +220,7 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
 
       const heightField = document.createElement('label');
       heightField.className = 'field field--int';
-      heightField.innerHTML = '<span class="field__label">Pane height (px)</span>';
+      heightField.innerHTML = `<span class="field__label">${escape(t('ind.paneHeight'))}</span>`;
       const heightInput = document.createElement('input');
       heightInput.type = 'number';
       heightInput.min = '60';
@@ -249,13 +250,13 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
     footer(foot, { close }) {
       // Name the scope in the buttons, so it is impossible to save a board-wide
       // change believing it was one chart.
-      const scopeNote = scope ? ` on ${scope.charts} charts` : '';
+      const scopeNote = scope ? t('ind.scopeNote', { n: scope.charts }) : '';
       foot.innerHTML = `
-        <button class="btn btn--ghost" data-act="toggle">${instance.enabled === false ? 'Enable' : 'Disable'}${scopeNote}</button>
-        <button class="btn btn--danger" data-act="delete">Remove${scopeNote}</button>
+        <button class="btn btn--ghost" data-act="toggle">${escape(t(instance.enabled === false ? 'ind.enable' : 'ind.disable'))}${escape(scopeNote)}</button>
+        <button class="btn btn--danger" data-act="delete">${escape(t('common.remove'))}${escape(scopeNote)}</button>
         <span class="spacer"></span>
-        <button class="btn" data-close>Cancel</button>
-        <button class="btn btn--primary" data-act="save">Apply${scopeNote}</button>
+        <button class="btn" data-close>${escape(t('common.cancel'))}</button>
+        <button class="btn btn--primary" data-act="save">${escape(t('common.apply'))}${escape(scopeNote)}</button>
       `;
       foot.querySelector('[data-act="save"]').addEventListener('click', () => {
         onSave({ ...readState(), enabled: instance.enabled !== false });

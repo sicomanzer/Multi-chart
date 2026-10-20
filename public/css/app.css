@@ -116,7 +116,19 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; }
 .topbar__group { display: flex; align-items: center; gap: 4px; }
 .topbar__group--right { margin-left: auto; gap: 6px; }
 .topbar__group--actions .btn + .btn { margin-left: 2px; }
-.topbar__group--actions { margin-left: auto; }
+
+/* The action group carries a lot of controls and a flex-basis of 0 keeps it on
+   the brand's line — the buttons wrap inside it instead of the group being
+   pushed down to a row of its own. Thai labels run wider than their English
+   counterparts ("รายการเฝ้าดู" against "Watchlists"), so the group has to be
+   allowed to wrap rather than push the page wider than the viewport. */
+.topbar__group--actions {
+  margin-left: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
 
 .spacer { flex: 1 1 auto; }
 

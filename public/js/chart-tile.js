@@ -17,6 +17,7 @@
  */
 import { computeIndicator } from './ta.js';
 import { formatPrice, formatCompact, formatMetric } from './format.js';
+import { t } from './i18n.js';
 
 const {
   createChart,
@@ -90,7 +91,7 @@ export class ChartTile {
     this.root.className = 'tile';
     this.root.innerHTML = `
       <header class="tile__bar">
-        <button class="tile__title" type="button" title="Change symbol / settings">
+        <button class="tile__title" type="button" title="${escapeHtml(t('tile.changeSymbol'))}">
           <span class="tile__badge">${ex}</span>
           <span class="tile__symbol">${escapeHtml(badge)}</span>
           <i class="tile__dot" data-role="oversold" hidden></i>
@@ -101,11 +102,11 @@ export class ChartTile {
           <span class="tile__change" data-role="change"></span>
         </div>
         <div class="tile__tools">
-          <span class="tile__tf" data-role="tf" title="Timeframe">${timeframe}</span>
-          <button class="icon-btn" data-act="indicators" title="Add indicator">ƒx</button>
-          <button class="icon-btn" data-act="settings" title="Chart settings">⚙</button>
-          <button class="icon-btn" data-act="focus" title="Maximise">⛶</button>
-          <button class="icon-btn" data-act="close" title="Close chart">✕</button>
+          <span class="tile__tf" data-role="tf" title="${escapeHtml(t('tile.timeframe'))}">${timeframe}</span>
+          <button class="icon-btn" data-act="indicators" title="${escapeHtml(t('tile.addIndicator'))}">ƒx</button>
+          <button class="icon-btn" data-act="settings" title="${escapeHtml(t('tile.settings'))}">⚙</button>
+          <button class="icon-btn" data-act="focus" title="${escapeHtml(t('tile.maximise'))}">⛶</button>
+          <button class="icon-btn" data-act="close" title="${escapeHtml(t('tile.close'))}">✕</button>
         </div>
       </header>
       <div class="tile__panes" data-role="panes"></div>
@@ -398,14 +399,14 @@ export class ChartTile {
 
     if (!data || metrics.length === 0) {
       node.hidden = false;
-      node.innerHTML = `<span class="tile__fundamentals__pending">${this._fundamentalsPending ? 'loading ratios…' : 'no fundamental data'}</span>`;
+      node.innerHTML = `<span class="tile__fundamentals__pending">${escapeHtml(this._fundamentalsPending ? t('tile.loadingRatios') : t('tile.noFundamentals'))}</span>`;
       return;
     }
 
     const parts = metrics.map((key) => {
       const entry = data[key];
       const label = this.metricLabels?.[key]?.label ?? key.toUpperCase();
-      const title = [label, this.metricLabels?.[key]?.hint, entry?.value == null ? 'not reported' : null]
+      const title = [label, this.metricLabels?.[key]?.hint, entry?.value == null ? t('tile.notReported') : null]
         .filter(Boolean).join(' · ');
       const tone = entry?.value == null ? '' : entry.kind === 'percent' ? 'is-up' : '';
       return { key, html: `<span class="tile__metric" title="${escapeHtml(title)}">`
@@ -426,7 +427,7 @@ export class ChartTile {
     }
     if (shown.length < parts.length) {
       const hiddenKeys = parts.slice(shown.length).map((p) => p.key);
-      node.title = `not shown (no room): ${hiddenKeys.join(', ')}`;
+      node.title = t('tile.notShown', { keys: hiddenKeys.join(', ') });
     } else {
       node.removeAttribute('title');
     }
@@ -672,7 +673,7 @@ export class ChartTile {
     const hit = enabled && rsi && rsi.value != null && rsi.value < rsi.threshold;
     dot.hidden = !hit;
     if (hit) {
-      dot.title = `RSI ${rsi.value.toFixed(1)} is below its ${rsi.threshold} line`;
+      dot.title = t('tile.oversoldTitle', { value: rsi.value.toFixed(1), line: rsi.threshold });
     }
   }
 
@@ -913,7 +914,7 @@ export class ChartTile {
     }
     this.el.legend.hidden = false;
     this.el.legend.innerHTML = rows.map((row) => `
-      <span class="legend__item" data-indicator="${escapeHtml(row.id)}" title="Click to edit indicator">
+      <span class="legend__item" data-indicator="${escapeHtml(row.id)}" title="${escapeHtml(t('tile.legendHint'))}">
         <i style="background:${escapeHtml(row.color)}"></i>
         <b>${escapeHtml(row.label)}</b>
         ${row.values.map((v) => `<span>${escapeHtml(v)}</span>`).join('')}

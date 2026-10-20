@@ -10,6 +10,7 @@
  */
 import { modal, escape, toast } from '../ui.js';
 import { api } from '../api.js';
+import { t } from '../i18n.js';
 
 export function openMcpConsole({ symbol }) {
   let tools = [];
@@ -17,21 +18,21 @@ export function openMcpConsole({ symbol }) {
   let args = {};
 
   modal({
-    title: 'MCP tools',
-    subtitle: 'tradingview-mcp · direct tool access',
+    title: t('mcp.title'),
+    subtitle: t('mcp.sub'),
     size: 'lg',
     render(body) {
       const layout = document.createElement('div');
       layout.className = 'mcp-layout';
       layout.innerHTML = `
-        <aside class="mcp-tools" data-role="list"><p class="section__hint">Loading tools…</p></aside>
+        <aside class="mcp-tools" data-role="list"><p class="section__hint">${escape(t('mcp.loading'))}</p></aside>
         <div class="mcp-main">
           <div class="mcp-form" data-role="form"></div>
           <div class="mcp-actions">
-            <button class="btn btn--primary" data-act="run">Run tool</button>
+            <button class="btn btn--primary" data-act="run">${escape(t('mcp.run'))}</button>
             <span class="section__hint" data-role="elapsed"></span>
           </div>
-          <pre class="code-block mcp-output" data-role="output">Pick a tool on the left.</pre>
+          <pre class="code-block mcp-output" data-role="output">${escape(t('mcp.pick'))}</pre>
         </div>
       `;
       body.appendChild(layout);
@@ -45,7 +46,7 @@ export function openMcpConsole({ symbol }) {
         tools = data.tools ?? [];
         listEl.innerHTML = '';
         if (!tools.length) {
-          listEl.innerHTML = '<p class="section__hint is-error">MCP server returned no tools.</p>';
+          listEl.innerHTML = `<p class="section__hint is-error">${escape(t('mcp.noTools'))}</p>`;
           return;
         }
         for (const tool of tools) {
@@ -59,7 +60,7 @@ export function openMcpConsole({ symbol }) {
         const preferred = tools.find((t) => t.name === 'stock_screener') ?? tools[0];
         select(preferred);
       }).catch((err) => {
-        listEl.innerHTML = `<p class="section__hint is-error">${escape(err.message)}<br>Is <code>tradingview-mcp-server</code> installed?</p>`;
+        listEl.innerHTML = `<p class="section__hint is-error">${escape(err.message)}<br>${t('mcp.noToolsErr')}</p>`;
       });
 
       function select(tool) {
@@ -119,17 +120,17 @@ export function openMcpConsole({ symbol }) {
         }
 
         if (!tool.params.length) {
-          grid.innerHTML = '<p class="section__hint">This tool takes no arguments.</p>';
+          grid.innerHTML = `<p class="section__hint">${escape(t('mcp.noArgs'))}</p>`;
         }
         formEl.appendChild(grid);
-        outEl.textContent = `${tool.name} ready — press Run.`;
+        outEl.textContent = t('mcp.ready', { name: tool.name });
       }
 
       body.addEventListener('click', async (e) => {
         if (!e.target.closest('[data-act="run"]')) return;
         if (!selected) return;
         const payload = Object.fromEntries(Object.entries(args).filter(([, v]) => v !== '' && v !== undefined));
-        outEl.textContent = 'Running…';
+        outEl.textContent = t('mcp.running');
         outEl.classList.add('is-loading');
         const started = performance.now();
         try {
@@ -140,9 +141,9 @@ export function openMcpConsole({ symbol }) {
           elapsedEl.textContent = `${ms} ms`;
         } catch (err) {
           outEl.classList.remove('is-loading');
-          outEl.textContent = `Error [${err.code}]: ${err.message}`;
+          outEl.textContent = t('mcp.error', { code: err.code, msg: err.message });
           elapsedEl.textContent = '';
-          toast(`${selected.name} failed`, { type: 'error' });
+          toast(t('mcp.failed', { name: selected.name }), { type: 'error' });
         }
       });
     },

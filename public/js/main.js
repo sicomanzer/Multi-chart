@@ -12,6 +12,9 @@
 import { api } from './api.js';
 import { Board } from './board.js';
 import { toast, escape, askText } from './ui.js';
+import {
+  t, tp, localizeCatalog, localizeMetrics, toggleLang, getLang, timeString, tfLabel,
+} from './i18n.js';
 import { openIndicatorPicker } from './dialogs/indicator-dialog.js';
 import { openWatchlists } from './dialogs/watchlist-dialog.js';
 import { openOversoldList } from './dialogs/oversold-dialog.js';
@@ -52,6 +55,7 @@ const el = {
   themeBtn: document.getElementById('themeBtn'),
   saveBtn: document.getElementById('saveBtn'),
   workspaceSelect: document.getElementById('workspaceSelect'),
+  langBtn: document.getElementById('langBtn'),
   filterChip: document.getElementById('filterChip'),
   workspaceName: document.getElementById('workspaceName'),
   statusPill: document.getElementById('statusPill'),
@@ -71,13 +75,27 @@ async function boot() {
     api.fundamentalsMeta().catch(() => ({ metrics: [], defaults: [] })),
   ]);
 
+  /**
+   * Timeframe ids stay exactly as the server sent them — only the human-facing
+   * `label` is swapped for the translated one, because the label also appears in
+   * the timeframe buttons' tooltips and in two dialogs.
+   */
+  const timeframes = (meta.timeframes ?? []).map((tf) => ({
+    ...tf,
+    label: tfLabel(tf.id, tf.label),
+  }));
+  meta.timeframes = timeframes;
+
   const catalog = Object.fromEntries(catalogRes.indicators.map((i) => [i.type, i]));
-  const metricCatalog = metricsRes.metrics ?? [];
+  // Names, groups and parameter labels are ours to translate; every id, range
+  // and default stays exactly as the server sent it.
+  const localized = localizeCatalog(catalog, catalogRes.groups);
+  const metricCatalog = localizeMetrics(metricsRes.metrics ?? []);
   const board = new Board({
     gridEl: el.grid,
     meta,
-    catalog,
-    groups: catalogRes.groups,
+    catalog: localized.catalog,
+    groups: localized.groups,
     metricCatalog,
     metricLabels: Object.fromEntries(metricCatalog.map((m) => [m.key, m])),
   });
@@ -162,6 +180,12 @@ function wireTopbar(board) {
   }
   markTimeframe(board.workspace.settings.defaultTimeframe);
 
+  // The button names the language you would get by clicking it, which is the
+  // only unambiguous label: "EN" beside an English UI reads as a state, not an
+  // action.
+  el.langBtn.textContent = getLang() === 'th' ? 'EN' : 'ไทย';
+  el.langBtn.addEventListener('click', toggleLang);
+
   el.addChartBtn.addEventListener('click', () => board.openAddChart());
   el.emptyAddBtn.addEventListener('click', () => board.openAddChart());
   el.watchlistBtn.addEventListener('click', () =>
@@ -180,7 +204,7 @@ function wireTopbar(board) {
     // Thresholds can differ per chart, so name the highest line in play rather
     // than implying one number applies to the whole board.
     const line = Math.max(...hits.map((h) => h.threshold));
-    el.oversoldBtn.textContent = `● ${n} below ${line}`;
+    el.oversoldBtn.textContent = t('oversold.chip', { n, line });
     el.oversoldBtn.title = hits
       .map((h) => `${h.symbol} RSI ${h.value.toFixed(1)} < ${h.threshold}`)
       .join('\n');
@@ -197,7 +221,7 @@ function wireTopbar(board) {
 
   el.filterChip.addEventListener('click', () => {
     board.clearFilter();
-    toast('Showing every chart again', { type: 'info', timeout: 2200 });
+    toast(t('toast.showAll'), { type: 'info', timeout: 2200 });
   });
   el.settingsBtn.addEventListener('click', () => board.openSettings());
   el.mcpBtn.addEventListener('click', () => board.openMcp());
@@ -207,8 +231,8 @@ function wireTopbar(board) {
     const result = board.applyLayout();
     board.commit();
     toast(result?.fits
-      ? `Fitted ${result.charts} charts in ${result.cols} × ${result.rows}`
-      : `${result?.charts ?? board.tiles.size} charts will not fit legibly — scrolling instead`, {
+      ? t('toast.fit.ok', { charts: result.charts, cols: result.cols, rows: result.rows })
+      : t('toast.fit.no', { n: result?.charts ?? board.tiles.size }), {
       type: result?.fits ? 'success' : 'info',
       timeout: 2600,
     });
@@ -220,7 +244,7 @@ function wireTopbar(board) {
   el.zoomOutBtn.addEventListener('click', () => board.zoomAll(ZOOM_OUT));
   el.zoomResetBtn.addEventListener('click', () => {
     board.fitAll();
-    toast('Zoom reset to the full range', { type: 'info', timeout: 1800 });
+    toast(t('toast.zoomReset'), { type: 'info', timeout: 1800 });
   });
 
   el.addIndicatorBtn.addEventListener('click', () => {
@@ -245,7 +269,7 @@ function wireTopbar(board) {
 
   el.saveBtn.addEventListener('click', async () => {
     await board.flushSave({ force: true });
-    toast('Board saved', { type: 'success', timeout: 2000 });
+    toast(t('toast.saved'), { type: 'success', timeout: 2000 });
     await refreshWorkspaceList(board);
   });
 
@@ -264,13 +288,13 @@ function wireTopbar(board) {
         const wl = await api.watchlist(id);
         const symbols = new Set(wl.symbols ?? []);
         if (!symbols.size) {
-          toast(`"${wl.name}" has no symbols yet`, { type: 'info' });
+          toast(t('toast.wl.empty', { name: wl.name }), { type: 'info' });
         } else {
           board.setFilter(symbols, wl.name, wl.id);
           const onBoard = board.visibleCount();
           toast(onBoard
-            ? `Showing ${onBoard} chart${onBoard === 1 ? '' : 's'} from "${wl.name}"`
-            : `None of "${wl.name}"'s symbols are on this board — use Watchlists → Load`,
+            ? tp('toast.wl.showing', onBoard, { name: wl.name })
+            : t('toast.wl.none', { name: wl.name }),
             { type: onBoard ? 'success' : 'error', timeout: 5000 });
         }
         return;
@@ -283,7 +307,7 @@ function wireTopbar(board) {
         // the board option unticked.
         if (board.filterSymbols) {
           board.clearFilter();
-          toast(`Showing all ${board.tiles.size} charts`, { type: 'info', timeout: 2400 });
+          toast(t('toast.all', { n: board.tiles.size }), { type: 'info', timeout: 2400 });
         }
         // The filter event re-syncs the dropdown; nothing to do here.
         return;
@@ -296,7 +320,7 @@ function wireTopbar(board) {
       markTimeframe(ws.settings.defaultTimeframe);
       await refreshWorkspaceList(board);
     } catch (err) {
-      toast(`Could not open ${kind}: ${err.message}`, { type: 'error' });
+      toast(t('err.openKind', { kind: t(`err.kind.${kind}`), msg: err.message }), { type: 'error' });
       await refreshWorkspaceList(board);
     }
   });
@@ -305,15 +329,15 @@ function wireTopbar(board) {
 function wireBoardEvents(board) {
   board.addEventListener('workspace', (e) => {
     const ws = e.detail;
-    el.workspaceName.textContent = `${ws.name} · ${ws.charts.length} chart${ws.charts.length === 1 ? '' : 's'}`;
+    el.workspaceName.textContent = tp('top.nameCharts', ws.charts.length, { name: ws.name });
     el.empty.hidden = ws.charts.length > 0;
     markTimeframe(ws.settings.defaultTimeframe);
   });
 
   board.addEventListener('stats', (e) => {
     const { charts, indicators, symbols } = e.detail;
-    el.statCharts.textContent = `${charts} chart${charts === 1 ? '' : 's'}`;
-    el.statIndicators.textContent = `${indicators} indicator${indicators === 1 ? '' : 's'} · ${symbols} symbol${symbols === 1 ? '' : 's'}`;
+    el.statCharts.textContent = tp('stat.charts', charts);
+    el.statIndicators.textContent = `${tp('stat.indicators', indicators)} · ${tp('stat.symbols', symbols)}`;
     el.empty.hidden = charts > 0;
   });
 
@@ -321,7 +345,9 @@ function wireBoardEvents(board) {
     const ts = e.detail?.ts;
     if (!ts) return;
     const secs = Math.max(0, Math.round((Date.now() - ts) / 1000));
-    el.statLastTick.textContent = `quotes: ${secs < 2 ? 'just now' : `${secs}s ago`}`;
+    el.statLastTick.textContent = t('stat.quotes', {
+      t: secs < 2 ? t('stat.justNow') : t('stat.secsAgo', { n: secs }),
+    });
   });
 
   board.addEventListener('status', () => updateStatusPill(board));
@@ -331,7 +357,7 @@ board.addEventListener('reidentified', (e) => {
   });
 
   board.addEventListener('conflict', async (e) => {
-    toast('This board was changed in another tab or by the CLI — reloading it', {
+    toast(t('toast.conflict'), {
       type: 'error', timeout: 6000,
     });
     const current = e.detail;
@@ -352,20 +378,19 @@ board.addEventListener('reidentified', (e) => {
   board.addEventListener('layout', (e) => {
     const r = e.detail ?? {};
     if (r.fixed) {
-      el.statLayout.textContent = `${board.workspace.settings.columns} columns · scrolling`;
+      el.statLayout.textContent = t('stat.layoutFixed', { n: board.workspace.settings.columns });
       return;
     }
     if (!r.fits) {
-      el.statLayout.textContent = `${r.charts ?? board.visibleCount()} charts · cannot fit, scrolling`;
+      el.statLayout.textContent = t('stat.layoutCantFit', { n: r.charts ?? board.visibleCount() });
       return;
     }
     const size = `${Math.round(r.tileW)}×${Math.round(r.tileH)}px`;
     // "Compact" is not an apology — it says the board chose small tiles on
     // purpose so that everything stays on one screen, which is a different
     // situation from a board that overflowed and has to be scrolled.
-    el.statLayout.textContent = r.compact
-      ? `fit: ${r.cols} × ${r.rows} · ${size} · compact`
-      : `fit: ${r.cols} × ${r.rows} · ${size}`;
+    el.statLayout.textContent = t('stat.layoutFit', { cols: r.cols, rows: r.rows, size })
+      + (r.compact ? t('stat.layoutCompact') : '');
   });
 
   // The filter chip appears only while a watchlist is narrowing the board, and
@@ -377,17 +402,17 @@ board.addEventListener('reidentified', (e) => {
     el.filterChip.hidden = !f.name;
     if (f.name) {
       el.filterChip.querySelector('b').textContent = f.name;
-      el.filterChip.querySelector('i').textContent = `${f.visible} shown · ${f.hidden} hidden`;
+      el.filterChip.querySelector('i').textContent = t('top.filterCount', { visible: f.visible, hidden: f.hidden });
     }
     refreshWorkspaceList(board);
   });
 
   board.addEventListener('stream', (e) => updateStatusPill(board, null, e.detail));
   board.addEventListener('change', () => {
-    el.statSaved.textContent = 'saving…';
+    el.statSaved.textContent = t('stat.saving');
   });
   board.addEventListener('saved', () => {
-    el.statSaved.textContent = `saved ${new Date().toLocaleTimeString()}`;
+    el.statSaved.textContent = t('stat.savedAt', { time: timeString() });
   });
 
   // Keyboard: `+`/`-` zoom the whole board, `0` resets it. Ignore the shortcut
@@ -431,13 +456,13 @@ function updateStatusPill(board, health = null, stream = null) {
 
   if (connected) {
     label.textContent = health?.mcp?.ping
-      ? `mcp · ${health.mcp.ping.ms}ms`
-      : 'mcp ready';
+      ? t('status.mcpPing', { ms: health.mcp.ping.ms })
+      : t('status.mcpReady');
     el.statusPill.classList.remove('is-error');
   } else {
-    label.textContent = mcp.lastError ? `mcp offline` : 'connecting…';
+    label.textContent = mcp.lastError ? t('status.mcpOffline') : t('status.connecting');
     el.statusPill.classList.toggle('is-error', Boolean(mcp.lastError));
-    el.statusPill.title = mcp.lastError ?? 'waiting for the MCP server';
+    el.statusPill.title = mcp.lastError ?? t('status.waiting');
   }
 }
 
@@ -468,7 +493,7 @@ async function refreshWorkspaceList(board) {
     el.workspaceSelect.innerHTML = '';
 
     const boardGroup = document.createElement('optgroup');
-    boardGroup.label = 'Boards';
+    boardGroup.label = t('ws.boards');
     for (const ws of workspaces) {
       const opt = document.createElement('option');
       opt.value = ws.id;
@@ -480,7 +505,7 @@ async function refreshWorkspaceList(board) {
 
     if (watchlists.length) {
       const listGroup = document.createElement('optgroup');
-      listGroup.label = 'Watchlists';
+      listGroup.label = t('ws.watchlists');
       for (const wl of watchlists) {
         const opt = document.createElement('option');
         opt.value = `${WATCHLIST_PREFIX}${wl.id}`;
@@ -499,9 +524,9 @@ async function refreshWorkspaceList(board) {
         actions = document.createElement('div');
         actions.className = 'ws-actions';
         actions.innerHTML = `
-          <button class="btn btn--ghost" data-act="rename" title="Rename this board">Rename</button>
-          <button class="btn btn--ghost" data-act="duplicate" title="Duplicate this board">Copy</button>
-          <button class="btn btn--ghost" data-act="delete" title="Delete this board">Delete</button>
+          <button class="btn btn--ghost" data-act="rename" title="${escape(t('ws.renameHint'))}">${escape(t('ws.rename'))}</button>
+          <button class="btn btn--ghost" data-act="duplicate" title="${escape(t('ws.copyHint'))}">${escape(t('ws.copy'))}</button>
+          <button class="btn btn--ghost" data-act="delete" title="${escape(t('ws.deleteHint'))}">${escape(t('ws.delete'))}</button>
         `;
         el.workspaceSelect.parentElement.appendChild(actions);
 
@@ -520,9 +545,9 @@ async function refreshWorkspaceList(board) {
           try {
             if (act === 'rename') {
               const name = await askText({
-                title: 'Rename board',
+                title: t('ws.renameTitle'),
                 value: board.workspace.name,
-                submitLabel: 'Save',
+                submitLabel: t('common.save'),
               });
               if (!name) return;
               await api.patchWorkspace(id, { name });
@@ -537,11 +562,11 @@ async function refreshWorkspaceList(board) {
               // a dialog that may not be able to open.
               if (!armedDelete) {
                 armedDelete = true;
-                del.textContent = 'Confirm delete';
+                del.textContent = t('ws.confirmDelete');
                 del.classList.add('is-armed');
                 setTimeout(() => {
                   armedDelete = false;
-                  del.textContent = 'Delete';
+                  del.textContent = t('ws.delete');
                   del.classList.remove('is-armed');
                 }, 4000);
                 return;
@@ -555,7 +580,7 @@ async function refreshWorkspaceList(board) {
               } else {
                 await board.loadWorkspace(await api.workspace(next.id));
               }
-              toast('Board deleted', { type: 'info' });
+              toast(t('ws.deleted'), { type: 'info' });
             }
             await refreshWorkspaceList(board);
           } catch (err) {
@@ -573,10 +598,9 @@ boot().catch((err) => {
   console.error(err);
   document.body.insertAdjacentHTML('afterbegin', `
     <div class="fatal">
-      <h2>Could not start the desk</h2>
+      <h2>${escape(t('err.bootTitle'))}</h2>
       <p>${escape(err.message)}</p>
-      <p class="section__hint">Check that the API is running on the same origin and that
-      <code>tradingview-mcp-server</code> is installed for your Python.</p>
+      <p class="section__hint">${t('err.bootBody')}</p>
     </div>
   `);
 });

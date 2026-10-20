@@ -2,6 +2,7 @@
  * Board settings dialog: layout, theme, polling, cross-chart behaviour.
  */
 import { modal, section, selectField, checkbox, escape } from '../ui.js';
+import { t, tp, tfLabel } from '../i18n.js';
 
 export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [], onSave, onRefreshRatios, onSnapshotHistory, historyStatus = null }) {
   const next = { ...settings };
@@ -12,67 +13,67 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
   // this is one row per symbol, and no trend feature can honestly run on it.
   const renderHistoryNote = (node, status) => {
     if (!status) {
-      node.textContent = 'Loading…';
+      node.textContent = t('common.loading');
       return;
     }
     const { symbols = 0, days = 0, lastDate = null } = status;
     if (days === 0) {
-      node.textContent = 'Nothing recorded yet. Ratios are written automatically each time the board loads; it starts now and cannot be back-filled.';
+      node.textContent = t('bs.histEmpty');
       return;
     }
     const tracked = status.tracked?.length ?? 0;
-    node.textContent = `${symbols} symbol${symbols === 1 ? '' : 's'} × ${tracked} ratios, ${days} day${days === 1 ? '' : 's'} recorded`
-      + ` (since ${status.since ?? '—'}, last ${lastDate ?? '—'})`
-      + (days < 30 ? '. Too few days yet for any trend to mean much.' : '.');
+    node.textContent = `${tp('stat.symbols', symbols)} × ${tracked} ${t('bs.ratios')}, ${tp('bs.days', days)}`
+      + t('bs.since', { since: status.since ?? '—', last: lastDate ?? '—' })
+      + (days < 30 ? t('bs.histShort') : '.');
   };
 
   const POLL_CHOICES = [
-    { value: '5', label: '5 seconds (fastest)' },
-    { value: '10', label: '10 seconds (default)' },
-    { value: '20', label: '20 seconds' },
-    { value: '30', label: '30 seconds' },
-    { value: '60', label: '60 seconds (relaxed)' },
-    { value: '120', label: '2 minutes (background)' },
+    { value: '5', label: t('poll.5') },
+    { value: '10', label: t('poll.10') },
+    { value: '20', label: t('poll.20') },
+    { value: '30', label: t('poll.30') },
+    { value: '60', label: t('poll.60') },
+    { value: '120', label: t('poll.120') },
   ];
 
   modal({
-    title: 'Board settings',
-    subtitle: 'Applies to every chart on this board.',
+    title: t('bs.title'),
+    subtitle: t('bs.sub'),
     size: 'md',
     render(body) {
-      body.appendChild(section('Layout', 'Auto fit sizes the grid so every chart is visible without scrolling.'));
+      body.appendChild(section(t('bs.layout'), t('bs.layoutHint')));
       const layout = document.createElement('div');
       layout.className = 'form-grid';
-      layout.appendChild(selectField('Board sizing', next.layoutFit ?? 'auto', [
-        { value: 'auto', label: 'Auto fit to screen' },
-        { value: 'fixed', label: 'Fixed columns (scroll if needed)' },
+      layout.appendChild(selectField(t('bs.sizing'), next.layoutFit ?? 'auto', [
+        { value: 'auto', label: t('bs.auto') },
+        { value: 'fixed', label: t('bs.fixed') },
       ], (v) => { next.layoutFit = v; }));
-      layout.appendChild(selectField('Columns', String(next.columns), [1, 2, 3, 4, 5].map((n) => ({
-        value: String(n), label: `${n} column${n > 1 ? 's' : ''}`,
+      layout.appendChild(selectField(t('bs.columns'), String(next.columns), [1, 2, 3, 4, 5].map((n) => ({
+        value: String(n), label: tp('bs.columnsN', n),
       })), (v) => { next.columns = Number(v); }));
-      layout.appendChild(selectField('Theme', next.theme, [
-        { value: 'dark', label: 'Dark' },
-        { value: 'light', label: 'Light' },
+      layout.appendChild(selectField(t('bs.theme'), next.theme, [
+        { value: 'dark', label: t('bs.dark') },
+        { value: 'light', label: t('bs.light') },
       ], (v) => { next.theme = v; }));
-      layout.appendChild(selectField('Default timeframe', next.defaultTimeframe,
-        meta.timeframes.map((t) => ({ value: t.id, label: `${t.id} — ${t.label}` })),
+      layout.appendChild(selectField(t('bs.defaultTf'), next.defaultTimeframe,
+        meta.timeframes.map((tf) => ({ value: tf.id, label: `${tf.id} — ${tfLabel(tf.id, tf.label)}` })),
         (v) => { next.defaultTimeframe = v; }));
-      layout.appendChild(selectField('Default chart style', next.candleStyle, [
-        { value: 'candles', label: 'Candles' },
-        { value: 'bars', label: 'OHLC bars' },
-        { value: 'line', label: 'Line' },
-        { value: 'area', label: 'Area' },
-        { value: 'baseline', label: 'Baseline' },
+      layout.appendChild(selectField(t('bs.defaultStyle'), next.candleStyle, [
+        { value: 'candles', label: t('style.candles') },
+        { value: 'bars', label: t('style.bars') },
+        { value: 'line', label: t('style.line') },
+        { value: 'area', label: t('style.area') },
+        { value: 'baseline', label: t('style.baseline') },
       ], (v) => { next.candleStyle = v; }));
       body.appendChild(layout);
 
-      body.appendChild(section('Chart footer', 'The strip under each chart: valuation ratios, indicator values, or both.'));
+      body.appendChild(section(t('bs.footer'), t('bs.footerHint')));
       const footer = document.createElement('div');
       footer.className = 'form-grid';
-      footer.appendChild(selectField('Show', next.footerMode ?? 'both', [
-        { value: 'fundamentals', label: 'Fundamentals only (P/E, P/BV, D/E, yield)' },
-        { value: 'indicators', label: 'Indicator values only' },
-        { value: 'both', label: 'Both (ratios on top, indicators below)' },
+      footer.appendChild(selectField(t('bs.show'), next.footerMode ?? 'both', [
+        { value: 'fundamentals', label: t('bs.footerFund') },
+        { value: 'indicators', label: t('bs.footerInd') },
+        { value: 'both', label: t('bs.footerBoth') },
       ], (v) => {
         next.footerMode = v;
         metricsWrap.hidden = v === 'indicators';
@@ -81,18 +82,18 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
       const refreshBtn = document.createElement('button');
       refreshBtn.className = 'btn';
       refreshBtn.type = 'button';
-      refreshBtn.textContent = 'Refresh ratios now';
-      refreshBtn.title = 'Bypass the 30-minute cache and re-query the screener';
+      refreshBtn.textContent = t('bs.refresh');
+      refreshBtn.title = t('bs.refreshHint');
       refreshBtn.addEventListener('click', async () => {
         refreshBtn.disabled = true;
-        refreshBtn.textContent = 'Refreshing…';
+        refreshBtn.textContent = t('bs.refreshing');
         await onRefreshRatios?.();
         refreshBtn.disabled = false;
-        refreshBtn.textContent = 'Refresh ratios now';
+        refreshBtn.textContent = t('bs.refresh');
       });
       const refreshField = document.createElement('div');
       refreshField.className = 'field';
-      refreshField.innerHTML = '<span class="field__label">Fundamentals</span>';
+      refreshField.innerHTML = `<span class="field__label">${escape(t('bs.fundamentals'))}</span>`;
       refreshField.appendChild(refreshBtn);
 
       // What the history file holds, and a way to fill today's gap by hand.
@@ -100,24 +101,24 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
       // invisible thing the app does on its own.
       const historyField = document.createElement('div');
       historyField.className = 'field';
-      historyField.innerHTML = '<span class="field__label">Recorded history</span>';
+      historyField.innerHTML = `<span class="field__label">${escape(t('bs.history'))}</span>`;
       const historyNote = document.createElement('p');
       historyNote.className = 'section__hint';
       historyField.appendChild(historyNote);
       const snapshotBtn = document.createElement('button');
       snapshotBtn.className = 'btn';
       snapshotBtn.type = 'button';
-      snapshotBtn.textContent = 'Record today now';
-      snapshotBtn.title = 'Write today\'s ratios for every chart on this board, replacing today\'s row';
+      snapshotBtn.textContent = t('bs.record');
+      snapshotBtn.title = t('bs.recordHint');
       snapshotBtn.addEventListener('click', async () => {
         snapshotBtn.disabled = true;
-        snapshotBtn.textContent = 'Recording…';
+        snapshotBtn.textContent = t('bs.recording');
         // The returned summary is the fresh one; the dialog's own copy of
         // `historyStatus` was captured when it opened.
         const result = await onSnapshotHistory?.();
         renderHistoryNote(historyNote, result?.summary ?? null);
         snapshotBtn.disabled = false;
-        snapshotBtn.textContent = 'Record today now';
+        snapshotBtn.textContent = t('bs.record');
       });
       historyField.appendChild(snapshotBtn);
       renderHistoryNote(historyNote, historyStatus);
@@ -126,7 +127,7 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
       const metricsWrap = document.createElement('div');
       metricsWrap.className = 'field';
       metricsWrap.hidden = next.footerMode === 'indicators';
-      metricsWrap.innerHTML = '<span class="field__label">Which ratios</span>';
+      metricsWrap.innerHTML = `<span class="field__label">${escape(t('bs.whichRatios'))}</span>`;
       const chips = document.createElement('div');
       chips.className = 'chip-row';
       for (const metric of metricCatalog) {
@@ -145,41 +146,35 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
         });
         chips.appendChild(chip);
       }
-      if (!metricCatalog.length) chips.innerHTML = '<span class="section__hint">Metric list unavailable</span>';
+      if (!metricCatalog.length) chips.innerHTML = `<span class="section__hint">${escape(t('bs.metricsMissing'))}</span>`;
       metricsWrap.appendChild(chips);
 
       footer.appendChild(metricsWrap);
       footer.appendChild(refreshField);
       body.appendChild(footer);
 
-      body.appendChild(section('Live data', 'Quotes are pushed by the server over SSE; the MCP screener is polled once per interval for the whole board.'));
+      body.appendChild(section(t('bs.live'), t('bs.liveHint')));
       const live = document.createElement('div');
       live.className = 'form-grid';
-      live.appendChild(selectField('Quote poll interval', String(next.pollSeconds), POLL_CHOICES, (v) => { next.pollSeconds = Number(v); }));
-      live.appendChild(checkbox('Live quotes (turn off to freeze the board)', next.liveQuotes, (v) => { next.liveQuotes = v; }));
-      live.appendChild(checkbox('Mirror crosshair across every chart', next.syncCrosshair, (v) => { next.syncCrosshair = v; }));
-      live.appendChild(checkbox('Link zoom/pan between charts', next.syncTimeScale, (v) => { next.syncTimeScale = v; }));
-      live.appendChild(checkbox('Show grid lines', next.showGrid, (v) => { next.showGrid = v; }));
-      live.appendChild(checkbox('Show last-price marker inside the chart', next.showWatermark, (v) => { next.showWatermark = v; }));
+      live.appendChild(selectField(t('bs.poll'), String(next.pollSeconds), POLL_CHOICES, (v) => { next.pollSeconds = Number(v); }));
+      live.appendChild(checkbox(t('bs.liveQuotes'), next.liveQuotes, (v) => { next.liveQuotes = v; }));
+      live.appendChild(checkbox(t('bs.syncCrosshair'), next.syncCrosshair, (v) => { next.syncCrosshair = v; }));
+      live.appendChild(checkbox(t('bs.syncTimeScale'), next.syncTimeScale, (v) => { next.syncTimeScale = v; }));
+      live.appendChild(checkbox(t('bs.showGrid'), next.showGrid, (v) => { next.showGrid = v; }));
+      live.appendChild(checkbox(t('bs.showWatermark'), next.showWatermark, (v) => { next.showWatermark = v; }));
       body.appendChild(live);
 
-      body.appendChild(section(
-        'Oversold alert',
-        'Flags any chart whose RSI is under the oversold line configured on that chart. '
-        + 'It refreshes whenever candles reload — on board load, on every intraday tick, '
-        + 'and after an indicator edit. Not on every quote tick, so it never disagrees '
-        + 'with the number drawn in the pane.',
-      ));
+      body.appendChild(section(t('bs.alert'), t('bs.alertHint')));
       const alert = document.createElement('div');
       alert.className = 'form-grid';
       alert.appendChild(checkbox(
-        'Show a green alert button when a chart is oversold',
+        t('bs.alertCheck'),
         next.oversoldAlert !== false,
         (v) => { next.oversoldAlert = v; },
       ));
       body.appendChild(alert);
 
-      body.appendChild(section('Connection'));
+      body.appendChild(section(t('bs.connection')));
       const status = document.createElement('pre');
       status.className = 'code-block';
       status.textContent = JSON.stringify(mcpStatus ?? {}, null, 2);
@@ -190,8 +185,8 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
     footer(foot, { close }) {
       foot.innerHTML = `
         <span class="spacer"></span>
-        <button class="btn" data-close>Cancel</button>
-        <button class="btn btn--primary" data-act="save">Save</button>
+        <button class="btn" data-close>${escape(t('common.cancel'))}</button>
+        <button class="btn btn--primary" data-act="save">${escape(t('common.save'))}</button>
       `;
       foot.querySelector('[data-act="save"]').addEventListener('click', () => {
         onSave(read());

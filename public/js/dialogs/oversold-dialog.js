@@ -15,6 +15,7 @@
  * shows always matches what is drawn on screen.
  */
 import { modal, escape, section } from '../ui.js';
+import { t, tp } from '../i18n.js';
 
 /**
  * @param {object} opts
@@ -26,28 +27,29 @@ export function openOversoldList({ board, hits }) {
   const lowest = rows[0];
 
   modal({
-    title: 'RSI below its oversold line',
+    title: t('os.title'),
     subtitle: rows.length
-      ? `${rows.length} chart${rows.length === 1 ? '' : 's'} on this board. Each is judged against its own RSI setting.`
-      : 'Nothing is below its line right now.',
+      ? tp('os.sub', rows.length)
+      : t('os.subNone'),
     size: 'md',
     render: (body) => {
       if (!rows.length) {
-        body.innerHTML = `
-          <p class="section__hint">
-            The alert re-checks whenever a chart reloads its candles, which is every
-            minute while the tab is visible and whenever a board loads.
-          </p>`;
+        body.innerHTML = `<p class="section__hint">${escape(t('os.hint'))}</p>`;
         return;
       }
 
       const summary = document.createElement('p');
       summary.className = 'section__hint';
-      summary.innerHTML = `Deepest: <b>${escape(lowest.symbol.split(':')[1])}</b> at
-        RSI <b>${lowest.value.toFixed(1)}</b> against a ${lowest.threshold} line.`;
+      // Markup is ours; the three values are escaped on the way in.
+      summary.innerHTML = escape(t('os.deepest', {
+        symbol: '\u0000', value: '\u0001', line: '\u0002',
+      }))
+        .replace('\u0000', `<b>${escape(lowest.symbol.split(':')[1])}</b>`)
+        .replace('\u0001', `<b>${lowest.value.toFixed(1)}</b>`)
+        .replace('\u0002', String(lowest.threshold));
       body.appendChild(summary);
 
-      body.appendChild(section('Charts', 'Click a row to bring that chart up full screen.'));
+      body.appendChild(section(t('os.charts'), t('os.chartsHint')));
 
       const list = document.createElement('div');
       list.className = 'os-list';
@@ -66,7 +68,13 @@ export function openOversoldList({ board, hits }) {
           <span class="os-row__bar"><i style="width:${depth.toFixed(1)}%"></i></span>
           <span class="os-row__val">${hit.value.toFixed(1)}</span>
           <span class="os-row__line">&lt; ${hit.threshold}</span>`;
-        row.title = `${hit.symbol} · ${hit.timeframe} · RSI(${hit.length}) ${hit.value.toFixed(2)}, line ${hit.threshold} — click to maximise`;
+        row.title = t('os.rowTitle', {
+          symbol: hit.symbol,
+          tf: hit.timeframe,
+          length: hit.length,
+          value: hit.value.toFixed(2),
+          line: hit.threshold,
+        });
         row.addEventListener('click', () => {
           const tile = board.tiles.get(hit.id);
           if (tile) board.toggleFocus(tile);
@@ -78,14 +86,13 @@ export function openOversoldList({ board, hits }) {
 
       const note = document.createElement('p');
       note.className = 'section__hint';
-      note.textContent = 'Change a chart\'s line from Settings, or from the RSI legend entry '
-        + 'clicking opens its editor.';
+      note.textContent = t('os.note');
       body.appendChild(note);
     },
     footer: (foot) => {
       foot.innerHTML = `
         <span class="spacer"></span>
-        <button class="btn" data-close>Close</button>`;
+        <button class="btn" data-close>${escape(t('common.close'))}</button>`;
     },
   });
 }

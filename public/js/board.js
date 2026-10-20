@@ -15,6 +15,7 @@ import { api } from './api.js';
 import { ChartTile } from './chart-tile.js';
 import { QuoteStream } from './stream.js';
 import { modal, section, escape, toast, selectField, checkbox } from './ui.js';
+import { t, tp, tfLabel } from './i18n.js';
 import {
   openIndicatorPicker, openIndicatorEditor, openBoardIndicatorPicker,
 } from './dialogs/indicator-dialog.js';
@@ -247,7 +248,7 @@ export class Board extends EventTarget {
           return;
         }
         console.warn('[board] autosave failed', err);
-        toast(`Could not save layout: ${err.message}`, { type: 'error' });
+        toast(t('err.saveLayout', { msg: err.message }), { type: 'error' });
       }
     };
 
@@ -922,7 +923,7 @@ export class Board extends EventTarget {
       };
       this.patchChart(tile.config.id, { indicators: [...tile.config.indicators, instance] });
     }
-    toast(`${def.name} added to ${this.tiles.size} chart${this.tiles.size === 1 ? '' : 's'}`);
+    toast(tp('board.indicatorAdded', this.tiles.size, { name: def.name }));
   }
 
   /**
@@ -969,7 +970,7 @@ export class Board extends EventTarget {
       if (instance) targets.push({ tile, instance });
     }
     if (!targets.length) {
-      toast(`No chart on this board has ${this.catalog[type]?.name ?? type}`, { type: 'info' });
+      toast(t('board.noChartHas', { name: this.catalog[type]?.name ?? type }), { type: 'info' });
       return;
     }
 
@@ -990,20 +991,24 @@ export class Board extends EventTarget {
       scope: { charts: targets.length, differing },
       onSave: (patch) => {
         writeAll((instance) => Object.assign(instance, patch));
-        const tail = missing ? ` · ${missing} chart${missing === 1 ? '' : 's'} without it left alone` : '';
-        toast(`${this.catalog[type]?.name ?? type} updated on ${targets.length} chart${targets.length === 1 ? '' : 's'}${tail}`);
+        const tail = missing ? tp('board.leftAlone', missing) : '';
+        const name = this.catalog[type]?.name ?? type;
+        toast(tp('board.updated', targets.length, { name }) + tail);
       },
       onDelete: () => {
         for (const { tile } of targets) {
           const kept = (tile.config.indicators ?? []).filter((i) => i.type !== type);
           this.patchChart(tile.config.id, { indicators: kept });
         }
-        toast(`${this.catalog[type]?.name ?? type} removed from ${targets.length} chart${targets.length === 1 ? '' : 's'}`);
+        toast(tp('board.removed', targets.length, { name: this.catalog[type]?.name ?? type }));
       },
       onToggle: () => {
         const enable = template.enabled === false;
         writeAll((instance) => { instance.enabled = enable; });
-        toast(`${this.catalog[type]?.name ?? type} ${enable ? 'enabled' : 'disabled'} on ${targets.length} chart${targets.length === 1 ? '' : 's'}`);
+        toast(tp('board.state', targets.length, {
+          name: this.catalog[type]?.name ?? type,
+          state: t(enable ? 'board.stateEnabled' : 'board.stateDisabled'),
+        }));
       },
     });
   }
@@ -1038,7 +1043,7 @@ export class Board extends EventTarget {
         if (symbols.length === 0) return null;
         const result = await api.snapshotHistory(symbols);
         this.historyStatus = result.summary ?? null;
-        toast(`Recorded ${result.written ?? 0} symbol${result.written === 1 ? '' : 's'} for today`);
+        toast(tp('board.recorded', result.written ?? 0));
         return result;
       },
       onSave: (settings) => {
@@ -1085,40 +1090,40 @@ export class Board extends EventTarget {
     input.placeholder = 'CPF, SET:CPF, NASDAQ:AAPL…';
     input.spellcheck = false;
 
-    const tfField = selectField('Timeframe', this.workspace.settings.defaultTimeframe,
-      this.meta.timeframes.map((t) => ({ value: t.id, label: t.id })), () => {});
+    const tfField = selectField(t('nc.timeframe'), this.workspace.settings.defaultTimeframe,
+      this.meta.timeframes.map((tf) => ({ value: tf.id, label: tf.id })), () => {});
 
-    const rsiField = checkbox('RSI(14) in its own pane', true, () => {});
+    const rsiField = checkbox(t('nc.rsiCheck'), true, () => {});
     let resolved = '';
 
     modal({
-      title: 'New chart',
-      subtitle: 'Add a symbol to the board.',
+      title: t('nc.title'),
+      subtitle: t('nc.sub'),
       size: 'md',
       // Arrow functions: a method shorthand would rebind `this` to the options
       // object instead of the Board.
       render: (body) => {
-        body.appendChild(section('Symbol'));
+        body.appendChild(section(t('nc.symbol')));
         const row = document.createElement('div');
         row.className = 'row';
         const searchBtn = document.createElement('button');
         searchBtn.className = 'btn';
-        searchBtn.textContent = 'Search SET';
+        searchBtn.textContent = t('searchSet');
         row.append(input, searchBtn);
 
         const results = document.createElement('div');
         results.className = 'symbol-results';
 
         body.append(row, results);
-        body.appendChild(section('Timeframe'));
+        body.appendChild(section(t('nc.timeframe')));
         body.appendChild(tfField);
-        body.appendChild(section('Start with'));
+        body.appendChild(section(t('nc.startWith')));
         body.appendChild(rsiField);
 
-        body.appendChild(section('Recent on this board'));
+        body.appendChild(section(t('nc.recent')));
         const recentHost = document.createElement('div');
         recentHost.className = 'chip-row';
-        const recent = [...this.tiles.values()].map((t) => t.config.symbol);
+        const recent = [...this.tiles.values()].map((tile) => tile.config.symbol);
         for (const sym of recent.slice(0, 30)) {
           const chip = document.createElement('button');
           chip.className = 'chip';
@@ -1128,16 +1133,16 @@ export class Board extends EventTarget {
           chip.addEventListener('click', () => { input.value = sym; resolved = sym; });
           recentHost.appendChild(chip);
         }
-        if (!recent.length) recentHost.innerHTML = '<p class="section__hint">Nothing on the board yet.</p>';
+        if (!recent.length) recentHost.innerHTML = `<p class="section__hint">${escape(t('nc.recentEmpty'))}</p>`;
         body.appendChild(recentHost);
 
         const runSearch = async () => {
-          results.innerHTML = '<p class="section__hint">Searching…</p>';
+          results.innerHTML = `<p class="section__hint">${escape(t('nc.searching'))}</p>`;
           try {
             const data = await api.symbols(input.value || '', 'thailand', 30);
             results.innerHTML = '';
             if (!data.results.length) {
-              results.innerHTML = `<p class="section__hint">No screener match. Typing <code>${escape(input.value || 'CPF')}</code> directly still works.</p>`;
+              results.innerHTML = `<p class="section__hint">${t('nc.noMatch', { code: `<code>${escape(input.value || 'CPF')}</code>` })}</p>`;
               return;
             }
             for (const hit of data.results) {
@@ -1165,15 +1170,15 @@ export class Board extends EventTarget {
       },
       footer: (foot, { close }) => {
         foot.innerHTML = `
-          <span class="section__hint">Exchanges: ${escape((this.meta.exchanges ?? []).slice(0, 6).join(', '))}…</span>
+          <span class="section__hint">${t('nc.exchanges', { list: escape((this.meta.exchanges ?? []).slice(0, 6).join(', ')) })}</span>
           <span class="spacer"></span>
-          <button class="btn" data-close>Cancel</button>
-          <button class="btn btn--primary" data-act="create">Add chart</button>
+          <button class="btn" data-close>${escape(t('common.cancel'))}</button>
+          <button class="btn btn--primary" data-act="create">${escape(t('nc.add'))}</button>
         `;
         foot.querySelector('[data-act="create"]').addEventListener('click', () => {
           const raw = (resolved || input.value).trim();
           if (!raw) {
-            toast('Type a ticker first', { type: 'error' });
+            toast(t('nc.typeFirst'), { type: 'error' });
             return;
           }
           const timeframe = tfField.querySelector('select').value;

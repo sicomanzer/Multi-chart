@@ -15,6 +15,10 @@ browser ──HTTP/SSE──▶ Node/Express ──stdio JSON-RPC──▶ pytho
                           └──OHLCV history──▶ Yahoo Finance chart API (same endpoint the MCP uses)
 ```
 
+The interface speaks **English and Thai**. The button in the top bar switches
+between them; the choice is remembered in `localStorage`. See
+[Two languages](#two-languages).
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sicomanzer/Multi-chart)
 
 The button opens the Render blueprint for this repository — it builds the
@@ -355,6 +359,62 @@ opinion (e.g. `combined_analysis`) rather than your own settings.
 
 ---
 
+## Two languages
+
+The UI ships in English and Thai. Everything the desk shows that is *chrome*
+rather than market data — buttons, hints, toasts, dialog copy, the status bar —
+is translated, and so is the metadata the server sends over: indicator names,
+groups, parameter labels, timeframe names and the fundamental-ratio hints.
+
+Market data is left alone on purpose. Prices, tickers, company names, saved
+board names and the JSON the MCP returns are not ours to translate, and the
+symbol, indicator and ratio abbreviations (`RSI`, `P/E`, `MACD`) are the same
+in both languages.
+
+### How it is put together
+
+`public/js/i18n.js` holds the two dictionaries and does the work:
+
+| | |
+|---|---|
+| `t(key, vars, fallback)` | translate a key, substituting `{name}` placeholders |
+| `tp(base, n, vars)` | plural form — `.one` / `.other` (Thai has no plural marker) |
+| `setLang(lang)` / `toggleLang()` | persist the choice and reload |
+| `applyStatic(root)` | fill every `data-i18n` node in the static markup |
+| `localizeCatalog(catalog, groups)` | translate the indicator catalog the server sent |
+| `localizeMetrics(metrics)` | translate the fundamental-ratio hints |
+| `tfLabel(id, fallback)` | translate a timeframe name |
+
+Two conventions keep the tables honest:
+
+- **Static markup** carries `data-i18n` (plus `-title` / `-placeholder` /
+  `-aria` variants). The English text stays in `index.html` as the no-JS
+  fallback; `i18n.js` swaps it before the board boots.
+- **Server-provided labels** are translated on the client, keyed by the English
+  text: a parameter labelled `Std dev multiplier` is looked up as
+  `param.std_dev_multiplier`. Only the human-readable fields are swapped —
+  every `type`, `id`, range and default stays exactly as the server sent it,
+  because those are what the calculation code validates against.
+
+### Adding a string
+
+1. Add the key to **both** tables in `public/js/i18n.js` — English first, then
+   Thai, same key.
+2. Use it: `t('your.key')`, or `t('your.key', { name: value })` for a
+   placeholder.
+3. For a count, add `your.key.one` and `your.key.other` and call
+   `tp('your.key', n)`.
+
+### Switching
+
+The button in the top bar persists the choice and reloads the page. That is
+deliberate: every string in the app is produced at render time, so one reload
+is the honest way to bring open dialogs, generated forms and event-driven
+chrome back in the new language, rather than maintaining a second "re-render
+everything" path per surface.
+
+---
+
 ## Layout
 
 ```
@@ -371,6 +431,7 @@ server/
 public/
   index.html
   css/app.css
+  js/i18n.js            English/Thai dictionaries, t(), localizeCatalog()
   js/ta.js              indicator maths
   js/chart-tile.js      one chart: panes, series, price lines, theming
   js/board.js           board model, data loading, syncing, persistence

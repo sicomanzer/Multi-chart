@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Multi-chart trading desk</title>
+<title data-i18n="app.docTitle">Multi-chart trading desk</title>
 <meta name="description" content="Real-time multi-chart board with editable indicators, powered by the tradingview-mcp server.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d1117'/><path d='M6 22l5-7 4 4 5-9 6 5' stroke='%232f6df6' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="stylesheet" href="/css/app.css">
@@ -11,64 +11,71 @@
 <script src="/vendor/lightweight-charts.js"></script>
 </head>
 <body>
+<!--
+  Every static string carries `data-i18n` (or `-title` / `-placeholder` /
+  `-aria`); the text in the markup is the English fallback for a no-JS load,
+  and `public/js/i18n.js` swaps it for the active language before the board
+  boots. See that module for how the two tables are kept in step.
+-->
 <header class="topbar">
   <div class="topbar__row">
     <div class="topbar__brand">
       <span class="topbar__logo" aria-hidden="true"></span>
       <div>
-        <h1>Trading Desk</h1>
-        <p id="workspaceName">Loading…</p>
+        <h1 data-i18n="app.title">Trading Desk</h1>
+        <p id="workspaceName" data-i18n="common.loading">Loading…</p>
       </div>
     </div>
 
     <div class="topbar__group topbar__group--actions">
-      <button class="btn btn--primary" id="addChartBtn" title="Add a chart to the board">+ Chart</button>
-      <button class="btn" id="watchlistBtn" title="Named symbol lists — load one onto the board in a click">Watchlists</button>
-      <button class="btn btn--alert" id="oversoldBtn" title="Charts whose RSI is under its oversold line" hidden>oversold</button>
-      <button class="btn" id="addIndicatorBtn" title="Add an indicator to every chart">ƒx All</button>
-      <button class="btn" id="editIndicatorsBtn" title="Edit one indicator's settings on every chart at once">ƒx Edit All</button>
+      <button class="btn btn--primary" id="addChartBtn" title="Add a chart to the board" data-i18n="top.addChart" data-i18n-title="top.addChartHint">+ Chart</button>
+      <button class="btn" id="watchlistBtn" title="Named symbol lists — load one onto the board in a click" data-i18n="top.watchlists" data-i18n-title="top.watchlistsHint">Watchlists</button>
+      <button class="btn btn--alert" id="oversoldBtn" title="Charts whose RSI is under its oversold line" data-i18n-title="top.oversoldHint" hidden>oversold</button>
+      <button class="btn" id="addIndicatorBtn" title="Add an indicator to every chart" data-i18n="top.addIndicator" data-i18n-title="top.addIndicatorHint">ƒx All</button>
+      <button class="btn" id="editIndicatorsBtn" title="Edit one indicator's settings on every chart at once" data-i18n="top.editIndicators" data-i18n-title="top.editIndicatorsHint">ƒx Edit All</button>
       <div class="zoom-group" role="group" aria-label="Zoom every chart at once">
-        <button class="btn btn--zoom" id="zoomOutBtn" title="Zoom out — every chart (−)" aria-label="Zoom out all charts">−</button>
-        <button class="btn btn--zoom" id="zoomInBtn" title="Zoom in — every chart (+)" aria-label="Zoom in all charts">+</button>
-        <button class="btn btn--zoom" id="zoomResetBtn" title="Reset zoom to the full range (0)" aria-label="Reset zoom">⤢</button>
+        <button class="btn btn--zoom" id="zoomOutBtn" title="Zoom out — every chart (−)" aria-label="Zoom out all charts" data-i18n-title="top.zoomOutHint">−</button>
+        <button class="btn btn--zoom" id="zoomInBtn" title="Zoom in — every chart (+)" aria-label="Zoom in all charts" data-i18n-title="top.zoomInHint">+</button>
+        <button class="btn btn--zoom" id="zoomResetBtn" title="Reset zoom to the full range (0)" aria-label="Reset zoom" data-i18n-title="top.zoomResetHint">⤢</button>
       </div>
-      <button class="btn" id="fitBtn" title="Fit every chart on screen">Fit</button>
-      <button class="btn" id="settingsBtn" title="Board settings">Settings</button>
-      <button class="btn" id="mcpBtn" title="Run tradingview-mcp tools">MCP</button>
-      <button class="btn btn--ghost" id="themeBtn" title="Toggle theme">◐</button>
-      <select class="input input--select" id="workspaceSelect" title="Saved boards"></select>
+      <button class="btn" id="fitBtn" title="Fit every chart on screen" data-i18n="top.fit" data-i18n-title="top.fitHint">Fit</button>
+      <button class="btn" id="settingsBtn" title="Board settings" data-i18n="top.settings" data-i18n-title="top.settingsHint">Settings</button>
+      <button class="btn" id="mcpBtn" title="Run tradingview-mcp tools" data-i18n="top.mcp" data-i18n-title="top.mcpHint">MCP</button>
+      <button class="btn btn--ghost" id="langBtn" title="Switch language" data-i18n-title="top.langHint">ไทย</button>
+      <button class="btn btn--ghost" id="themeBtn" title="Toggle theme" data-i18n-title="top.themeHint">◐</button>
+      <select class="input input--select" id="workspaceSelect" title="Saved boards" data-i18n-title="top.workspacesHint"></select>
       <button class="btn btn--filter" id="filterChip" title="Showing only these symbols — click to show every chart" hidden>
-        filter: <b></b><i></i> ✕
+        <span data-i18n="top.filter">filter:</span> <b></b><i></i> ✕
       </button>
-      <button class="btn btn--ghost" id="saveBtn" title="Save this board">Save</button>
-      <span class="status-pill" id="statusPill" title="MCP + stream status">
-        <i class="dot"></i><span>connecting…</span>
+      <button class="btn btn--ghost" id="saveBtn" title="Save this board" data-i18n="top.save" data-i18n-title="top.saveHint">Save</button>
+      <span class="status-pill" id="statusPill" title="MCP + stream status" data-i18n-title="top.statusHint">
+        <i class="dot"></i><span data-i18n="status.connecting">connecting…</span>
       </span>
     </div>
   </div>
 
   <div class="topbar__row topbar__row--tools">
-    <div class="topbar__group" id="timeframeBar" role="group" aria-label="Timeframe for all charts"></div>
-    <span class="topbar__hint">Timeframe applies to every chart · click the active one to reload</span>
+    <div class="topbar__group" id="timeframeBar" role="group" aria-label="Timeframe for all charts" data-i18n-aria="top.tfGroup"></div>
+    <span class="topbar__hint" data-i18n="top.tfHint">Timeframe applies to every chart · click the active one to reload</span>
   </div>
 </header>
 
 <main class="board" id="grid"></main>
 
 <div class="board__empty" id="emptyState" hidden>
-  <h2>No charts yet</h2>
-  <p>Add a symbol to start watching the board.</p>
-  <button class="btn btn--primary" id="emptyAddBtn">+ Add first chart</button>
+  <h2 data-i18n="empty.title">No charts yet</h2>
+  <p data-i18n="empty.body">Add a symbol to start watching the board.</p>
+  <button class="btn btn--primary" id="emptyAddBtn" data-i18n="empty.cta">+ Add first chart</button>
 </div>
 
 <footer class="statusbar">
-  <span id="statCharts">0 charts</span>
-  <span id="statIndicators">0 indicators</span>
-  <span id="statLastTick">quotes: —</span>
+  <span id="statCharts" data-i18n="stat.zeroCharts">0 charts</span>
+  <span id="statIndicators" data-i18n="stat.zeroIndicators">0 indicators</span>
+  <span id="statLastTick" data-i18n="stat.quotesIdle">quotes: —</span>
   <span class="spacer"></span>
-  <span id="statLayout" title="How the charts are sized to fit the screen"></span>
-  <span id="statSource" title="Where the numbers come from">quotes: tradingview-mcp · candles: Yahoo chart API</span>
-  <span id="statSaved">saved</span>
+  <span id="statLayout" title="How the charts are sized to fit the screen" data-i18n-title="stat.layoutTitle"></span>
+  <span id="statSource" title="Where the numbers come from" data-i18n="stat.source" data-i18n-title="stat.sourceTitle">quotes: tradingview-mcp · candles: Yahoo chart API</span>
+  <span id="statSaved" data-i18n="stat.saved">saved</span>
 </footer>
 
 <div id="modal-root"></div>

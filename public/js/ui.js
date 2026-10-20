@@ -5,6 +5,7 @@
  * adding a parameter to an indicator in `server/indicator-catalog.js` gives it a
  * form control with the right widget, range and default — no HTML written twice.
  */
+import { t } from './i18n.js';
 
 let openCount = 0;
 
@@ -27,7 +28,7 @@ export function modal({ title, subtitle = '', render, footer, size = 'md', onClo
           <h2>${escape(title)}</h2>
           ${subtitle ? `<p>${escape(subtitle)}</p>` : ''}
         </div>
-        <button class="icon-btn" data-close title="Close">✕</button>
+        <button class="icon-btn" data-close title="${escape(t('common.close'))}">✕</button>
       </header>
       <div class="modal__body"></div>
       <footer class="modal__foot"></footer>
@@ -175,7 +176,7 @@ export function buildForm(host, schema, values) {
  *
  * @returns {Promise<string|null>} the trimmed text, or null if cancelled
  */
-export function askText({ title, subtitle = '', value = '', placeholder = '', submitLabel = 'Save', maxLength = 80 }) {
+export function askText({ title, subtitle = '', value = '', placeholder = '', submitLabel = null, maxLength = 80 }) {
   return new Promise((resolve) => {
     let settled = false;
     const finish = (result) => {
@@ -212,8 +213,8 @@ export function askText({ title, subtitle = '', value = '', placeholder = '', su
       footer(foot) {
         foot.innerHTML = `
           <span class="spacer"></span>
-          <button class="btn" data-close>Cancel</button>
-          <button class="btn btn--primary" data-act="ok">${escape(submitLabel)}</button>`;
+          <button class="btn" data-close>${escape(t('common.cancel'))}</button>
+          <button class="btn btn--primary" data-act="ok">${escape(submitLabel ?? t('common.save'))}</button>`;
         foot.querySelector('[data-act="ok"]').addEventListener('click', submit);
       },
       onClose: () => finish(null),
