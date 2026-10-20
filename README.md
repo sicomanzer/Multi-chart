@@ -19,6 +19,10 @@ The interface speaks **English and Thai**. The button in the top bar switches
 between them; the choice is remembered in `localStorage`. See
 [Two languages](#two-languages).
 
+A **value screener** sits behind the `Screener` button: fourteen fundamental
+rules, a two-stage dividend discount model with live sliders, and the stock's
+own P/E and P/BV bands. See [The value screener](#the-value-screener).
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sicomanzer/Multi-chart)
 
 The button opens the Render blueprint for this repository — it builds the
@@ -339,6 +343,72 @@ opinion (e.g. `combined_analysis`) rather than your own settings.
 
 ---
 
+## The value screener
+
+A second data layer, used only by the screener. It answers a different question
+from the fundamentals strip: not "what is this company's P/E today" but "has it
+earned more than 15% on equity every year for four years, and is the dividend
+safe".
+
+Where the numbers come from matters here, so the shortcuts are listed rather
+than hidden:
+
+| Need | Source | Spans |
+| --- | --- | --- |
+| Annual statements (net income, equity, debt, EBIT, cash flow, EPS, shares) | Yahoo `ws/fundamentals-timeseries` | 4–5 fiscal years |
+| Dividend ex-dates and amounts | Yahoo `chart?events=div` | 10–15 years |
+| Daily closes | Yahoo `chart` | 15 years |
+| Current price / ratios | the fundamentals strip above | now |
+
+**Four years, not ten.** Yahoo serves four annual periods per symbol to a free
+client, consistently across SET names. That covers the framework's "3–5
+consecutive years" rules, and it is why the P/E and P/BV bands say `4y` rather
+than implying a decade. The band is rebuilt from the statements rather than
+taken from a provider: for each trading day the multiple is `close / EPS` using
+the fiscal year *reported as of that date* — applying the latest EPS across the
+whole window would fold hindsight into the bands and make every stock look
+expensive in the past.
+
+**The dividend that gets discounted is not always the dividend just paid.** Two
+independent estimates exist and both fail, in opposite directions:
+
+- the ex-date record picks up one-off specials — ADVANC's 2026 payment was
+  27.41 on top of the usual 8.69, so trailing cash shows a 10.9% yield that
+  will not repeat (the price did really gap 404 → 380 on the ex-date)
+- the cash-flow statement counts dividends paid to minorities — CPF reads 2.83
+  per share against a real 0.66
+
+Taking the lower of the two discards whichever was inflated. The recurring
+figure goes into the DDM; the trailing cash figure is still shown, marked `*`.
+
+**Valuation.** Two-stage DDM, with `g1` capped at 8%, `g2` defaulting to 3% and
+`r` to 9%. The cap is the point: a two-stage model fed a 25% growth rate
+produces a number that says more about the input than the business. When `r` is
+at or below `g2` the model refuses to answer instead of returning infinity.
+
+**Scoring.** Fourteen rules in four groups — quality (40 points), solvency (20),
+cash conversion (20), shareholder returns (20) — so a high yield on a business
+that fails the first three can never carry a name into the results. A rule that
+cannot be judged is neutral, not a failure: banks have no meaningful interest
+cover, and no dividend means no dividend rules, neither of which should read as
+a red flag. The row carries a `coverage` figure so a score built on half the
+framework is recognisable as thin.
+
+Presets differ in which rules are **mandatory**, not in how the score is
+computed, which is why the same company can be strong for one mandate and
+disqualified for another.
+
+`data/` holds nothing for the screener: statements are cached in memory for
+twelve hours, and a cold run of 77 names takes about two seconds at five
+parallel upstream requests.
+
+The engine is pure and covered by `scripts/verify-screener.mjs` — the DDM
+against its closed form, the bands for the no-hindsight property, the dividend
+basis on both failure modes, and the scoring on a healthy company, a bank, a
+non-payer and a broken one.
+
+---
+
 ## HTTP API
 
 | Route | Purpose |
@@ -353,6 +423,9 @@ opinion (e.g. `combined_analysis`) rather than your own settings.
 | `GET /api/quotes?symbols=` | MCP quotes |
 | `GET /api/fundamentals?symbols=&metrics=&refresh=1` | valuation ratios (P/E, P/BV, D/E, yield, …) |
 | `GET /api/fundamentals/metrics` | metric labels/hints and sidecar status |
+| `GET /api/screener/universe` | screening universes: SET large caps, watchlists, saved boards |
+| `POST /api/screener/run` | `{ universe \| symbols, preset, overrides }` → scored rows |
+| `GET /api/screener/stock?symbol=&r=&g1=&g2=` | one company in full, re-valued for the sliders |
 | `GET /api/stream?symbols=&intervalMs=` | SSE quote stream |
 | `GET/POST/PATCH/DELETE /api/workspaces` | saved boards |
 | `GET /api/mcp/tools` · `POST /api/mcp/tools/:name` | MCP passthrough |

@@ -29,6 +29,7 @@ import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS, TRACKED_METRICS } 
 import { FundamentalsHistory } from './history.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
+import { runScreen, loadDetail, SET_LARGE_CAPS } from './screener-run.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
   TIMEFRAMES, DEFAULT_TIMEFRAME, getCandles, getCandlesBatch,
@@ -401,6 +402,119 @@ app.post('/api/fundamentals/cache/clear', (_req, res) => {
 });
 
 // ── Workspaces ───────────────────────────────────────────────────────────────
+
+// ── Screener ────────────────────────────────────────────────────────────────
+
+/** Upper bound on one run: every symbol costs three upstream requests. */
+const MAX_SCREEN_SYMBOLS = 120;
+
+/** Resolve a named universe to symbols, or null when the id is unknown. */
+function universeSymbols(id) {
+  if (!id) return null;
+  if (id === 'set-large') return SET_LARGE_CAPS.map((s) => `SET:${s}`);
+  if (id === 'all-watchlists') {
+    const out = [];
+    for (const list of watchlists.list()) {
+      const full = watchlists.get(list.id);
+      if (full?.symbols) out.push(...full.symbols);
+    }
+    return [...new Set(out)];
+  }
+  const [kind, key] = String(id).split(':');
+  if (kind === 'workspace') {
+    const ws = store.get(key);
+    if (!ws) return null;
+    return [...new Set((ws.charts ?? []).map((c) => c.symbol))];
+  }
+  if (kind === 'watchlist') {
+    const list = watchlists.get(key);
+    if (!list) return null;
+    return [...new Set(list.symbols ?? [])];
+  }
+  return null;
+}
+
+/**
+ * The universes the dialog offers.
+ *
+ * Static list first, then whatever the user has already curated — their own
+ * boards and watchlists are the most relevant universe in practice, and they
+ * cost nothing to include because both stores are already in memory.
+ */
+app.get('/api/screener/universe', (_req, res) => {
+  const lists = [
+    {
+      id: 'set-large',
+      label: 'SET large caps',
+      symbols: SET_LARGE_CAPS.map((s) => `SET:${s}`),
+    },
+  ];
+  for (const wl of watchlists.list()) {
+    const full = watchlists.get(wl.id);
+    lists.push({ id: `watchlist:${wl.id}`, label: wl.name, symbols: [...(full?.symbols ?? [])] });
+  }
+  for (const ws of store.list()) {
+    const full = store.get(ws.id);
+    const symbols = [...new Set((full?.charts ?? []).map((c) => c.symbol))];
+    lists.push({ id: `workspace:${ws.id}`, label: ws.name, symbols });
+  }
+  res.json({
+    lists: lists.map((l) => ({ ...l, count: l.symbols.length })).filter((l) => l.count > 0),
+    maxSymbols: MAX_SCREEN_SYMBOLS,
+  });
+});
+
+/**
+ * Run the screen.
+ *
+ * Synchronous from the caller's point of view: the per-symbol cache means a
+ * repeat run over the same universe is instant, and a cold run of ~60 names
+ * takes about ten seconds at five parallel requests. Streaming progress would
+ * buy little for that, and a job id would add state that has to be expired.
+ */
+app.post('/api/screener/run', asyncRoute(async (req, res) => {
+  const body = req.body ?? {};
+  const preset = String(body.preset ?? 'all');
+  const overrides = body.overrides && typeof body.overrides === 'object' ? body.overrides : {};
+
+  let symbols = Array.isArray(body.symbols) ? body.symbols : null;
+  if ((!symbols || symbols.length === 0) && body.universe) {
+    symbols = universeSymbols(String(body.universe));
+    if (!symbols) {
+      return res.status(400).json({ error: { code: 'BAD_UNIVERSE', message: 'unknown universe' } });
+    }
+  }
+  if (!symbols || symbols.length === 0) {
+    return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbols or universe is required' } });
+  }
+  if (symbols.length > MAX_SCREEN_SYMBOLS) {
+    return res.status(400).json({
+      error: {
+        code: 'TOO_MANY',
+        message: `at most ${MAX_SCREEN_SYMBOLS} symbols per run`,
+      },
+    });
+  }
+
+  const result = await runScreen(symbols, { preset, overrides });
+  res.json(result);
+}));
+
+/** One company in full, with the series behind its valuation bands. */
+app.get('/api/screener/stock', asyncRoute(async (req, res) => {
+  const symbol = normalizeSymbol(req.query.symbol);
+  if (!symbol) {
+    return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbol is required' } });
+  }
+  const overrides = {
+    r: req.query.r,
+    g1: req.query.g1,
+    g2: req.query.g2,
+    years: req.query.years,
+  };
+  const detail = await loadDetail(symbol, { overrides });
+  res.json(detail);
+}));
 
 app.get('/api/workspaces', (_req, res) => res.json({ workspaces: store.list() }));
 

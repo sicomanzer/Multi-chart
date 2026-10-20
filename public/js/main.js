@@ -18,6 +18,7 @@ import {
 import { openIndicatorPicker } from './dialogs/indicator-dialog.js';
 import { openWatchlists } from './dialogs/watchlist-dialog.js';
 import { openOversoldList } from './dialogs/oversold-dialog.js';
+import { openScreener } from './dialogs/screener-dialog.js';
 
 const LOCAL_KEY = 'mctd:last-workspace';
 
@@ -42,6 +43,7 @@ const el = {
   timeframeBar: document.getElementById('timeframeBar'),
   addChartBtn: document.getElementById('addChartBtn'),
   watchlistBtn: document.getElementById('watchlistBtn'),
+  screenerBtn: document.getElementById('screenerBtn'),
   oversoldBtn: document.getElementById('oversoldBtn'),
   emptyAddBtn: document.getElementById('emptyAddBtn'),
   addIndicatorBtn: document.getElementById('addIndicatorBtn'),
@@ -190,6 +192,7 @@ function wireTopbar(board) {
   el.emptyAddBtn.addEventListener('click', () => board.openAddChart());
   el.watchlistBtn.addEventListener('click', () =>
     openWatchlists({ board, onChanged: () => refreshWorkspaceList(board) }));
+  el.screenerBtn.addEventListener('click', () => openScreener({ board }));
 
   // The board re-publishes the oversold set whenever any chart rebuilds its
   // indicators. The button is only a summary — it says how many are under

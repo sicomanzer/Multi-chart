@@ -24,6 +24,7 @@ const BASE = `http://127.0.0.1:${PORT}`;
 
 const SUITES = [
   { name: 'units', file: 'verify-units.mjs', needsServer: false },
+  { name: 'screener', file: 'verify-screener.mjs', needsServer: true },
   { name: 'workspaces', file: 'verify-workspaces.mjs', needsServer: true },
   { name: 'watchlists', file: 'verify-watchlists.mjs', needsServer: true },
 ];

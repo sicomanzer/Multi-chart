@@ -121,4 +121,12 @@ export const api = {
   mcpTools: () => request('/api/mcp/tools'),
   mcpCall: (name, args, timeoutMs) =>
     request(`/api/mcp/tools/${name}`, { method: 'POST', body: { arguments: args, timeoutMs } }),
+
+  // ── Screener ──────────────────────────────────────────────────────────────
+  // The run is one request rather than a job: the server caches statements for
+  // twelve hours, so a repeat run is instant and a cold one is a few seconds.
+  screenerUniverse: () => request('/api/screener/universe'),
+  screenerRun: (body) => request('/api/screener/run', { method: 'POST', body }),
+  screenerStock: (symbol, overrides = {}) =>
+    request(`/api/screener/stock${qs({ symbol, ...overrides })}`),
 };
