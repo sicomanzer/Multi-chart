@@ -453,9 +453,12 @@ function calculator(detail, state, rerender) {
   const controls = [
     { key: 'r', label: t('scr.r'), min: 5, max: 20, step: 0.5, value: state.overrides.r * 100,
       hint: t('scr.r.hint') },
-    { key: 'g1', label: t('scr.g1'), min: 0, max: 15, step: 0.5,
+    // Both growth rates run to 20%: a cyclical coming off a trough really can
+    // grow that fast for a while, and refusing to express it just moves the
+    // guesswork out of the model and into the reader's head.
+    { key: 'g1', label: t('scr.g1'), min: 0, max: 20, step: 0.5,
       value: (state.overrides.g1 ?? ddm.g1) * 100, hint: t('scr.g1.hint') },
-    { key: 'g2', label: t('scr.g2'), min: 0, max: 5, step: 0.25, value: state.overrides.g2 * 100,
+    { key: 'g2', label: t('scr.g2'), min: 0, max: 20, step: 0.25, value: state.overrides.g2 * 100,
       hint: t('scr.g2.hint') },
   ];
 
@@ -481,6 +484,23 @@ function calculator(detail, state, rerender) {
     box.appendChild(wrap);
   }
 
+  const actions = document.createElement('div');
+  actions.className = 'scr-calc__actions';
+
+  // A named pair, not a magic number: 5%/5% is the shape a reader reaches for
+  // when they want to see the value with a flat, undemanding growth assumption.
+  const flat = document.createElement('button');
+  flat.type = 'button';
+  flat.className = 'btn btn--sm';
+  flat.textContent = t('scr.g1g2Five');
+  flat.title = t('scr.g1g2Five.hint');
+  flat.addEventListener('click', () => {
+    state.overrides.g1 = 0.05;
+    state.overrides.g2 = 0.05;
+    refreshDetail(state, rerender);
+  });
+  actions.appendChild(flat);
+
   const reset = document.createElement('button');
   reset.type = 'button';
   reset.className = 'btn btn--sm';
@@ -489,7 +509,8 @@ function calculator(detail, state, rerender) {
     state.overrides = { r: 0.09, g1: null, g2: 0.03, years: 5 };
     refreshDetail(state, rerender);
   });
-  box.appendChild(reset);
+  actions.appendChild(reset);
+  box.appendChild(actions);
 
   const out = document.createElement('div');
   out.className = 'scr-calc__out';

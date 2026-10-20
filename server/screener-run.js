@@ -74,7 +74,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     ? clampInput(overrides.g1, 0, { min: 0, max: 0.30 })
     : sustainableGrowth(fin.years, fin.dividends);
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
-  const g2 = clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.05 });
+  const g2 = clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.20 });
   const years = clampInput(overrides.years, DEFAULTS.years, { min: 1, max: 15 });
 
   const valuation = ddm({ d0, g1, g2, r, years });
@@ -224,7 +224,7 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
       asOf: asOf.toISOString(),
       overrides: {
         r: clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 }),
-        g2: clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.05 }),
+        g2: clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.20 }),
       },
     },
   };

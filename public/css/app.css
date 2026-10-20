@@ -1267,6 +1267,7 @@ select {
 .scr-slider__label b { font-family: var(--mono); }
 .scr-slider input[type="range"] { width: 100%; accent-color: var(--accent); }
 
+.scr-calc__actions { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
 .scr-calc__out {
   display: grid;
   grid-template-columns: 1fr 1fr;
