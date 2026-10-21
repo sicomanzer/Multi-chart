@@ -1332,6 +1332,28 @@ select {
   cursor: help;
 }
 .scr-table--peers td:first-child { color: var(--text-dim); }
+
+/* The analysis view: a search box in front of the same detail page. */
+.scr-analyze { display: flex; flex-direction: column; gap: 10px; }
+.scr-analyze .row .input { flex: 1; }
+.scr-analyze__list { display: flex; flex-direction: column; gap: 2px; max-height: 46vh; overflow: auto; }
+.scr-analyze__row {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
+}
+.scr-analyze__row:hover { background: var(--bg-input); border-color: var(--border-strong); }
+.scr-analyze__row b { font: 600 12px var(--mono); }
+.scr-analyze__row span { color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .scr-band__levels { width: 100%; border-collapse: collapse; font-size: 10px; font-family: var(--mono); }
 .scr-band__levels td { padding: 1px 0; color: var(--text-dim); }
 .scr-band__levels td:last-child { text-align: right; color: var(--text); }

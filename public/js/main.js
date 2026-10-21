@@ -44,6 +44,7 @@ const el = {
   addChartBtn: document.getElementById('addChartBtn'),
   watchlistBtn: document.getElementById('watchlistBtn'),
   screenerBtn: document.getElementById('screenerBtn'),
+  analyzeBtn: document.getElementById('analyzeBtn'),
   oversoldBtn: document.getElementById('oversoldBtn'),
   emptyAddBtn: document.getElementById('emptyAddBtn'),
   addIndicatorBtn: document.getElementById('addIndicatorBtn'),
@@ -193,6 +194,9 @@ function wireTopbar(board) {
   el.watchlistBtn.addEventListener('click', () =>
     openWatchlists({ board, onChanged: () => refreshWorkspaceList(board) }));
   el.screenerBtn.addEventListener('click', () => openScreener({ board }));
+  // One company in full: the same dialog the screener opens for a row, with a
+  // search box in front of it.
+  el.analyzeBtn.addEventListener('click', () => openScreener({ board, mode: 'analyze' }));
 
   // The board re-publishes the oversold set whenever any chart rebuilds its
   // indicators. The button is only a summary — it says how many are under

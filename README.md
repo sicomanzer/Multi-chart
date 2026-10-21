@@ -515,6 +515,14 @@ means no dividend rules, which should not read as a red flag. The row carries a
 `coverage` figure so a score built on half the framework is recognisable as
 thin.
 
+**One company in full.** The top bar carries a second door into the same
+dialog: *Analyse a stock*. It opens a filter box in front of the screen, so a
+ticker or a company name leads to exactly the page a row of the table opens —
+the same scorecard, the same dividend model, the same bands and the same
+charts. The filter covers the screened universe, the boards and the watchlists,
+and asks the exchange for anything else, so a name outside the index is one
+keystroke away.
+
 **Growth, from the ten-year history.** Three rules answer whether the business
 is getting bigger: EPS growing 10% a year over three years, revenue growing 5%
 a year over five, and profit in at least eight of the last ten years. The

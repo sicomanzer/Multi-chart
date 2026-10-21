@@ -92,7 +92,7 @@ function scoreTone(score) {
  * @param {import('../board.js').Board} opts.board
  * @param {string} [opts.symbol] open straight into one company
  */
-export function openScreener({ board, symbol = null }) {
+export function openScreener({ board, symbol = null, mode = 'screen' }) {
   const state = {
     preset: 'moat',
     universe: 'set100',
@@ -107,6 +107,11 @@ export function openScreener({ board, symbol = null }) {
     error: null,
     detail: null,
     detailSymbol: null,
+    // 'screen' is the list of names; 'analyze' is the same dialog opened on one
+    // company, with a search box in front of it.
+    mode,
+    analyzeQuery: '',
+    analyzeResults: [],
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
     overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
@@ -129,8 +134,8 @@ export function openScreener({ board, symbol = null }) {
   };
 
   const handle = modal({
-    title: t('scr.title'),
-    subtitle: t('scr.subtitle'),
+    title: mode === 'analyze' ? t('scr.analyze.title') : t('scr.title'),
+    subtitle: mode === 'analyze' ? t('scr.analyze.hint') : t('scr.subtitle'),
     size: 'xl',
     render: (body) => {
       // One repaint closes over everything it needs, so every interaction below
@@ -147,10 +152,18 @@ export function openScreener({ board, symbol = null }) {
 
   loadUniverses(state, render).then(() => {
     if (symbol) openDetail(state, render, symbol);
-    else runScreen(state, render);
+    else if (mode === 'analyze') {
+      // The peer comparison needs the whole universe, so the screen runs in the
+      // background: the company opens straight away and the percentiles arrive
+      // with it.
+      runScreen(state, render, { background: true }).then(() => {
+        if (state.detailSymbol) refreshDetail(state, render);
+      });
+    } else runScreen(state, render);
   });
 
-  setAuto(state.auto);
+  // Only the table re-prices itself; the analysis view waits for the reader.
+  if (mode === 'screen') setAuto(state.auto);
 
   return handle;
 }
@@ -231,11 +244,138 @@ function paint(body, state, board, setAuto) {
     paintDetail(body, state, board, rerender);
     return;
   }
+  if (state.mode === 'analyze') {
+    paintAnalyze(body, state, board, rerender);
+    return;
+  }
   paintToolbar(body, state, rerender, setAuto);
   paintResults(body, state, rerender);
 
   const wrap = body.querySelector('.scr-table-wrap');
   if (wrap && scrolled) wrap.scrollTop = scrolled;
+}
+
+// ── Analyse view ────────────────────────────────────────────────────────────
+
+/**
+ * The names a reader can pick from.
+ *
+ * The screened universe comes first — it carries the company names — and the
+ * boards and watchlists fill in behind it, so the list is the reader's own
+ * world rather than a directory of the exchange.
+ */
+function analyzeCandidates(state) {
+  const out = new Map();
+  for (const row of state.result?.rows ?? []) {
+    out.set(row.symbol, { symbol: row.symbol, bare: row.bare, name: row.name ?? '' });
+  }
+  for (const list of state.lists ?? []) {
+    for (const symbol of list.symbols ?? []) {
+      if (!out.has(symbol)) {
+        out.set(symbol, { symbol, bare: String(symbol).split(':')[1] ?? symbol, name: '' });
+      }
+    }
+  }
+  return [...out.values()];
+}
+
+/**
+ * The search in front of the analysis.
+ *
+ * A filter box and a list, and the company behind a row opens on exactly the
+ * page a row of the screener's table opens — the same scorecard, the same
+ * valuation, the same charts. The exchange's own search is asked for names the
+ * local list does not carry, so a name outside the universe is one keystroke
+ * away.
+ */
+function paintAnalyze(body, state, board, rerender) {
+  const box = document.createElement('div');
+  box.className = 'scr-analyze';
+
+  const input = document.createElement('input');
+  input.type = 'search';
+  input.className = 'input';
+  input.placeholder = t('scr.analyze.placeholder');
+  input.value = state.analyzeQuery ?? '';
+  input.spellcheck = false;
+  input.autocomplete = 'off';
+
+  const go = document.createElement('button');
+  go.type = 'button';
+  go.className = 'btn btn--primary';
+  go.textContent = t('scr.analyze.go');
+
+  const analyse = () => {
+    const raw = input.value.trim();
+    if (!raw) return;
+    // A bare ticker is a Thai name; anything else is taken as a full symbol.
+    const symbol = /^[A-Za-z0-9.-]{1,12}$/.test(raw) ? `SET:${raw.toUpperCase()}` : raw.toUpperCase();
+    openDetail(state, rerender, symbol);
+  };
+  go.addEventListener('click', analyse);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); analyse(); } });
+
+  const list = document.createElement('div');
+  list.className = 'scr-analyze__list';
+
+  const draw = () => {
+    const q = state.analyzeQuery.trim().toLowerCase();
+    const matches = (text) => !q || String(text ?? '').toLowerCase().includes(q);
+    const local = analyzeCandidates(state).filter((c) => matches(c.bare) || matches(c.name));
+    const remote = state.analyzeResults.filter((r) => matches(r.bare) || matches(r.name));
+    const rows = [...local];
+    for (const r of remote) {
+      if (!rows.some((c) => c.symbol === r.symbol)) rows.push(r);
+    }
+    list.innerHTML = '';
+    if (!rows.length) {
+      const p = document.createElement('p');
+      p.className = 'section__hint';
+      p.textContent = t('scr.analyze.empty');
+      list.appendChild(p);
+      return;
+    }
+    for (const r of rows.slice(0, 40)) {
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'scr-analyze__row';
+      el.innerHTML = `<b>${escape(r.bare ?? r.symbol)}</b><span>${escape(r.name ?? '')}</span>`;
+      el.addEventListener('click', () => openDetail(state, rerender, r.symbol));
+      list.appendChild(el);
+    }
+  };
+
+  // The exchange's search answers for names the local list does not carry.
+  let searchTimer = null;
+  input.addEventListener('input', () => {
+    state.analyzeQuery = input.value;
+    draw();
+    clearTimeout(searchTimer);
+    const q = input.value.trim();
+    if (q.length < 2) {
+      state.analyzeResults = [];
+      draw();
+      return;
+    }
+    searchTimer = setTimeout(async () => {
+      const data = await api.symbols(q, 'thailand', 20).catch(() => null);
+      state.analyzeResults = (data?.results ?? []).map((r) => ({
+        symbol: r.symbol,
+        bare: String(r.display ?? r.symbol).split(':')[1] ?? r.display ?? r.symbol,
+        name: r.name ?? '',
+      }));
+      draw();
+    }, 350);
+  });
+
+  box.appendChild(section(t('scr.analyze.title'), t('scr.analyze.hint')));
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.append(input, go);
+  box.appendChild(row);
+  box.appendChild(list);
+  body.appendChild(box);
+  draw();
 }
 
 // ── Search view ─────────────────────────────────────────────────────────────
