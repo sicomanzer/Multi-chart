@@ -61,6 +61,12 @@ const CURRENT_TYPES = [
   'trailingBasicEPS',
   'quarterlyStockholdersEquity',
   'quarterlyOrdinarySharesNumber',
+  // Quarterly income lines used to build a true trailing-twelve-months EPS
+  // from the last four discrete quarters. Yahoo's own trailing figure is
+  // occasionally stale or computed on a different basis, and the quarterly
+  // sum is the number the exchange's P/E is closest to.
+  'quarterlyNetIncome',
+  'quarterlyNetIncomeCommonStockholders',
 ];
 
 /**
@@ -154,6 +160,63 @@ function latestPoint(payload, type) {
   const points = (result?.[type] ?? []).filter((p) => typeof p?.reportedValue?.raw === 'number');
   const last = points.at(-1);
   return last ? { value: last.reportedValue.raw, asOf: last.asOfDate } : null;
+}
+
+/** All points of a non-annual series, sorted by as-of date. */
+function seriesPoints(payload, type) {
+  const result = (payload?.timeseries?.result ?? []).find((r) => r?.meta?.type?.[0] === type);
+  return (result?.[type] ?? [])
+    .filter((p) => p?.asOfDate && typeof p?.reportedValue?.raw === 'number' && Number.isFinite(p.reportedValue.raw))
+    .map((p) => ({ asOf: p.asOfDate, value: p.reportedValue.raw }))
+    .sort((a, b) => a.asOf.localeCompare(b.asOf));
+}
+
+function daysBetween(a, b) {
+  return Math.abs(Date.parse(`${a}T00:00:00Z`) - Date.parse(`${b}T00:00:00Z`)) / 86_400_000;
+}
+
+/**
+ * Build a trailing-twelve-months EPS from the last four discrete quarterly
+ * net-income points, divided by the latest quarterly share count.
+ *
+ * Returns null when the series is incomplete, gappy or stale, so the caller
+ * can fall back to Yahoo's own trailing figure. `basis` is 'attributable'
+ * when the attributable (common-stockholders) line was used and 'total'
+ * when only the total net-income line was available.
+ */
+function ttmEpsFromQuarters(payload) {
+  const candidates = [
+    { series: seriesPoints(payload, 'quarterlyNetIncomeCommonStockholders'), basis: 'attributable' },
+    { series: seriesPoints(payload, 'quarterlyNetIncome'), basis: 'total' },
+  ];
+  for (const { series, basis } of candidates) {
+    if (series.length < 4) continue;
+    // Find the last run of four consecutive quarters (no gaps).
+    let last4 = null;
+    for (let i = series.length - 1; i >= 3; i -= 1) {
+      const a = series[i - 3], b = series[i - 2], c = series[i - 1], d = series[i];
+      const gaps = [daysBetween(b.asOf, a.asOf), daysBetween(c.asOf, b.asOf), daysBetween(d.asOf, c.asOf)];
+      if (gaps.every((g) => g >= 75 && g <= 105)) { last4 = [a, b, c, d]; break; }
+    }
+    if (!last4) continue;
+    // Freshness: the last quarter must be recent.
+    if (Date.now() - Date.parse(`${last4[3].asOf}T00:00:00Z`) > 200 * 86_400_000) continue;
+    const sum = last4.reduce((s, p) => s + p.value, 0);
+    // Latest quarterly share count, falling back to the annual line.
+    let shares = null;
+    const sharePoints = seriesPoints(payload, 'quarterlyOrdinarySharesNumber');
+    if (sharePoints.length) {
+      const lp = sharePoints[sharePoints.length - 1];
+      if (Date.now() - Date.parse(`${lp.asOf}T00:00:00Z`) < 400 * 86_400_000) shares = lp.value;
+    }
+    if (!shares) {
+      const annualShares = seriesPoints(payload, 'annualOrdinarySharesNumber');
+      if (annualShares.length) shares = annualShares[annualShares.length - 1].value;
+    }
+    if (!Number.isFinite(shares) || shares <= 0) continue;
+    return { eps: sum / shares, asOf: last4[3].asOf, basis };
+  }
+  return null;
 }
 
 /** Dividend events keyed by ex-date timestamp. */
@@ -441,6 +504,19 @@ export async function loadFinancials(tvSymbol, { quote = null } = {}) {
     // the book value a buyer is actually paying a multiple of today.
     const trailingEps = latestPoint(timeSeries, 'trailingDilutedEPS')
       ?? latestPoint(timeSeries, 'trailingBasicEPS');
+    const quarterlyTtm = ttmEpsFromQuarters(timeSeries);
+    // Guard: if the quarterly sum diverges wildly from the market's own
+    // trailing EPS, something is off (a one-off gain sitting just outside the
+    // window, a restatement, a missing quarter) and the market figure is the
+    // safer denominator. Keep the quarterly figure only when it agrees with
+    // the quote within 40%; otherwise fall back to the trailing/quote path.
+    const quoteEpsForGuard = quote?.epsTtm ?? null;
+    let chosenQuarterly = quarterlyTtm;
+    if (chosenQuarterly && quoteEpsForGuard != null) {
+      const rel = Math.abs(chosenQuarterly.eps - quoteEpsForGuard)
+        / Math.max(Math.abs(quoteEpsForGuard), 1e-9);
+      if (rel > 0.40) chosenQuarterly = null;
+    }
     const quarterEquity = latestPoint(timeSeries, 'quarterlyStockholdersEquity');
     const quarterShares = latestPoint(timeSeries, 'quarterlyOrdinarySharesNumber');
     const quarterBvps = quarterEquity && quarterShares && quarterShares.value > 0
@@ -469,8 +545,9 @@ export async function loadFinancials(tvSymbol, { quote = null } = {}) {
       })),
       years,
       ttm: {
-        eps: trailingEps?.value ?? null,
-        epsAsOf: trailingEps?.asOf ?? null,
+        eps: chosenQuarterly?.eps ?? trailingEps?.value ?? null,
+        epsAsOf: chosenQuarterly?.asOf ?? trailingEps?.asOf ?? null,
+        epsBasis: chosenQuarterly?.basis ?? 'trailing',
         bvps: quarterBvps,
         bvpsAsOf: quarterEquity?.asOf ?? null,
       },

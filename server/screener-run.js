@@ -134,6 +134,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     pe: peCurrent,
     pbv: pbvCurrent,
     ttmEps,
+    ttmEpsBasis: fin.ttm?.epsBasis ?? null,
     ttmBvps: fin.ttm?.bvps ?? null,
     score: quality.score,
     coverage: quality.coverage,
@@ -193,6 +194,28 @@ export async function loadDetail(tvSymbol, options = {}) {
   const row = buildRow(fin, options);
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
   const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
+
+  // Year-end close lookup so the trend can show what a holder actually paid
+  // at the time, not today's price.
+  const closesSorted = [...(fin.closes ?? [])].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  const closeAt = (date) => {
+    let best = null;
+    for (const c of closesSorted) {
+      if (c.date <= date) best = c.close; else break;
+    }
+    return best;
+  };
+  const trend = {
+    years: fin.years.map((y) => y.fiscalYear),
+    roe: fin.years.map((y) => (typeof y.roe === 'number' && Number.isFinite(y.roe) ? y.roe : null)),
+    yield: fin.years.map((y) => {
+      const c = closeAt(y.asOf);
+      return (typeof y.dps === 'number' && Number.isFinite(y.dps) && typeof c === 'number' && c > 0)
+        ? y.dps / c
+        : null;
+    }),
+  };
+
   return {
     ...row,
     years: fin.years,
@@ -203,6 +226,7 @@ export async function loadDetail(tvSymbol, options = {}) {
     peLevels: bands.pe?.levels ?? null,
     pbvPoints: bands.pbv?.points ?? [],
     pbvLevels: bands.pbv?.levels ?? null,
+    trend,
     asOf: new Date().toISOString(),
   };
 }

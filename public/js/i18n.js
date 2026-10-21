@@ -648,6 +648,12 @@ const EN = {
   'scr.band.minus1': '-1 sigma',
   'scr.band.minus2': '-2 sigma',
 
+  'scr.trend': 'ROE & dividend yield trend',
+  'scr.trendHint': 'Four fiscal years from the annual statements: ROE on the left scale, the cash dividend yield on the price at each year end on the right',
+  'scr.trend.roe': 'ROE',
+  'scr.trend.yield': 'Dividend yield',
+  'scr.trend.none': 'Not enough history to draw a trend.',
+
   'scr.fin': 'Statements',
   'scr.finHint': 'Fiscal years as reported; the ratios above are derived from these lines. DPS is the cash a holder actually received',
   'scr.fin.year': 'FY',
@@ -1283,6 +1289,12 @@ const TH = {
   'scr.band.mean': 'ค่าเฉลี่ย',
   'scr.band.minus1': '-1 ซิกมา',
   'scr.band.minus2': '-2 ซิกมา',
+
+  'scr.trend': 'แนวโน้ม ROE และยีลด์ปันผล',
+  'scr.trendHint': '4 ปีบัญชีจากงบการเงิน: ROE ตามสเกลซ้าย ยีลด์ปันผลเงินสดต่อราคา ณ สิ้นปีนั้น ตามสเกลขวา',
+  'scr.trend.roe': 'ROE',
+  'scr.trend.yield': 'ยีลด์ปันผล',
+  'scr.trend.none': 'ประวัติไม่พอจะวาดแนวโน้ม',
 
   'scr.fin': 'งบการเงิน',
   'scr.finHint': 'ปีบัญชีตามที่รายงาน อัตราส่วนด้านบนคำนวณจากบรรทัดเหล่านี้ DPS คือเงินที่ผู้ถือหุ้นได้รับจริง',
