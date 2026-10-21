@@ -250,7 +250,7 @@ export function openIndicatorEditor({ catalog, instance, onSave, onDelete, onTog
     footer(foot, { close }) {
       // Name the scope in the buttons, so it is impossible to save a board-wide
       // change believing it was one chart.
-      const scopeNote = scope ? t('ind.scopeNote', { n: scope.charts }) : '';
+      const scopeNote = scope ? tp('ind.scopeNote', scope.charts) : '';
       foot.innerHTML = `
         <button class="btn btn--ghost" data-act="toggle">${escape(t(instance.enabled === false ? 'ind.enable' : 'ind.disable'))}${escape(scopeNote)}</button>
         <button class="btn btn--danger" data-act="delete">${escape(t('common.remove'))}${escape(scopeNote)}</button>
