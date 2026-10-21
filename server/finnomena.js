@@ -334,6 +334,7 @@ export function finnomenaStatus() {
       path: datasetPath,
       symbols: dataset?.size ?? 0,
       loaded: dataset != null,
+      searched: datasetPaths(),
     },
     live: {
       ok: live.ok,
@@ -343,6 +344,18 @@ export function finnomenaStatus() {
       blockedUntil: live.blockedUntil ? new Date(live.blockedUntil).toISOString() : null,
     },
   };
+}
+
+/**
+ * Read the tracked file at startup.
+ *
+ * The file is small and local, and reading it once means the health endpoint
+ * can say whether the deploy really has the history rather than reporting
+ * "not loaded" until somebody opens a stock.
+ */
+export async function initAnnualHistory() {
+  await loadDataset().catch(() => null);
+  return dataset?.size ?? 0;
 }
 
 export function clearFinnomenaCache() {

@@ -27,7 +27,7 @@ import { McpClient, McpError, detectPython } from './mcp-client.js';
 import { RealtimeHub } from './realtime.js';
 import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS, TRACKED_METRICS } from './fundamentals.js';
 import { FundamentalsHistory } from './history.js';
-import { finnomenaStatus } from './finnomena.js';
+import { finnomenaStatus, initAnnualHistory } from './finnomena.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
 import { runScreen, loadDetail, UNIVERSES } from './screener-run.js';
@@ -122,6 +122,11 @@ const fundamentals = new FundamentalsClient({ command: detectPython() });
 // this ships; it cannot be back-filled later.
 const history = new FundamentalsHistory(join(DATA_DIR, 'fundamentals-history.jsonl'));
 await history.load();
+
+// The ten-year annual history the deep-dive charts draw. It is a local file,
+// so reading it at startup costs nothing and the health endpoint can report
+// whether the deploy really carries it.
+const annualSymbols = await initAnnualHistory();
 
 /**
  * Snapshot these symbols' ratios into the history file.
@@ -872,7 +877,8 @@ const server = app.listen(PORT, HOST, () => {
   console.log(`\n  Multi-chart trading desk  ->  http://${shown}:${PORT}\n`);
   console.log(`  MCP command: ${mcp.config.command} ${mcp.config.args.join(' ')}`);
   console.log(`  Workspaces: ${store.filePath}`);
-  console.log(`  Data dir:   ${DATA_DIR}${process.env.DATA_DIR ? ' (DATA_DIR)' : ''}\n`);
+  console.log(`  Data dir:   ${DATA_DIR}${process.env.DATA_DIR ? ' (DATA_DIR)' : ''}`);
+  console.log(`  Annual history: ${annualSymbols} symbol(s)${annualSymbols ? '' : ' — charts will fall back to four years'}\n`);
   mcp.ensureStarted().catch((err) => console.warn(`[mcp] initial start failed: ${err.message}`));
   // Warm the index list in the background: the first dialog that opens should
   // already see the exchange's copy rather than the written one.
