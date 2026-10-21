@@ -89,7 +89,9 @@ export function openScreener({ board, symbol = null }) {
     error: null,
     detail: null,
     detailSymbol: null,
-    overrides: { r: 0.09, g1: null, g2: 0.03, years: 5 },
+    // The same defaults the server uses, so the table and the calculator quote
+    // the same intrinsic value before anyone touches a slider.
+    overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
   };
 
   let render = () => {};
@@ -148,7 +150,7 @@ async function runScreen(state, render) {
 
 async function openDetail(state, render, symbol) {
   state.detailSymbol = symbol;
-  state.overrides = { r: 0.09, g1: null, g2: 0.03, years: 5 };
+  state.overrides = { r: 0.09, g1: 0.05, g2: 0.05, years: 5 };
   render();
   await refreshDetail(state, render);
 }
@@ -157,8 +159,11 @@ async function openDetail(state, render, symbol) {
 async function refreshDetail(state, render) {
   if (!state.detailSymbol) return;
   try {
-    const overrides = { r: state.overrides.r, g2: state.overrides.g2 };
-    if (state.overrides.g1 != null) overrides.g1 = state.overrides.g1;
+    const overrides = {
+      r: state.overrides.r,
+      g1: state.overrides.g1,
+      g2: state.overrides.g2,
+    };
     state.detail = await api.screenerStock(state.detailSymbol, overrides);
     state.error = null;
   } catch (err) {
@@ -307,11 +312,13 @@ function buildTable(rows, state, rerender) {
   table.innerHTML = `
     <thead><tr>
       <th>${escape(t('scr.col.symbol'))}</th>
+      <th class="num">${escape(t('scr.col.price'))}</th>
       <th class="num">${escape(t('scr.col.score'))}</th>
       <th class="num">${escape(t('scr.col.roe'))}</th>
       <th class="num">${escape(t('scr.col.de'))}</th>
       <th class="num">${escape(t('scr.col.yield'))}</th>
       <th class="num">${escape(t('scr.col.pe'))}</th>
+      <th class="num">${escape(t('scr.col.intrinsic'))}</th>
       <th class="num">${escape(t('scr.col.mos'))}</th>
     </tr></thead>`;
 
@@ -328,7 +335,7 @@ function buildTable(rows, state, rerender) {
         const divider = document.createElement('tr');
         divider.className = 'scr-divider';
         const cell = document.createElement('td');
-        cell.colSpan = 7;
+        cell.colSpan = 9;
         cell.textContent = t('scr.belowPreset', { n: rows.length - passing });
         divider.appendChild(cell);
         tbody.appendChild(divider);
@@ -342,11 +349,13 @@ function buildTable(rows, state, rerender) {
     if (!row.pass && row.failReason) tr.title = t('scr.rejected', { reason: rejectReason(row) });
     tr.innerHTML = `
       <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
+      <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
       <td class="num"><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
       <td class="num">${percent(row.roe3)}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}</td>
       <td class="num">${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}</td>
       <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}</td>
+      <td class="num">${row.ddm.intrinsic == null ? '—' : row.ddm.intrinsic.toFixed(2)}</td>
       <td class="num ${row.ddm.mos > 0 ? 'is-up' : 'is-down'}">${row.ddm.mos == null ? '—' : `${row.ddm.mos.toFixed(0)}%`}</td>`;
     tr.addEventListener('click', () => openDetail(state, rerender, row.symbol));
     tbody.appendChild(tr);
@@ -541,7 +550,7 @@ function calculator(detail, state, rerender) {
   reset.className = 'btn btn--sm';
   reset.textContent = t('scr.reset');
   reset.addEventListener('click', () => {
-    state.overrides = { r: 0.09, g1: null, g2: 0.03, years: 5 };
+    state.overrides = { r: 0.09, g1: 0.05, g2: 0.05, years: 5 };
     refreshDetail(state, rerender);
   });
   actions.appendChild(reset);

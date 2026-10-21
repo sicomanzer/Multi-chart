@@ -157,44 +157,6 @@ function dividendStreak(dividends, asOf = new Date()) {
 }
 
 /**
- * Growth rate that a company can plausibly sustain into the DDM's first stage.
- *
- * Uses the compound growth of EPS across the years we have, then clamps it:
- * anything above 8% is capped because a two-stage model fed a 25% growth rate
- * produces a valuation that says more about the input than the business, and
- * anything negative is floored at zero because stage one is meant to be the
- * profitable phase. When there is no usable EPS history the dividend's own
- * growth is the fallback, and zero the last resort.
- */
-function sustainableGrowth(years, dividends) {
-  const epsSeries = years
-    .map((y) => y.eps)
-    .filter((v) => typeof v === 'number' && Number.isFinite(v) && v > 0);
-  let rate = null;
-  if (epsSeries.length >= 2) {
-    const first = epsSeries[0];
-    const last = epsSeries[epsSeries.length - 1];
-    const n = epsSeries.length - 1;
-    rate = Math.pow(last / first, 1 / n) - 1;
-  }
-  if (rate == null) {
-    const byYear = {};
-    for (const d of dividends) {
-      const y = Number(d.date.slice(0, 4));
-      byYear[y] = (byYear[y] ?? 0) + d.amount;
-    }
-    const values = Object.values(byYear).filter((v) => v > 0);
-    if (values.length >= 2) {
-      const first = values[0];
-      const last = values[values.length - 1];
-      rate = Math.pow(last / first, 1 / (values.length - 1)) - 1;
-    }
-  }
-  if (rate == null || !Number.isFinite(rate)) return 0;
-  return Math.max(0, Math.min(0.08, rate));
-}
-
-/**
  * Two-stage dividend discount model.
  *
  *   P0 = Σ D0(1+g1)^t / (1+r)^t  for t = 1..n
@@ -635,4 +597,4 @@ export function applyPreset(row, preset) {
   return { pass: true, reason: null };
 }
 
-export { dividendStreak, sustainableGrowth };
+export { dividendStreak };

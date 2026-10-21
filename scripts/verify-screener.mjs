@@ -28,7 +28,7 @@ import {
   sustainableDividend,
   trailingDividend,
 } from '../server/screener.js';
-import { SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
+import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
 import { parseComposition } from '../server/setindex.js';
 import { deriveYears } from '../server/fin.js';
 
@@ -75,6 +75,15 @@ check('r at or below g2 is refused rather than returning infinity',
   ddm({ d0: 1, g1: 0.05, g2: 0.05, r: 0.05 }).reason === 'r-not-above-g2');
 check('the growth window is clamped',
   ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, years: 500 }).inputs.years === 20);
+
+// The shipped default is the flat pair, and at g1 = g2 the two-stage model
+// collapses to Gordon growth: V = D0(1+g)/(r-g). That identity is what makes
+// the default defensible — it is one assumption, not two.
+check('the default valuation is g1 = g2 = 5%',
+  DEFAULTS.g1 === 0.05 && DEFAULTS.g2 === 0.05, `${DEFAULTS.g1}/${DEFAULTS.g2}`);
+check('flat growth collapses to D0(1+g)/(r-g)',
+  near(ddm({ d0: 1, g1: 0.05, g2: 0.05, r: 0.09 }).intrinsic, 26.25, 1e-9),
+  ddm({ d0: 1, g1: 0.05, g2: 0.05, r: 0.09 }).intrinsic);
 
 // ── Bands ───────────────────────────────────────────────────────────────────
 

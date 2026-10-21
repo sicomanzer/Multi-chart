@@ -17,7 +17,6 @@ import {
   presetById,
   scoreQuality,
   sustainableDividend,
-  sustainableGrowth,
 } from './screener.js';
 import { normalizeSymbol, toYahooSymbol, uniqueSymbols } from './symbols.js';
 import { quoteBatch } from './quotes.js';
@@ -25,11 +24,20 @@ import { quoteBatch } from './quotes.js';
 /** Yahoo tolerates a handful of parallel requests; more earns a 429. */
 const CONCURRENCY = 5;
 
-/** Valuation defaults, overridable per request. */
+/**
+ * Valuation defaults, overridable per request.
+ *
+ * Both growth rates are 5%: the flat assumption is the one a reader can defend
+ * without knowing anything about the company, and using it everywhere means the
+ * table, the presets and the calculator quote the same intrinsic value. The
+ * model is still two-stage — the sliders can move either rate independently —
+ * but the number on screen no longer depends on a growth estimate derived from
+ * four years of EPS.
+ */
 export const DEFAULTS = {
   r: 0.09,
-  g1: null, // null = derive from the company's own history
-  g2: 0.03,
+  g1: 0.05,
+  g2: 0.05,
   years: 5,
 };
 
@@ -94,9 +102,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
 
   const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf });
   const d0 = dividend.d0;
-  const g1 = overrides.g1 != null
-    ? clampInput(overrides.g1, 0, { min: 0, max: 0.30 })
-    : sustainableGrowth(fin.years, fin.dividends);
+  const g1 = clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 });
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
   const g2 = clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.20 });
   const years = clampInput(overrides.years, DEFAULTS.years, { min: 1, max: 15 });
@@ -279,6 +285,7 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
       asOf: asOf.toISOString(),
       overrides: {
         r: clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 }),
+        g1: clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 }),
         g2: clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.20 }),
       },
     },

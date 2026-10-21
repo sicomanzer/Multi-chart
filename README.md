@@ -443,10 +443,13 @@ background. When that fails the written list stays in use — the index rebalanc
 twice a year, so a stale copy is a much smaller problem than a screen that will
 not start.
 
-**Valuation.** Two-stage DDM, with `g1` capped at 8%, `g2` defaulting to 3% and
-`r` to 9%. The cap is the point: a two-stage model fed a 25% growth rate
-produces a number that says more about the input than the business. When `r` is
-at or below `g2` the model refuses to answer instead of returning infinity.
+**Valuation.** Two-stage DDM with `g1 = g2 = 5.00%` and `r = 9%` by default, so
+the table, the presets and the calculator all quote the same intrinsic value
+before anyone moves a slider. The flat 5% is the assumption a reader can defend
+without knowing the company; deriving `g1` from four years of EPS made the
+number depend on an estimate that was itself the weakest input. The sliders can
+still move either rate independently, and the model refuses to answer when `r`
+is at or below `g2` rather than returning infinity.
 
 **Scoring.** Fourteen rules in four groups — quality (40 points), solvency (20),
 cash conversion (20), shareholder returns (20) — so a high yield on a business
