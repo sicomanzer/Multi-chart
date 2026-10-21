@@ -280,6 +280,24 @@ function paintResults(body, state, rerender) {
   }
 }
 
+/**
+ * Turn the server's machine reason into a sentence.
+ *
+ * The server says `requires:dividendStreak`; a reader needs "Dividend every
+ * year for 5 years". Every check already carries a label, so this is a lookup
+ * rather than a second dictionary.
+ */
+function rejectReason(row) {
+  const reason = row.failReason;
+  if (!reason) return '';
+  const prefix = 'requires:';
+  if (reason.startsWith(prefix)) {
+    const id = reason.slice(prefix.length);
+    return t(`scr.check.${id}`, null, id);
+  }
+  return t(`scr.reject.${reason}`, null, reason);
+}
+
 function buildTable(rows, state, rerender) {
   const wrap = document.createElement('div');
   wrap.className = 'scr-table-wrap';
@@ -298,13 +316,30 @@ function buildTable(rows, state, rerender) {
     </tr></thead>`;
 
   const tbody = document.createElement('tbody');
+  // The server puts the names that passed first, each group ranked on its own;
+  // a labelled boundary is what stops a rejected 83 above a passing 71 from
+  // reading as a sorting bug.
+  const passing = rows.filter((row) => row.pass).length;
+  let divided = false;
   for (const row of rows) {
+    if (!row.pass && !divided) {
+      divided = true;
+      if (passing > 0) {
+        const divider = document.createElement('tr');
+        divider.className = 'scr-divider';
+        const cell = document.createElement('td');
+        cell.colSpan = 7;
+        cell.textContent = t('scr.belowPreset', { n: rows.length - passing });
+        divider.appendChild(cell);
+        tbody.appendChild(divider);
+      }
+    }
     const tr = document.createElement('tr');
     // A row the preset rejected stays visible but dimmed, with the rule that
     // stopped it as a tooltip — "why is this not in the list" is half of what
     // a screen is for.
     tr.className = row.pass ? '' : 'is-out';
-    if (!row.pass && row.failReason) tr.title = t('scr.rejected', { reason: row.failReason });
+    if (!row.pass && row.failReason) tr.title = t('scr.rejected', { reason: rejectReason(row) });
     tr.innerHTML = `
       <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
       <td class="num"><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>

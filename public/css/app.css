@@ -1211,6 +1211,19 @@ select {
 .scr-table tbody tr:hover { background: var(--bg-input); }
 /* A name the preset rejected: still readable, visibly not recommended. */
 .scr-table tbody tr.is-out { opacity: 0.45; }
+/* The boundary between the names that passed and the ones that did not: the
+   table is ordered pass-first, so without this a rejected 83 above a passing 71
+   reads as a sorting bug. */
+.scr-table tbody tr.scr-divider { cursor: default; opacity: 1; }
+.scr-table tbody tr.scr-divider:hover { background: none; }
+.scr-table tbody tr.scr-divider td {
+  padding-top: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-faint);
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
 .scr-table .num { text-align: right; font-variant-numeric: tabular-nums; }
 .scr-table--years { font-family: var(--mono); font-size: 11px; }
 
