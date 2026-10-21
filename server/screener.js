@@ -70,31 +70,94 @@ export function trailingDividend(dividends, asOf = new Date()) {
     .reduce((sum, d) => sum + d.amount, 0);
 }
 
+/** Shift a date by whole months, clamping the day to the target month. */
+function addMonths(date, months) {
+  const day = date.getUTCDate();
+  const shifted = new Date(date.getTime());
+  shifted.setUTCDate(1);
+  shifted.setUTCMonth(shifted.getUTCMonth() + months);
+  const last = new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth() + 1, 0)).getUTCDate();
+  shifted.setUTCDate(Math.min(day, last));
+  return shifted;
+}
+
+/** Cash dividends with an ex-date in `(from, to]`. */
+function sumDividends(dividends, from, to) {
+  return dividends
+    .filter((d) => {
+      const t = new Date(d.date);
+      return t > from && t <= to;
+    })
+    .reduce((sum, d) => sum + d.amount, 0);
+}
+
+/**
+ * The dividend declared for the latest completed fiscal year.
+ *
+ * This is the figure the exchange publishes as "dividend yield": one fiscal
+ * year's dividend over today's price. A fiscal year is paid in two halves — the
+ * interim inside the year, the final in the first months after it — so the
+ * window is the twelve months centred on the year end, and it is complete once
+ * the final has been paid (roughly six months later).
+ *
+ * A plain trailing-twelve-month sum is not the same number, and the difference
+ * is not small. It mixes the *next* year's interim with the current year's
+ * final: ICHI read 1.00 (0.55 final + 0.45 interim) where the exchange
+ * publishes 1.10 (0.55 + 0.55), and every company that moves its interim date
+ * makes the rolling figure drift by half a year's growth.
+ *
+ * Returns null when no fiscal year is old enough for its final to have been
+ * paid, or when the statements carry no year end at all (test fixtures).
+ */
+export function fiscalYearDividend(years, dividends, asOf = new Date()) {
+  const complete = years.filter((y) => {
+    const end = y.asOf ? new Date(y.asOf) : null;
+    return end && Number.isFinite(end.getTime()) && addMonths(end, 6) <= asOf;
+  });
+  const year = complete.at(-1);
+  if (!year) return null;
+  const end = new Date(year.asOf);
+  const from = addMonths(end, -6);
+  const to = addMonths(end, 6);
+  return {
+    fiscalYear: year.fiscalYear ?? null,
+    from,
+    to,
+    amount: sumDividends(dividends, from, to),
+  };
+}
+
 /**
  * The dividend to value, as opposed to the dividend that was just paid.
  *
- * ADVANC's 2026 record contains a 27.41 special on top of the usual 8.69
- * instalment — real cash, and the price really did gap from 404 to 380 on the
- * ex-date. A two-stage model that capitalises it into a perpetuity would value
- * ADVANC as if the special repeated every year forever, which is how a screen
- * produces absurd margins of safety.
+ * The anchor is the fiscal-year figure above, because that is the one the
+ * exchange and the company's own annual report quote, and because it is a
+ * clean year rather than a window that slides across two of them.
  *
- * The trailing twelve months is the default anchor because it is the only
- * figure that is true by construction: it is what the exchange actually paid.
  * The exception is a one-off. ADVANC's 2026 record contains a 27.41 special on
  * top of the usual 8.69 instalment — real cash, and the price really did gap on
  * the ex-date — and a two-stage model that capitalises it into a perpetuity
- * would value ADVANC as if the special repeated every year forever.
+ * would value ADVANC as if the special repeated every year forever, which is
+ * how a screen produces absurd margins of safety.
  *
- * So the trailing figure is used unless it spikes against both the annual
+ * So the fiscal-year figure is used unless it spikes against both the annual
  * statement and the same window a year earlier; then the smaller of the two is
  * used and `hasSpecial` tells the UI why.
  */
 export function sustainableDividend({ years, dividends, asOf = new Date() }) {
   const last = years.at(-1);
   const ttm = trailingDividend(dividends, asOf);
+  const fy = fiscalYearDividend(years, dividends, asOf);
+
+  // An empty fiscal-year window means the statements themselves are stale, not
+  // that the company stopped paying: GULF's last full year is FY2024 and its
+  // 3.25 was paid in March 2026, after that window closed. There the trailing
+  // record is the only figure that knows a dividend was paid at all.
+  const annual = fy && fy.amount > 0 ? fy.amount : ttm;
   // The same window a year earlier, so a one-off can be told from a new rate.
-  const prior = trailingDividend(dividends, new Date(asOf.getTime() - 365 * 86_400_000));
+  const prior = fy
+    ? sumDividends(dividends, addMonths(fy.from, -12), addMonths(fy.to, -12))
+    : trailingDividend(dividends, new Date(asOf.getTime() - 365 * 86_400_000));
 
   // The annual cash-flow line is only an anchor when it looks like a full year
   // of distributions. A company that pays its final after the year end leaves a
@@ -112,22 +175,19 @@ export function sustainableDividend({ years, dividends, asOf = new Date() }) {
     ? last.dpsStatement
     : null;
 
-  // What a holder received over the last twelve months is the best estimate of
-  // the run-rate, because it is the only figure that is true by construction.
-  // The exception is a spike: ADVANC's 27.41 special in February 2026 nearly
-  // tripled the cash received, and capitalising it forever is how a screen
-  // produces absurd margins of safety. A spike has to clear both the statement
-  // and the same window a year earlier — one of them alone is often just a
-  // timing difference.
-  const inflated = fromStatement != null && ttm > fromStatement * 1.5;
-  const spiked = prior > 0 && ttm > prior * 1.5;
-  const special = ttm > 0 && inflated && (prior === 0 || spiked);
+  // A spike has to clear both the statement and the same window a year earlier
+  // — one of them alone is often just a timing difference.
+  const inflated = fromStatement != null && annual > fromStatement * 1.5;
+  const spiked = prior > 0 && annual > prior * 1.5;
+  const special = annual > 0 && inflated && (prior === 0 || spiked);
 
-  const d0 = special ? Math.min(ttm, fromStatement) : ttm || fromStatement || 0;
+  const d0 = special ? Math.min(annual, fromStatement) : annual || fromStatement || 0;
 
   return {
     d0,
     ttm,
+    annual,
+    fiscalYear: fy?.fiscalYear ?? null,
     fromStatement,
     // Worth flagging in the UI: the cash received was well above the recurring rate.
     hasSpecial: special,
@@ -450,7 +510,11 @@ export function scoreQuality({
   const dividend = sustainableDividend({ years, dividends, asOf });
   const dividendYield = price > 0 && dividend.d0 > 0 ? dividend.d0 / price : null;
   add('dividendYield', dividendYield != null ? dividendYield >= 0.04 : null, dividendYield, 0.04,
-    { special: dividend.hasSpecial, ttmYield: price > 0 ? dividend.ttm / price : null });
+    {
+      special: dividend.hasSpecial,
+      ttmYield: price > 0 ? dividend.ttm / price : null,
+      fy: dividend.fiscalYear,
+    });
 
   const last = years.at(-1);
   // Paying more than 70% of profit is flagged even though it still passes the

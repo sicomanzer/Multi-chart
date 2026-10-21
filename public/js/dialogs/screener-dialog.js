@@ -316,7 +316,7 @@ function buildTable(rows, state, rerender) {
       <th class="num">${escape(t('scr.col.score'))}</th>
       <th class="num">${escape(t('scr.col.roe'))}</th>
       <th class="num">${escape(t('scr.col.de'))}</th>
-      <th class="num">${escape(t('scr.col.yield'))}</th>
+      <th class="num" title="${escape(t('scr.col.yieldHint'))}">${escape(t('scr.col.yield'))}</th>
       <th class="num">${escape(t('scr.col.pe'))}</th>
       <th class="num">${escape(t('scr.col.intrinsic'))}</th>
       <th class="num">${escape(t('scr.col.mos'))}</th>
@@ -566,7 +566,7 @@ function calculator(detail, state, rerender) {
         <b>${money(ddm.intrinsic, detail.currency)}</b></div>
       <div><span>${escape(t('scr.mos'))}</span>
         <b class="${ddm.mos > 0 ? 'is-up' : 'is-down'}">${ddm.mos.toFixed(1)}%</b></div>
-      <div><span>${escape(t('scr.d0'))}</span><b>${money(ddm.d0)}</b></div>
+      <div><span>${escape(t('scr.d0', { year: detail.dividendFy ?? '—' }))}</span><b>${money(ddm.d0)}</b></div>
       <div><span>${escape(t('scr.dps.ttm'))}</span><b>${money(detail.ttmDps)}</b></div>`;
   }
   box.appendChild(out);

@@ -416,20 +416,35 @@ independent estimates exist and both fail, in opposite directions:
   per share against a real 0.66) and can lag a final that is paid after the year
   end (STECON's FY2025 line is 0.004 against 0.55 actually paid)
 
-The trailing twelve months is the default because it is the only figure that is
-true by construction. It is overridden only when it spikes against *both* the
-statement and the same window a year earlier; then the smaller figure is used
-and the row marks it. The same rule covers a genuine step-up: SCGP's dividend
-rose from 0.55 to 0.75 without looking like a one-off, and is followed.
+The basis is the **dividend of the last completed fiscal year**, which is what
+`set.or.th` publishes as dividend yield: one fiscal year's interim plus its
+final, over today's price. The window is the twelve months centred on the year
+end (a December year end pays its final in March–May), and a year is only used
+once its final should have been paid — six months after the year end.
 
-**Payout pairs trailing cash with trailing earnings.** The fiscal-year version
-looked tidy and was wrong twice over: `dividendsPaid` carries the minority
-owners' share (PTT read 93% of profit, against roughly two thirds of trailing
-earnings actually paid out) and a dividend declared in March is paid out of the
-previous year's profit, so numerator and denominator described different years.
-The check is now trailing twelve months of dividends over trailing twelve months
-of EPS. The per-year DPS column shows what the exchange actually credited in
-that calendar year, falling back to the cash-flow statement only when there is
+A plain trailing-twelve-month sum is a different number, and the gap is not
+small: it mixes the *next* year's interim with the current year's final, so
+ICHI read 1.00 (0.55 final + 0.45 interim) where the exchange publishes 1.10
+(0.55 + 0.55), and every company that moves its interim date drifts by half a
+year's growth. The trailing figure is still shown in the detail view as "cash
+received, 12m" — it is what a holder was actually paid — but it is not what the
+yield, the payout ratio or the valuation use.
+
+The fiscal-year figure is overridden only when it spikes against *both* the
+statement and the same window a year earlier; then the smaller figure is used
+and the row marks it with `*`. That is what keeps ADVANC's 27.41 special out of
+the perpetuity (the exchange reports 10.33% for it; this screen reports the
+recurring 3.80%). The same rule follows a genuine step-up: SCGP's dividend rose
+from 0.55 to 0.75 without looking like a one-off.
+
+**Payout pairs that dividend with trailing earnings.** The fiscal-year
+denominator looked tidy and was wrong twice over: `dividendsPaid` carries the
+minority owners' share (PTT read 93% of profit, against roughly two thirds of
+trailing earnings actually paid out) and a dividend declared in March is paid
+out of the previous year's profit, so numerator and denominator described
+different years. The check is the fiscal-year dividend over trailing twelve
+months of EPS. The per-year DPS column shows what the exchange actually credited
+in that calendar year, falling back to the cash-flow statement only when there is
 no ex-date record — the statement is the one that can be wrong in either
 direction (PTT 2.94 against 2.20 received, BANPU 0.02 against 0.55).
 

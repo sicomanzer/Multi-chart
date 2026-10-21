@@ -150,6 +150,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     streak: quality.streak,
     ttmDps: dividend.ttm,
     dps: d0,
+    dividendFy: dividend.fiscalYear,
     hasSpecialDividend: dividend.hasSpecial,
     ddm: {
       ok: valuation.ok,

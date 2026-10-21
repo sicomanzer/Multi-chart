@@ -22,6 +22,7 @@ import {
   applyPreset,
   computeBands,
   ddm,
+  fiscalYearDividend,
   marginOfSafety,
   presetById,
   scoreQuality,
@@ -165,6 +166,43 @@ check('the skipped points are reported so the UI can say so',
 console.log('\n── Recurring dividend ──');
 
 const asOf = new Date('2026-10-01T00:00:00Z');
+
+// The exchange's yield is the dividend of the last completed fiscal year, not
+// the last twelve months of cash: ICHI's 2026 interim is 0.45 against 0.55 a
+// year earlier, so a rolling sum reads 1.00 while the exchange publishes 1.10.
+const fyDividend = fiscalYearDividend(
+  [{ fiscalYear: 2025, asOf: '2025-12-31' }],
+  [
+    { date: '2025-08-27', amount: 0.55 }, // interim for FY2025
+    { date: '2026-03-13', amount: 0.55 }, // final for FY2025
+    { date: '2026-08-26', amount: 0.45 }, // FY2026 interim, not this year
+  ],
+  new Date('2026-10-21T00:00:00Z'),
+);
+check('the fiscal-year dividend is the interim plus its final',
+  near(fyDividend.amount, 1.1, 1e-9), fyDividend.amount);
+check('the next year\'s interim is not mixed in', fyDividend.fiscalYear === 2025, fyDividend.fiscalYear);
+
+check('a year whose final is not paid yet is not used',
+  fiscalYearDividend(
+    [{ fiscalYear: 2026, asOf: '2026-06-30' }],
+    [{ date: '2026-09-01', amount: 1 }],
+    new Date('2026-10-21T00:00:00Z'),
+  ) === null);
+
+const mega = sustainableDividend({
+  years: [{ fiscalYear: 2025, asOf: '2025-12-31', dpsStatement: 1.6 }],
+  dividends: [
+    { date: '2025-08-27', amount: 0.8 },
+    { date: '2026-03-09', amount: 0.8 },
+    { date: '2026-08-26', amount: 0.85 },
+  ],
+  asOf: new Date('2026-10-21T00:00:00Z'),
+});
+check('the valuation uses the last fiscal year, not the last twelve months',
+  near(mega.d0, 1.6, 1e-9), mega.d0);
+check('the cash actually received is still reported',
+  near(mega.ttm, 1.65, 1e-9), mega.ttm);
 const withSpecial = sustainableDividend({
   years: [{ dpsStatement: 10 }],
   dividends: [
