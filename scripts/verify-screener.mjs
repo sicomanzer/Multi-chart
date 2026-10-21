@@ -274,6 +274,7 @@ const payoutCheck = ttmPayout.checks.find((c) => c.id === 'payoutBand');
 check('payout is measured against trailing earnings',
   near(payoutCheck.value, 0.25, 1e-9), payoutCheck.value);
 check('a payout that thin fails the framework band', payoutCheck.pass === false);
+check('and earns no half credit for being thin', payoutCheck.warn !== true, JSON.stringify(payoutCheck));
 const noTtmPayout = scoreQuality({ years, dividends, price: 20, asOf });
 check('without trailing earnings the fiscal year is the fallback',
   near(noTtmPayout.checks.find((c) => c.id === 'payoutBand').value, 0.5, 1e-9),
@@ -347,6 +348,14 @@ const row = (overrides = {}) => ({
 });
 const moat = presetById('moat');
 check('a passing row is kept', applyPreset(row(), moat).pass === true);
+
+const thinYield = row({
+  checks: row().checks.map((c) => (c.id === 'dividendYield' ? { id: 'dividendYield', pass: false } : c)),
+});
+check('the high-dividend preset refuses a name that barely pays',
+  applyPreset(thinYield, moat).pass === false);
+check('and says the yield was the reason',
+  applyPreset(thinYield, moat).reason === 'requires:dividendYield');
 
 const warnOnly = row({
   checks: row().checks.map((c) => (c.id === 'roeLevel' ? { id: 'roeLevel', pass: false, warn: true } : c)),

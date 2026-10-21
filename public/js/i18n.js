@@ -553,7 +553,7 @@ const EN = {
   'scr.years.other': '{n} years',
 
   'scr.preset.moat': 'High-dividend moat',
-  'scr.preset.moat.hint': 'ROE above 15%, cash-backed profit, and an unbroken dividend record',
+  'scr.preset.moat.hint': 'Yield at 4% or more, ROE above 15%, cash-backed profit, and an unbroken dividend record',
   'scr.preset.quality': 'Growth and quality',
   'scr.preset.quality.hint': 'Profitable, low-debt compounders — little attention to price',
   'scr.preset.dividend': 'Dividend income',
@@ -1182,7 +1182,7 @@ const TH = {
   'scr.years.other': '{n} ปี',
 
   'scr.preset.moat': 'ปันผลสูง + คูเมือง',
-  'scr.preset.moat.hint': 'ROE เกิน 15% กำไรมาจากกระแสเงินสดจริง และจ่ายปันผลต่อเนื่อง',
+  'scr.preset.moat.hint': 'ยีลด์ 4% ขึ้นไป ROE เกิน 15% กำไรมาจากกระแสเงินสดจริง และจ่ายปันผลต่อเนื่อง',
   'scr.preset.quality': 'เติบโตและมีคุณภาพ',
   'scr.preset.quality.hint': 'ทำกำไรสม่ำเสมอ หนี้น้อย ยังไม่เน้นว่าราคาถูกหรือแพง',
   'scr.preset.dividend': 'เน้นรายได้ปันผล',

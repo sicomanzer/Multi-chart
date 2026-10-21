@@ -440,7 +440,14 @@ export function scoreQuality({ years, dividends, price, asOf = new Date(), ttmEp
     ? dividend.d0 / ttmEps
     : last?.eps > 0 && paidPerShare != null ? paidPerShare / last.eps : null;
   const payoutOk = payout != null ? payout >= 0.40 && payout <= 0.70 : null;
-  add('payoutBand', payoutOk, payout, 0.40, { upper: 0.70, warn: payout != null && payout > 0 && payout <= 0.80 });
+  // Only the shoulder above the band is a warning: 70–80% is still covered but
+  // leaves no room to reinvest. A payout *below* the band is not a warning, it
+  // is simply not an income case — the earlier `<= 0.80` test handed every low
+  // payer half credit, which is how DELTA's 19% payout earned three points.
+  add('payoutBand', payoutOk, payout, 0.40, {
+    upper: 0.70,
+    warn: payout != null && payout > 0.70 && payout <= 0.80,
+  });
 
   const streak = dividendStreak(dividends, asOf);
   add('dividendStreak', dividends.length ? streak >= 5 : null, streak, 5);
@@ -496,7 +503,10 @@ export function scoreQuality({ years, dividends, price, asOf = new Date(), ttmEp
 export const PRESETS = [
   {
     id: 'moat',
-    requires: ['roeLevel', 'dividendStreak', 'cfoPositive'],
+    // "High dividend" is part of the mandate, so the yield floor is mandatory
+    // too. Without it the preset admitted DELTA at a 0.19% yield — a fine
+    // business, and not an income idea by any reading of the name.
+    requires: ['dividendYield', 'roeLevel', 'dividendStreak', 'cfoPositive'],
     minScore: 65,
     sort: 'score',
   },
