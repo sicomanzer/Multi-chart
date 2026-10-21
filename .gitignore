@@ -1,10 +1,13 @@
 # Dependencies
 node_modules/
 
-# Runtime state — the boards and watchlists a deployment writes are that
-# deployment's data, not source. They are recreated (with a default board) on
-# first boot, and the stores mkdir the directory themselves.
-data/
+# Runtime state
+#
+# data/workspaces.json and data/watchlists.json are deliberately tracked. On a
+# host without a persistent disk (Render's free plan, for one) the container
+# filesystem is wiped on every deploy, and these two files are what the app
+# boots from — without them a deploy comes up as the bare default board. Attach
+# a disk and set DATA_DIR if you would rather keep them out of git.
 data/*.tmp
 data/server.log
 data/server.err
