@@ -682,83 +682,34 @@ function calculator(detail, state, rerender) {
 /**
  * The annual statement charts.
  *
- * Amounts stack: the four quarters of a year add up to the year, and the total
- * is written above the bar. Ratios do not — a sum of margins is not a margin —
- * so the margin and leverage charts set the four quarters side by side instead
- * of piling them up, and mark the year's own figure with a dot. The payment
- * chart stacks the exchange ex-date record the same way, because there the
- * quarters are cash, and cash adds up.
+ * One bar per fiscal year. The shape is the point — is profit growing, is the
+ * margin holding — and a pile of four quarters in every bar hides that shape
+ * rather than showing it. The payment chart keeps its quarters, because there
+ * the quarters are cash and cash adds up.
  */
 function chartBlock(detail) {
   const box = document.createElement('div');
   box.appendChild(section(t('scr.chart'), t('scr.chartHint')));
 
+  // The statement charts read the long annual history when the second source
+  // has it and fall back to the four Yahoo years otherwise, so a name the long
+  // source does not carry still draws.
   const years = detail.years ?? [];
-  const history = detail.history ?? null;
-  const groups = history?.quarters ?? [];
+  const long = detail.history?.years?.length ? detail.history.years : years;
+  const labels = long.map((y) => y.fiscalYear);
+  const dps = detail.dpsQuarterly ?? [];
   const unit = t('scr.chart.unit');
   const money = (v) => `${(v / 1e6).toFixed(0)}${unit}`;
   const percent = (v) => `${(v * 100).toFixed(1)}%`;
   const plainNumber = (v) => v.toFixed(2);
 
-  // One row per fiscal year, with the four quarters pulled out of it.
-  const rowsFor = (metric) => groups.map((group) => {
-    const row = { year: group.fiscalYear, q1: null, q2: null, q3: null, q4: null, annual: null };
-    for (const q of group.quarters ?? []) {
-      const v = q[metric];
-      if (Number.isFinite(v)) row[`q${q.quarter}`] = v;
-    }
-    row.total = ['q1', 'q2', 'q3', 'q4']
-      .reduce((s, k) => s + (Number.isFinite(row[k]) ? row[k] : 0), 0);
-    const annual = (history?.years ?? []).find((y) => y.fiscalYear === group.fiscalYear);
-    if (annual) row.annual = annual[metric];
-    return row;
-  });
-
-  const fy = years.map((y) => y.fiscalYear);
   const cells = [
-    {
-      label: t('scr.chart.netProfit'),
-      rows: rowsFor('netIncome'),
-      stacked: true,
-      format: money,
-      plain: { labels: fy, values: years.map((y) => y.netIncome), color: '#a06cff', format: money },
-    },
-    {
-      label: t('scr.chart.revenue'),
-      rows: rowsFor('revenue'),
-      stacked: true,
-      format: money,
-      plain: { labels: fy, values: years.map((y) => y.revenue), color: '#2f7ff0', format: money },
-    },
-    {
-      label: t('scr.chart.eps'),
-      rows: rowsFor('eps'),
-      stacked: true,
-      format: plainNumber,
-      plain: { labels: fy, values: years.map((y) => y.eps), color: '#1fb6d4', format: plainNumber },
-    },
-    {
-      label: t('scr.chart.npm'),
-      rows: rowsFor('npm'),
-      stacked: false,
-      format: percent,
-      plain: { labels: fy, values: years.map((y) => y.npm), color: '#e8418a', format: percent },
-    },
-    {
-      label: t('scr.chart.dps'),
-      rows: detail.dpsQuarterly ?? [],
-      stacked: true,
-      format: plainNumber,
-      plain: null,
-    },
-    {
-      label: t('scr.chart.de'),
-      rows: rowsFor('de'),
-      stacked: false,
-      format: plainNumber,
-      plain: { labels: fy, values: years.map((y) => y.de), color: '#f0a020', format: plainNumber },
-    },
+    { label: t('scr.chart.netProfit'), values: long.map((y) => y.netIncome), color: '#a06cff', format: money },
+    { label: t('scr.chart.revenue'), values: long.map((y) => y.revenue), color: '#2f7ff0', format: money },
+    { label: t('scr.chart.eps'), values: long.map((y) => y.eps), color: '#1fb6d4', format: plainNumber },
+    { label: t('scr.chart.npm'), values: long.map((y) => y.npm), color: '#e8418a', format: percent },
+    { label: t('scr.chart.dps'), rows: dps, format: plainNumber },
+    { label: t('scr.chart.de'), values: long.map((y) => y.de), color: '#f0a020', format: plainNumber },
   ];
 
   const grid = document.createElement('div');
@@ -772,17 +723,14 @@ function chartBlock(detail) {
       legend.className = 'scr-chart__legend';
       legend.innerHTML = [
         ['--q1', 'Q1'], ['--q2', 'Q2'], ['--q3', 'Q3'], ['--q4', 'Q4'],
-      ].map(([k, n]) => `<span><i style="background:var(${k})"></i>${escape(n)}</span>`).join('')
-        + (c.stacked
-          ? ''
-          : `<span><i class="scr-chart__dot"></i>${escape(t('scr.chart.annual'))}</span>`);
+      ].map(([k, n]) => `<span><i style="background:var(${k})"></i>${escape(n)}</span>`).join('');
       cell.appendChild(legend);
     }
     grid.appendChild(cell);
     requestAnimationFrame(() => {
       const canvas = cell.querySelector('canvas');
-      if (c.rows?.length) drawQuarterBars(canvas, c.rows, c);
-      else if (c.plain) drawBars(canvas, c.plain);
+      if (c.rows?.length) drawQuarterBars(canvas, c.rows, { stacked: true, format: c.format });
+      else drawBars(canvas, { labels, values: c.values, color: c.color, format: c.format });
     });
   }
   box.appendChild(grid);

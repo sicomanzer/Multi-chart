@@ -649,7 +649,7 @@ const EN = {
   'scr.band.minus2': '-2 sigma',
 
   'scr.chart': 'Annual statement charts',
-  'scr.chartHint': 'Net profit, revenue, EPS, net margin, dividends by payment and leverage, per fiscal year and split by quarter. The three amount charts stack the quarters because they add up; the margin and leverage charts set them side by side, because a sum of ratios is not a ratio, and mark the year\'s own figure with a dot. The long history reaches back ten fiscal years, falling back to the four Yahoo years when it is unavailable. The leverage chart counts all liabilities over equity, which is a wider measure than the interest-bearing D/E in the table below',
+  'scr.chartHint': 'Net profit, revenue, EPS, net margin, dividends by payment and leverage, one bar per fiscal year. The statement charts reach back ten fiscal years from the long annual history, falling back to the four Yahoo years when it is unavailable. The payment chart splits the exchange ex-date record by the quarter the cash was paid, and the leverage chart counts all liabilities over equity — a wider measure than the interest-bearing D/E in the table below',
   'scr.chart.netProfit': 'Net profit',
   'scr.chart.revenue': 'Revenue',
   'scr.chart.eps': 'EPS',
@@ -657,7 +657,6 @@ const EN = {
   'scr.chart.dps': 'DPS by payment',
   'scr.chart.de': 'D/E (liabilities/equity)',
   'scr.chart.unit': 'M',
-  'scr.chart.annual': "year's figure",
 
   'scr.fin': 'Statements',
   'scr.finHint': 'Fiscal years as reported; the ratios above are derived from these lines. DPS is the cash a holder actually received',
@@ -1296,7 +1295,7 @@ const TH = {
   'scr.band.minus2': '-2 ซิกมา',
 
   'scr.chart': 'กราฟงบการเงินรายปี',
-  'scr.chartHint': 'กำไรสุทธิ รายได้ กำไรต่อหุ้น อัตรากำไรสุทธิ เงินปันผลตามครั้งที่จ่าย และหนี้สินต่อทุน รายปีบัญชี แยกตามไตรมาส กราฟจำนวนเงินสามกราฟซ้อนไตรมาสเพราะบวกกันได้ ส่วนกราฟอัตราส่วนสองกราฟเรียงไตรมาสเคียงกัน เพราะผลรวมของอัตราส่วนไม่ใช่อัตราส่วน และจุดกลางคือค่าของทั้งปี ประวัติยาวย้อนหลัง 10 ปีบัญชี ถ้าไม่มีข้อมูลจะถอยไปใช้ 4 ปีจาก Yahoo กราฟหนี้สินนับหนี้สินรวมหารด้วยทุน ซึ่งกว้างกว่า D/E เฉพาะดอกเบี้ยในตารางด้านล่าง ส่วนกราฟเงินปันผลใช้ประวัติวัน ex-date ของตลาดหลักทรัพย์',
+  'scr.chartHint': 'กำไรสุทธิ รายได้ กำไรต่อหุ้น อัตรากำไรสุทธิ เงินปันผลตามครั้งที่จ่าย และหนี้สินต่อทุน ปีบัญชีละหนึ่งแท่ง กราฟงบการเงินย้อนหลัง 10 ปีบัญชีจากประวัติรายปี ถ้าไม่มีข้อมูลจะถอยไปใช้ 4 ปีจาก Yahoo ส่วนกราฟเงินปันผลแยกตามไตรมาสที่จ่ายจริงจากประวัติวัน ex-date ของตลาดหลักทรัพย์ และกราฟหนี้สินนับหนี้สินรวมหารด้วยทุน ซึ่งกว้างกว่า D/E เฉพาะดอกเบี้ยในตารางด้านล่าง',
   'scr.chart.netProfit': 'กำไรสุทธิ',
   'scr.chart.revenue': 'รายได้รวม',
   'scr.chart.eps': 'กำไรต่อหุ้น',
@@ -1304,7 +1303,6 @@ const TH = {
   'scr.chart.dps': 'เงินปันผลต่อหุ้น',
   'scr.chart.de': 'D/E (หนี้สินรวม/ทุน)',
   'scr.chart.unit': 'ล้าน',
-  'scr.chart.annual': 'ค่าของทั้งปี',
 
   'scr.fin': 'งบการเงิน',
   'scr.finHint': 'ปีบัญชีตามที่รายงาน อัตราส่วนด้านบนคำนวณจากบรรทัดเหล่านี้ DPS คือเงินที่ผู้ถือหุ้นได้รับจริง',
