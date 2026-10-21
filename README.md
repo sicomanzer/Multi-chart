@@ -359,6 +359,7 @@ than hidden:
 | Trailing EPS, latest-quarter equity and share count | the same endpoint (`trailing*`, `quarterly*`) | latest quarter |
 | Per-share figures in the trading currency | Yahoo `v7/finance/quote` (crumb) | now |
 | Dividend ex-dates and amounts | Yahoo `chart?events=div` | 10–15 years |
+| Long annual history for the annual charts (net profit, revenue, EPS, margin, D/E) | Finnomena public market-info API | 10 fiscal years |
 | Daily closes | Yahoo `chart` | 15 years |
 | Current price | the last close in that chart | now |
 
@@ -380,6 +381,15 @@ taken from a provider: for each trading day the multiple is `close / EPS` using
 the fiscal year *published as of that date* — applying the latest EPS across the
 whole window would fold hindsight into the bands and make every stock look
 expensive in the past.
+
+**Ten years for the charts only.** The annual charts in the deep dive — net
+profit, revenue, EPS, net margin and D/E — reach back ten fiscal years, because
+the screen's own statements stop at four. That history comes from Finnomena's
+public market-info API, which republishes the same listed-company data with a
+longer tail, and it is used for drawing only: the score, the bands and the
+valuation still run on Yahoo's four years, so a second source can never move a
+price target. When it is missing — an unlisted ticker, an upstream failure —
+the charts fall back to the four years rather than drawing a gap.
 
 **Published, not merely ended.** Yahoo dates a statement by the period it
 covers, so FY2024 is stamped `2024-12-31` — a day on which nobody had seen it.

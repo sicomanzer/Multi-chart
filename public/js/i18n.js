@@ -655,7 +655,7 @@ const EN = {
   'scr.trend.none': 'Not enough history to draw a trend.',
 
   'scr.chart': 'Annual statement charts',
-  'scr.chartHint': 'Net profit, revenue, EPS, net margin, dividends by payment and leverage, per fiscal year. The income-statement lines come from Yahoo and reach back four fiscal years; the payment chart uses the exchange ex-date record and reaches further',
+  'scr.chartHint': 'Net profit, revenue, EPS, net margin, dividends by payment and leverage, per fiscal year. The statement charts reach back ten fiscal years from the long annual history, falling back to the four Yahoo years when it is unavailable; the payment chart uses the exchange ex-date record',
   'scr.chart.netProfit': 'Net profit',
   'scr.chart.revenue': 'Revenue',
   'scr.chart.eps': 'EPS',
@@ -1307,7 +1307,7 @@ const TH = {
   'scr.trend.none': 'ประวัติไม่พอจะวาดแนวโน้ม',
 
   'scr.chart': 'กราฟงบการเงินรายปี',
-  'scr.chartHint': 'กำไรสุทธิ รายได้ กำไรต่อหุ้น อัตรากำไรสุทธิ เงินปันผลตามครั้งที่จ่าย และหนี้สินต่อทุน รายปีบัญชี บรรทัดงบการเงินมาจาก Yahoo ย้อนหลัง 4 ปีบัญชี ส่วนกราฟเงินปันผลใช้ประวัติวัน ex-date ของตลาดหลักทรัพย์จึงยาวกว่า',
+  'scr.chartHint': 'กำไรสุทธิ รายได้ กำไรต่อหุ้น อัตรากำไรสุทธิ เงินปันผลตามครั้งที่จ่าย และหนี้สินต่อทุน รายปีบัญชี กราฟงบการเงินย้อนหลัง 10 ปีบัญชีจากประวัติรายปี ถ้าไม่มีข้อมูลจะถอยไปใช้ 4 ปีจาก Yahoo ส่วนกราฟเงินปันผลใช้ประวัติวัน ex-date ของตลาดหลักทรัพย์',
   'scr.chart.netProfit': 'กำไรสุทธิ',
   'scr.chart.revenue': 'รายได้รวม',
   'scr.chart.eps': 'กำไรต่อหุ้น',

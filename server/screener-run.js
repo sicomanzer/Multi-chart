@@ -20,6 +20,7 @@ import {
 } from './screener.js';
 import { normalizeSymbol, toYahooSymbol, uniqueSymbols } from './symbols.js';
 import { quoteBatch } from './quotes.js';
+import { annualHistory } from './finnomena.js';
 
 /** Yahoo tolerates a handful of parallel requests; more earns a 429. */
 const CONCURRENCY = 5;
@@ -189,7 +190,13 @@ export async function loadDetail(tvSymbol, options = {}) {
     throw err;
   }
   const yahoo = toYahooSymbol(symbol);
-  const quotes = await quoteBatch([yahoo]);
+  // The long annual history is a second source and an optional one: it runs in
+  // parallel with the quote and its failure only costs the charts, never the
+  // screen.
+  const [quotes, history] = await Promise.all([
+    quoteBatch([yahoo]),
+    annualHistory(symbol),
+  ]);
   const fin = await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null });
   const row = buildRow(fin, options);
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
@@ -245,6 +252,7 @@ export async function loadDetail(tvSymbol, options = {}) {
     pbvLevels: bands.pbv?.levels ?? null,
     trend,
     dpsQuarterly,
+    history: history ?? null,
     asOf: new Date().toISOString(),
   };
 }

@@ -32,6 +32,7 @@ import {
 import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears } from '../server/fin.js';
+import { aggregateAnnual, annualHistory, clearFinnomenaCache, HISTORY_YEARS } from '../server/finnomena.js';
 
 const BASE = process.env.API ?? 'http://127.0.0.1:8787';
 
@@ -611,6 +612,65 @@ console.warn = realWarn;
 check('a failed refresh resolves quietly', failed === null, failed);
 Date.now = realNow;
 check('and the last good list stays in use', constituents('set100', written) === afterTtl);
+globalThis.fetch = realFetch;
+
+// ── Long annual history ──────────────────────────────────────────────────────
+console.log('\n── Long annual history ──');
+
+// The annual row is the one flagged `quarter === 9`; the three-month rows must
+// not be summed with it or the year double-counts.
+const rows = [
+  { fiscal: 2024, quarter: 1, net_profit: '1', revenue: '10', npm: '5', debt_to_equity: '0.5', end_of_year_date: '2024-12-31' },
+  { fiscal: 2024, quarter: 2, net_profit: '2', revenue: '20', npm: '6', debt_to_equity: '0.6' },
+  { fiscal: 2024, quarter: 9, net_profit: '7', revenue: '70', npm: '7', debt_to_equity: '0.7', end_of_year_date: '2024-12-31' },
+  { fiscal: 2025, quarter: 9, net_profit: '8', revenue: '80', npm: '8', debt_to_equity: '0.8', end_of_year_date: '2025-12-31' },
+];
+const annual = aggregateAnnual(rows);
+check('only the annual row is kept, and the year is not double-counted',
+  annual.length === 2 && annual[0].netIncome === 7 && annual[0].revenue === 70, JSON.stringify(annual));
+check('a margin reported as a percentage becomes a fraction',
+  annual[0].npm === 0.07 && annual[1].npm === 0.08, `${annual[0].npm}`);
+check('the years come back in order',
+  annual[0].fiscalYear === 2024 && annual[1].fiscalYear === 2025);
+check('empty input yields no years', aggregateAnnual([]).length === 0);
+
+const finnomenaFetch = (ok = true) => async (url) => {
+  const u = String(url);
+  if (!ok) return { ok: false, status: 500, json: async () => ({}) };
+  if (u.includes('/stock/list')) {
+    return { ok: true, status: 200, json: async () => ({ data: Array.from({ length: 100 }, (_, i) => ({
+      name: i === 0 ? 'BH' : `T${i}`,
+      security_id: `id-${i}`,
+    })) }) };
+  }
+  if (u.includes('/stock/summary/id-0')) {
+    return { ok: true, status: 200, json: async () => ({ data: Array.from({ length: 16 }, (_, i) => ({
+      fiscal: 2010 + i,
+      quarter: 9,
+      net_profit: String(1000 + i),
+      revenue: String(10000 + i),
+      earning_per_share: '1',
+      npm: '10',
+      debt_to_equity: '0.5',
+      end_of_year_date: `${2010 + i}-12-31`,
+    })) }) };
+  }
+  return { ok: true, status: 200, json: async () => ({ data: [] }) };
+};
+
+globalThis.fetch = finnomenaFetch(true);
+clearFinnomenaCache();
+const bh = await annualHistory('SET:BH');
+check('the symbol map resolves the ticker to an id and returns history',
+  bh?.length === HISTORY_YEARS && bh[0].fiscalYear === 2016 && bh.at(-1).fiscalYear === 2025,
+  bh ? `${bh.length} years` : 'null');
+check('a symbol the source does not carry resolves to null',
+  (await annualHistory('SET:NOPE')) === null);
+
+globalThis.fetch = finnomenaFetch(false);
+clearFinnomenaCache();
+check('a failed request resolves to null rather than throwing',
+  (await annualHistory('SET:BH')) === null);
 globalThis.fetch = realFetch;
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────

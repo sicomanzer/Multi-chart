@@ -684,27 +684,31 @@ function chartBlock(detail) {
   const box = document.createElement('div');
   box.appendChild(section(t('scr.chart'), t('scr.chartHint')));
 
+  // The statement charts read the long annual history when the second source
+  // has it and fall back to the four Yahoo years otherwise, so a name the long
+  // source does not carry still draws.
   const years = detail.years ?? [];
-  const fys = years.map((y) => y.fiscalYear);
+  const long = detail.history ?? years;
+  const fys = long.map((y) => y.fiscalYear);
   const dps = detail.dpsQuarterly ?? [];
   const unit = t('scr.chart.unit');
 
   const cells = [
     { key: 'netProfit', label: t('scr.chart.netProfit'), labels: fys,
-      values: years.map((y) => y.netIncome), color: '#a06cff',
+      values: long.map((y) => y.netIncome), color: '#a06cff',
       format: (v) => `${(v / 1e6).toFixed(0)}${unit}`, showValues: false },
     { key: 'revenue', label: t('scr.chart.revenue'), labels: fys,
-      values: years.map((y) => y.revenue), color: '#2f7ff0',
+      values: long.map((y) => y.revenue), color: '#2f7ff0',
       format: (v) => `${(v / 1e6).toFixed(0)}${unit}`, showValues: false },
     { key: 'eps', label: t('scr.chart.eps'), labels: fys,
-      values: years.map((y) => y.eps), color: '#1fb6d4',
+      values: long.map((y) => y.eps), color: '#1fb6d4',
       format: (v) => v.toFixed(2), showValues: false },
     { key: 'npm', label: t('scr.chart.npm'), labels: fys,
-      values: years.map((y) => y.npm), color: '#e8418a',
+      values: long.map((y) => y.npm), color: '#e8418a',
       format: (v) => `${(v * 100).toFixed(1)}%`, showValues: false },
     { key: 'dps', label: t('scr.chart.dps'), stacked: dps },
     { key: 'de', label: t('scr.chart.de'), labels: fys,
-      values: years.map((y) => y.de), color: '#f0a020',
+      values: long.map((y) => y.de), color: '#f0a020',
       format: (v) => v.toFixed(2), showValues: false },
   ];
 
