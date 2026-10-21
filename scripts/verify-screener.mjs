@@ -32,7 +32,10 @@ import {
 import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears } from '../server/fin.js';
-import { aggregateAnnual, annualHistory, clearFinnomenaCache, HISTORY_YEARS } from '../server/finnomena.js';
+import { aggregateAnnual, annualHistory, clearFinnomenaCache, finnomenaStatus, HISTORY_YEARS } from '../server/finnomena.js';
+import { mkdtemp, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const BASE = process.env.API ?? 'http://127.0.0.1:8787';
 
@@ -639,11 +642,11 @@ const finnomenaFetch = (ok = true) => async (url) => {
   if (!ok) return { ok: false, status: 500, json: async () => ({}) };
   if (u.includes('/stock/list')) {
     return { ok: true, status: 200, json: async () => ({ data: Array.from({ length: 100 }, (_, i) => ({
-      name: i === 0 ? 'BH' : `T${i}`,
+      name: `T${i}`,
       security_id: `id-${i}`,
     })) }) };
   }
-  if (u.includes('/stock/summary/id-0')) {
+  if (u.includes('/stock/summary/')) {
     return { ok: true, status: 200, json: async () => ({ data: Array.from({ length: 16 }, (_, i) => ({
       fiscal: 2010 + i,
       quarter: 9,
@@ -658,20 +661,40 @@ const finnomenaFetch = (ok = true) => async (url) => {
   return { ok: true, status: 200, json: async () => ({ data: [] }) };
 };
 
-globalThis.fetch = finnomenaFetch(true);
+// The tracked file is the first source: the deploy boots from it, and it
+// answers whatever the upstream refuses.
+const tmpDir = await mkdtemp(join(tmpdir(), 'annual-history-'));
+const tmpFile = join(tmpDir, 'annual-history.json');
+await writeFile(tmpFile, JSON.stringify({
+  symbols: { ZZZ: [{ y: 2020, np: 5, rev: 50, eps: 1, npm: 0.1, de: 0.2 }] },
+}), 'utf8');
+process.env.ANNUAL_HISTORY_FILE = tmpFile;
 clearFinnomenaCache();
-const bh = await annualHistory('SET:BH');
-check('the symbol map resolves the ticker to an id and returns history',
-  bh?.length === HISTORY_YEARS && bh[0].fiscalYear === 2016 && bh.at(-1).fiscalYear === 2025,
-  bh ? `${bh.length} years` : 'null');
+globalThis.fetch = finnomenaFetch(true);
+const fromFile = await annualHistory('SET:ZZZ');
+check('the tracked file answers before the network',
+  fromFile?.length === 1 && fromFile[0].fiscalYear === 2020 && fromFile[0].netIncome === 5,
+  JSON.stringify(fromFile));
+
+// A symbol the file does not have falls through to the live API.
+process.env.ANNUAL_HISTORY_FILE = join(tmpDir, 'not-here.json');
+clearFinnomenaCache();
+const live7 = await annualHistory('SET:T7');
+check('a symbol the file does not have comes from the live API',
+  live7?.length === HISTORY_YEARS && live7[0].fiscalYear === 2016 && live7.at(-1).fiscalYear === 2025,
+  live7 ? `${live7.length} years` : 'null');
 check('a symbol the source does not carry resolves to null',
   (await annualHistory('SET:NOPE')) === null);
 
 globalThis.fetch = finnomenaFetch(false);
 clearFinnomenaCache();
 check('a failed request resolves to null rather than throwing',
-  (await annualHistory('SET:BH')) === null);
+  (await annualHistory('SET:T7')) === null);
+check('and the failure is reported for the health endpoint',
+  finnomenaStatus().live.ok === false && !!finnomenaStatus().live.error);
 globalThis.fetch = realFetch;
+delete process.env.ANNUAL_HISTORY_FILE;
+clearFinnomenaCache();
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 

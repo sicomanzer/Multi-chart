@@ -27,6 +27,7 @@ import { McpClient, McpError, detectPython } from './mcp-client.js';
 import { RealtimeHub } from './realtime.js';
 import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS, TRACKED_METRICS } from './fundamentals.js';
 import { FundamentalsHistory } from './history.js';
+import { finnomenaStatus } from './finnomena.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
 import { runScreen, loadDetail, UNIVERSES } from './screener-run.js';
@@ -183,6 +184,7 @@ app.get('/api/health', asyncRoute(async (req, res) => {
     ready: true,
     mcp: deep ? { ...mcp.status(), ping: await mcp.ping() } : mcp.status(),
     fundamentals: fundamentals.status(),
+    annualHistory: finnomenaStatus(),
     history: history.summary(),
     watchlists: watchlists.summary(),
     realtime: hub.status(),

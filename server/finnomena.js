@@ -11,20 +11,43 @@
  * `quarter` is 9; the other quarters are the three-month figures and would
  * double-count if they were summed with it.
  *
- * Everything is best-effort. The list and each summary are cached for a day and
- * any failure — offline, blocked, a symbol Finnomena does not carry — resolves
- * to null, and the charts fall back to the four Yahoo years instead of
- * breaking the detail view.
+ * Two ways in, and the tracked file comes first. The container's own address
+ * is refused by the upstream's bot filter more often than not, so the same
+ * history is kept in `data/annual-history.json` and read from disk; the live
+ * call then only covers the symbols that file does not have. Rebuild the file
+ * with `scripts/refresh-annual-history.mjs`.
+ *
+ * Everything is best-effort. Any failure — offline, blocked, a symbol
+ * Finnomena does not carry — resolves to null, and the charts fall back to the
+ * four Yahoo years instead of breaking the detail view.
  */
+import { readFile } from 'node:fs/promises';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { normalizeSymbol, bareSymbol } from './symbols.js';
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO_DATA = resolve(HERE, '..', 'data');
+
+/** Where the tracked history may live: an explicit path, the data dir, the repo. */
+function datasetPaths() {
+  return [
+    process.env.ANNUAL_HISTORY_FILE ? resolve(process.env.ANNUAL_HISTORY_FILE) : null,
+    process.env.DATA_DIR ? join(process.env.DATA_DIR, 'annual-history.json') : null,
+    join(REPO_DATA, 'annual-history.json'),
+  ].filter(Boolean);
+}
 
 const BASE = 'https://www.finnomena.com/market-info/api/public';
 const LIST_URL = `${BASE}/stock/list?exchange=TH`;
 const USER_AGENT = 'Mozilla/5.0 (compatible; multi-chart-trading-desk/1.0)';
 
-const TIMEOUT_MS = 15_000;
+const TIMEOUT_MS = 10_000;
 const LIST_TTL_MS = 24 * 60 * 60 * 1000;
 const SUMMARY_TTL_MS = 24 * 60 * 60 * 1000;
+
+/** How long a failed live call keeps the app from trying again. */
+const LIVE_BACKOFF_MS = 30 * 60 * 1000;
 
 /** The number of fiscal years the annual charts show. */
 export const HISTORY_YEARS = 10;
@@ -50,10 +73,58 @@ async function getJson(url) {
   }
 }
 
+/* ── the tracked file ─────────────────────────────────────────────────────── */
+
+let dataset = null;
+let datasetPath = null;
+let datasetInFlight = null;
+
+function rowFromFile(row) {
+  return {
+    fiscalYear: Number(row?.y),
+    netIncome: num(row?.np),
+    revenue: num(row?.rev),
+    eps: num(row?.eps),
+    npm: num(row?.npm),
+    de: num(row?.de),
+  };
+}
+
+async function loadDataset() {
+  if (dataset) return dataset;
+  if (datasetInFlight) return datasetInFlight;
+  datasetInFlight = (async () => {
+    for (const path of datasetPaths()) {
+      try {
+        const raw = JSON.parse(await readFile(path, 'utf8'));
+        const map = new Map();
+        for (const [symbol, rows] of Object.entries(raw?.symbols ?? {})) {
+          const clean = (rows ?? [])
+            .map(rowFromFile)
+            .filter((r) => Number.isFinite(r.fiscalYear));
+          if (clean.length) map.set(String(symbol).toUpperCase(), clean);
+        }
+        dataset = map;
+        datasetPath = path;
+        return dataset;
+      } catch {
+        // Try the next candidate.
+      }
+    }
+    dataset = new Map();
+    return dataset;
+  })().finally(() => { datasetInFlight = null; });
+  return datasetInFlight;
+}
+
+/* ── the live API ─────────────────────────────────────────────────────────── */
+
 let listState = { at: 0, map: null };
 let listInFlight = null;
 const summaryCache = new Map(); // security_id -> { at, rows }
 const summaryInFlight = new Map();
+
+const live = { ok: null, error: null, blockedUntil: 0, attempts: 0, symbols: 0 };
 
 async function symbolMap() {
   if (listState.map && Date.now() - listState.at < LIST_TTL_MS) return listState.map;
@@ -69,6 +140,8 @@ async function symbolMap() {
       }
       if (map.size < 100) throw new Error(`only ${map.size} tickers returned`);
       listState = { at: Date.now(), map };
+      live.ok = true;
+      live.error = null;
       return map;
     } finally {
       listInFlight = null;
@@ -132,6 +205,16 @@ export function aggregateAnnual(rows) {
 export async function annualHistory(tvSymbol) {
   const bare = bareSymbol(normalizeSymbol(tvSymbol));
   if (!bare) return null;
+
+  // The tracked file answers first: it is local, it always works, and it is
+  // what the deploy boots from.
+  const file = await loadDataset().catch(() => null);
+  const fromFile = file?.get(bare);
+  if (fromFile?.length) return fromFile.slice(-HISTORY_YEARS);
+
+  // Not in the file: ask the upstream, unless it has just refused.
+  if (live.blockedUntil > Date.now()) return null;
+  live.attempts += 1;
   try {
     const map = await symbolMap();
     const id = map.get(bare);
@@ -139,14 +222,43 @@ export async function annualHistory(tvSymbol) {
     const rows = await summaryRows(id);
     const years = aggregateAnnual(rows);
     if (years.length === 0) return null;
+    live.symbols += 1;
     return years.slice(-HISTORY_YEARS);
-  } catch {
+  } catch (err) {
+    live.ok = false;
+    live.error = String(err?.message ?? err).slice(0, 160);
+    live.blockedUntil = Date.now() + LIVE_BACKOFF_MS;
     return null;
   }
+}
+
+/** What the health endpoint reports about the annual history. */
+export function finnomenaStatus() {
+  return {
+    dataset: {
+      path: datasetPath,
+      symbols: dataset?.size ?? 0,
+      loaded: dataset != null,
+    },
+    live: {
+      ok: live.ok,
+      error: live.error,
+      attempts: live.attempts,
+      symbols: live.symbols,
+      blockedUntil: live.blockedUntil ? new Date(live.blockedUntil).toISOString() : null,
+    },
+  };
 }
 
 export function clearFinnomenaCache() {
   listState = { at: 0, map: null };
   summaryCache.clear();
   summaryInFlight.clear();
+  dataset = null;
+  datasetPath = null;
+  live.ok = null;
+  live.error = null;
+  live.blockedUntil = 0;
+  live.attempts = 0;
+  live.symbols = 0;
 }

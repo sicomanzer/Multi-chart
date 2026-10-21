@@ -391,6 +391,16 @@ valuation still run on Yahoo's four years, so a second source can never move a
 price target. When it is missing — an unlisted ticker, an upstream failure —
 the charts fall back to the four years rather than drawing a gap.
 
+**The history is tracked in the repository.** Finnomena's host sits behind a bot
+filter that a container's address does not always pass, so the same ten years
+are also kept in `data/annual-history.json` and read from disk — the deploy
+boots from it the way it boots from the boards and watchlists, and the live
+call then only covers the symbols the file does not have. Annual figures change
+once a year, so the file stays true for a long time; rebuild it with
+`node scripts/refresh-annual-history.mjs`, which writes every symbol the app
+knows about (the index, the boards and the lists). `/api/health` reports the
+file and the live channel separately under `annualHistory`.
+
 **Published, not merely ended.** Yahoo dates a statement by the period it
 covers, so FY2024 is stamped `2024-12-31` — a day on which nobody had seen it.
 Each year therefore carries a `knownFrom` date of the fiscal year end plus ninety
