@@ -356,18 +356,42 @@ than hidden:
 | Need | Source | Spans |
 | --- | --- | --- |
 | Annual statements (net income, equity, debt, EBIT, cash flow, EPS, shares) | Yahoo `ws/fundamentals-timeseries` | 4–5 fiscal years |
+| Trailing EPS, latest-quarter equity and share count | the same endpoint (`trailing*`, `quarterly*`) | latest quarter |
 | Dividend ex-dates and amounts | Yahoo `chart?events=div` | 10–15 years |
 | Daily closes | Yahoo `chart` | 15 years |
-| Current price / ratios | the fundamentals strip above | now |
+| Current price | the last close in that chart | now |
 
 **Four years, not ten.** Yahoo serves four annual periods per symbol to a free
 client, consistently across SET names. That covers the framework's "3–5
 consecutive years" rules, and it is why the P/E and P/BV bands say `4y` rather
 than implying a decade. The band is rebuilt from the statements rather than
 taken from a provider: for each trading day the multiple is `close / EPS` using
-the fiscal year *reported as of that date* — applying the latest EPS across the
+the fiscal year *published as of that date* — applying the latest EPS across the
 whole window would fold hindsight into the bands and make every stock look
 expensive in the past.
+
+**Published, not merely ended.** Yahoo dates a statement by the period it
+covers, so FY2024 is stamped `2024-12-31` — a day on which nobody had seen it.
+Each year therefore carries a `knownFrom` date of the fiscal year end plus sixty
+days (Thai issuers have three months to file, and large caps file sooner), and
+the band refuses to use a year before that date.
+
+**The right-hand edge is today's multiple, not last year's.** The history has to
+be annual because that is the only series that exists for every year, but the
+current point uses trailing twelve-month EPS and the latest quarter's book value
+per share — the same denominators a quote screen uses. A P/E built from the last
+fiscal year is stale by up to twelve months, and for a company that has swung to
+a loss it is not stale but wrong: BANPU, JAS and EA were all showing a low
+multiple from a profitable year that had already ended. When trailing earnings
+are negative there is no multiple, so the row shows `—` instead of a flattering
+number.
+
+**Multiples above 100× (50× for P/BV) are left out of the statistics.** A
+company that earned 0.05 baht a share is not "trading at 300 times earnings" in
+any useful sense — the denominator is noise around zero, and one such year drags
+the mean far enough that every other year looks cheap. BANPU's band read a mean
+of 175× and a −2σ level below zero before this rule; the dialog reports how many
+days were excluded rather than dropping them silently.
 
 **The dividend that gets discounted is not always the dividend just paid.** Two
 independent estimates exist and both fail, in opposite directions:
@@ -380,6 +404,17 @@ independent estimates exist and both fail, in opposite directions:
 
 Taking the lower of the two discards whichever was inflated. The recurring
 figure goes into the DDM; the trailing cash figure is still shown, marked `*`.
+
+**Payout pairs trailing cash with trailing earnings.** The fiscal-year version
+looked tidy and was wrong twice over: `dividendsPaid` carries the minority
+owners' share (PTT read 93% of profit, against roughly two thirds of trailing
+earnings actually paid out) and a dividend declared in March is paid out of the
+previous year's profit, so numerator and denominator described different years.
+The check is now trailing twelve months of dividends over trailing twelve months
+of EPS. The per-year DPS column shows what the exchange actually credited in
+that calendar year, falling back to the cash-flow statement only when there is
+no ex-date record — the statement is the one that can be wrong in either
+direction (PTT 2.94 against 2.20 received, BANPU 0.02 against 0.55).
 
 **Valuation.** Two-stage DDM, with `g1` capped at 8%, `g2` defaulting to 3% and
 `r` to 9%. The cap is the point: a two-stage model fed a 25% growth rate
@@ -399,12 +434,13 @@ computed, which is why the same company can be strong for one mandate and
 disqualified for another.
 
 `data/` holds nothing for the screener: statements are cached in memory for
-twelve hours, and a cold run of 77 names takes about two seconds at five
+twelve hours, and a cold run of 75 names takes about two seconds at five
 parallel upstream requests.
 
 The engine is pure and covered by `scripts/verify-screener.mjs` — the DDM
-against its closed form, the bands for the no-hindsight property, the dividend
-basis on both failure modes, and the scoring on a healthy company, a bank, a
+against its closed form, the bands for the no-hindsight and filing-lag
+properties, the dividend basis on both failure modes, the per-share definitions
+(DPS, trailing payout) and the scoring on a healthy company, a bank, a
 non-payer and a broken one.
 
 ---

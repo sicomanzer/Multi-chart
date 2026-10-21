@@ -613,7 +613,7 @@ const EN = {
   'scr.check.dividendYield': 'Yield at 4% or more',
   'scr.check.dividendYield.hint': 'Recurring dividend over price — needs {threshold}',
   'scr.check.payoutBand': 'Payout between 40% and 70%',
-  'scr.check.payoutBand.hint': 'Share of profit paid out, from {threshold} upward; above 80% is flagged',
+  'scr.check.payoutBand.hint': 'Dividends received over the last 12 months ÷ trailing 12-month earnings; above 80% is flagged',
   'scr.check.dividendStreak': 'Dividend every year for 5 years',
   'scr.check.dividendStreak.hint': 'Unbroken run of calendar years — needs {threshold}',
 
@@ -623,11 +623,13 @@ const EN = {
   'scr.verdict.na': 'n/a',
 
   'scr.band': 'Valuation bands',
-  'scr.bandHint': 'The stock measured against its own history, across {years} fiscal years of earnings',
+  'scr.bandHint': 'Measured against its own history: {years} fiscal years of annual earnings, with the latest multiple on trailing earnings',
   'scr.band.pe': 'P/E',
   'scr.band.pbv': 'P/BV',
   'scr.band.none': 'Not enough history to draw a band.',
-  'scr.band.now': 'now',
+  'scr.band.nowPe': 'now (TTM)',
+  'scr.band.nowPbv': 'now (latest quarter)',
+  'scr.band.capped': '{n} days left out: above {max}× the denominator is earnings that are close to zero, which says nothing about valuation',
   'scr.band.z': 'vs mean',
   'scr.band.plus2': '+2 sigma',
   'scr.band.plus1': '+1 sigma',
@@ -636,7 +638,7 @@ const EN = {
   'scr.band.minus2': '-2 sigma',
 
   'scr.fin': 'Statements',
-  'scr.finHint': 'Fiscal years as reported; the ratios above are derived from these lines',
+  'scr.finHint': 'Fiscal years as reported; the ratios above are derived from these lines. DPS is the cash a holder actually received',
   'scr.fin.year': 'FY',
   'scr.fin.roe': 'ROE',
   'scr.fin.roa': 'ROA',
@@ -644,7 +646,7 @@ const EN = {
   'scr.fin.de': 'D/E',
   'scr.fin.eps': 'EPS',
   'scr.fin.bvps': 'BVPS',
-  'scr.fin.dps': 'DPS',
+  'scr.fin.dps': 'DPS paid',
 };
 
 const TH = {
@@ -1236,7 +1238,7 @@ const TH = {
   'scr.check.dividendYield': 'ยีลด์ 4% ขึ้นไป',
   'scr.check.dividendYield.hint': 'ปันผลปกติหารราคา — ต้องถึง {threshold}',
   'scr.check.payoutBand': 'อัตราจ่ายปันผล 40%-70%',
-  'scr.check.payoutBand.hint': 'สัดส่วนกำไรที่จ่ายออก เริ่มที่ {threshold} ถ้าเกิน 80% จะติดธงเตือน',
+  'scr.check.payoutBand.hint': 'เงินปันผลที่ได้รับจริง 12 เดือน ÷ กำไร 12 เดือน ถ้าเกิน 80% จะติดธงเตือน',
   'scr.check.dividendStreak': 'จ่ายปันผลต่อเนื่อง 5 ปี',
   'scr.check.dividendStreak.hint': 'จำนวนปีที่จ่ายติดต่อกัน — ต้องได้ {threshold}',
 
@@ -1246,11 +1248,13 @@ const TH = {
   'scr.verdict.na': 'ไม่มีข้อมูล',
 
   'scr.band': 'ช่วงการซื้อขายของอัตราส่วน',
-  'scr.bandHint': 'เทียบหุ้นกับประวัติของตัวเอง จากกำไร {years} ปี',
+  'scr.bandHint': 'เทียบหุ้นกับประวัติของตัวเอง: กำไรปีบัญชี {years} ปี และจุดล่าสุดใช้กำไรย้อนหลัง 12 เดือน',
   'scr.band.pe': 'P/E',
   'scr.band.pbv': 'P/BV',
   'scr.band.none': 'ประวัติไม่พอจะวาดช่วงการซื้อขาย',
-  'scr.band.now': 'ปัจจุบัน',
+  'scr.band.nowPe': 'ปัจจุบัน (TTM)',
+  'scr.band.nowPbv': 'ปัจจุบัน (ไตรมาสล่าสุด)',
+  'scr.band.capped': 'ตัด {n} วันออก เพราะค่าที่เกิน {max} เท่ามาจากกำไรที่ใกล้ศูนย์ ซึ่งบอกอะไรเกี่ยวกับมูลค่าไม่ได้',
   'scr.band.z': 'เทียบค่าเฉลี่ย',
   'scr.band.plus2': '+2 ซิกมา',
   'scr.band.plus1': '+1 ซิกมา',
@@ -1259,7 +1263,7 @@ const TH = {
   'scr.band.minus2': '-2 ซิกมา',
 
   'scr.fin': 'งบการเงิน',
-  'scr.finHint': 'ปีบัญชีตามที่รายงาน อัตราส่วนด้านบนคำนวณจากบรรทัดเหล่านี้',
+  'scr.finHint': 'ปีบัญชีตามที่รายงาน อัตราส่วนด้านบนคำนวณจากบรรทัดเหล่านี้ DPS คือเงินที่ผู้ถือหุ้นได้รับจริง',
   'scr.fin.year': 'ปี',
   'scr.fin.roe': 'ROE',
   'scr.fin.roa': 'ROA',
@@ -1267,7 +1271,7 @@ const TH = {
   'scr.fin.de': 'D/E',
   'scr.fin.eps': 'EPS',
   'scr.fin.bvps': 'BVPS',
-  'scr.fin.dps': 'DPS',
+  'scr.fin.dps': 'DPS ที่จ่ายจริง',
 };
 
 /**

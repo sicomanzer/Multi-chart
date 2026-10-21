@@ -29,6 +29,7 @@ import {
   trailingDividend,
 } from '../server/screener.js';
 import { SET_LARGE_CAPS } from '../server/screener-run.js';
+import { deriveYears } from '../server/fin.js';
 
 const BASE = process.env.API ?? 'http://127.0.0.1:8787';
 
@@ -104,10 +105,50 @@ check('no hindsight: a 2021 close uses the 2020 EPS',
   near(bands.pe.points.find((p) => p.date === january.date)?.value ?? -1, expected, 1e-12),
   `${bands.pe.points.find((p) => p.date === january.date)?.value} vs ${expected}`);
 
+// A fiscal year end is not the day the numbers were published. `knownFrom`
+// carries the filing date, and a close before it must not see that year yet.
+const lagged = [
+  { asOf: '2020-12-31', knownFrom: '2021-03-01', eps: 10, bvps: 50 },
+  { asOf: '2022-12-31', knownFrom: '2023-03-01', eps: 20, bvps: 60 },
+];
+const lagBands = computeBands(months, lagged);
+check('a close before the filing date is not priced on unpublished earnings',
+  lagBands.pe.points.every((p) => p.date >= '2021-03-01'), lagBands.pe.points[0]?.date);
+check('the first close after filing uses that fiscal year',
+  near(lagBands.pe.points[0].value, months.find((m) => m.date === '2021-03-28').close / 10, 1e-12),
+  lagBands.pe.points[0]?.value);
+
+// The right-hand edge is today's multiple, not the last fiscal year's.
+const overridden = computeBands(months, fiscal, { peCurrent: 5, pbvCurrent: 2 });
+check('the current multiple can be overridden with trailing figures',
+  near(overridden.pe.current, 5) && near(overridden.pbv.current, 2),
+  `${overridden.pe.current} / ${overridden.pbv.current}`);
+check('the override lands on the last date instead of adding a point',
+  overridden.pe.points.length === bands.pe.points.length &&
+  overridden.pe.points.at(-1).date === months.at(-1).date);
+const noMultiple = computeBands(months, fiscal, { peCurrent: null });
+check('negative trailing earnings report no multiple',
+  noMultiple.pe.current === null && noMultiple.pe.z === null,
+  `${noMultiple.pe.current} / ${noMultiple.pe.z}`);
+check('the history is still shown when today has no multiple',
+  noMultiple.pe.points.length > 0 && noMultiple.pe.mean > 0);
+
 const tooShort = computeBands(months.slice(0, 5), fiscal);
 check('a short history yields no band instead of a meaningless one', tooShort.pe === null);
 check('no closes yields no band', computeBands([], fiscal).pe === null);
 check('no positive EPS yields no band', computeBands(months, [{ asOf: '2020-12-31', eps: -1 }]).pe === null);
+
+// A year that barely earned anything must not become a 2000x multiple and drag
+// the whole band with it.
+const trough = [
+  { asOf: '2020-12-31', eps: 10, bvps: 50 },
+  { asOf: '2022-12-31', eps: 0.05, bvps: 60 },
+];
+const capped = computeBands(months, trough);
+check('a near-zero EPS year is skipped rather than plotted at 2000x',
+  capped.pe.skipped > 0 && capped.pe.max <= 100, `${capped.pe.skipped} skipped, max ${capped.pe.max}`);
+check('the skipped points are reported so the UI can say so',
+  typeof capped.pe.skipped === 'number' && capped.pe.points.every((p) => p.value <= 100));
 
 // ── Dividend basis ──────────────────────────────────────────────────────────
 
@@ -144,6 +185,43 @@ check('the trailing window is twelve months',
     { date: '2026-01-15', amount: 1 },
     { date: '2024-01-15', amount: 5 },
   ], asOf), 1));
+
+// ── Per-share definitions ───────────────────────────────────────────────────
+
+console.log('\n── Per-share definitions ──');
+
+// PTT's shape: the cash-flow line counts every baht leaving the group,
+// including the share that went to minority owners of subsidiaries.
+const ptt = deriveYears({
+  '2025-12-31': {
+    netIncome: 90_000,
+    stockholdersEquity: 1_127_000,
+    totalAssets: 3_500_000,
+    totalRevenue: 2_900_000,
+    totalDebt: 900_000,
+    cashDividendsPaid: -1_100,
+    dilutedEPS: 3.15,
+    ordinarySharesNumber: 374,
+  },
+}, [{ date: new Date('2025-05-10'), amount: 2.2 }])[0];
+
+check('the statement DPS is the group total divided by shares',
+  near(ptt.dpsStatement, 1100 / 374, 1e-9), ptt.dpsStatement);
+check('the reported DPS is what a holder actually received',
+  near(ptt.dps, 2.2, 1e-9), ptt.dps);
+check('the fiscal year end is not treated as the day of filing',
+  ptt.knownFrom === '2026-03-01', ptt.knownFrom);
+
+// The opposite shape: a cash-flow line that is incomplete rather than inflated
+// (BANPU reports 0.02 against 0.55 actually paid). The ex-date record wins in
+// both directions because it is the amount the exchange credited.
+const banpu = deriveYears({
+  '2025-12-31': { dilutedEPS: -0.1, ordinarySharesNumber: 4_000, cashDividendsPaid: -80 },
+}, [{ date: new Date('2025-05-10'), amount: 0.55 }])[0];
+check('a deflated statement figure does not win either',
+  near(banpu.dps, 0.55, 1e-9), banpu.dps);
+check('with no ex-date record the statement is the only source',
+  near(deriveYears({ '2025-12-31': { dilutedEPS: 1, ordinarySharesNumber: 100, cashDividendsPaid: -50 } }, [])[0].dps, 0.5));
 
 // ── Quality score ───────────────────────────────────────────────────────────
 
@@ -187,6 +265,18 @@ check('a company that meets every rule scores 100', healthy.score === 100, healt
 check('all fourteen rules are evaluated', healthy.total === 14, healthy.total);
 check('nothing fails', healthy.failed === 0, healthy.failed);
 check('the dividend streak is counted', healthy.streak >= 5, healthy.streak);
+
+// Payout pairs trailing cash with trailing earnings. On a doubled trailing EPS
+// the same dividend is 25% of profit, not the 50% the fiscal-year lines imply.
+const ttmPayout = scoreQuality({ years, dividends, price: 20, asOf, ttmEps: 4 });
+const payoutCheck = ttmPayout.checks.find((c) => c.id === 'payoutBand');
+check('payout is measured against trailing earnings',
+  near(payoutCheck.value, 0.25, 1e-9), payoutCheck.value);
+check('a payout that thin fails the framework band', payoutCheck.pass === false);
+const noTtmPayout = scoreQuality({ years, dividends, price: 20, asOf });
+check('without trailing earnings the fiscal year is the fallback',
+  near(noTtmPayout.checks.find((c) => c.id === 'payoutBand').value, 0.5, 1e-9),
+  noTtmPayout.checks.find((c) => c.id === 'payoutBand').value);
 
 // A bank: no meaningful interest expense, so the rule cannot be judged. It must
 // come back neutral rather than failing a company for a metric that does not

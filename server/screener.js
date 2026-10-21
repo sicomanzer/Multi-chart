@@ -225,19 +225,42 @@ export function marginOfSafety(intrinsic, price) {
 }
 
 /**
+ * Multiples beyond these are not valuation observations.
+ *
+ * A company that earned 0.05 baht a share is not "trading at 300 times
+ * earnings" in any useful sense — the denominator is noise around zero, and one
+ * such year drags the mean and the standard deviation far enough that every
+ * other year looks cheap by comparison. BANPU's band read a mean of 175× and a
+ * −2σ level below zero; the honest answer is that its earnings were too close to
+ * zero for a multiple to describe it. Points above the cap are counted and
+ * reported rather than silently dropped.
+ */
+const MAX_MULTIPLE = { pe: 100, pbv: 50 };
+
+/**
  * Historical P/E and P/BV band.
  *
  * The series is rebuilt from the statements rather than taken from a data
  * provider: for each trading day, the multiple is `close / EPS` (or `close /
- * BVPS`) using the most recently *reported* fiscal year as of that date. That
+ * BVPS`) using the most recently *published* fiscal year as of that date. That
  * is what an investor at the time could actually have known — using the final
  * year's number across the whole window would fold hindsight into the bands
  * and make every stock look expensive in the past.
  *
+ * `knownFrom` on a year is the day its statements became public (fiscal year
+ * end plus a filing lag), which is not the same as the day the period ended.
+ * Falling back to `asOf` keeps hand-built rows working.
+ *
+ * `peCurrent` / `pbvCurrent` replace the last point with today's multiple on
+ * trailing earnings and the latest quarter's book value. The history is annual
+ * because that is the only comparable series we have; the right-hand edge has
+ * to be the number on the screen today, or the chart's "now" would be a year
+ * old.
+ *
  * `basis` reports how many fiscal years of earnings the window spans, so the
  * UI can say "4y" rather than implying a decade.
  */
-export function computeBands(closes, years) {
+export function computeBands(closes, years, { peCurrent, pbvCurrent } = {}) {
   const usable = years.filter(
     (y) => typeof y.eps === 'number' && Number.isFinite(y.eps) && y.eps > 0 &&
       typeof y.asOf === 'string',
@@ -246,43 +269,68 @@ export function computeBands(closes, years) {
     return { pe: null, pbv: null, basis: 0 };
   }
 
+  const known = (y) => y.knownFrom ?? y.asOf;
   const pe = [];
   const pbv = [];
+  let peSkipped = 0;
+  let pbvSkipped = 0;
   for (const point of closes) {
-    const applicable = usable.filter((y) => y.asOf <= point.date).at(-1);
+    const applicable = usable.filter((y) => known(y) <= point.date).at(-1);
     if (!applicable) continue;
-    if (applicable.eps > 0) pe.push({ date: point.date, value: point.close / applicable.eps });
+    if (applicable.eps > 0) {
+      const value = point.close / applicable.eps;
+      if (value <= MAX_MULTIPLE.pe) pe.push({ date: point.date, value });
+      else peSkipped += 1;
+    }
     if (typeof applicable.bvps === 'number' && applicable.bvps > 0) {
-      pbv.push({ date: point.date, value: point.close / applicable.bvps });
+      const value = point.close / applicable.bvps;
+      if (value <= MAX_MULTIPLE.pbv) pbv.push({ date: point.date, value });
+      else pbvSkipped += 1;
     }
   }
 
   const basis = usable.length;
   return {
-    pe: summarise(pe, basis),
-    pbv: summarise(pbv, basis),
+    pe: summarise(pe, basis, peCurrent, peSkipped, MAX_MULTIPLE.pe),
+    pbv: summarise(pbv, basis, pbvCurrent, pbvSkipped, MAX_MULTIPLE.pbv),
     basis,
   };
 }
 
-function summarise(points, basis) {
+function summarise(points, basis, currentOverride, skipped = 0, cap = Infinity) {
   if (points.length < 20) return null;
-  const values = points.map((p) => p.value).sort((a, b) => a - b);
+  // The override belongs on the last day, not appended as a second point for
+  // the same session — the chart draws one dot per date. It is left out of the
+  // statistics when it is itself above the cap, so today's odd denominator
+  // cannot distort the band it is being compared against.
+  const inBand = typeof currentOverride === 'number' && Number.isFinite(currentOverride) &&
+    currentOverride <= cap;
+  const series = inBand
+    ? [...points.slice(0, -1), { ...points.at(-1), value: currentOverride }]
+    : points;
+  const values = series.map((p) => p.value).sort((a, b) => a - b);
   const mean = values.reduce((a, b) => a + b, 0) / values.length;
   const variance = values.reduce((sum, v) => sum + (v - mean) ** 2, 0) / values.length;
   const sd = Math.sqrt(variance);
-  const current = points[points.length - 1].value;
+  // `null` means today has no multiple at all (a loss); a number above the cap
+  // is still reported as today's multiple, it just does not join the band.
+  let current;
+  if (currentOverride === null) current = null;
+  else if (typeof currentOverride === 'number' && Number.isFinite(currentOverride)) current = currentOverride;
+  else current = series[series.length - 1].value;
 
   return {
     basis,
-    points: downsample(points, 160),
+    points: downsample(series, 160),
     mean,
     sd,
     min: values[0],
     max: values[values.length - 1],
     median: quantile(values, 0.5),
     current,
-    z: sd > 0 ? (current - mean) / sd : 0,
+    z: current == null || sd === 0 ? null : (current - mean) / sd,
+    skipped,
+    cap: Number.isFinite(cap) ? cap : null,
     levels: {
       plus2: mean + 2 * sd,
       plus1: mean + sd,
@@ -321,7 +369,7 @@ function downsample(points, max) {
  * coverage, a company has no dividend — passes as `null`, neither earning nor
  * losing points, so a missing data point never masquerades as a red flag.
  */
-export function scoreQuality({ years, dividends, price, asOf = new Date() }) {
+export function scoreQuality({ years, dividends, price, asOf = new Date(), ttmEps = null }) {
   const last3 = recent(years, 3);
   const last4 = recent(years, 4);
   const checks = [];
@@ -381,10 +429,16 @@ export function scoreQuality({ years, dividends, price, asOf = new Date() }) {
   const last = years.at(-1);
   // Paying more than 70% of profit is flagged even though it still passes the
   // "is it being paid" question — the framework wants room to reinvest.
-  // The calendar-year figure is the fallback: `dividendsPaid` is absent for
-  // some names, and a missing line should not read as "no dividend at all".
-  const paidPerShare = last?.dpsStatement ?? last?.dpsPaid ?? null;
-  const payout = last?.eps > 0 && paidPerShare != null ? paidPerShare / last.eps : null;
+  //
+  // The ratio pairs trailing cash with trailing earnings. Mixing a fiscal-year
+  // numerator with a fiscal-year denominator looked tidy but was wrong twice
+  // over: `dividendsPaid` carries the minority owners' share (PTT read 93%
+  // against a true 70%) and a dividend declared in March is paid out of the
+  // previous year's profit, so the two lines described different years.
+  const paidPerShare = last?.dps ?? last?.dpsStatement ?? last?.dpsPaid ?? null;
+  const payout = ttmEps > 0 && dividend.d0 > 0
+    ? dividend.d0 / ttmEps
+    : last?.eps > 0 && paidPerShare != null ? paidPerShare / last.eps : null;
   const payoutOk = payout != null ? payout >= 0.40 && payout <= 0.70 : null;
   add('payoutBand', payoutOk, payout, 0.40, { upper: 0.70, warn: payout != null && payout > 0 && payout <= 0.80 });
 

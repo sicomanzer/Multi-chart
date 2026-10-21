@@ -53,6 +53,26 @@ function clampInput(value, fallback, { min, max }) {
 }
 
 /**
+ * The two multiples a buyer pays today.
+ *
+ * Trailing EPS is the market's denominator and the latest quarter's equity over
+ * the latest share count is the book value; both fall back to the last fiscal
+ * year only when the current figures are missing altogether. A *negative*
+ * trailing figure is not a reason to fall back — it means the multiple does not
+ * exist, and saying so is the whole point.
+ */
+export function currentMultiples(fin) {
+  const last = fin.years.at(-1);
+  const ttmEps = fin.ttm?.eps ?? null;
+  const ttmBvps = fin.ttm?.bvps ?? null;
+  const multiple = (price, perShare) => (price > 0 && perShare > 0 ? price / perShare : null);
+  return {
+    peCurrent: ttmEps != null ? multiple(fin.price, ttmEps) : multiple(fin.price, last?.eps),
+    pbvCurrent: ttmBvps != null ? multiple(fin.price, ttmBvps) : multiple(fin.price, last?.bvps),
+  };
+}
+
+/**
  * Build one row.
  *
  * `overrides` is what the deep-dive sliders send. When a caller changes the
@@ -61,11 +81,13 @@ function clampInput(value, fallback, { min, max }) {
  * exactly the kind of mismatch that makes a screen untrustworthy.
  */
 export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
+  const ttmEps = fin.ttm?.eps ?? null;
   const quality = scoreQuality({
     years: fin.years,
     dividends: fin.dividends,
     price: fin.price,
     asOf,
+    ttmEps,
   });
 
   const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf });
@@ -80,7 +102,19 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
   const valuation = ddm({ d0, g1, g2, r, years });
   const mos = valuation.ok ? marginOfSafety(valuation.intrinsic, fin.price) : null;
 
-  const bands = computeBands(fin.closes, fin.years);
+  // Today's multiples, on today's denominators.
+  //
+  // The band history has to be annual — that is the only series that exists for
+  // every year — but the right-hand edge must not be. A P/E built from the last
+  // fiscal year is stale by up to twelve months, and for a company that has
+  // just swung to a loss it is not stale but wrong: BANPU, JAS and EA were all
+  // still showing a low multiple from a profitable year that had already ended.
+  // When trailing earnings are negative the multiple does not exist, so the
+  // row reports null and the table prints a dash rather than a flattering
+  // number.
+  const { peCurrent, pbvCurrent } = currentMultiples(fin);
+
+  const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
 
   return {
     symbol: fin.symbol,
@@ -89,6 +123,10 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     currency: fin.currency,
     price: fin.price,
     priceDate: fin.priceDate,
+    pe: peCurrent,
+    pbv: pbvCurrent,
+    ttmEps,
+    ttmBvps: fin.ttm?.bvps ?? null,
     score: quality.score,
     coverage: quality.coverage,
     passed: quality.passed,
@@ -119,10 +157,10 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     bands: {
       basis: bands.basis,
       pe: bands.pe
-        ? { current: bands.pe.current, mean: bands.pe.mean, sd: bands.pe.sd, z: bands.pe.z, levels: bands.pe.levels, median: bands.pe.median, min: bands.pe.min, max: bands.pe.max }
+        ? { current: bands.pe.current, mean: bands.pe.mean, sd: bands.pe.sd, z: bands.pe.z, levels: bands.pe.levels, median: bands.pe.median, min: bands.pe.min, max: bands.pe.max, skipped: bands.pe.skipped, cap: bands.pe.cap }
         : null,
       pbv: bands.pbv
-        ? { current: bands.pbv.current, mean: bands.pbv.mean, sd: bands.pbv.sd, z: bands.pbv.z, levels: bands.pbv.levels, median: bands.pbv.median, min: bands.pbv.min, max: bands.pbv.max }
+        ? { current: bands.pbv.current, mean: bands.pbv.mean, sd: bands.pbv.sd, z: bands.pbv.z, levels: bands.pbv.levels, median: bands.pbv.median, min: bands.pbv.min, max: bands.pbv.max, skipped: bands.pbv.skipped, cap: bands.pbv.cap }
         : null,
     },
     yearCount: fin.years.length,
@@ -133,10 +171,12 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
 export async function loadDetail(tvSymbol, options = {}) {
   const fin = await loadFinancials(tvSymbol);
   const row = buildRow(fin, options);
-  const bands = computeBands(fin.closes, fin.years);
+  const { peCurrent, pbvCurrent } = currentMultiples(fin);
+  const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
   return {
     ...row,
     years: fin.years,
+    ttm: fin.ttm,
     yearCount: fin.years.length,
     dividends: fin.dividends.slice(-80),
     pePoints: bands.pe?.points ?? [],
@@ -240,12 +280,17 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
  * membership changes every half-year and a stale claim would be worse than a
  * vague one. The board and the watchlists supply the other universes, and the
  * dialog accepts a pasted list for anything else.
+ *
+ * Delisted names are removed rather than left to fail: BPP was absorbed into
+ * BANPU and INTUCH into GULF during 2026, and a universe that lists them would
+ * report two "no data" errors on every run — noise that looks like a bug in the
+ * screen rather than a fact about the market.
  */
 export const SET_LARGE_CAPS = [
   'ADVANC', 'AOT', 'AWC', 'BAM', 'BANPU', 'BBL', 'BCP', 'BDMS', 'BEM', 'BGRIM',
-  'BH', 'BJC', 'BPP', 'BTS', 'CBG', 'CENTEL', 'CHG', 'COM7', 'CPALL', 'CPF',
+  'BH', 'BJC', 'BTS', 'CBG', 'CENTEL', 'CHG', 'COM7', 'CPALL', 'CPF',
   'CPN', 'CRC', 'DELTA', 'DOHOME', 'EA', 'EGCO', 'ERW', 'GLOBAL', 'GPSC', 'GULF',
-  'GUNKUL', 'HANA', 'HMPRO', 'ICHI', 'INTUCH', 'IRPC', 'IVL', 'JAS', 'JMT', 'KBANK',
+  'GUNKUL', 'HANA', 'HMPRO', 'ICHI', 'IRPC', 'IVL', 'JAS', 'JMT', 'KBANK',
   'KCE', 'KKP', 'KTB', 'KTC', 'LH', 'MINT', 'MTC', 'OR', 'OSP', 'PLANB',
   'PTT', 'PTTEP', 'PTTGC', 'QH', 'RATCH', 'SAWAD', 'SCB', 'SCC', 'SCGP', 'SIRI',
   'SPALI', 'STA', 'TIDLOR', 'TISCO', 'TLI', 'TOP', 'TRUE', 'TU', 'TVO', 'WHA',

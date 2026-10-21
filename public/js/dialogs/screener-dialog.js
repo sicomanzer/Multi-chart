@@ -311,7 +311,7 @@ function buildTable(rows, state, rerender) {
       <td class="num">${percent(row.roe3)}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}</td>
       <td class="num">${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}</td>
-      <td class="num">${row.bands?.pe ? row.bands.pe.current.toFixed(1) : '—'}</td>
+      <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}</td>
       <td class="num ${row.ddm.mos > 0 ? 'is-up' : 'is-down'}">${row.ddm.mos == null ? '—' : `${row.ddm.mos.toFixed(0)}%`}</td>`;
     tr.addEventListener('click', () => openDetail(state, rerender, row.symbol));
     tbody.appendChild(tr);
@@ -556,18 +556,30 @@ function bandsBlock(detail) {
       continue;
     }
 
+    // The band's history is annual, but the right-hand edge is today's figure:
+    // trailing earnings for the multiple, the latest quarter for book value.
+    // Saying so in the header is cheaper than a footnote nobody reads.
+    const nowLabel = t(key === 'pe' ? 'scr.band.nowPe' : 'scr.band.nowPbv');
+    const now = band.current == null
+      ? `${escape(nowLabel)} —`
+      : `${escape(nowLabel)} ${band.current.toFixed(2)}` +
+        (band.z == null ? '' : ` · ${escape(t('scr.band.z'))} ${band.z.toFixed(2)}σ`);
+
+    // A band level at or below zero is not a multiple anyone can pay; printing
+    // it invites reading "the stock is cheap below −19×".
+    const lvl = (v) => (v > 0 ? v.toFixed(2) : '—');
     cell.innerHTML = `
       <h4>${escape(label)}
-        <span>${escape(t('scr.band.now'))} ${band.current.toFixed(2)}
-        · ${escape(t('scr.band.z'))} ${band.z.toFixed(2)}σ</span></h4>
+        <span>${now}</span></h4>
       <canvas height="150"></canvas>
       <table class="scr-band__levels">
-        <tr><td>${escape(t('scr.band.plus2'))}</td><td>${levels.plus2.toFixed(2)}</td></tr>
-        <tr><td>${escape(t('scr.band.plus1'))}</td><td>${levels.plus1.toFixed(2)}</td></tr>
-        <tr><td>${escape(t('scr.band.mean'))}</td><td>${levels.mean.toFixed(2)}</td></tr>
-        <tr><td>${escape(t('scr.band.minus1'))}</td><td>${levels.minus1.toFixed(2)}</td></tr>
-        <tr><td>${escape(t('scr.band.minus2'))}</td><td>${levels.minus2.toFixed(2)}</td></tr>
-      </table>`;
+        <tr><td>${escape(t('scr.band.plus2'))}</td><td>${lvl(levels.plus2)}</td></tr>
+        <tr><td>${escape(t('scr.band.plus1'))}</td><td>${lvl(levels.plus1)}</td></tr>
+        <tr><td>${escape(t('scr.band.mean'))}</td><td>${lvl(levels.mean)}</td></tr>
+        <tr><td>${escape(t('scr.band.minus1'))}</td><td>${lvl(levels.minus1)}</td></tr>
+        <tr><td>${escape(t('scr.band.minus2'))}</td><td>${lvl(levels.minus2)}</td></tr>
+      </table>
+      ${band.skipped ? `<p class="section__hint">${escape(t('scr.band.capped', { n: band.skipped, max: band.cap }))}</p>` : ''}`;
     grid.appendChild(cell);
     // Laid out after insertion: a canvas in a detached node has no width.
     requestAnimationFrame(() => drawBand(cell.querySelector('canvas'), points, levels, band.current));
@@ -599,7 +611,9 @@ function drawBand(canvas, points, levels, current) {
   const plotW = width - pad.left - pad.right;
   const plotH = height - pad.top - pad.bottom;
 
-  const values = points.map((p) => p.value).concat([levels.plus2, levels.minus2]);
+  const values = points.map((p) => p.value)
+    .concat([levels.plus2, levels.minus2])
+    .filter((v) => Number.isFinite(v) && v > 0);
   const min = Math.min(...values);
   const max = Math.max(...values);
   const span = max - min || 1;
@@ -623,6 +637,9 @@ function drawBand(canvas, points, levels, current) {
   ctx.font = '9px system-ui, sans-serif';
   ctx.textBaseline = 'middle';
   for (const [value, colour, label] of guides) {
+    // A guide below zero has no place on a ratio chart; drawing it would only
+    // stretch the axis to make room for a multiple that cannot exist.
+    if (!(value > 0)) continue;
     ctx.strokeStyle = colour;
     ctx.globalAlpha = label === 'x̄' ? 0.55 : 0.35;
     ctx.setLineDash(label === 'x̄' ? [] : [3, 3]);
@@ -648,9 +665,11 @@ function drawBand(canvas, points, levels, current) {
   ctx.stroke();
 
   ctx.fillStyle = accent;
-  ctx.beginPath();
-  ctx.arc(x(points.length - 1), y(current), 3, 0, Math.PI * 2);
-  ctx.fill();
+  if (current != null) {
+    ctx.beginPath();
+    ctx.arc(x(points.length - 1), y(current), 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
 }
 
 /** The four statements' worth of numbers the screen is built out of. */
@@ -674,7 +693,7 @@ function financialsBlock(detail) {
     </tr></thead>`;
   const tbody = document.createElement('tbody');
   for (const year of detail.years) {
-    const dps = year.dpsStatement ?? year.dpsPaid;
+    const dps = year.dps ?? year.dpsPaid ?? year.dpsStatement;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${year.fiscalYear}</td>

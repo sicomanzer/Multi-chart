@@ -45,6 +45,34 @@ const ANNUAL_TYPES = [
   'annualCashDividendsPaid',
 ];
 
+/**
+ * Current-period figures the screen needs but the annual rows cannot give.
+ *
+ * The trailing EPS is what the market actually prices — a P/E built from the
+ * last fiscal year is stale by up to twelve months, and for a cyclical it is
+ * simply the wrong number. The quarterly balance sheet does the same job for
+ * book value: a company that pays a large special dividend halves its equity
+ * in the middle of the year, and a P/BV taken from the old annual figure is
+ * then out by a factor of two.
+ */
+const CURRENT_TYPES = [
+  'trailingDilutedEPS',
+  'trailingBasicEPS',
+  'quarterlyStockholdersEquity',
+  'quarterlyOrdinarySharesNumber',
+];
+
+/**
+ * How long after a fiscal year end the numbers are treated as public.
+ *
+ * Yahoo dates a statement by the period it covers, not by the day it was
+ * filed. Using that date as the "known at" date would let the band chart use
+ * FY2024 earnings on 1 January 2025 — six weeks before anyone could read them.
+ * Thai listed companies file within three months; two is the common case for
+ * large caps, so this errs late rather than early.
+ */
+const FILING_LAG_DAYS = 60;
+
 /** Statements barely move, so a long TTL costs nothing and saves a lot upstream. */
 const STATEMENT_TTL_MS = 12 * 60 * 60 * 1000;
 
@@ -94,12 +122,16 @@ async function getJson(url, { timeoutMs = 20_000 } = {}) {
  * Yahoo returns one result object per requested type, each holding its own
  * sparse array of `{ asOfDate, reportedValue: { raw } }`. Flatten that into
  * `{ '2024-12-31': { netIncome: 90072026202, … } }`.
+ *
+ * Only annual types are folded in: a trailing or quarterly point carries a
+ * quarter-end date, and letting one through would invent a fiscal year that
+ * never existed.
  */
 function parseTimeseries(payload) {
   const byDate = {};
   for (const result of payload?.timeseries?.result ?? []) {
     const type = result?.meta?.type?.[0];
-    if (!type) continue;
+    if (!type || !type.startsWith('annual')) continue;
     const key = type.replace(/^annual/, '');
     const field = key.charAt(0).toLowerCase() + key.slice(1);
     for (const point of result[type] ?? []) {
@@ -110,6 +142,14 @@ function parseTimeseries(payload) {
     }
   }
   return byDate;
+}
+
+/** Latest value of one non-annual series, or null when Yahoo has none. */
+function latestPoint(payload, type) {
+  const result = (payload?.timeseries?.result ?? []).find((r) => r?.meta?.type?.[0] === type);
+  const points = (result?.[type] ?? []).filter((p) => typeof p?.reportedValue?.raw === 'number');
+  const last = points.at(-1);
+  return last ? { value: last.reportedValue.raw, asOf: last.asOfDate } : null;
 }
 
 /** Dividend events keyed by ex-date timestamp. */
@@ -161,8 +201,12 @@ function ratio(numerator, denominator) {
  * but every *published* number the screen compares is a ratio or a growth rate
  * — the same discipline the fundamentals sidecar follows, and for the same
  * reason: it keeps the screen honest about units.
+ *
+ * Exported because it is the one pure step between Yahoo's raw rows and every
+ * number the screen publishes, which makes it the right place to pin down the
+ * per-share definitions in the verification script.
  */
-function deriveYears(byDate, dividends) {
+export function deriveYears(byDate, dividends) {
   const dps = dpsByYear(dividends);
   const years = Object.entries(byDate)
     .sort(([a], [b]) => a.localeCompare(b))
@@ -176,6 +220,10 @@ function deriveYears(byDate, dividends) {
       return {
         fiscalYear,
         asOf: date,
+        // The first day these numbers could have been on a screen.
+        knownFrom: new Date(Date.parse(`${date}T00:00:00Z`) + FILING_LAG_DAYS * 86_400_000)
+          .toISOString()
+          .slice(0, 10),
         revenue: row.totalRevenue ?? null,
         netIncome: row.netIncome ?? null,
         equity: row.stockholdersEquity ?? null,
@@ -210,6 +258,17 @@ function deriveYears(byDate, dividends) {
     // statement. Unlike the ex-date record this cannot be inflated by a special
     // dividend that has not yet been reported in an annual statement.
     y.dpsStatement = ratio(y.dividendsPaid, y.shares);
+    // What a holder was actually paid for that year.
+    //
+    // `dpsStatement` counts every dividend leaving the group, including the
+    // share that went to minority owners of subsidiaries — PTT reads 2.94
+    // against 2.20 received, CPF 2.83 against 1.55. The ex-date record is the
+    // only line that is true by construction: it is what the exchange paid per
+    // share. The statement is used only when there is no ex-date record at all.
+    // (Taking the lower of the two looked safer but is not: BANPU reads 0.02
+    // against 0.55 received, because its cash-flow line is the one that is
+    // incomplete.)
+    y.dps = y.dpsPaid ?? y.dpsStatement;
   }
   return years;
 }
@@ -233,7 +292,7 @@ export async function loadFinancials(tvSymbol) {
     const [timeSeries, chart] = await Promise.all([
       getJson(
         `${TIMESERIES}/${encodeURIComponent(yahoo)}?symbol=${encodeURIComponent(yahoo)}` +
-        `&type=${ANNUAL_TYPES.join(',')}&period1=${from}&period2=${now}`,
+        `&type=${[...ANNUAL_TYPES, ...CURRENT_TYPES].join(',')}&period1=${from}&period2=${now}`,
       ),
       getJson(
         `${CHART}/${encodeURIComponent(yahoo)}?range=15y&interval=1d&events=div`,
@@ -245,6 +304,16 @@ export async function loadFinancials(tvSymbol) {
     const years = deriveYears(parseTimeseries(timeSeries), dividends);
     const closes = parsePriceSeries(chartResult);
     const lastClose = closes.length ? closes[closes.length - 1].close : null;
+
+    // Trailing EPS is the market's denominator; the quarterly balance sheet is
+    // the book value a buyer is actually paying a multiple of today.
+    const trailingEps = latestPoint(timeSeries, 'trailingDilutedEPS')
+      ?? latestPoint(timeSeries, 'trailingBasicEPS');
+    const quarterEquity = latestPoint(timeSeries, 'quarterlyStockholdersEquity');
+    const quarterShares = latestPoint(timeSeries, 'quarterlyOrdinarySharesNumber');
+    const quarterBvps = quarterEquity && quarterShares && quarterShares.value > 0
+      ? quarterEquity.value / quarterShares.value
+      : null;
 
     if (years.length === 0 && !lastClose) {
       const err = new Error(`no financial data for ${yahoo}`);
@@ -267,6 +336,12 @@ export async function loadFinancials(tvSymbol) {
         amount: d.amount,
       })),
       years,
+      ttm: {
+        eps: trailingEps?.value ?? null,
+        epsAsOf: trailingEps?.asOf ?? null,
+        bvps: quarterBvps,
+        bvpsAsOf: quarterEquity?.asOf ?? null,
+      },
     };
   });
 }
