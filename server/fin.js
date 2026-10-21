@@ -376,10 +376,41 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
  * the reporting currency differs from the trading one. When in doubt nothing is
  * converted, because a wrong factor is worse than a missing one.
  */
+/**
+ * How far the price's unit and the earnings' unit are apart.
+ *
+ * A line quoted in pence against earnings in pounds is out by a hundred, and
+ * the quote's own trailing multiple is the only figure that knows the units —
+ * it is the price over the earnings as Yahoo pairs them. So when our multiple
+ * and theirs disagree by a round factor, that is the unit gap.
+ *
+ * A disagreement that is *not* round is the difference between earnings
+ * attributable to the owners and earnings in total, which is a fact about the
+ * company and not a mistake, and it is left alone. Only a factor of a hundred
+ * or a thousand is treated as a unit: a price and earnings in the same
+ * currency cannot be that far apart.
+ */
+export function unitGap(price, eps, theirPe) {
+  if (!(price > 0) || !(eps > 0) || !(theirPe > 0)) return 1;
+  const gap = (price / eps) / theirPe;
+  if (!Number.isFinite(gap) || gap <= 0) return 1;
+  if (gap >= 60 && gap <= 160) return 100;
+  if (gap >= 600 && gap <= 1600) return 1000;
+  return 1;
+}
+
 async function convert(base, quote) {
   const statementEps = base.ttm.eps;
   const quoteEps = quote?.epsTtm ?? null;
+  // Two corrections, and they are different in kind.
+  //
+  // `fx` is the exchange rate between the currency the statements are in and
+  // the currency the line trades in. `unit` is the gap between that currency's
+  // major unit and the unit the *price* is quoted in: Shell's London line is
+  // priced in pence and its earnings are in pounds, so a multiple built from
+  // one and the other is out by a hundred.
   let fx = 1;
+  let unit = 1;
   if (
     quoteEps != null
     && statementEps != null
@@ -388,28 +419,59 @@ async function convert(base, quote) {
   ) {
     const ratio = quoteEps / statementEps;
     if (ratio > 2 || ratio < 0.5) {
+      // A ratio far from one is only a suspicion: a stale trailing EPS produces
+      // the same shape, and GULF's trailing point was a year old and read 3x
+      // below the quote. The label settles it — the ratio is applied only when
+      // Yahoo also says the reporting currency differs from the trading one.
       const p = await profile(base.yahoo);
       if (p?.financialCurrency && p.financialCurrency !== (quote.currency ?? base.currency ?? 'THB')) {
         fx = ratio;
       }
+    } else {
+      // The rate is close to one, so the currencies cannot be far apart — but
+      // the price and the earnings can still be in different units. The
+      // quote's own trailing multiple is the only figure that knows the
+      // units: it is the price over the earnings as Yahoo pairs them. A
+      // disagreement by a round factor is a unit gap; a disagreement that is
+      // not round is the difference between earnings attributable to the
+      // owners and earnings in total, which is a fact about the company.
+      const theirPe = quote?.trailingPe;
+      if (theirPe > 0 && base.price > 0) {
+        const factor = unitGap(base.price, statementEps, theirPe);
+        if (factor !== 1) {
+          const p = await profile(base.yahoo);
+          const trading = quote.currency ?? base.currency ?? null;
+          if (p?.financialCurrency && trading && p.financialCurrency !== trading) {
+            fx = ratio;
+            unit = factor;
+          }
+        }
+      }
     }
   }
 
-  if (fx === 1) {
-    // Yahoo's quote carries a trailing EPS too, but it is not always the same
-    // figure as its own quarterly series: GPSC's quote read 3.55 while the
-    // series — and the exchange — said 2.40. Prefer the quarterly series when
-    // it is current, and keep the quote for the cases it exists to solve: a
-    // series that has gone stale (GULF's last point was a year old) and the
-    // currency mismatch below.
-    const fresh = base.ttm.eps != null
-      && base.ttm.epsAsOf != null
-      && Date.now() - Date.parse(base.ttm.epsAsOf) < 270 * 86_400_000;
+  // Yahoo's quote carries a trailing EPS too, but it is not always the same
+  // figure as its own quarterly series: GPSC's quote read 3.55 while the
+  // series — and the exchange — said 2.40. Prefer the quarterly series when
+  // it is current, and keep the quote for the cases it exists to solve: a
+  // series that has gone stale (GULF's last point was a year old) and the
+  // currency mismatch below.
+  const fresh = base.ttm.eps != null
+    && base.ttm.epsAsOf != null
+    && Date.now() - Date.parse(base.ttm.epsAsOf) < 270 * 86_400_000;
+  const eps = fresh ? base.ttm.eps : (quoteEps ?? base.ttm.eps);
+  const scale = fx * unit;
+  // The statement figure is in the reporting currency and needs both
+  // corrections; the quote's figure is already in the currency the line trades
+  // in, so it only needs the unit.
+  const epsScaled = eps == null ? null : eps * (fresh ? scale : unit);
+
+  if (scale === 1) {
     return {
       ...base,
       ttm: {
         ...base.ttm,
-        eps: fresh ? base.ttm.eps : (quoteEps ?? base.ttm.eps),
+        eps: epsScaled,
         bvps: quote?.bookValue ?? base.ttm.bvps,
       },
       fx: 1,
@@ -418,19 +480,19 @@ async function convert(base, quote) {
 
   const years = base.years.map((y) => ({
     ...y,
-    revenue: y.revenue == null ? null : y.revenue * fx,
-    netIncome: y.netIncome == null ? null : y.netIncome * fx,
-    equity: y.equity == null ? null : y.equity * fx,
-    assets: y.assets == null ? null : y.assets * fx,
-    totalDebt: y.totalDebt == null ? null : y.totalDebt * fx,
-    ebit: y.ebit == null ? null : y.ebit * fx,
-    interestExpense: y.interestExpense == null ? null : y.interestExpense * fx,
-    operatingCashFlow: y.operatingCashFlow == null ? null : y.operatingCashFlow * fx,
-    freeCashFlow: y.freeCashFlow == null ? null : y.freeCashFlow * fx,
-    eps: y.eps == null ? null : y.eps * fx,
-    dividendsPaid: y.dividendsPaid == null ? null : y.dividendsPaid * fx,
-    dpsStatement: y.dpsStatement == null ? null : y.dpsStatement * fx,
-    bvps: y.bvps == null ? null : y.bvps * fx,
+    revenue: y.revenue == null ? null : y.revenue * scale,
+    netIncome: y.netIncome == null ? null : y.netIncome * scale,
+    equity: y.equity == null ? null : y.equity * scale,
+    assets: y.assets == null ? null : y.assets * scale,
+    totalDebt: y.totalDebt == null ? null : y.totalDebt * scale,
+    ebit: y.ebit == null ? null : y.ebit * scale,
+    interestExpense: y.interestExpense == null ? null : y.interestExpense * scale,
+    operatingCashFlow: y.operatingCashFlow == null ? null : y.operatingCashFlow * scale,
+    freeCashFlow: y.freeCashFlow == null ? null : y.freeCashFlow * scale,
+    eps: y.eps == null ? null : y.eps * scale,
+    dividendsPaid: y.dividendsPaid == null ? null : y.dividendsPaid * scale,
+    dpsStatement: y.dpsStatement == null ? null : y.dpsStatement * scale,
+    bvps: y.bvps == null ? null : y.bvps * scale,
   }));
 
   return {
@@ -438,10 +500,12 @@ async function convert(base, quote) {
     years,
     ttm: {
       ...base.ttm,
-      eps: quoteEps ?? (base.ttm.eps == null ? null : base.ttm.eps * fx),
-      bvps: quote?.bookValue ?? (base.ttm.bvps == null ? null : base.ttm.bvps * fx),
+      eps: epsScaled,
+      bvps: quote?.bookValue != null
+        ? quote.bookValue * unit
+        : (base.ttm.bvps == null ? null : base.ttm.bvps * scale),
     },
-    fx,
+    fx: scale,
   };
 }
 

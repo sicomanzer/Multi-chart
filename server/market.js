@@ -388,7 +388,11 @@ const COUNTRY_TO_EXCHANGE = {
   'south korea': 'KRX',
   korea: 'KRX',
   japan: 'TSE',
+  // The screener spells the markets its own way: "america", "hongkong", "uk".
+  // A name it does not know answers with an empty market, which looks like
+  // "no such stock" rather than "no such country".
   'hong kong': 'HKEX',
+  hongkong: 'HKEX',
   china: 'SSE',
   taiwan: 'TWSE',
   india: 'NSE',
@@ -401,11 +405,14 @@ const COUNTRY_TO_EXCHANGE = {
   canada: 'TSX',
   'united states': 'NASDAQ',
   usa: 'NASDAQ',
+  america: 'NASDAQ',
   'united kingdom': 'LSE',
+  uk: 'LSE',
   germany: 'XETR',
   france: 'EURONEXT',
   brazil: 'BVMF',
   'south africa': 'JSE',
+  southafrica: 'JSE',
 };
 
 /** Screener tool for a given country, plus the exchange prefix it returns. */

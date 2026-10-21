@@ -32,7 +32,7 @@ import {
 } from '../server/screener.js';
 import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
-import { deriveYears } from '../server/fin.js';
+import { deriveYears, unitGap } from '../server/fin.js';
 import { aggregateAnnual, aggregateQuarterly, annualHistory, clearFinnomenaCache, finnomenaStatus, HISTORY_YEARS } from '../server/finnomena.js';
 import { mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -876,6 +876,20 @@ const pg = peerPercentiles(
 );
 check('names with no sector are not compared with each other',
   pg.get(noGroup[0]).v == null, pg.get(noGroup[0]).v);
+
+// ── The price's unit against the earnings' unit ─────────────────────────────
+console.log('\n── Units ──');
+
+// Shell's London line is priced in pence and its earnings are in pounds, so
+// a multiple built from one and the other is out by a hundred. The quote's own
+// trailing multiple is the only figure that knows the units.
+check('a price in pence against earnings in pounds is a hundred apart',
+  unitGap(3910, 4.69, 11.57) === 100, unitGap(3910, 4.69, 11.57));
+check('a thousand-fold unit is caught as well', unitGap(1000, 1, 1) === 1000);
+check('a multiple that differs a little is not a unit gap',
+  unitGap(100, 10, 10.5) === 1, unitGap(100, 10, 10.5));
+check('a multiple that differs by a round factor but not enough is left alone',
+  unitGap(100, 10, 8) === 1, unitGap(100, 10, 8));
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 

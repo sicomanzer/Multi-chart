@@ -112,6 +112,7 @@ export function openScreener({ board, symbol = null, mode = 'screen' }) {
     mode,
     analyzeQuery: '',
     analyzeResults: [],
+    analyzeMarket: 'thailand',
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
     overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
@@ -258,6 +259,36 @@ function paint(body, state, board, setAuto) {
 // ── Analyse view ────────────────────────────────────────────────────────────
 
 /**
+ * The markets the analysis can reach.
+ *
+ * The screener's own universe is Thai, but a name is a name: the statements
+ * come from the same place whatever the exchange, so a reader who wants to
+ * look at a company outside the index can. The exchange prefix is what the
+ * search asks for and what the reader's own typing is read as.
+ */
+const MARKETS = [
+  { id: 'thailand', prefix: 'SET', label: 'Thailand (SET)' },
+  { id: 'america', prefix: 'NASDAQ', label: 'USA (NASDAQ/NYSE)' },
+  { id: 'hongkong', prefix: 'HKEX', label: 'Hong Kong (HKEX)' },
+  { id: 'japan', prefix: 'TSE', label: 'Japan (TSE)' },
+  { id: 'uk', prefix: 'LSE', label: 'United Kingdom (LSE)' },
+  { id: 'germany', prefix: 'XETR', label: 'Germany (XETR)' },
+  { id: 'china', prefix: 'SSE', label: 'China (SSE/SZSE)' },
+  { id: 'taiwan', prefix: 'TWSE', label: 'Taiwan (TWSE)' },
+  { id: 'korea', prefix: 'KRX', label: 'Korea (KRX)' },
+  { id: 'singapore', prefix: 'SGX', label: 'Singapore (SGX)' },
+  { id: 'australia', prefix: 'ASX', label: 'Australia (ASX)' },
+  { id: 'canada', prefix: 'TSX', label: 'Canada (TSX)' },
+  { id: 'india', prefix: 'NSE', label: 'India (NSE/BSE)' },
+  { id: 'indonesia', prefix: 'IDX', label: 'Indonesia (IDX)' },
+  { id: 'malaysia', prefix: 'MYX', label: 'Malaysia (MYX)' },
+  { id: 'vietnam', prefix: 'HOSE', label: 'Vietnam (HOSE)' },
+  { id: 'philippines', prefix: 'PSE', label: 'Philippines (PSE)' },
+  { id: 'turkey', prefix: 'BIST', label: 'Turkey (BIST)' },
+  { id: 'brazil', prefix: 'BVMF', label: 'Brazil (BVMF)' },
+];
+
+/**
  * The names a reader can pick from.
  *
  * The screened universe comes first — it carries the company names — and the
@@ -305,11 +336,25 @@ function paintAnalyze(body, state, board, rerender) {
   go.className = 'btn btn--primary';
   go.textContent = t('scr.analyze.go');
 
+  const market = document.createElement('select');
+  market.className = 'input input--select';
+  for (const m of MARKETS) {
+    const opt = document.createElement('option');
+    opt.value = m.id;
+    opt.textContent = m.label;
+    market.appendChild(opt);
+  }
+  market.value = state.analyzeMarket ?? 'thailand';
+
   const analyse = () => {
     const raw = input.value.trim();
     if (!raw) return;
-    // A bare ticker is a Thai name; anything else is taken as a full symbol.
-    const symbol = /^[A-Za-z0-9.-]{1,12}$/.test(raw) ? `SET:${raw.toUpperCase()}` : raw.toUpperCase();
+    // A bare ticker is a name in the market that is selected; anything else is
+    // taken as a full symbol.
+    const chosen = MARKETS.find((m) => m.id === market.value) ?? MARKETS[0];
+    const symbol = /^[A-Za-z0-9.-]{1,12}$/.test(raw)
+      ? `${chosen.prefix}:${raw.toUpperCase()}`
+      : raw.toUpperCase();
     openDetail(state, rerender, symbol);
   };
   go.addEventListener('click', analyse);
@@ -321,7 +366,11 @@ function paintAnalyze(body, state, board, rerender) {
   const draw = () => {
     const q = state.analyzeQuery.trim().toLowerCase();
     const matches = (text) => !q || String(text ?? '').toLowerCase().includes(q);
-    const local = analyzeCandidates(state).filter((c) => matches(c.bare) || matches(c.name));
+    // The local list is the reader's own Thai world; another market is asked
+    // of the exchange, because the boards and the index say nothing about it.
+    const local = market.value === 'thailand'
+      ? analyzeCandidates(state).filter((c) => matches(c.bare) || matches(c.name))
+      : [];
     const remote = state.analyzeResults.filter((r) => matches(r.bare) || matches(r.name));
     const rows = [...local];
     for (const r of remote) {
@@ -347,9 +396,7 @@ function paintAnalyze(body, state, board, rerender) {
 
   // The exchange's search answers for names the local list does not carry.
   let searchTimer = null;
-  input.addEventListener('input', () => {
-    state.analyzeQuery = input.value;
-    draw();
+  const search = () => {
     clearTimeout(searchTimer);
     const q = input.value.trim();
     if (q.length < 2) {
@@ -358,7 +405,7 @@ function paintAnalyze(body, state, board, rerender) {
       return;
     }
     searchTimer = setTimeout(async () => {
-      const data = await api.symbols(q, 'thailand', 20).catch(() => null);
+      const data = await api.symbols(q, market.value, 20).catch(() => null);
       state.analyzeResults = (data?.results ?? []).map((r) => ({
         symbol: r.symbol,
         bare: String(r.display ?? r.symbol).split(':')[1] ?? r.display ?? r.symbol,
@@ -366,12 +413,23 @@ function paintAnalyze(body, state, board, rerender) {
       }));
       draw();
     }, 350);
+  };
+  input.addEventListener('input', () => {
+    state.analyzeQuery = input.value;
+    draw();
+    search();
+  });
+  market.addEventListener('change', () => {
+    state.analyzeMarket = market.value;
+    state.analyzeResults = [];
+    draw();
+    search();
   });
 
   box.appendChild(section(t('scr.analyze.title'), t('scr.analyze.hint')));
   const row = document.createElement('div');
   row.className = 'row';
-  row.append(input, go);
+  row.append(input, market, go);
   box.appendChild(row);
   box.appendChild(list);
   body.appendChild(box);
@@ -1191,7 +1249,10 @@ function peerBlock(detail) {
   if (!peers) {
     const p = document.createElement('p');
     p.className = 'section__hint';
-    p.textContent = t('scr.peer.none');
+    // A company outside the Thai index has no peer group here at all, and
+    // saying "open the screen" would be advice that cannot help.
+    const outside = !String(detail.symbol ?? '').startsWith('SET:');
+    p.textContent = outside ? t('scr.peer.foreign') : t('scr.peer.none');
     box.appendChild(p);
     return box;
   }

@@ -1336,6 +1336,7 @@ select {
 /* The analysis view: a search box in front of the same detail page. */
 .scr-analyze { display: flex; flex-direction: column; gap: 10px; }
 .scr-analyze .row .input { flex: 1; }
+.scr-analyze .row .input--select { flex: 0 0 auto; min-width: 170px; }
 .scr-analyze__list { display: flex; flex-direction: column; gap: 2px; max-height: 46vh; overflow: auto; }
 .scr-analyze__row {
   display: grid;

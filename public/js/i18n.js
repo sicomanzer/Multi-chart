@@ -684,6 +684,7 @@ const EN = {
   'scr.peer.higherShort': 'higher than {n}%',
   'scr.peer.lowerShort': 'lower than {n}%',
   'scr.peer.none': 'No comparison yet — open the screen to rank it against the group',
+  'scr.peer.foreign': 'A company outside the Thai index has no peer group here — the comparison covers the names that were screened',
   'scr.peer.colHint': 'The small figure beside it is the percentile against the names screened here',
 
   'scr.fin': 'Statements',
@@ -1358,6 +1359,7 @@ const TH = {
   'scr.peer.higherShort': 'สูงกว่า {n}%',
   'scr.peer.lowerShort': 'ต่ำกว่า {n}%',
   'scr.peer.none': 'ยังไม่มีการเทียบเทียบ — เปิดหน้าคัดกรองเพื่อเทียบกับกลุ่ม',
+  'scr.peer.foreign': 'หุ้นนอกตลาดหลักทรัพย์ไทยไม่มีกลุ่มเทียบในจัดหน่ายนี้ — การเทียบเทียบครอบคลุมเฉพาะหุ้นที่คัดกรอง',
   'scr.peer.colHint': 'ตัวเลขเล็ก ๆ ข้าง ๆ คือเปอร์เซ็นไทล์เทียบกับหุ้นที่คัดกรองอยู่',
 
   'scr.fin': 'งบการเงิน',

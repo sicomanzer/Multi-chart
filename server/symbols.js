@@ -35,6 +35,17 @@ const YAHOO_SUFFIX = {
   SZSE: '.SZ',
   TWSE: '.TW',
   TPEX: '.TWO',
+  // The exchange names the screener answers with, which are not always the
+  // ones this map started from: Japan comes back as TSE, not JPX.
+  TSE: '.T',
+  JPX: '.T',
+  MYX: '.MY',
+  SGX: '.SI',
+  HOSE: '.VN',
+  PSE: '.PS',
+  JSE: '.JO',
+  MOEX: '.MOEX',
+  ICE: '.IC',
   KRX: '',
   KOSPI: '',
   IDX: '.JK',

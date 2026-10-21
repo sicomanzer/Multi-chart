@@ -521,7 +521,13 @@ ticker or a company name leads to exactly the page a row of the table opens —
 the same scorecard, the same dividend model, the same bands and the same
 charts. The filter covers the screened universe, the boards and the watchlists,
 and asks the exchange for anything else, so a name outside the index is one
-keystroke away.
+keystroke away. A market selector widens the search to nineteen exchanges —
+Thailand, the US, Hong Kong, Japan, the UK, Germany, China and the rest — and
+the statements come from the same place whatever the exchange, so a foreign
+company is analysed on the same framework. What a foreign name does not have is
+a peer group: the comparison covers the names that were screened, and the
+ten-year history behind the growth rules is Thai, so those rules fall back to
+the four years the statements carry.
 
 **Growth, from the ten-year history.** Three rules answer whether the business
 is getting bigger: EPS growing 10% a year over three years, revenue growing 5%
