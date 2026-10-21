@@ -531,7 +531,22 @@ app.post('/api/screener/run', asyncRoute(async (req, res) => {
     });
   }
 
-  const result = await runScreen(symbols, { preset, overrides, sectors: await sectorFor(symbols) });
+  // The reader's own conditions. A shape the server does not recognise is
+  // ignored rather than trusted, and a screen with no conditions is the screen
+  // as it was.
+  const filters = Array.isArray(body.filters)
+    ? body.filters
+      .filter((f) => f && typeof f.field === 'string' && Number.isFinite(Number(f.value)))
+      .slice(0, 12)
+      .map((f) => ({ field: f.field, op: String(f.op ?? '>='), value: Number(f.value) }))
+    : null;
+
+  const result = await runScreen(symbols, {
+    preset,
+    overrides,
+    sectors: await sectorFor(symbols),
+    filters,
+  });
   res.json(result);
 }));
 

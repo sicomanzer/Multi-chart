@@ -10,6 +10,7 @@
  */
 import { loadFinancials } from './fin.js';
 import {
+  applyFilters,
   applyPreset,
   computeBands,
   ddm,
@@ -277,7 +278,7 @@ const PEER_SPECS = [
  */
 const peerCache = new Map();
 
-export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, asOf = new Date(), sectors = null } = {}) {
+export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, asOf = new Date(), sectors = null, filters = null } = {}) {
   const symbols = uniqueSymbols(rawSymbols);
   if (symbols.length === 0) {
     const err = new Error('no symbols to screen');
@@ -345,9 +346,20 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
   }
 
   const presetDef = presetById(preset);
+  // The reader's own conditions narrow the universe first; the preset then
+  // applies on top, so a name has to clear both.
+  const conditions = applyFilters(rows, filters);
   const evaluated = rows.map((row) => {
     const verdict = applyPreset(row, presetDef);
-    return { ...row, pass: verdict.pass, failReason: verdict.reason };
+    const mine = conditions.find((c) => c.row === row);
+    const pass = verdict.pass && mine?.pass !== false;
+    return {
+      ...row,
+      pass,
+      failReason: verdict.pass
+        ? (mine?.pass === false ? (mine.reason ?? 'filter') : null)
+        : verdict.reason,
+    };
   });
 
   const kept = evaluated.filter((row) => row.pass);

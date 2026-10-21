@@ -541,6 +541,15 @@ missing year is not quietly treated as a shorter period, and a rate whose base
 year lost money is left unmeasured rather than reported as zero. The deep dive
 and the table read the same history, so the scorecard and the score agree.
 
+**Your own conditions.** The presets are the framework's; the filter panel is
+the reader's. A condition names a measure the table already prints — ROE, net
+margin, EPS growth, yield, margin of safety, P/E, P/BV, D/E, payout, the
+score — a comparison and a value, and a name has to clear every one of them
+before the preset is even consulted. A measure with no value cannot clear a
+condition: a company with no P/E because it lost money does not pass "P/E
+under 15". The conditions are kept between sessions, because a screen built
+last week is a screen worth having again today.
+
 **How good, not just good.** A threshold says a company is good; a percentile
 says how good. Every row carries the share of the screened names it is better
 than, for ROE, net margin, P/E, dividend yield and leverage — 92 means better

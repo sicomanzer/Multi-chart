@@ -817,4 +817,58 @@ export function peerPercentiles(rows, specs, { groupBy = null, minGroup = 5 } = 
   return out;
 }
 
+/**
+ * The measures a reader can filter on, and the direction that is better.
+ *
+ * Each is a number the table already prints, so a condition can be stated in
+ * the reader's own words: "ROE above 20% and P/E under 15". The client offers
+ * the same list with the labels; a field the server does not know is ignored
+ * rather than trusted.
+ */
+export const FILTER_FIELDS = [
+  { key: 'score', better: 'high', kind: 'number', get: (row) => row.score },
+  { key: 'roe3', better: 'high', kind: 'percent', get: (row) => row.roe3 },
+  { key: 'npm3', better: 'high', kind: 'percent', get: (row) => row.npm3 },
+  { key: 'epsCagr3', better: 'high', kind: 'percent', get: (row) => row.epsCagr3 },
+  { key: 'dividendYield', better: 'high', kind: 'percent', get: (row) => row.dividendYield },
+  { key: 'mos', better: 'high', kind: 'percent', get: (row) => row.ddm?.mos ?? null },
+  { key: 'pe', better: 'low', kind: 'number', get: (row) => row.pe },
+  { key: 'pbv', better: 'low', kind: 'number', get: (row) => row.pbv },
+  { key: 'de', better: 'low', kind: 'number', get: (row) => row.de },
+  { key: 'payout', better: 'low', kind: 'percent', get: (row) => row.payout },
+];
+
+/**
+ * A reader's own conditions.
+ *
+ * The presets are the framework's; these are the reader's. A row has to clear
+ * every condition to stay, and a measure with no value is neither a pass nor a
+ * fail: it is unknown. A company with no P/E because it lost money cannot
+ * clear "P/E under 15", and one with no ROE because the source is silent
+ * cannot clear "ROE above 20%" — a condition the reader wrote is taken as
+ * written.
+ */
+export function applyFilters(rows, filters) {
+  const list = (filters ?? []).filter((f) => f && typeof f.field === 'string');
+  const known = new Map(FILTER_FIELDS.map((f) => [f.key, f]));
+  return rows.map((row) => {
+    for (const f of list) {
+      const field = known.get(f.field);
+      if (!field) continue;
+      const value = field.get(row);
+      if (typeof value !== 'number' || !Number.isFinite(value)) {
+        return { row, pass: false, reason: `filter:${f.field}` };
+      }
+      const target = Number(f.value);
+      if (!Number.isFinite(target)) continue;
+      const ok = f.op === '>' ? value > target
+        : f.op === '<=' ? value <= target
+          : f.op === '<' ? value < target
+            : value >= target;
+      if (!ok) return { row, pass: false, reason: `filter:${f.field}` };
+    }
+    return { row, pass: true, reason: null };
+  });
+}
+
 export { dividendStreak };

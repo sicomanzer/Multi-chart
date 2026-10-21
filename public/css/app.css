@@ -1333,6 +1333,23 @@ select {
 }
 .scr-table--peers td:first-child { color: var(--text-dim); }
 
+/* The reader's own conditions, under the toolbar. */
+.scr-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+.scr-filters__row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.scr-filters__row .input--select { flex: 0 0 auto; }
+.scr-filters__row .input[type='number'] { width: 92px; }
+.scr-filters__unit { color: var(--text-dim); font-size: 12px; min-width: 12px; }
+.scr-filters__actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+
 /* The analysis view: a search box in front of the same detail page. */
 .scr-analyze { display: flex; flex-direction: column; gap: 10px; }
 .scr-analyze .row .input { flex: 1; }

@@ -23,6 +23,79 @@ import { api } from '../api.js';
 /** Preset ids, in the order the chips are shown. */
 const PRESETS = ['moat', 'quality', 'dividend', 'value', 'all'];
 
+/**
+ * The measures a reader can filter on.
+ *
+ * The server holds the same list with the getters that read a row; this one
+ * holds the labels. A field the server does not know is ignored there rather
+ * than trusted, so the two never decide anything on their own.
+ */
+const FILTER_FIELDS = [
+  { key: 'roe3', label: 'scr.col.roe', better: 'high', kind: 'percent', def: 15 },
+  { key: 'npm3', label: 'scr.fin.npm', better: 'high', kind: 'percent', def: 10 },
+  { key: 'epsCagr3', label: 'scr.filter.epsGrowth', better: 'high', kind: 'percent', def: 10 },
+  { key: 'dividendYield', label: 'scr.col.yield', better: 'high', kind: 'percent', def: 5 },
+  { key: 'mos', label: 'scr.col.mos', better: 'high', kind: 'percent', def: 20 },
+  { key: 'payout', label: 'scr.filter.payout', better: 'low', kind: 'percent', def: 60 },
+  { key: 'pe', label: 'scr.col.pe', better: 'low', kind: 'number', def: 15 },
+  { key: 'pbv', label: 'scr.filter.pbv', better: 'low', kind: 'number', def: 2 },
+  { key: 'de', label: 'scr.col.de', better: 'low', kind: 'number', def: 1 },
+  { key: 'score', label: 'scr.col.score', better: 'high', kind: 'number', def: 60 },
+];
+
+/** The comparisons a condition can make. The default suits the direction. */
+const FILTER_OPS = [
+  { op: '>=', label: 'scr.filter.op.gte' },
+  { op: '>', label: 'scr.filter.op.gt' },
+  { op: '<=', label: 'scr.filter.op.lte' },
+  { op: '<', label: 'scr.filter.op.lt' },
+];
+
+const FILTER_KEY = 'scr.filters';
+
+/** The reader's conditions, kept between sessions. */
+function loadFilters() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(FILTER_KEY) ?? '[]');
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .filter((f) => f && typeof f.field === 'string' && Number.isFinite(Number(f.value)))
+      .slice(0, 12)
+      .map((f) => ({ field: f.field, op: String(f.op ?? '>='), value: Number(f.value) }));
+  } catch {
+    return [];
+  }
+}
+
+function saveFilters(filters) {
+  try {
+    localStorage.setItem(FILTER_KEY, JSON.stringify(filters));
+  } catch {
+    // A browser that will not keep it is not a reason to break the screen.
+  }
+}
+
+/**
+ * The conditions as the server wants them.
+ *
+ * The reader types the number the table prints — twenty for twenty per cent —
+ * so a percentage is divided on the way out and the row's own fraction is what
+ * the server compares.
+ */
+function buildFilters(filters) {
+  return filters
+    .filter((f) => f && typeof f.field === 'string' && Number.isFinite(Number(f.value)))
+    .map((f) => {
+      const field = FILTER_FIELDS.find((x) => x.key === f.field);
+      const value = Number(f.value);
+      return {
+        field: f.field,
+        op: f.op,
+        value: field?.kind === 'percent' ? value / 100 : value,
+      };
+    });
+}
+
 /** Rule ids in scorecard order, matching `scoreQuality()` on the server. */
 const CHECK_ORDER = [
   'roeLevel', 'roeConsistency', 'roaLevel', 'npmLevel', 'npmTrend', 'npmPositive',
@@ -113,6 +186,11 @@ export function openScreener({ board, symbol = null, mode = 'screen' }) {
     analyzeQuery: '',
     analyzeResults: [],
     analyzeMarket: 'thailand',
+    // The reader's own conditions, and whether the panel is open. The draft is
+    // what the panel is editing; the conditions are what the screen is using.
+    filters: loadFilters(),
+    filterDraft: null,
+    filterOpen: false,
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
     overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
@@ -191,7 +269,11 @@ async function runScreen(state, render, { background = false } = {}) {
     render();
   }
   try {
-    state.result = await api.screenerRun({ universe: state.universe, preset: state.preset });
+    state.result = await api.screenerRun({
+      universe: state.universe,
+      preset: state.preset,
+      filters: buildFilters(state.filters),
+    });
     state.updatedAt = Date.now();
     state.error = null;
   } catch (err) {
@@ -483,6 +565,26 @@ function paintToolbar(body, state, rerender, setAuto) {
   run.addEventListener('click', () => runScreen(state, rerender));
   controls.appendChild(run);
 
+  // The reader's own conditions. The count is on the button because a screen
+  // with a condition on it is a different screen, and the reader should be
+  // able to see that at a glance.
+  const filterBtn = document.createElement('button');
+  filterBtn.type = 'button';
+  filterBtn.className = `btn${state.filterOpen ? ' is-on' : ''}`;
+  filterBtn.textContent = state.filters.length
+    ? t('scr.filter.buttonN', { n: state.filters.length })
+    : t('scr.filter.button');
+  filterBtn.title = t('scr.filter.hint');
+  filterBtn.addEventListener('click', () => {
+    state.filterOpen = !state.filterOpen;
+    // Opening the panel starts from what is in force, so the draft and the
+    // screen never disagree about what is being asked for.
+    if (state.filterOpen) state.filterDraft = state.filters.map((f) => ({ ...f }));
+    else state.filterDraft = null;
+    rerender();
+  });
+  controls.appendChild(filterBtn);
+
   // The screen re-prices itself while it is open, the way the board does. The
   // checkbox is the off switch for a reader who wants the table to hold still
   // while they compare a row against their notes.
@@ -498,6 +600,123 @@ function paintToolbar(body, state, rerender, setAuto) {
 
   bar.appendChild(controls);
   body.appendChild(bar);
+  if (state.filterOpen) paintFilterPanel(body, state, rerender);
+}
+
+/**
+ * The reader's own conditions.
+ *
+ * The presets are the framework's; this is the reader's. A condition names a
+ * measure the table already prints, a comparison and a value, and a name has
+ * to clear all of them. They are kept between sessions, because a screen the
+ * reader built last week is a screen they want again today.
+ */
+function paintFilterPanel(body, state, rerender) {
+  const draft = state.filterDraft ?? (state.filterDraft = state.filters.map((f) => ({ ...f })));
+  const panel = document.createElement('div');
+  panel.className = 'scr-filters';
+
+  draft.forEach((filter, i) => {
+    const row = document.createElement('div');
+    row.className = 'scr-filters__row';
+
+    const field = document.createElement('select');
+    field.className = 'input input--select';
+    for (const f of FILTER_FIELDS) {
+      const opt = document.createElement('option');
+      opt.value = f.key;
+      opt.textContent = t(f.label);
+      if (f.key === filter.field) opt.selected = true;
+      field.appendChild(opt);
+    }
+    field.addEventListener('change', () => {
+      const f = FILTER_FIELDS.find((x) => x.key === field.value);
+      filter.field = field.value;
+      filter.op = f?.better === 'low' ? '<=' : '>=';
+      filter.value = f?.def ?? filter.value;
+      rerender();
+    });
+
+    const op = document.createElement('select');
+    op.className = 'input input--select';
+    for (const o of FILTER_OPS) {
+      const opt = document.createElement('option');
+      opt.value = o.op;
+      opt.textContent = t(o.label);
+      if (o.op === filter.op) opt.selected = true;
+      op.appendChild(opt);
+    }
+    op.addEventListener('change', () => {
+      filter.op = op.value;
+      rerender();
+    });
+
+    const value = document.createElement('input');
+    value.type = 'number';
+    value.className = 'input';
+    value.step = 'any';
+    value.value = String(filter.value);
+    value.addEventListener('change', () => {
+      const n = Number(value.value);
+      if (Number.isFinite(n)) filter.value = n;
+      rerender();
+    });
+
+    const unit = document.createElement('span');
+    unit.className = 'scr-filters__unit';
+    unit.textContent = FILTER_FIELDS.find((f) => f.key === filter.field)?.kind === 'percent' ? '%' : '';
+
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'icon-btn';
+    remove.textContent = '✕';
+    remove.title = t('scr.filter.remove');
+    remove.addEventListener('click', () => {
+      draft.splice(i, 1);
+      rerender();
+    });
+
+    row.append(field, op, value, unit, remove);
+    panel.appendChild(row);
+  });
+
+  const actions = document.createElement('div');
+  actions.className = 'scr-filters__actions';
+
+  const add = document.createElement('button');
+  add.type = 'button';
+  add.className = 'btn btn--sm';
+  add.textContent = t('scr.filter.add');
+  add.addEventListener('click', () => {
+    const f = FILTER_FIELDS[0];
+    draft.push({ field: f.key, op: f.better === 'low' ? '<=' : '>=', value: f.def });
+    rerender();
+  });
+
+  const apply = document.createElement('button');
+  apply.type = 'button';
+  apply.className = 'btn btn--sm btn--primary';
+  apply.textContent = t('scr.filter.apply');
+  apply.addEventListener('click', () => {
+    state.filters = draft.map((f) => ({ ...f }));
+    saveFilters(state.filters);
+    runScreen(state, rerender);
+  });
+
+  const clear = document.createElement('button');
+  clear.type = 'button';
+  clear.className = 'btn btn--sm';
+  clear.textContent = t('scr.filter.clear');
+  clear.addEventListener('click', () => {
+    state.filters = [];
+    state.filterDraft = [];
+    saveFilters(state.filters);
+    runScreen(state, rerender);
+  });
+
+  actions.append(add, apply, clear);
+  panel.appendChild(actions);
+  body.appendChild(panel);
 }
 
 function paintResults(body, state, rerender) {
@@ -570,6 +789,12 @@ function rejectReason(row) {
   if (reason.startsWith(prefix)) {
     const id = reason.slice(prefix.length);
     return t(`scr.check.${id}`, null, id);
+  }
+  // A condition the reader set is named in the reader's own terms.
+  if (reason.startsWith('filter:')) {
+    const key = reason.slice('filter:'.length);
+    const field = FILTER_FIELDS.find((f) => f.key === key);
+    return t('scr.reject.filter', { field: field ? t(field.label) : key });
   }
   return t(`scr.reject.${reason}`, null, reason);
 }

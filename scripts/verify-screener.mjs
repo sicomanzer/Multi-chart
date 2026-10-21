@@ -19,6 +19,7 @@
  * Exits non-zero on any failure.
  */
 import {
+  applyFilters,
   applyPreset,
   computeBands,
   ddm,
@@ -890,6 +891,31 @@ check('a multiple that differs a little is not a unit gap',
   unitGap(100, 10, 10.5) === 1, unitGap(100, 10, 10.5));
 check('a multiple that differs by a round factor but not enough is left alone',
   unitGap(100, 10, 8) === 1, unitGap(100, 10, 8));
+
+// ── The reader's own conditions ─────────────────────────────────────────────
+console.log('\n── Filters ──');
+
+const filterRows = [
+  { bare: 'A', score: 90, roe3: 0.25, pe: 10, ddm: { mos: 30 } },
+  { bare: 'B', score: 70, roe3: 0.12, pe: 20, ddm: { mos: -5 } },
+  { bare: 'C', score: 80, roe3: null, pe: 8, ddm: { mos: 10 } },
+];
+const one = applyFilters(filterRows, [{ field: 'roe3', op: '>=', value: 0.15 }]);
+check('a name that clears the condition stays', one[0].pass === true);
+check('a name that does not is rejected', one[1].pass === false);
+check('a name with no value cannot clear a condition', one[2].pass === false, JSON.stringify(one[2]));
+check('the reason names the measure', one[1].reason === 'filter:roe3', one[1].reason);
+
+const two = applyFilters(filterRows, [
+  { field: 'roe3', op: '>=', value: 0.15 },
+  { field: 'pe', op: '<', value: 12 },
+]);
+check('every condition has to be cleared', two[0].pass === true && two[1].pass === false, JSON.stringify(two.map((v) => v.pass)));
+
+const unknownField = applyFilters(filterRows, [{ field: 'nonsense', op: '>=', value: 1 }]);
+check('a field the server does not know is ignored', unknownField.every((v) => v.pass));
+check('no conditions leaves every name alone',
+  applyFilters(filterRows, []).every((v) => v.pass));
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 
