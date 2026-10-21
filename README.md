@@ -416,6 +416,16 @@ that calendar year, falling back to the cash-flow statement only when there is
 no ex-date record — the statement is the one that can be wrong in either
 direction (PTT 2.94 against 2.20 received, BANPU 0.02 against 0.55).
 
+**Universes.** Two written lists ship with the app — SET100, and a wider set of
+large caps that is not an index — plus whatever the user has saved as a board or
+a watchlist. SET100 is refreshed from the exchange rather than left to drift:
+`set.or.th` serves the member table from `/api/set/index/set100/composition`,
+which only answers once the cookies from the page itself are attached, so the
+server fetches the page, then the JSON, at most twice a day and in the
+background. When that fails the written list stays in use — the index rebalances
+twice a year, so a stale copy is a much smaller problem than a screen that will
+not start.
+
 **Valuation.** Two-stage DDM, with `g1` capped at 8%, `g2` defaulting to 3% and
 `r` to 9%. The cap is the point: a two-stage model fed a 25% growth rate
 produces a number that says more about the input than the business. When `r` is
@@ -434,7 +444,7 @@ computed, which is why the same company can be strong for one mandate and
 disqualified for another.
 
 `data/` holds nothing for the screener: statements are cached in memory for
-twelve hours, and a cold run of 75 names takes about two seconds at five
+twelve hours, and a cold run of a hundred names takes a few seconds at five
 parallel upstream requests.
 
 The engine is pure and covered by `scripts/verify-screener.mjs` — the DDM
@@ -459,7 +469,7 @@ non-payer and a broken one.
 | `GET /api/quotes?symbols=` | MCP quotes |
 | `GET /api/fundamentals?symbols=&metrics=&refresh=1` | valuation ratios (P/E, P/BV, D/E, yield, …) |
 | `GET /api/fundamentals/metrics` | metric labels/hints and sidecar status |
-| `GET /api/screener/universe` | screening universes: SET large caps, watchlists, saved boards |
+| `GET /api/screener/universe` | screening universes: SET100, SET large caps, watchlists, saved boards |
 | `POST /api/screener/run` | `{ universe \| symbols, preset, overrides }` → scored rows |
 | `GET /api/screener/stock?symbol=&r=&g1=&g2=` | one company in full, re-valued for the sliders |
 | `GET /api/stream?symbols=&intervalMs=` | SSE quote stream |

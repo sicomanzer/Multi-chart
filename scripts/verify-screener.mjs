@@ -28,7 +28,8 @@ import {
   sustainableDividend,
   trailingDividend,
 } from '../server/screener.js';
-import { SET_LARGE_CAPS } from '../server/screener-run.js';
+import { SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
+import { parseComposition } from '../server/setindex.js';
 import { deriveYears } from '../server/fin.js';
 
 const BASE = process.env.API ?? 'http://127.0.0.1:8787';
@@ -381,6 +382,32 @@ check('every ticker is a bare SET symbol',
   SET_LARGE_CAPS.every((s) => /^[A-Z0-9-]+$/.test(s)),
   SET_LARGE_CAPS.filter((s) => !/^[A-Z0-9-]+$/.test(s)).join(','));
 
+check('SET100 has a hundred members', SET100.length === 100, SET100.length);
+check('SET100 has no duplicates', new Set(SET100).size === SET100.length);
+check('every SET100 ticker is a bare SET symbol',
+  SET100.every((s) => /^[A-Z0-9-]+$/.test(s)),
+  SET100.filter((s) => !/^[A-Z0-9-]+$/.test(s)).join(','));
+
+// The live list comes from set.or.th; the parser is what has to be right when
+// the exchange rebalances the index, so it is tested without the network.
+const throws = (fn) => {
+  try { fn(); return false; } catch { return true; }
+};
+const fixtures = Array.from({ length: 22 }, (_, i) => ({ symbol: `S${i}` }));
+const parsed = parseComposition({
+  composition: {
+    stockInfos: [...fixtures, { symbol: 'ptt' }, { symbol: 'PTT' }, { symbol: '' }, { symbol: 'not a symbol' }],
+  },
+});
+check('constituents are upper-cased and de-duplicated',
+  parsed.includes('PTT') && parsed.filter((s) => s === 'PTT').length === 1, parsed.join(','));
+check('junk symbols are dropped rather than sent to the screen',
+  parsed.every((s) => /^[A-Z0-9-]{1,12}$/.test(s)));
+check('a truncated payload is refused instead of shrinking the index',
+  throws(() => parseComposition({ composition: { stockInfos: [{ symbol: 'PTT' }] } })));
+check('a payload with no table is refused',
+  throws(() => parseComposition({})));
+
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 
 console.log('\n── Routes ──');
@@ -405,6 +432,10 @@ try {
     universe.body.lists.every((l) => Array.isArray(l.symbols) && l.symbols.length > 0));
   check('the static SET list is offered',
     universe.body.lists.some((l) => l.id === 'set-large'));
+  const set100 = universe.body.lists.find((l) => l.id === 'set100');
+  check('SET100 is offered with about a hundred symbols',
+    Boolean(set100) && set100.symbols.length >= 95 && set100.symbols.length <= 105,
+    set100?.symbols.length);
   check('the run cap is published',
     Number.isInteger(universe.body.maxSymbols) && universe.body.maxSymbols > 0,
     universe.body.maxSymbols);

@@ -82,7 +82,7 @@ function scoreTone(score) {
 export function openScreener({ board, symbol = null }) {
   const state = {
     preset: 'moat',
-    universe: 'set-large',
+    universe: 'set100',
     lists: [],
     result: null,
     loading: false,

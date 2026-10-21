@@ -29,7 +29,8 @@ import { FundamentalsClient, METRIC_CATALOG, DEFAULT_METRICS, TRACKED_METRICS } 
 import { FundamentalsHistory } from './history.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
-import { runScreen, loadDetail, SET_LARGE_CAPS } from './screener-run.js';
+import { runScreen, loadDetail, UNIVERSES } from './screener-run.js';
+import { constituents, refresh as refreshConstituents } from './setindex.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
   TIMEFRAMES, DEFAULT_TIMEFRAME, getCandles, getCandlesBatch,
@@ -411,7 +412,13 @@ const MAX_SCREEN_SYMBOLS = 120;
 /** Resolve a named universe to symbols, or null when the id is unknown. */
 function universeSymbols(id) {
   if (!id) return null;
-  if (id === 'set-large') return SET_LARGE_CAPS.map((s) => `SET:${s}`);
+  const named = UNIVERSES.find((u) => u.id === id);
+  if (named) {
+    // An index member list is refreshed from the exchange when it can be;
+    // the written copy is what makes the screen work when it cannot.
+    const symbols = named.live ? constituents(named.live, named.symbols) : named.symbols;
+    return symbols.map((s) => `SET:${s}`);
+  }
   if (id === 'all-watchlists') {
     const out = [];
     for (const list of watchlists.list()) {
@@ -442,13 +449,11 @@ function universeSymbols(id) {
  * cost nothing to include because both stores are already in memory.
  */
 app.get('/api/screener/universe', (_req, res) => {
-  const lists = [
-    {
-      id: 'set-large',
-      label: 'SET large caps',
-      symbols: SET_LARGE_CAPS.map((s) => `SET:${s}`),
-    },
-  ];
+  const lists = UNIVERSES.map((u) => ({
+    id: u.id,
+    label: u.label,
+    symbols: (u.live ? constituents(u.live, u.symbols) : u.symbols).map((s) => `SET:${s}`),
+  }));
   for (const wl of watchlists.list()) {
     const full = watchlists.get(wl.id);
     lists.push({ id: `watchlist:${wl.id}`, label: wl.name, symbols: [...(full?.symbols ?? [])] });
@@ -867,6 +872,9 @@ const server = app.listen(PORT, HOST, () => {
   console.log(`  Workspaces: ${store.filePath}`);
   console.log(`  Data dir:   ${DATA_DIR}${process.env.DATA_DIR ? ' (DATA_DIR)' : ''}\n`);
   mcp.ensureStarted().catch((err) => console.warn(`[mcp] initial start failed: ${err.message}`));
+  // Warm the index list in the background: the first dialog that opens should
+  // already see the exchange's copy rather than the written one.
+  void refreshConstituents('set100');
 });
 
 let shuttingDown = false;

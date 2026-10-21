@@ -296,3 +296,32 @@ export const SET_LARGE_CAPS = [
   'SPALI', 'STA', 'TIDLOR', 'TISCO', 'TLI', 'TOP', 'TRUE', 'TU', 'TVO', 'WHA',
   'MC', 'MEGA', 'TACC', 'BKIH', 'HTC', 'TTW', 'KAMART',
 ];
+
+/**
+ * SET100, as published by the exchange.
+ *
+ * A written copy of the constituents, used as the seed and as the fallback for
+ * the live refresh in `setindex.js`: SET reviews the index twice a year, so the
+ * server asks set.or.th for the current list and keeps this one for when the
+ * exchange cannot be reached. `live` on the universe entry is what opts into
+ * that refresh — the large-cap list below is curated, not an index, so it is
+ * never fetched.
+ */
+export const SET100 = [
+  'AAV', 'ADVANC', 'AEONTS', 'AMATA', 'AOT', 'AP', 'AURA', 'AWC', 'BA', 'BAM',
+  'BANPU', 'BBL', 'BCH', 'BCP', 'BCPG', 'BDMS', 'BEM', 'BGRIM', 'BH', 'BJC',
+  'BLA', 'BTG', 'BTS', 'CBG', 'CCET', 'CENTEL', 'CHG', 'CK', 'COM7', 'CPALL',
+  'CPF', 'CPN', 'CRC', 'DELTA', 'DOHOME', 'EA', 'EGCO', 'ERW', 'GFPT', 'GLOBAL',
+  'GPSC', 'GST', 'GULF', 'GUNKUL', 'HANA', 'HMPRO', 'ICHI', 'IRPC', 'IVL', 'JMART',
+  'JMT', 'KBANK', 'KCE', 'KKP', 'KTB', 'KTC', 'LH', 'M', 'MEGA', 'MINT',
+  'MOSHI', 'MRDIYT', 'MTC', 'OR', 'OSP', 'PLANB', 'PR9', 'PRM', 'PTG', 'PTT',
+  'PTTEP', 'PTTGC', 'QH', 'RATCH', 'RCL', 'SAWAD', 'SCB', 'SCC', 'SCGP', 'SIRI',
+  'SPALI', 'SPRC', 'STA', 'STECON', 'STGT', 'TASCO', 'TCAP', 'TFG', 'THAI', 'TIDLOR',
+  'TISCO', 'TLI', 'TOA', 'TOP', 'TRUE', 'TTB', 'TU', 'VGI', 'WHA', 'WHAUP',
+];
+
+/** The static universes, in the order the dialog shows them. */
+export const UNIVERSES = [
+  { id: 'set100', label: 'SET100', symbols: SET100, live: 'set100' },
+  { id: 'set-large', label: 'SET large caps', symbols: SET_LARGE_CAPS },
+];
