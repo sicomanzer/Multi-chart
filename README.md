@@ -23,6 +23,9 @@ A **value screener** sits behind the `Screener` button: seventeen fundamental
 rules, a two-stage dividend discount model with live sliders, and the stock's
 own P/E and P/BV bands. See [The value screener](#the-value-screener).
 
+What has been built, what is still open and what comes next is written up in
+**[PROGRESS.md](PROGRESS.md)** — the handover note, in Thai.
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sicomanzer/Multi-chart)
 
 The button opens the Render blueprint for this repository — it builds the
@@ -651,6 +654,7 @@ server/
   fundamentals.py       long-lived sidecar: TradingView screener ratios
   fundamentals.js       sidecar client: queue, timeouts, per-symbol cache
   fin.js                statements, dividends and ratios per symbol
+  finnomena.js          ten-year annual history: tracked file first, live API second
   screener.js           scoring rules, DDM, P/E and P/BV bands (pure)
   screener-run.js       runner, presets, universes, deep-dive payload
   quotes.js             Yahoo quote snapshot and sector profile (crumb)
