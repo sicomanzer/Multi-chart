@@ -32,7 +32,7 @@ import {
 import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears } from '../server/fin.js';
-import { aggregateAnnual, annualHistory, clearFinnomenaCache, finnomenaStatus, HISTORY_YEARS } from '../server/finnomena.js';
+import { aggregateAnnual, aggregateQuarterly, annualHistory, clearFinnomenaCache, finnomenaStatus, HISTORY_YEARS } from '../server/finnomena.js';
 import { mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -637,6 +637,18 @@ check('the years come back in order',
   annual[0].fiscalYear === 2024 && annual[1].fiscalYear === 2025);
 check('empty input yields no years', aggregateAnnual([]).length === 0);
 
+// The quarters are kept apart, so a chart can stack them.
+const quarters = aggregateQuarterly(rows);
+check('the three-month rows are kept per year, in order',
+  quarters.length === 1 && quarters[0].quarters.length === 2
+    && quarters[0].quarters[0].quarter === 1 && quarters[0].quarters[1].quarter === 2,
+  JSON.stringify(quarters));
+check('the annual row is not one of the quarters',
+  !quarters[0].quarters.some((q) => q.quarter === 9));
+check('a quarter carries its own margin and leverage',
+  quarters[0].quarters[0].npm === 0.05 && quarters[0].quarters[0].de === 0.5);
+check('no quarters means no groups', aggregateQuarterly([]).length === 0);
+
 const finnomenaFetch = (ok = true) => async (url) => {
   const u = String(url);
   if (!ok) return { ok: false, status: 500, json: async () => ({}) };
@@ -647,7 +659,7 @@ const finnomenaFetch = (ok = true) => async (url) => {
     })) }) };
   }
   if (u.includes('/stock/summary/')) {
-    return { ok: true, status: 200, json: async () => ({ data: Array.from({ length: 16 }, (_, i) => ({
+    const years = Array.from({ length: 16 }, (_, i) => ({
       fiscal: 2010 + i,
       quarter: 9,
       net_profit: String(1000 + i),
@@ -656,7 +668,17 @@ const finnomenaFetch = (ok = true) => async (url) => {
       npm: '10',
       debt_to_equity: '0.5',
       end_of_year_date: `${2010 + i}-12-31`,
-    })) }) };
+    }));
+    const quarters = Array.from({ length: 16 }, (_, i) => [1, 2, 3, 4].map((q) => ({
+      fiscal: 2010 + i,
+      quarter: q,
+      net_profit: String(250 + i),
+      revenue: String(2500 + i),
+      earning_per_share: '0.25',
+      npm: '10',
+      debt_to_equity: '0.5',
+    }))).flat();
+    return { ok: true, status: 200, json: async () => ({ data: [...quarters, ...years] }) };
   }
   return { ok: true, status: 200, json: async () => ({ data: [] }) };
 };
@@ -666,23 +688,37 @@ const finnomenaFetch = (ok = true) => async (url) => {
 const tmpDir = await mkdtemp(join(tmpdir(), 'annual-history-'));
 const tmpFile = join(tmpDir, 'annual-history.json');
 await writeFile(tmpFile, JSON.stringify({
-  symbols: { ZZZ: [{ y: 2020, np: 5, rev: 50, eps: 1, npm: 0.1, de: 0.2 }] },
+  symbols: {
+    ZZZ: {
+      years: [[2020, 5, 50, 1, 0.1, 0.2]],
+      quarters: [[2020, 1, 1, 10, 0.25, 0.1, 0.2]],
+    },
+  },
 }), 'utf8');
 process.env.ANNUAL_HISTORY_FILE = tmpFile;
 clearFinnomenaCache();
 globalThis.fetch = finnomenaFetch(true);
 const fromFile = await annualHistory('SET:ZZZ');
 check('the tracked file answers before the network',
-  fromFile?.length === 1 && fromFile[0].fiscalYear === 2020 && fromFile[0].netIncome === 5,
+  fromFile?.years.length === 1 && fromFile.years[0].fiscalYear === 2020
+    && fromFile.years[0].netIncome === 5 && fromFile.quarters.length === 1,
   JSON.stringify(fromFile));
+check('the file carries the quarters too, grouped by year',
+  fromFile?.quarters[0]?.fiscalYear === 2020 && fromFile?.quarters[0]?.quarters[0]?.quarter === 1
+    && fromFile?.quarters[0]?.quarters[0]?.netIncome === 1,
+  JSON.stringify(fromFile?.quarters));
 
 // A symbol the file does not have falls through to the live API.
 process.env.ANNUAL_HISTORY_FILE = join(tmpDir, 'not-here.json');
 clearFinnomenaCache();
 const live7 = await annualHistory('SET:T7');
 check('a symbol the file does not have comes from the live API',
-  live7?.length === HISTORY_YEARS && live7[0].fiscalYear === 2016 && live7.at(-1).fiscalYear === 2025,
-  live7 ? `${live7.length} years` : 'null');
+  live7?.years.length === HISTORY_YEARS && live7.years[0].fiscalYear === 2016
+    && live7.years.at(-1).fiscalYear === 2025,
+  live7 ? `${live7.years.length} years` : 'null');
+check('and the quarters come with it',
+  live7?.quarters.length === HISTORY_YEARS && live7.quarters[0].quarters.length === 4,
+  live7 ? `${live7.quarters.length} groups` : 'null');
 check('a symbol the source does not carry resolves to null',
   (await annualHistory('SET:NOPE')) === null);
 

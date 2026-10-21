@@ -679,36 +679,86 @@ function calculator(detail, state, rerender) {
  * the exchange ex-date record by the quarter the cash landed in, which reaches
  * further. Each chart says so rather than stretching a short history.
  */
+/**
+ * The annual statement charts.
+ *
+ * Amounts stack: the four quarters of a year add up to the year, and the total
+ * is written above the bar. Ratios do not — a sum of margins is not a margin —
+ * so the margin and leverage charts set the four quarters side by side instead
+ * of piling them up, and mark the year's own figure with a dot. The payment
+ * chart stacks the exchange ex-date record the same way, because there the
+ * quarters are cash, and cash adds up.
+ */
 function chartBlock(detail) {
   const box = document.createElement('div');
   box.appendChild(section(t('scr.chart'), t('scr.chartHint')));
 
-  // The statement charts read the long annual history when the second source
-  // has it and fall back to the four Yahoo years otherwise, so a name the long
-  // source does not carry still draws.
   const years = detail.years ?? [];
-  const long = detail.history ?? years;
-  const fys = long.map((y) => y.fiscalYear);
-  const dps = detail.dpsQuarterly ?? [];
+  const history = detail.history ?? null;
+  const groups = history?.quarters ?? [];
   const unit = t('scr.chart.unit');
+  const money = (v) => `${(v / 1e6).toFixed(0)}${unit}`;
+  const percent = (v) => `${(v * 100).toFixed(1)}%`;
+  const plainNumber = (v) => v.toFixed(2);
 
+  // One row per fiscal year, with the four quarters pulled out of it.
+  const rowsFor = (metric) => groups.map((group) => {
+    const row = { year: group.fiscalYear, q1: null, q2: null, q3: null, q4: null, annual: null };
+    for (const q of group.quarters ?? []) {
+      const v = q[metric];
+      if (Number.isFinite(v)) row[`q${q.quarter}`] = v;
+    }
+    row.total = ['q1', 'q2', 'q3', 'q4']
+      .reduce((s, k) => s + (Number.isFinite(row[k]) ? row[k] : 0), 0);
+    const annual = (history?.years ?? []).find((y) => y.fiscalYear === group.fiscalYear);
+    if (annual) row.annual = annual[metric];
+    return row;
+  });
+
+  const fy = years.map((y) => y.fiscalYear);
   const cells = [
-    { key: 'netProfit', label: t('scr.chart.netProfit'), labels: fys,
-      values: long.map((y) => y.netIncome), color: '#a06cff',
-      format: (v) => `${(v / 1e6).toFixed(0)}${unit}`, showValues: false },
-    { key: 'revenue', label: t('scr.chart.revenue'), labels: fys,
-      values: long.map((y) => y.revenue), color: '#2f7ff0',
-      format: (v) => `${(v / 1e6).toFixed(0)}${unit}`, showValues: false },
-    { key: 'eps', label: t('scr.chart.eps'), labels: fys,
-      values: long.map((y) => y.eps), color: '#1fb6d4',
-      format: (v) => v.toFixed(2), showValues: false },
-    { key: 'npm', label: t('scr.chart.npm'), labels: fys,
-      values: long.map((y) => y.npm), color: '#e8418a',
-      format: (v) => `${(v * 100).toFixed(1)}%`, showValues: false },
-    { key: 'dps', label: t('scr.chart.dps'), stacked: dps },
-    { key: 'de', label: t('scr.chart.de'), labels: fys,
-      values: long.map((y) => y.de), color: '#f0a020',
-      format: (v) => v.toFixed(2), showValues: false },
+    {
+      label: t('scr.chart.netProfit'),
+      rows: rowsFor('netIncome'),
+      stacked: true,
+      format: money,
+      plain: { labels: fy, values: years.map((y) => y.netIncome), color: '#a06cff', format: money },
+    },
+    {
+      label: t('scr.chart.revenue'),
+      rows: rowsFor('revenue'),
+      stacked: true,
+      format: money,
+      plain: { labels: fy, values: years.map((y) => y.revenue), color: '#2f7ff0', format: money },
+    },
+    {
+      label: t('scr.chart.eps'),
+      rows: rowsFor('eps'),
+      stacked: true,
+      format: plainNumber,
+      plain: { labels: fy, values: years.map((y) => y.eps), color: '#1fb6d4', format: plainNumber },
+    },
+    {
+      label: t('scr.chart.npm'),
+      rows: rowsFor('npm'),
+      stacked: false,
+      format: percent,
+      plain: { labels: fy, values: years.map((y) => y.npm), color: '#e8418a', format: percent },
+    },
+    {
+      label: t('scr.chart.dps'),
+      rows: detail.dpsQuarterly ?? [],
+      stacked: true,
+      format: plainNumber,
+      plain: null,
+    },
+    {
+      label: t('scr.chart.de'),
+      rows: rowsFor('de'),
+      stacked: false,
+      format: plainNumber,
+      plain: { labels: fy, values: years.map((y) => y.de), color: '#f0a020', format: plainNumber },
+    },
   ];
 
   const grid = document.createElement('div');
@@ -717,19 +767,22 @@ function chartBlock(detail) {
     const cell = document.createElement('div');
     cell.className = 'scr-chart';
     cell.innerHTML = `<h4>${escape(c.label)}</h4><canvas height="150"></canvas>`;
-    if (c.stacked) {
+    if (c.rows?.length) {
       const legend = document.createElement('div');
       legend.className = 'scr-chart__legend';
       legend.innerHTML = [
         ['--q1', 'Q1'], ['--q2', 'Q2'], ['--q3', 'Q3'], ['--q4', 'Q4'],
-      ].map(([k, n]) => `<span><i style="background:var(${k})"></i>${escape(n)}</span>`).join('');
+      ].map(([k, n]) => `<span><i style="background:var(${k})"></i>${escape(n)}</span>`).join('')
+        + (c.stacked
+          ? ''
+          : `<span><i class="scr-chart__dot"></i>${escape(t('scr.chart.annual'))}</span>`);
       cell.appendChild(legend);
     }
     grid.appendChild(cell);
     requestAnimationFrame(() => {
       const canvas = cell.querySelector('canvas');
-      if (c.stacked) drawStackedBars(canvas, c.stacked);
-      else drawBars(canvas, c);
+      if (c.rows?.length) drawQuarterBars(canvas, c.rows, c);
+      else if (c.plain) drawBars(canvas, c.plain);
     });
   }
   box.appendChild(grid);
@@ -749,23 +802,33 @@ function drawBars(canvas, { labels, values, color, format, showValues = false })
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, width, height);
 
-  const pad = { top: 14, right: 6, bottom: 20, left: 34 };
-  const plotW = width - pad.left - pad.right;
-  const plotH = height - pad.top - pad.bottom;
   const nums = values.filter((v) => Number.isFinite(v));
   if (!nums.length || !labels.length) return;
 
   const max = Math.max(...nums, 0) || 1;
   const span = max * 1.15;
-  const n = labels.length;
-  const slot = plotW / n;
-  const bw = Math.min(30, slot * 0.6);
-  const y = (v) => pad.top + plotH - (v / span) * plotH;
 
   const style = getComputedStyle(document.documentElement);
   const line = style.getPropertyValue('--text-dim').trim() || '#888';
   ctx.font = '9px system-ui, sans-serif';
   ctx.textBaseline = 'middle';
+  // The axis labels set the gutter: a clipped label is a wrong label.
+  let gutter = 0;
+  for (let i = 0; i <= 4; i += 1) {
+    gutter = Math.max(gutter, ctx.measureText(format((span * i) / 4, true)).width);
+  }
+  const pad = {
+    top: 14,
+    right: 6,
+    bottom: 20,
+    left: Math.min(Math.max(30, Math.ceil(gutter) + 10), Math.round(width * 0.32)),
+  };
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const n = labels.length;
+  const slot = plotW / n;
+  const bw = Math.min(30, slot * 0.6);
+  const y = (v) => pad.top + plotH - (v / span) * plotH;
 
   for (let i = 0; i <= 4; i += 1) {
     const v = (span * i) / 4;
@@ -805,8 +868,15 @@ function drawBars(canvas, { labels, values, color, format, showValues = false })
   });
 }
 
-/** The dividend chart: one stacked bar per calendar year, split by quarter. */
-function drawStackedBars(canvas, rows) {
+/**
+ * One bar per fiscal year, split by quarter.
+ *
+ * Stacked when the quarters are amounts that add up; side by side when they
+ * are ratios, because a stack of margins means nothing. The ratio charts also
+ * mark the year's own figure with a dot, so the quarters have something to
+ * sit against.
+ */
+function drawQuarterBars(canvas, rows, { stacked, format }) {
   if (!canvas) return;
   const dpr = window.devicePixelRatio || 1;
   const width = canvas.clientWidth || 300;
@@ -817,20 +887,7 @@ function drawStackedBars(canvas, rows) {
   if (!ctx) return;
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, width, height);
-
-  const labels = rows.map((r) => r.year);
-  const values = rows.map((r) => r.total);
-  if (!labels.length) return;
-
-  const pad = { top: 14, right: 6, bottom: 20, left: 30 };
-  const plotW = width - pad.left - pad.right;
-  const plotH = height - pad.top - pad.bottom;
-  const max = Math.max(...values.filter((v) => Number.isFinite(v)), 0) || 1;
-  const span = max * 1.18;
-  const n = labels.length;
-  const slot = plotW / n;
-  const bw = Math.min(26, slot * 0.62);
-  const y = (v) => pad.top + plotH - (v / span) * plotH;
+  if (!rows?.length) return;
 
   const style = getComputedStyle(document.documentElement);
   const line = style.getPropertyValue('--text-dim').trim() || '#888';
@@ -840,9 +897,38 @@ function drawStackedBars(canvas, rows) {
     q3: style.getPropertyValue('--q3').trim() || '#4caf50',
     q4: style.getPropertyValue('--q4').trim() || '#9b59b6',
   };
+  const keys = ['q1', 'q2', 'q3', 'q4'];
+
+  // The scale is the stack's total when stacked, and the single quarter when
+  // the quarters stand side by side.
+  const heights = rows
+    .flatMap((r) => (stacked ? [r.total] : keys.map((k) => r[k])))
+    .filter((v) => Number.isFinite(v));
+  if (!heights.length) return;
+  const max = Math.max(...heights, 0) || 1;
+  const span = max * 1.18;
 
   ctx.font = '9px system-ui, sans-serif';
   ctx.textBaseline = 'middle';
+  // The axis labels decide how much room the plot gets: "2,242 ล้าน" is wider
+  // than "0.18", and a clipped label is a wrong label.
+  let gutter = 0;
+  for (let i = 0; i <= 4; i += 1) {
+    gutter = Math.max(gutter, ctx.measureText(format((span * i) / 4, true)).width);
+  }
+  const pad = {
+    top: 14,
+    right: 6,
+    bottom: 20,
+    left: Math.min(Math.max(30, Math.ceil(gutter) + 10), Math.round(width * 0.32)),
+  };
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const n = rows.length;
+  const slot = plotW / n;
+  const bw = stacked ? Math.min(26, slot * 0.62) : Math.min(10, (slot * 0.74) / 4);
+  const y = (v) => pad.top + plotH - (v / span) * plotH;
+
   for (let i = 0; i <= 4; i += 1) {
     const v = (span * i) / 4;
     const yy = y(v);
@@ -856,34 +942,50 @@ function drawStackedBars(canvas, rows) {
     ctx.globalAlpha = 1;
     ctx.setLineDash([]);
     ctx.textAlign = 'right';
-    ctx.fillText(v.toFixed(1), pad.left - 4, yy);
+    ctx.fillText(format(v, true), pad.left - 4, yy);
   }
 
   rows.forEach((row, i) => {
     const cx = pad.left + slot * (i + 0.5);
-    let acc = 0;
-    for (const q of ['q1', 'q2', 'q3', 'q4']) {
-      const v = row[q] ?? 0;
-      if (v <= 0) continue;
-      const h = (v / span) * plotH;
-      const top = y(acc + v);
-      ctx.fillStyle = colours[q];
-      ctx.fillRect(cx - bw / 2, top, bw, h);
-      acc += v;
-    }
-    if (Number.isFinite(row.total) && row.total > 0) {
-      ctx.fillStyle = line;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(row.total.toFixed(2), cx, y(acc) - 1);
+    if (stacked) {
+      let acc = 0;
+      for (const k of keys) {
+        const v = row[k];
+        if (!Number.isFinite(v) || v <= 0) continue;
+        const top = y(acc + v);
+        ctx.fillStyle = colours[k];
+        ctx.fillRect(cx - bw / 2, top, bw, (v / span) * plotH);
+        acc += v;
+      }
+      if (Number.isFinite(row.total) && row.total > 0) {
+        ctx.fillStyle = line;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(format(row.total, false), cx, y(acc) - 1);
+      }
+    } else {
+      keys.forEach((k, j) => {
+        const v = row[k];
+        if (!Number.isFinite(v)) return;
+        const x = cx - (bw * 4) / 2 + j * bw;
+        const top = y(v);
+        ctx.fillStyle = colours[k];
+        ctx.fillRect(x, top, Math.max(1, bw - 1), pad.top + plotH - top);
+      });
+      if (Number.isFinite(row.annual)) {
+        ctx.fillStyle = line;
+        ctx.beginPath();
+        ctx.arc(cx, y(row.annual), 2.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
   });
 
   ctx.fillStyle = line;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  labels.forEach((l, i) => {
-    ctx.fillText(String(l), pad.left + slot * (i + 0.5), pad.top + plotH + 4);
+  rows.forEach((r, i) => {
+    ctx.fillText(String(r.year), pad.left + slot * (i + 0.5), pad.top + plotH + 4);
   });
 }
 

@@ -7,9 +7,9 @@
  * with a longer history, so it is used here for the annual charts only.
  *
  * The API is two steps: `/stock/list` maps a ticker to a `security_id`, then
- * `/stock/summary/{id}` returns every period. The annual row is the one whose
- * `quarter` is 9; the other quarters are the three-month figures and would
- * double-count if they were summed with it.
+ * `/stock/summary/{id}` returns every period. The periods come with a quarter
+ * number: 1 to 4 are the three months, and 9 is the fiscal year as a whole —
+ * the two must not be mixed, or the year double-counts.
  *
  * Two ways in, and the tracked file comes first. The container's own address
  * is refused by the upstream's bot filter more often than not, so the same
@@ -58,6 +58,12 @@ const num = (v) => {
   return Number.isFinite(n) ? n : null;
 };
 
+/** Finnomena reports a margin as a percentage; the screen carries fractions. */
+const fraction = (v) => {
+  const n = num(v);
+  return n == null ? null : n / 100;
+};
+
 async function getJson(url) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
@@ -79,14 +85,28 @@ let dataset = null;
 let datasetPath = null;
 let datasetInFlight = null;
 
-function rowFromFile(row) {
+/** `years` rows are [fiscalYear, netIncome, revenue, eps, npm, de]. */
+function yearFromFile(row) {
   return {
-    fiscalYear: Number(row?.y),
-    netIncome: num(row?.np),
-    revenue: num(row?.rev),
-    eps: num(row?.eps),
-    npm: num(row?.npm),
-    de: num(row?.de),
+    fiscalYear: num(row?.[0]),
+    netIncome: num(row?.[1]),
+    revenue: num(row?.[2]),
+    eps: num(row?.[3]),
+    npm: num(row?.[4]),
+    de: num(row?.[5]),
+  };
+}
+
+/** `quarters` rows are [fiscalYear, quarter, netIncome, revenue, eps, npm, de]. */
+function quarterFromFile(row) {
+  return {
+    fiscalYear: num(row?.[0]),
+    quarter: num(row?.[1]),
+    netIncome: num(row?.[2]),
+    revenue: num(row?.[3]),
+    eps: num(row?.[4]),
+    npm: num(row?.[5]),
+    de: num(row?.[6]),
   };
 }
 
@@ -98,11 +118,16 @@ async function loadDataset() {
       try {
         const raw = JSON.parse(await readFile(path, 'utf8'));
         const map = new Map();
-        for (const [symbol, rows] of Object.entries(raw?.symbols ?? {})) {
-          const clean = (rows ?? [])
-            .map(rowFromFile)
+        for (const [symbol, entry] of Object.entries(raw?.symbols ?? {})) {
+          const years = (entry?.years ?? [])
+            .map(yearFromFile)
             .filter((r) => Number.isFinite(r.fiscalYear));
-          if (clean.length) map.set(String(symbol).toUpperCase(), clean);
+          const quarters = (entry?.quarters ?? [])
+            .map(quarterFromFile)
+            .filter((r) => Number.isFinite(r.fiscalYear) && Number.isFinite(r.quarter));
+          if (years.length || quarters.length) {
+            map.set(String(symbol).toUpperCase(), { years, quarters });
+          }
         }
         dataset = map;
         datasetPath = path;
@@ -187,9 +212,7 @@ export function aggregateAnnual(rows) {
       netIncome: num(row.net_profit),
       revenue: num(row.revenue),
       eps: num(row.earning_per_share),
-      // Finnomena reports margins as a percentage and leverage as a ratio;
-      // the screen's own years carry both as fractions, so convert to match.
-      npm: num(row.npm) == null ? null : num(row.npm) / 100,
+      npm: fraction(row.npm),
       de: num(row.debt_to_equity),
     });
   }
@@ -197,10 +220,91 @@ export function aggregateAnnual(rows) {
 }
 
 /**
+ * The same rows, kept per quarter.
+ *
+ * A year can be missing a quarter — a company that reports late, or a feed
+ * that skipped one — and the chart then draws the three it has rather than
+ * pretending the year had four.
+ */
+export function aggregateQuarterly(rows) {
+  const byYear = new Map();
+  for (const row of rows ?? []) {
+    const quarter = Number(row?.quarter);
+    if (!Number.isFinite(quarter) || quarter < 1 || quarter > 4) continue;
+    const fiscalYear = Number(row.fiscal);
+    if (!Number.isFinite(fiscalYear)) continue;
+    const list = byYear.get(fiscalYear) ?? [];
+    list.push({
+      fiscalYear,
+      quarter,
+      netIncome: num(row.net_profit),
+      revenue: num(row.revenue),
+      eps: num(row.earning_per_share),
+      npm: fraction(row.npm),
+      de: num(row.debt_to_equity),
+    });
+    byYear.set(fiscalYear, list);
+  }
+  return [...byYear.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([fiscalYear, list]) => ({
+      fiscalYear,
+      quarters: list.sort((a, b) => a.quarter - b.quarter),
+    }));
+}
+
+/* ── the answer ───────────────────────────────────────────────────────────── */
+
+/** Group flat quarter rows into one group per fiscal year. */
+function groupQuarters(rows) {
+  const byYear = new Map();
+  for (const row of rows ?? []) {
+    const list = byYear.get(row.fiscalYear) ?? [];
+    list.push(row);
+    byYear.set(row.fiscalYear, list);
+  }
+  return [...byYear.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([fiscalYear, quarters]) => ({
+      fiscalYear,
+      quarters: quarters.sort((a, b) => a.quarter - b.quarter),
+    }));
+}
+
+/**
+ * Ask the upstream for one symbol, ignoring the tracked file.
+ *
+ * The refresh script needs this: rebuilding the file must not read the file.
+ */
+export async function liveAnnualHistory(tvSymbol) {
+  const bare = bareSymbol(normalizeSymbol(tvSymbol));
+  if (!bare) return null;
+  if (live.blockedUntil > Date.now()) return null;
+  live.attempts += 1;
+  try {
+    const map = await symbolMap();
+    const id = map.get(bare);
+    if (!id) return null;
+    const rows = await summaryRows(id);
+    const years = aggregateAnnual(rows).slice(-HISTORY_YEARS);
+    const quarters = aggregateQuarterly(rows).slice(-HISTORY_YEARS);
+    if (years.length === 0 && quarters.length === 0) return null;
+    live.symbols += 1;
+    return { years, quarters };
+  } catch (err) {
+    live.ok = false;
+    live.error = String(err?.message ?? err).slice(0, 160);
+    live.blockedUntil = Date.now() + LIVE_BACKOFF_MS;
+    return null;
+  }
+}
+
+/**
  * The last `HISTORY_YEARS` fiscal years for one symbol, or null.
  *
- * Returns null rather than throwing so a caller can fall back without a
- * try/catch at every call site.
+ * Returns the years and their quarters, because a chart that stacks the
+ * quarters needs both. Returns null rather than throwing so a caller can fall
+ * back without a try/catch at every call site.
  */
 export async function annualHistory(tvSymbol) {
   const bare = bareSymbol(normalizeSymbol(tvSymbol));
@@ -210,26 +314,17 @@ export async function annualHistory(tvSymbol) {
   // what the deploy boots from.
   const file = await loadDataset().catch(() => null);
   const fromFile = file?.get(bare);
-  if (fromFile?.length) return fromFile.slice(-HISTORY_YEARS);
+  if (fromFile && (fromFile.years.length || fromFile.quarters.length)) {
+    const years = fromFile.years.slice(-HISTORY_YEARS);
+    const keep = new Set(years.map((r) => r.fiscalYear));
+    return {
+      years,
+      quarters: groupQuarters(fromFile.quarters.filter((q) => keep.has(q.fiscalYear))),
+    };
+  }
 
   // Not in the file: ask the upstream, unless it has just refused.
-  if (live.blockedUntil > Date.now()) return null;
-  live.attempts += 1;
-  try {
-    const map = await symbolMap();
-    const id = map.get(bare);
-    if (!id) return null;
-    const rows = await summaryRows(id);
-    const years = aggregateAnnual(rows);
-    if (years.length === 0) return null;
-    live.symbols += 1;
-    return years.slice(-HISTORY_YEARS);
-  } catch (err) {
-    live.ok = false;
-    live.error = String(err?.message ?? err).slice(0, 160);
-    live.blockedUntil = Date.now() + LIVE_BACKOFF_MS;
-    return null;
-  }
+  return liveAnnualHistory(bare);
 }
 
 /** What the health endpoint reports about the annual history. */

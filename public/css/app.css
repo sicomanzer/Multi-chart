@@ -1321,6 +1321,7 @@ select {
 .scr-chart__legend { display: flex; gap: 12px; font-size: 10px; color: var(--text-dim); margin-top: 4px; }
 .scr-chart__legend span { display: inline-flex; align-items: center; gap: 4px; }
 .scr-chart__legend i { width: 9px; height: 9px; display: inline-block; border-radius: 2px; }
+.scr-chart__legend i.scr-chart__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim); }
 .scr-band__levels { width: 100%; border-collapse: collapse; font-size: 10px; font-family: var(--mono); }
 .scr-band__levels td { padding: 1px 0; color: var(--text-dim); }
 .scr-band__levels td:last-child { text-align: right; color: var(--text); }

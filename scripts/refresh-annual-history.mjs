@@ -19,7 +19,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { annualHistory, clearFinnomenaCache, HISTORY_YEARS } from '../server/finnomena.js';
+import { liveAnnualHistory, clearFinnomenaCache, HISTORY_YEARS } from '../server/finnomena.js';
 import { SET100 } from '../server/screener-run.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -67,20 +67,18 @@ async function main() {
     while (next < symbols.length) {
       const symbol = symbols[next];
       next += 1;
-      const years = await annualHistory(symbol);
-      if (!years || years.length === 0) {
+      const history = await liveAnnualHistory(symbol);
+      if (!history || (history.years.length === 0 && history.quarters.length === 0)) {
         missing.push(symbol);
         continue;
       }
-      out[symbol] = years.map((y) => ({
-        y: y.fiscalYear,
-        np: y.netIncome,
-        rev: y.revenue,
-        eps: y.eps,
-        npm: y.npm,
-        de: y.de,
-      }));
-      process.stdout.write(`  ${symbol} ${years.length}y\n`);
+      out[symbol] = {
+        years: history.years.map((y) => [y.fiscalYear, y.netIncome, y.revenue, y.eps, y.npm, y.de]),
+        quarters: history.quarters.flatMap((row) => row.quarters.map((q) => (
+          [q.fiscalYear, q.quarter, q.netIncome, q.revenue, q.eps, q.npm, q.de]
+        ))),
+      };
+      process.stdout.write(`  ${symbol} ${history.years.length}y ${history.quarters.length}q\n`);
     }
   });
   await Promise.all(runners);

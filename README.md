@@ -401,6 +401,17 @@ once a year, so the file stays true for a long time; rebuild it with
 knows about (the index, the boards and the lists). `/api/health` reports the
 file and the live channel separately under `annualHistory`.
 
+**The charts are split by quarter, and only the amounts are stacked.** The feed
+carries the three-month rows as well as the year, so a bar can show where a
+year's profit came from. The three amount charts — net profit, revenue and EPS
+— stack the quarters, because four quarters add up to the year and the total is
+written above the bar. The margin and leverage charts set the four quarters
+side by side instead, because a sum of ratios is not a ratio; they mark the
+year's own figure with a dot. The leverage chart counts all liabilities over
+equity, which is a wider measure than the interest-bearing D/E the score and
+the statements table use — the label says so, rather than the two numbers
+quietly disagreeing.
+
 **Published, not merely ended.** Yahoo dates a statement by the period it
 covers, so FY2024 is stamped `2024-12-31` — a day on which nobody had seen it.
 Each year therefore carries a `knownFrom` date of the fiscal year end plus ninety
