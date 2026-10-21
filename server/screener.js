@@ -15,13 +15,15 @@
  */
 
 /**
- * Rule weights, summing to 100.
+ * Rule weights. The framework is worth 100 and growth adds 20, so the total is
+ * 120: the score is the earned fraction over the rules that applied, and the
+ * totals are relative rather than absolute.
  *
  * The split follows the framework: quality of the business first (40), then
- * whether it can survive a bad year (20), then whether the profit is real cash
- * (20), and only then what it pays out (20). A high dividend on a business that
- * fails the first three is the trap the framework is built to avoid, so yield
- * alone can never carry a name into the result set.
+ * growth (20), then whether it can survive a bad year (20), then whether the
+ * profit is real cash (20), and only then what it pays out (20). A high
+ * dividend on a business that fails the first three is the trap the framework
+ * is built to avoid, so yield alone can never carry a name into the result set.
  */
 const WEIGHTS = {
   roeLevel: 12,
@@ -30,6 +32,9 @@ const WEIGHTS = {
   npmLevel: 6,
   npmTrend: 4,
   npmPositive: 4,
+  epsGrowth: 8,
+  revenueGrowth: 6,
+  earningsStability: 6,
   debtLevel: 10,
   interestCoverage: 10,
   cfoPositive: 8,
@@ -413,6 +418,66 @@ function downsample(points, max) {
 }
 
 /**
+ * Growth, from the long annual history.
+ *
+ * Four fiscal years say whether a business is good; they do not say whether it
+ * is growing, because two good years can follow two bad ones and the average
+ * hides the turn. The ten-year history answers that, and it is the same series
+ * the deep-dive charts draw — one source, used twice.
+ *
+ * The rate is a compound annual growth rate over the *calendar* span between
+ * the two points, so a history with a missing year is not quietly treated as a
+ * shorter period. A rate needs a positive base on both ends: a company that
+ * lost money in the earlier year has no growth rate to speak of, and saying
+ * zero would be a claim the data does not support.
+ *
+ * Returns null when the history is too short to judge at all.
+ */
+export function growthMetrics(history) {
+  const years = (history?.years ?? [])
+    .filter((y) => Number.isFinite(y?.fiscalYear))
+    .sort((a, b) => a.fiscalYear - b.fiscalYear);
+  if (years.length < 4) return null;
+
+  // A missing number is unknown; a loss year is known and cannot compound.
+  // The two are told apart, because a rule that cannot be judged is left out
+  // of the score while a rule that was judged and failed is not — and a
+  // turnaround judged on a smaller denominator would score better than a
+  // compounder for having lost money.
+  const rate = (metric, back) => {
+    const to = years.at(-1);
+    const from = years.at(-1 - back);
+    const a = from?.[metric];
+    const b = to?.[metric];
+    const span = (to?.fiscalYear ?? 0) - (from?.fiscalYear ?? 0);
+    if (!Number.isFinite(a) || !Number.isFinite(b) || !(span > 0)) {
+      return { value: null, known: false };
+    }
+    if (a <= 0 || b <= 0) return { value: null, known: true };
+    return { value: (b / a) ** (1 / span) - 1, known: true };
+  };
+
+  return {
+    eps3: rate('eps', 3),
+    revenue5: rate('revenue', 5),
+    profitableYears: years.filter((y) => typeof y.netIncome === 'number' && y.netIncome > 0).length,
+    years: years.length,
+  };
+}
+
+/**
+ * A growth rule's verdict.
+ *
+ * `null` when the history cannot answer the question, `false` when it can and
+ * the answer is no.
+ */
+function growthVerdict(rate, threshold) {
+  if (!rate) return null;
+  if (rate.value != null) return rate.value >= threshold;
+  return rate.known ? false : null;
+}
+
+/**
  * Score one company against the framework.
  *
  * Each check carries its own `pass` (and `warn` where the framework allows a
@@ -434,6 +499,7 @@ export function scoreQuality({
   asOf = new Date(),
   ttmEps = null,
   isFinancial = false,
+  history = null,
 }) {
   const last3 = recent(years, 3);
   const last4 = recent(years, 4);
@@ -468,6 +534,25 @@ export function scoreQuality({
   const incomeComplete = income3.length === 3 && income3.every((v) => typeof v === 'number');
   add('npmPositive', incomeComplete ? income3.every((v) => v > 0) : null,
     income3.filter((v) => typeof v === 'number' && v > 0).length, income3.length, { of: last3.length });
+
+  // Growth, from the long history. The framework judges a business as it is;
+  // these three ask whether it is getting bigger, which is the question a
+  // value buyer asks before paying a multiple for it.
+  //
+  // Thresholds are read off the SET100 distribution rather than picked out of
+  // the air: EPS growing 10% a year is the top third of the index, and revenue
+  // growing 5% a year is the median. A rule that every name passes is not a
+  // rule, and one that only a handful passes says nothing but "cyclical".
+  const growth = growthMetrics(history);
+  add('epsGrowth', growthVerdict(growth?.eps3, 0.10),
+    growth?.eps3?.value ?? null, 0.10, { years: 3 });
+  add('revenueGrowth', growthVerdict(growth?.revenue5, 0.05),
+    growth?.revenue5?.value ?? null, 0.05, { years: 5 });
+  // Eight profitable years out of ten is "earnings that do not stop". Fewer
+  // than eight years of history cannot answer the question, so the rule is
+  // left unmeasured rather than passed on a short record.
+  add('earningsStability', growth && growth.years >= 8 ? growth.profitableYears >= 8 : null,
+    growth?.profitableYears ?? null, 8, { of: growth?.years ?? 0 });
 
   const de = years.at(-1)?.de ?? null;
   // 1.5 is the framework's allowance for capital-intensive utilities; `warn`
@@ -585,6 +670,7 @@ export function scoreQuality({
     payout,
     streak,
     dividend,
+    growth,
   };
 }
 

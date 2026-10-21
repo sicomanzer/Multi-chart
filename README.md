@@ -19,7 +19,7 @@ The interface speaks **English and Thai**. The button in the top bar switches
 between them; the choice is remembered in `localStorage`. See
 [Two languages](#two-languages).
 
-A **value screener** sits behind the `Screener` button: fourteen fundamental
+A **value screener** sits behind the `Screener` button: seventeen fundamental
 rules, a two-stage dividend discount model with live sliders, and the stock's
 own P/E and P/BV bands. See [The value screener](#the-value-screener).
 
@@ -382,14 +382,17 @@ the fiscal year *published as of that date* — applying the latest EPS across t
 whole window would fold hindsight into the bands and make every stock look
 expensive in the past.
 
-**Ten years for the charts only.** The annual charts in the deep dive — net
+**Ten years, and what it is for.** The annual charts in the deep dive — net
 profit, revenue, EPS, net margin and D/E — reach back ten fiscal years, because
 the screen's own statements stop at four. That history comes from Finnomena's
 public market-info API, which republishes the same listed-company data with a
-longer tail, and it is used for drawing only: the score, the bands and the
-valuation still run on Yahoo's four years, so a second source can never move a
-price target. When it is missing — an unlisted ticker, an upstream failure —
-the charts fall back to the four years rather than drawing a gap.
+longer tail. It draws the charts *and* judges three of the rules — the growth
+ones — because four fiscal years can say whether a business is good but not
+whether it is growing: two good years can follow two bad ones, and the average
+hides the turn. The valuation still runs on Yahoo's four years and the price
+target is untouched by the second source. When the history is missing — an
+unlisted ticker, a gap in the file — the charts fall back to the four years and
+the growth rules are left unmeasured rather than failed.
 
 **The history is tracked in the repository.** Finnomena's host sits behind a bot
 filter that a container's address does not always pass, so the same ten years
@@ -501,12 +504,25 @@ number depend on an estimate that was itself the weakest input. The sliders can
 still move either rate independently, and the model refuses to answer when `r`
 is at or below `g2` rather than returning infinity.
 
-**Scoring.** Fourteen rules in four groups — quality (40 points), solvency (20),
-cash conversion (20), shareholder returns (20) — so a high yield on a business
-that fails the first three can never carry a name into the results. A rule that
-cannot be judged is neutral, not a failure: no dividend means no dividend rules,
-which should not read as a red flag. The row carries a `coverage` figure so a
-score built on half the framework is recognisable as thin.
+**Scoring.** Seventeen rules in five groups — quality (40 points), growth (20),
+solvency (20), cash conversion (20), shareholder returns (20), 120 in all — so a
+high yield on a business that fails the first three can never carry a name into
+the results. A rule that cannot be judged is neutral, not a failure: no dividend
+means no dividend rules, which should not read as a red flag. The row carries a
+`coverage` figure so a score built on half the framework is recognisable as
+thin.
+
+**Growth, from the ten-year history.** Three rules answer whether the business
+is getting bigger: EPS growing 10% a year over three years, revenue growing 5%
+a year over five, and profit in at least eight of the last ten years. The
+thresholds are read off the SET100 distribution rather than picked out of the
+air — EPS growing 10% a year is the top third of the index, revenue growing 5%
+is the median — because a rule every name passes is not a rule and one only a
+handful passes says nothing but "cyclical". The rates are compound annual
+rates over the *calendar* span between the two points, so a history with a
+missing year is not quietly treated as a shorter period, and a rate whose base
+year lost money is left unmeasured rather than reported as zero. The deep dive
+and the table read the same history, so the scorecard and the score agree.
 
 Financials are judged on a narrower framework on purpose. A bank funds itself
 with deposits, so "interest-bearing debt to equity below 1.0" reads 0.38 for

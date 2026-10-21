@@ -306,7 +306,7 @@ export async function liveAnnualHistory(tvSymbol) {
  * quarters needs both. Returns null rather than throwing so a caller can fall
  * back without a try/catch at every call site.
  */
-export async function annualHistory(tvSymbol) {
+export async function annualHistory(tvSymbol, { live = true } = {}) {
   const bare = bareSymbol(normalizeSymbol(tvSymbol));
   if (!bare) return null;
 
@@ -323,7 +323,10 @@ export async function annualHistory(tvSymbol) {
     };
   }
 
-  // Not in the file: ask the upstream, unless it has just refused.
+  // Not in the file: ask the upstream, unless it has just refused — or unless
+  // the caller only wanted the file. A screen over a hundred names must not
+  // turn into a hundred network calls.
+  if (!live) return null;
   return liveAnnualHistory(bare);
 }
 

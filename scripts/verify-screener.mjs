@@ -388,9 +388,86 @@ const dividends = ['2021', '2022', '2023', '2024', '2025', '2026'].map((y) => ({
 
 const healthy = scoreQuality({ years, dividends, price: 20, asOf });
 check('a company that meets every rule scores 100', healthy.score === 100, healthy.score);
-check('all fourteen rules are evaluated', healthy.total === 14, healthy.total);
+check('all seventeen rules are evaluated', healthy.total === 17, healthy.total);
 check('nothing fails', healthy.failed === 0, healthy.failed);
 check('the dividend streak is counted', healthy.streak >= 5, healthy.streak);
+
+// Without the long history the three growth rules cannot be judged, so they
+// stay out of both sides of the fraction rather than counting as failures.
+check('a company with no long history is judged on the fourteen rules it has',
+  healthy.evaluated === 14 && healthy.coverage < 1, `${healthy.evaluated} of ${healthy.total}`);
+
+// ── Growth from the long history ─────────────────────────────────────────────
+const longHistory = (eps, revenue, netIncome) => ({
+  years: Array.from({ length: 10 }, (_, i) => ({
+    fiscalYear: 2016 + i,
+    netIncome: netIncome(i),
+    revenue: revenue(i),
+    eps: eps(i),
+    npm: 0.2,
+    de: 0.4,
+  })),
+});
+
+const growthUp = scoreQuality({
+  years,
+  dividends,
+  price: 20,
+  asOf,
+  history: longHistory((i) => 1 * 1.12 ** i, (i) => 100 * 1.06 ** i, () => 10),
+});
+const epsGrowth = growthUp.checks.find((c) => c.id === 'epsGrowth');
+const revenueGrowth = growthUp.checks.find((c) => c.id === 'revenueGrowth');
+const stability = growthUp.checks.find((c) => c.id === 'earningsStability');
+check('a company that grows passes the growth rules',
+  epsGrowth.pass === true && revenueGrowth.pass === true && stability.pass === true,
+  JSON.stringify([epsGrowth.pass, revenueGrowth.pass, stability.pass]));
+check('the growth rate is a compound annual rate over the calendar span',
+  near(epsGrowth.value, 0.12, 1e-9), epsGrowth.value);
+check('the growth rules are counted in the score',
+  growthUp.evaluated === 17 && growthUp.coverage === 1, `${growthUp.evaluated}`);
+
+const growthDown = scoreQuality({
+  years,
+  dividends,
+  price: 20,
+  asOf,
+  history: longHistory((i) => 2 * 0.9 ** i, (i) => 200 * 0.97 ** i, (i) => (i > 6 ? -5 : 10)),
+});
+check('a company that shrinks fails the growth rules',
+  growthDown.checks.find((c) => c.id === 'epsGrowth').pass === false &&
+  growthDown.checks.find((c) => c.id === 'revenueGrowth').pass === false);
+check('loss years are counted against the stability rule',
+  growthDown.checks.find((c) => c.id === 'earningsStability').pass === false,
+  JSON.stringify(growthDown.checks.find((c) => c.id === 'earningsStability')));
+
+// A short history cannot answer a five-year question.
+const shortHistory = scoreQuality({
+  years,
+  dividends,
+  price: 20,
+  asOf,
+  history: { years: longHistory(() => 1, () => 1, () => 1).years.slice(0, 5) },
+});
+check('a history too short for the question is left unmeasured',
+  shortHistory.checks.find((c) => c.id === 'revenueGrowth').pass === null &&
+  shortHistory.checks.find((c) => c.id === 'earningsStability').pass === null);
+
+// A company that lost money in the base year has no growth to measure, and
+// that is a known answer rather than an unknown one: a turnaround must not be
+// scored on a smaller denominator than a compounder and come out ahead.
+const turnaround = scoreQuality({
+  years,
+  dividends,
+  price: 20,
+  asOf,
+  history: longHistory((i) => (i === 6 ? -1 : 2 * 1.1 ** i), (i) => 100 * 1.06 ** i, () => 10),
+});
+const turnaroundCheck = turnaround.checks.find((c) => c.id === 'epsGrowth');
+check('a loss year in the base is a known failure, not an unknown one',
+  turnaroundCheck.pass === false && turnaroundCheck.value === null, JSON.stringify(turnaroundCheck));
+check('and the growth rules still count against it',
+  turnaround.evaluated === 17, `${turnaround.evaluated}`);
 
 // Payout pairs trailing cash with trailing earnings. On a doubled trailing EPS
 // the same dividend is 25% of profit, not the 50% the fiscal-year lines imply.
@@ -413,24 +490,32 @@ const bank = scoreQuality({
   dividends,
   price: 20,
   asOf,
+  history: longHistory((i) => 1 * 1.12 ** i, (i) => 100 * 1.06 ** i, () => 10),
 });
 const bankIcr = bank.checks.find((c) => c.id === 'interestCoverage');
 check('a bank is not failed for missing interest cover', bankIcr.pass === null, JSON.stringify(bankIcr));
 check('an unevaluated rule still leaves the rest of the score intact', bank.score === 100, bank.score);
-check('coverage reports how much of the framework applied', near(bank.coverage, 0.9, 1e-9), bank.coverage);
+check('coverage reports how much of the framework applied', near(bank.coverage, 110 / 120, 1e-9), bank.coverage);
 
 // A financial business as a whole. Leverage is its business model, operating
 // cash flow is the movement in deposits and loans, and free cash flow after
 // capex is an industrial measurement. All five rules must be left out of both
 // sides of the score, and a mandatory one must not disqualify the name either.
-const financial = scoreQuality({ years, dividends, price: 20, asOf, isFinancial: true });
+const financial = scoreQuality({
+  years,
+  dividends,
+  price: 20,
+  asOf,
+  isFinancial: true,
+  history: longHistory((i) => 1 * 1.12 ** i, (i) => 100 * 1.06 ** i, () => 10),
+});
 const financialCheck = (id) => financial.checks.find((c) => c.id === id);
 const industrial = ['debtLevel', 'interestCoverage', 'cfoPositive', 'cfoBeatsEarnings', 'fcfPositive'];
 check('a financial is not scored on industrial leverage or cash flow',
   industrial.every((id) => financialCheck(id).pass === null && financialCheck(id).na === true),
   industrial.map((id) => `${id}:${financialCheck(id).pass}/${financialCheck(id).na}`).join(' '));
 check('the score is built only from the rules that apply',
-  near(financial.coverage, 0.6, 1e-9), financial.coverage);
+  near(financial.coverage, 80 / 120, 1e-9), financial.coverage);
 const financialRow = { score: financial.score, checks: financial.checks, ddm: { mos: 20 } };
 check('a mandatory rule that cannot apply does not disqualify a financial',
   applyPreset(financialRow, presetById('moat')).pass === true,

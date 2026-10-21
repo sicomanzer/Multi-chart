@@ -26,6 +26,7 @@ const PRESETS = ['moat', 'quality', 'dividend', 'value', 'all'];
 /** Rule ids in scorecard order, matching `scoreQuality()` on the server. */
 const CHECK_ORDER = [
   'roeLevel', 'roeConsistency', 'roaLevel', 'npmLevel', 'npmTrend', 'npmPositive',
+  'epsGrowth', 'revenueGrowth', 'earningsStability',
   'debtLevel', 'interestCoverage', 'cfoPositive', 'cfoBeatsEarnings', 'fcfPositive',
   'dividendYield', 'payoutBand', 'dividendStreak',
 ];
@@ -33,6 +34,7 @@ const CHECK_ORDER = [
 /** Formats a check's measured value according to what the rule measures. */
 const RATIO_CHECKS = new Set([
   'roeLevel', 'roaLevel', 'npmLevel', 'dividendYield', 'payoutBand', 'npmTrend',
+  'epsGrowth', 'revenueGrowth',
 ]);
 /** Ratios quoted as a plain number, like the D/E the framework specifies. */
 const DECIMAL_CHECKS = new Set(['debtLevel']);
@@ -40,6 +42,7 @@ const MULTIPLE_CHECKS = new Set(['interestCoverage']);
 const YEAR_CHECKS = new Set(['dividendStreak']);
 const COUNT_CHECKS = new Set([
   'roeConsistency', 'npmPositive', 'cfoPositive', 'cfoBeatsEarnings', 'fcfPositive',
+  'earningsStability',
 ]);
 
 function formatCheckValue(check) {
@@ -427,10 +430,16 @@ function buildTable(rows, state, rerender) {
         recurring: percent(row.dividendYield, 2),
       })
       : '';
+    // A score is a fraction of the rules that could be judged, so a name with
+    // a short history is scored on a smaller base than the rest. The number
+    // says so rather than letting the reader compare two different rulers.
+    const coverageTitle = row.coverage != null && row.coverage < 1
+      ? t('scr.coverageHint', { n: Math.round(row.coverage * 100) })
+      : '';
     tr.innerHTML = `
       <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
-      <td class="num"><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
+      <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
       <td class="num">${percent(row.roe3)}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}</td>
       <td class="num"${specialTitle ? ` title="${escape(specialTitle)}"` : ''}>${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}</td>

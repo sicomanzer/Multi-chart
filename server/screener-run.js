@@ -90,7 +90,7 @@ export function currentMultiples(fin) {
  * table and the calculator would disagree about the same company, which is
  * exactly the kind of mismatch that makes a screen untrustworthy.
  */
-export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
+export function buildRow(fin, { overrides = {}, asOf = new Date(), history = null } = {}) {
   const ttmEps = fin.ttm?.eps ?? null;
   const quality = scoreQuality({
     years: fin.years,
@@ -99,6 +99,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     asOf,
     ttmEps,
     isFinancial: fin.isFinancial === true,
+    history,
   });
 
   const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf, ttmEps });
@@ -198,7 +199,9 @@ export async function loadDetail(tvSymbol, options = {}) {
     annualHistory(symbol),
   ]);
   const fin = await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null });
-  const row = buildRow(fin, options);
+  // The same history the charts draw also judges the growth rules, so the
+  // scorecard in the deep dive and the score in the table agree.
+  const row = buildRow(fin, { ...options, history });
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
   const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
 
@@ -259,8 +262,14 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
 
   const settled = await mapLimit(symbols, CONCURRENCY, async (symbol) => {
     try {
-      const fin = await loadFinancials(symbol, { quote: quotes.get(toYahooSymbol(symbol)) ?? null });
-      return { ok: true, row: buildRow(fin, { overrides, asOf }) };
+      // The long history comes from the tracked file, so this costs a lookup
+      // and not a request: a screen over a hundred names must not become a
+      // hundred calls to an upstream that may not answer.
+      const [fin, history] = await Promise.all([
+        loadFinancials(symbol, { quote: quotes.get(toYahooSymbol(symbol)) ?? null }),
+        annualHistory(symbol, { live: false }),
+      ]);
+      return { ok: true, row: buildRow(fin, { overrides, asOf, history }) };
     } catch (err) {
       return {
         ok: false,
