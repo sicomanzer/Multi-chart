@@ -216,6 +216,23 @@ export async function loadDetail(tvSymbol, options = {}) {
     }),
   };
 
+  // DPS split by the quarter the cash actually landed in, from the ex-date
+  // record rather than the fiscal-year statements: the ex-dates reach back
+  // further and are what a holder was paid. Used by the payment chart.
+  const dpsQuarterlyMap = new Map();
+  for (const d of fin.dividends ?? []) {
+    const y = Number(String(d.date).slice(0, 4));
+    const m = Number(String(d.date).slice(5, 7));
+    if (!Number.isFinite(y) || !Number.isFinite(m)) continue;
+    const q = Math.min(4, Math.max(1, Math.ceil(m / 3)));
+    const row = dpsQuarterlyMap.get(y) ?? { year: y, q1: 0, q2: 0, q3: 0, q4: 0 };
+    row[`q${q}`] += d.amount;
+    dpsQuarterlyMap.set(y, row);
+  }
+  const dpsQuarterly = [...dpsQuarterlyMap.values()]
+    .sort((a, b) => a.year - b.year)
+    .map((r) => ({ ...r, total: r.q1 + r.q2 + r.q3 + r.q4 }));
+
   return {
     ...row,
     years: fin.years,
@@ -227,6 +244,7 @@ export async function loadDetail(tvSymbol, options = {}) {
     pbvPoints: bands.pbv?.points ?? [],
     pbvLevels: bands.pbv?.levels ?? null,
     trend,
+    dpsQuarterly,
     asOf: new Date().toISOString(),
   };
 }

@@ -18,6 +18,10 @@
   --up: #26a69a;
   --down: #ef5350;
   --warn: #f7a600;
+  --q1: #f5a623;
+  --q2: #4a90d9;
+  --q3: #4caf50;
+  --q4: #9b59b6;
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   --radius: 8px;
   --radius-sm: 5px;
@@ -1313,6 +1317,14 @@ select {
 .scr-trend__legend { display: flex; gap: 14px; font-size: 10px; color: var(--text-dim); margin-top: 6px; }
 .scr-trend__legend span { display: inline-flex; align-items: center; gap: 4px; }
 .scr-trend__dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+.scr-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 900px) { .scr-charts { grid-template-columns: 1fr; } }
+.scr-chart h4 { margin: 0 0 6px; font-size: 12px; }
+.scr-chart canvas { width: 100%; display: block; }
+.scr-chart__legend { display: flex; gap: 12px; font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+.scr-chart__legend span { display: inline-flex; align-items: center; gap: 4px; }
+.scr-chart__legend i { width: 9px; height: 9px; display: inline-block; border-radius: 2px; }
 .scr-band__levels { width: 100%; border-collapse: collapse; font-size: 10px; font-family: var(--mono); }
 .scr-band__levels td { padding: 1px 0; color: var(--text-dim); }
 .scr-band__levels td:last-child { text-align: right; color: var(--text); }

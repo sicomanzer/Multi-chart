@@ -485,6 +485,7 @@ function paintDetail(body, state, board, rerender) {
 
   body.appendChild(bandsBlock(detail));
   body.appendChild(trendBlock(detail));
+  body.appendChild(chartBlock(detail));
   body.appendChild(financialsBlock(detail));
 }
 
@@ -669,6 +670,220 @@ function calculator(detail, state, rerender) {
  * cannot answer. Two series, two scales: ROE in percent on the left, the cash
  * yield on the price at each year end on the right.
  */
+/**
+ * The annual statement charts.
+ *
+ * The statements table below carries the same fiscal-year rows as numbers; this
+ * grid is the shape a reader scans first — is profit growing, is the margin
+ * holding, is the dividend still being paid. The income-statement lines come
+ * from Yahoo and reach back four fiscal years, while the payment chart splits
+ * the exchange ex-date record by the quarter the cash landed in, which reaches
+ * further. Each chart says so rather than stretching a short history.
+ */
+function chartBlock(detail) {
+  const box = document.createElement('div');
+  box.appendChild(section(t('scr.chart'), t('scr.chartHint')));
+
+  const years = detail.years ?? [];
+  const fys = years.map((y) => y.fiscalYear);
+  const dps = detail.dpsQuarterly ?? [];
+  const unit = t('scr.chart.unit');
+
+  const cells = [
+    { key: 'netProfit', label: t('scr.chart.netProfit'), labels: fys,
+      values: years.map((y) => y.netIncome), color: '#a06cff',
+      format: (v) => `${(v / 1e6).toFixed(0)}${unit}`, showValues: false },
+    { key: 'revenue', label: t('scr.chart.revenue'), labels: fys,
+      values: years.map((y) => y.revenue), color: '#2f7ff0',
+      format: (v) => `${(v / 1e6).toFixed(0)}${unit}`, showValues: false },
+    { key: 'eps', label: t('scr.chart.eps'), labels: fys,
+      values: years.map((y) => y.eps), color: '#1fb6d4',
+      format: (v) => v.toFixed(2), showValues: false },
+    { key: 'npm', label: t('scr.chart.npm'), labels: fys,
+      values: years.map((y) => y.npm), color: '#e8418a',
+      format: (v) => `${(v * 100).toFixed(1)}%`, showValues: false },
+    { key: 'dps', label: t('scr.chart.dps'), stacked: dps },
+    { key: 'de', label: t('scr.chart.de'), labels: fys,
+      values: years.map((y) => y.de), color: '#f0a020',
+      format: (v) => v.toFixed(2), showValues: false },
+  ];
+
+  const grid = document.createElement('div');
+  grid.className = 'scr-charts';
+  for (const c of cells) {
+    const cell = document.createElement('div');
+    cell.className = 'scr-chart';
+    cell.innerHTML = `<h4>${escape(c.label)}</h4><canvas height="150"></canvas>`;
+    if (c.stacked) {
+      const legend = document.createElement('div');
+      legend.className = 'scr-chart__legend';
+      legend.innerHTML = [
+        ['--q1', 'Q1'], ['--q2', 'Q2'], ['--q3', 'Q3'], ['--q4', 'Q4'],
+      ].map(([k, n]) => `<span><i style="background:var(${k})"></i>${escape(n)}</span>`).join('');
+      cell.appendChild(legend);
+    }
+    grid.appendChild(cell);
+    requestAnimationFrame(() => {
+      const canvas = cell.querySelector('canvas');
+      if (c.stacked) drawStackedBars(canvas, c.stacked);
+      else drawBars(canvas, c);
+    });
+  }
+  box.appendChild(grid);
+  return box;
+}
+
+/** One simple bar chart: gridlines, axis labels, a bar per year. */
+function drawBars(canvas, { labels, values, color, format, showValues = false }) {
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const width = canvas.clientWidth || 300;
+  const height = canvas.clientHeight || 150;
+  canvas.width = Math.round(width * dpr);
+  canvas.height = Math.round(height * dpr);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, width, height);
+
+  const pad = { top: 14, right: 6, bottom: 20, left: 34 };
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const nums = values.filter((v) => Number.isFinite(v));
+  if (!nums.length || !labels.length) return;
+
+  const max = Math.max(...nums, 0) || 1;
+  const span = max * 1.15;
+  const n = labels.length;
+  const slot = plotW / n;
+  const bw = Math.min(30, slot * 0.6);
+  const y = (v) => pad.top + plotH - (v / span) * plotH;
+
+  const style = getComputedStyle(document.documentElement);
+  const line = style.getPropertyValue('--text-dim').trim() || '#888';
+  ctx.font = '9px system-ui, sans-serif';
+  ctx.textBaseline = 'middle';
+
+  for (let i = 0; i <= 4; i += 1) {
+    const v = (span * i) / 4;
+    const yy = y(v);
+    ctx.strokeStyle = line;
+    ctx.globalAlpha = 0.15;
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, yy);
+    ctx.lineTo(pad.left + plotW, yy);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
+    ctx.textAlign = 'right';
+    ctx.fillText(format(v, true), pad.left - 4, yy);
+  }
+
+  values.forEach((v, i) => {
+    if (!Number.isFinite(v)) return;
+    const cx = pad.left + slot * (i + 0.5);
+    const top = y(v);
+    ctx.fillStyle = color;
+    ctx.fillRect(cx - bw / 2, top, bw, pad.top + plotH - top);
+    if (showValues) {
+      ctx.fillStyle = line;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(format(v, false), cx, top - 1);
+    }
+  });
+
+  ctx.fillStyle = line;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  labels.forEach((l, i) => {
+    ctx.fillText(String(l), pad.left + slot * (i + 0.5), pad.top + plotH + 4);
+  });
+}
+
+/** The dividend chart: one stacked bar per calendar year, split by quarter. */
+function drawStackedBars(canvas, rows) {
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const width = canvas.clientWidth || 300;
+  const height = canvas.clientHeight || 150;
+  canvas.width = Math.round(width * dpr);
+  canvas.height = Math.round(height * dpr);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, width, height);
+
+  const labels = rows.map((r) => r.year);
+  const values = rows.map((r) => r.total);
+  if (!labels.length) return;
+
+  const pad = { top: 14, right: 6, bottom: 20, left: 30 };
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const max = Math.max(...values.filter((v) => Number.isFinite(v)), 0) || 1;
+  const span = max * 1.18;
+  const n = labels.length;
+  const slot = plotW / n;
+  const bw = Math.min(26, slot * 0.62);
+  const y = (v) => pad.top + plotH - (v / span) * plotH;
+
+  const style = getComputedStyle(document.documentElement);
+  const line = style.getPropertyValue('--text-dim').trim() || '#888';
+  const colours = {
+    q1: style.getPropertyValue('--q1').trim() || '#f5a623',
+    q2: style.getPropertyValue('--q2').trim() || '#4a90d9',
+    q3: style.getPropertyValue('--q3').trim() || '#4caf50',
+    q4: style.getPropertyValue('--q4').trim() || '#9b59b6',
+  };
+
+  ctx.font = '9px system-ui, sans-serif';
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i <= 4; i += 1) {
+    const v = (span * i) / 4;
+    const yy = y(v);
+    ctx.strokeStyle = line;
+    ctx.globalAlpha = 0.15;
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, yy);
+    ctx.lineTo(pad.left + plotW, yy);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
+    ctx.textAlign = 'right';
+    ctx.fillText(v.toFixed(1), pad.left - 4, yy);
+  }
+
+  rows.forEach((row, i) => {
+    const cx = pad.left + slot * (i + 0.5);
+    let acc = 0;
+    for (const q of ['q1', 'q2', 'q3', 'q4']) {
+      const v = row[q] ?? 0;
+      if (v <= 0) continue;
+      const h = (v / span) * plotH;
+      const top = y(acc + v);
+      ctx.fillStyle = colours[q];
+      ctx.fillRect(cx - bw / 2, top, bw, h);
+      acc += v;
+    }
+    if (Number.isFinite(row.total) && row.total > 0) {
+      ctx.fillStyle = line;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(row.total.toFixed(2), cx, y(acc) - 1);
+    }
+  });
+
+  ctx.fillStyle = line;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  labels.forEach((l, i) => {
+    ctx.fillText(String(l), pad.left + slot * (i + 0.5), pad.top + plotH + 4);
+  });
+}
+
 function trendBlock(detail) {
   const box = document.createElement('div');
   box.appendChild(section(t('scr.trend'), t('scr.trendHint')));

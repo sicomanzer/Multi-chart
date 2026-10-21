@@ -654,6 +654,16 @@ const EN = {
   'scr.trend.yield': 'Dividend yield',
   'scr.trend.none': 'Not enough history to draw a trend.',
 
+  'scr.chart': 'Annual statement charts',
+  'scr.chartHint': 'Net profit, revenue, EPS, net margin, dividends by payment and leverage, per fiscal year. The income-statement lines come from Yahoo and reach back four fiscal years; the payment chart uses the exchange ex-date record and reaches further',
+  'scr.chart.netProfit': 'Net profit',
+  'scr.chart.revenue': 'Revenue',
+  'scr.chart.eps': 'EPS',
+  'scr.chart.npm': 'NPM %',
+  'scr.chart.dps': 'DPS by payment',
+  'scr.chart.de': 'D/E',
+  'scr.chart.unit': 'M',
+
   'scr.fin': 'Statements',
   'scr.finHint': 'Fiscal years as reported; the ratios above are derived from these lines. DPS is the cash a holder actually received',
   'scr.fin.year': 'FY',
@@ -1295,6 +1305,16 @@ const TH = {
   'scr.trend.roe': 'ROE',
   'scr.trend.yield': 'ยีลด์ปันผล',
   'scr.trend.none': 'ประวัติไม่พอจะวาดแนวโน้ม',
+
+  'scr.chart': 'กราฟงบการเงินรายปี',
+  'scr.chartHint': 'กำไรสุทธิ รายได้ กำไรต่อหุ้น อัตรากำไรสุทธิ เงินปันผลตามครั้งที่จ่าย และหนี้สินต่อทุน รายปีบัญชี บรรทัดงบการเงินมาจาก Yahoo ย้อนหลัง 4 ปีบัญชี ส่วนกราฟเงินปันผลใช้ประวัติวัน ex-date ของตลาดหลักทรัพย์จึงยาวกว่า',
+  'scr.chart.netProfit': 'กำไรสุทธิ',
+  'scr.chart.revenue': 'รายได้รวม',
+  'scr.chart.eps': 'กำไรต่อหุ้น',
+  'scr.chart.npm': 'อัตรากำไรสุทธิ',
+  'scr.chart.dps': 'เงินปันผลต่อหุ้น',
+  'scr.chart.de': 'อัตราส่วนหนี้สินต่อทุน',
+  'scr.chart.unit': 'ล้าน',
 
   'scr.fin': 'งบการเงิน',
   'scr.finHint': 'ปีบัญชีตามที่รายงาน อัตราส่วนด้านบนคำนวณจากบรรทัดเหล่านี้ DPS คือเงินที่ผู้ถือหุ้นได้รับจริง',
