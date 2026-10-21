@@ -648,12 +648,6 @@ const EN = {
   'scr.band.minus1': '-1 sigma',
   'scr.band.minus2': '-2 sigma',
 
-  'scr.trend': 'ROE & dividend yield trend',
-  'scr.trendHint': 'Four fiscal years from the annual statements: ROE on the left scale, the cash dividend yield on the price at each year end on the right',
-  'scr.trend.roe': 'ROE',
-  'scr.trend.yield': 'Dividend yield',
-  'scr.trend.none': 'Not enough history to draw a trend.',
-
   'scr.chart': 'Annual statement charts',
   'scr.chartHint': 'Net profit, revenue, EPS, net margin, dividends by payment and leverage, per fiscal year. The statement charts reach back ten fiscal years from the long annual history, falling back to the four Yahoo years when it is unavailable; the payment chart uses the exchange ex-date record',
   'scr.chart.netProfit': 'Net profit',
@@ -1299,12 +1293,6 @@ const TH = {
   'scr.band.mean': 'ค่าเฉลี่ย',
   'scr.band.minus1': '-1 ซิกมา',
   'scr.band.minus2': '-2 ซิกมา',
-
-  'scr.trend': 'แนวโน้ม ROE และยีลด์ปันผล',
-  'scr.trendHint': '4 ปีบัญชีจากงบการเงิน: ROE ตามสเกลซ้าย ยีลด์ปันผลเงินสดต่อราคา ณ สิ้นปีนั้น ตามสเกลขวา',
-  'scr.trend.roe': 'ROE',
-  'scr.trend.yield': 'ยีลด์ปันผล',
-  'scr.trend.none': 'ประวัติไม่พอจะวาดแนวโน้ม',
 
   'scr.chart': 'กราฟงบการเงินรายปี',
   'scr.chartHint': 'กำไรสุทธิ รายได้ กำไรต่อหุ้น อัตรากำไรสุทธิ เงินปันผลตามครั้งที่จ่าย และหนี้สินต่อทุน รายปีบัญชี กราฟงบการเงินย้อนหลัง 10 ปีบัญชีจากประวัติรายปี ถ้าไม่มีข้อมูลจะถอยไปใช้ 4 ปีจาก Yahoo ส่วนกราฟเงินปันผลใช้ประวัติวัน ex-date ของตลาดหลักทรัพย์',

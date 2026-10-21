@@ -202,27 +202,6 @@ export async function loadDetail(tvSymbol, options = {}) {
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
   const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
 
-  // Year-end close lookup so the trend can show what a holder actually paid
-  // at the time, not today's price.
-  const closesSorted = [...(fin.closes ?? [])].sort((a, b) => String(a.date).localeCompare(String(b.date)));
-  const closeAt = (date) => {
-    let best = null;
-    for (const c of closesSorted) {
-      if (c.date <= date) best = c.close; else break;
-    }
-    return best;
-  };
-  const trend = {
-    years: fin.years.map((y) => y.fiscalYear),
-    roe: fin.years.map((y) => (typeof y.roe === 'number' && Number.isFinite(y.roe) ? y.roe : null)),
-    yield: fin.years.map((y) => {
-      const c = closeAt(y.asOf);
-      return (typeof y.dps === 'number' && Number.isFinite(y.dps) && typeof c === 'number' && c > 0)
-        ? y.dps / c
-        : null;
-    }),
-  };
-
   // DPS split by the quarter the cash actually landed in, from the ex-date
   // record rather than the fiscal-year statements: the ex-dates reach back
   // further and are what a holder was paid. Used by the payment chart.
@@ -250,7 +229,6 @@ export async function loadDetail(tvSymbol, options = {}) {
     peLevels: bands.pe?.levels ?? null,
     pbvPoints: bands.pbv?.points ?? [],
     pbvLevels: bands.pbv?.levels ?? null,
-    trend,
     dpsQuarterly,
     history: history ?? null,
     asOf: new Date().toISOString(),
