@@ -24,6 +24,7 @@ import {
   ddm,
   fiscalYearDividend,
   marginOfSafety,
+  peerPercentiles,
   presetById,
   scoreQuality,
   sustainableDividend,
@@ -816,6 +817,65 @@ check('and the failure is reported for the health endpoint',
 globalThis.fetch = realFetch;
 delete process.env.ANNUAL_HISTORY_FILE;
 clearFinnomenaCache();
+
+// ── Peer percentiles ────────────────────────────────────────────────────────
+console.log('\n── Peer percentiles ──');
+
+const peerRows = [
+  { name: 'A', roe: 0.30, pe: 20 },
+  { name: 'B', roe: 0.20, pe: 10 },
+  { name: 'C', roe: 0.10, pe: 30 },
+];
+const p = peerPercentiles(peerRows, [{ key: 'roe', better: 'high', get: (r) => r.roe }]);
+check('the best name in the group reads 100', p.get(peerRows[0]).roe === 100, p.get(peerRows[0]).roe);
+check('the worst reads 0', p.get(peerRows[2]).roe === 0, p.get(peerRows[2]).roe);
+check('the middle reads 50', p.get(peerRows[1]).roe === 50, p.get(peerRows[1]).roe);
+
+const pl = peerPercentiles(peerRows, [{ key: 'pe', better: 'low', get: (r) => r.pe }]);
+check('a lower multiple is the better one when the measure is a multiple',
+  pl.get(peerRows[1]).pe === 100 && pl.get(peerRows[2]).pe === 0,
+  `${pl.get(peerRows[1]).pe}/${pl.get(peerRows[2]).pe}`);
+
+// A tie is half a place: the name beats nobody and matches one, out of two.
+const tied = [{ v: 10 }, { v: 10 }, { v: 20 }];
+const pt = peerPercentiles(tied, [{ key: 'v', better: 'high', get: (r) => r.v }]);
+check('a tie counts as half a place', pt.get(tied[0]).v === 25, pt.get(tied[0]).v);
+check('and the name alone on top still reads 100', pt.get(tied[2]).v === 100, pt.get(tied[2]).v);
+
+// A sector with too few names in it is not a peer group.
+const small = [
+  { g: 'A', v: 1 }, { g: 'A', v: 2 },
+  { g: 'B', v: 3 }, { g: 'B', v: 4 }, { g: 'B', v: 5 },
+];
+const ps = peerPercentiles(
+  small,
+  [{ key: 'v', better: 'high', get: (r) => r.v }],
+  { groupBy: (r) => r.g, minGroup: 3 },
+);
+check('a group below the floor gets no percentile', ps.get(small[0]).v == null, ps.get(small[0]).v);
+check('a group above the floor is compared', ps.get(small[4]).v === 100, ps.get(small[4]).v);
+check('and its worst reads 0', ps.get(small[2]).v === 0, ps.get(small[2]).v);
+
+// A name with no value for the measure is left out of that comparison.
+const missing = [{ v: 10 }, { v: null }, { v: 20 }, { v: 30 }];
+const pm = peerPercentiles(missing, [{ key: 'v', better: 'high', get: (r) => r.v }]);
+check('a name with no value is given no percentile', pm.get(missing[1]).v == null, pm.get(missing[1]).v);
+check('and the rest are compared with each other',
+  pm.get(missing[3]).v === 100 && pm.get(missing[0]).v === 0,
+  `${pm.get(missing[0]).v}/${pm.get(missing[3]).v}`);
+
+// Names with no sector are not a group of their own.
+const noGroup = [
+  { g: '', v: 1 }, { g: '', v: 2 }, { g: '', v: 3 },
+  { g: 'B', v: 4 }, { g: 'B', v: 5 }, { g: 'B', v: 6 },
+];
+const pg = peerPercentiles(
+  noGroup,
+  [{ key: 'v', better: 'high', get: (r) => r.v }],
+  { groupBy: (r) => r.g, minGroup: 3 },
+);
+check('names with no sector are not compared with each other',
+  pg.get(noGroup[0]).v == null, pg.get(noGroup[0]).v);
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 

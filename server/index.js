@@ -171,6 +171,29 @@ hub.on('tick', ({ quotes, errors }) => {
 const asyncRoute = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res)).catch(next);
 
+/**
+ * The sector of each name, for the peer comparison.
+ *
+ * One call for the whole universe: the fundamentals sidecar already asks the
+ * exchange's screener for these names, and it carries the sector with the
+ * ratios. A failure here costs the comparison and nothing else — the screen
+ * still runs, it just cannot say who the peers are.
+ */
+async function sectorFor(symbols) {
+  const map = new Map();
+  if (!symbols?.length) return map;
+  try {
+    const res = await fundamentals.get(symbols, { metrics: [] });
+    for (const [symbol, row] of Object.entries(res.data ?? {})) {
+      const sector = row?.sector ?? null;
+      if (sector) map.set(symbol, sector);
+    }
+  } catch (err) {
+    console.warn(`[screener] sector lookup failed (${err.message})`);
+  }
+  return map;
+}
+
 // ── Meta / health ────────────────────────────────────────────────────────────
 
 /**
@@ -508,7 +531,7 @@ app.post('/api/screener/run', asyncRoute(async (req, res) => {
     });
   }
 
-  const result = await runScreen(symbols, { preset, overrides });
+  const result = await runScreen(symbols, { preset, overrides, sectors: await sectorFor(symbols) });
   res.json(result);
 }));
 

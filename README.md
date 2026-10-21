@@ -527,6 +527,18 @@ missing year is not quietly treated as a shorter period, and a rate whose base
 year lost money is left unmeasured rather than reported as zero. The deep dive
 and the table read the same history, so the scorecard and the score agree.
 
+**How good, not just good.** A threshold says a company is good; a percentile
+says how good. Every row carries the share of the screened names it is better
+than, for ROE, net margin, P/E, dividend yield and leverage — 92 means better
+than 92 of every 100 names screened — and the deep dive shows the same figures
+against the names in the company's own industry, because ROE of 20% is a
+different statement beside a bank than beside a property developer. The
+industry comes from the exchange's screener with the rest of the ratios, in one
+request for the whole universe. A tie counts as half a place, a measure needs
+at least three values to rank on, and an industry with fewer than five names in
+it is not a peer group at all: a percentile drawn from three companies is not a
+percentile.
+
 Financials are judged on a narrower framework on purpose. A bank funds itself
 with deposits, so "interest-bearing debt to equity below 1.0" reads 0.38 for
 KBANK where the exchange publishes 5.77; its operating cash flow is the movement

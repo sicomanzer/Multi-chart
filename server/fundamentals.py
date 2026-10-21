@@ -71,10 +71,15 @@ METRICS = {
 # Extra columns worth having even when not displayed: the exchange-scoped
 # currency keeps "100M" unambiguous, and `name` doubles as a sanity check that
 # the screener matched the symbol we asked for.
+#
+# `sector` and `industry` come along for free — the scanner already has them —
+# and the screen needs them to compare a name with its own peers rather than
+# with the whole market: a bank's ROE and a property developer's are not the
+# same number, and ranking them against each other says nothing.
 # NOTE: do not add "ticker" here — the scanner adds it on its own, and selecting
 # it twice produces duplicate columns, which makes `to_dict("records")` drop
 # the field entirely.
-ALWAYS = ["name", "close", "currency", "description"]
+ALWAYS = ["name", "close", "currency", "description", "sector", "industry"]
 
 
 def _clean(value):
@@ -120,6 +125,8 @@ def fetch(symbols: list[str], metrics: list[str]) -> dict:
             "description": _clean(record.get("description")),
             "price": _clean(record.get("close")),
             "currency": _clean(record.get("currency")),
+            "sector": _clean(record.get("sector")),
+            "industry": _clean(record.get("industry")),
         }
         for metric in wanted:
             field, kind = METRICS[metric]

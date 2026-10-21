@@ -753,4 +753,68 @@ export function applyPreset(row, preset) {
   return { pass: true, reason: null };
 }
 
+/**
+ * Where a name sits inside its group.
+ *
+ * A pass/fail screen says a company is good; a percentile says how good, and
+ * the same threshold means different things in a bank and in a property
+ * developer. The percentile is the share of the group the name is *better
+ * than*: 92 means better than 92 of every 100 names beside it.
+ *
+ * Ties count as half, so a name that merely matches the field is not credited
+ * with beating it, and the best name in the group reads 100 rather than 99.
+ *
+ * A group smaller than `minGroup` is not compared: a percentile drawn from
+ * three names is not a percentile, and printing one would say more than three
+ * companies can support. Names with no value for a metric are left out of
+ * that metric's comparison — a company with negative earnings has no P/E to
+ * rank.
+ */
+export function peerPercentiles(rows, specs, { groupBy = null, minGroup = 5 } = {}) {
+  const groups = new Map();
+  for (const row of rows) {
+    const key = groupBy ? (groupBy(row) ?? '') : '';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(row);
+  }
+
+  const out = new Map();
+  for (const row of rows) out.set(row, {});
+
+  for (const [key, members] of groups) {
+    // Names with no sector are not a group: comparing them with each other
+    // would invent a peer set out of whatever the data happened to be missing.
+    if (groupBy && !key) continue;
+    // The whole universe is the group when no grouping is asked for; a sector
+    // needs enough names in it to be worth comparing.
+    const usable = groupBy ? members.length >= minGroup : true;
+    for (const spec of specs) {
+      const values = members
+        .map((row) => spec.get(row))
+        .filter((v) => typeof v === 'number' && Number.isFinite(v));
+      if (values.length < 3) continue;
+      for (const row of members) {
+        const value = spec.get(row);
+        if (typeof value !== 'number' || !Number.isFinite(value)) continue;
+        let better = 0;
+        let equal = 0;
+        for (const other of values) {
+          if (other === value) equal += 1;
+          else if (spec.better === 'low' ? other > value : other < value) better += 1;
+        }
+        const n = values.length - 1;
+        if (n <= 0) continue;
+        // `equal` counts the name itself, so the others that match it are one
+        // fewer; without that correction the best name in a group of five
+        // would read 113.
+        const ties = Math.max(0, equal - 1);
+        const pct = Math.round((100 * (better + ties * 0.5)) / n);
+        const entry = out.get(row);
+        entry[spec.key] = usable ? pct : null;
+      }
+    }
+  }
+  return out;
+}
+
 export { dividendStreak };

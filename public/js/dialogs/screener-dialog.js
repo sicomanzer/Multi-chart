@@ -17,7 +17,7 @@
  * copy is a second answer waiting to disagree with the first.
  */
 import { modal, escape, section, toast } from '../ui.js';
-import { t, tp, timeString } from '../i18n.js';
+import { t, tp, timeString, isThai } from '../i18n.js';
 import { api } from '../api.js';
 
 /** Preset ids, in the order the chips are shown. */
@@ -376,6 +376,94 @@ function rejectReason(row) {
   return t(`scr.reject.${reason}`, null, reason);
 }
 
+/**
+ * The measures the peer comparison ranks, in the order the table shows them.
+ *
+ * The server ranks the same set; this is the label, the direction and the
+ * figure that go with each of them.
+ */
+const PEER_METRICS = [
+  { key: 'roe', label: 'scr.col.roe', better: 'high', value: (row) => percent(row.roe3) },
+  { key: 'pe', label: 'scr.col.pe', better: 'low', value: (row) => (row.pe == null ? '—' : row.pe.toFixed(1)) },
+  { key: 'yield', label: 'scr.col.yield', better: 'high', value: (row) => percent(row.dividendYield) },
+  { key: 'de', label: 'scr.col.de', better: 'low', value: (row) => (row.de == null ? '—' : row.de.toFixed(2)) },
+];
+
+/**
+ * The exchange's sector names, in Thai.
+ *
+ * The classification comes from the data source in English, and a Thai screen
+ * that says "CONSUMER NON-DURABLES" is a screen that has to be translated in
+ * the reader's head. A name the list does not carry is left as it came.
+ */
+const SECTOR_TH = {
+  'Finance': 'การเงิน',
+  'Retail Trade': 'ค้าปลีก',
+  'Process Industries': 'อุตสาหกรรมการแปรรูป',
+  'Transportation': 'การขนส่ง',
+  'Utilities': 'สาธารณูปโภค',
+  'Energy Minerals': 'พลังงานและแร่',
+  'Consumer Non-Durables': 'สินค้าอุปโภคไม่คงทน',
+  'Health Services': 'บริการสาธารณสุข',
+  'Distribution Services': 'บริการกระจายสินค้า',
+  'Consumer Services': 'บริการอุปโภค',
+  'Electronic Technology': 'เทคโนโลยีอิเล็กทรอนิกส์',
+  'Industrial Services': 'บริการอุตสาหกรรม',
+  'Communications': 'การสื่อสาร',
+  'Commercial Services': 'บริการพาณิชย์',
+  'Non-Energy Minerals': 'แร่ที่ไม่ใช่พลังงาน',
+  'Consumer Durables': 'สินค้าอุปโภคคงทน',
+  'Producer Manufacturing': 'อุตสาหกรรมการผลิต',
+  'Health Technology': 'เทคโนโลยีการแพทย์',
+  'Technology Services': 'บริการเทคโนโลยี',
+  'Miscellaneous Industrial Products': 'สินค้าอุตสาหกรรมอื่น',
+  'Containers & Packaging': 'บรรจุภัณฑ์และการบรรจุ',
+  'Transportation Services': 'บริการขนส่ง',
+  'Hotel & Restaurant': 'โรงแรมและร้านอาหาร',
+  'Broadcasting & Entertainment': 'การกระจายเสียงและบันเทิง',
+  'Real Estate': 'อสังหาริมทรัพย์',
+  'Publishing': 'สิ่งพิมพ์',
+  'Marine Transportation': 'การขนส่งทางทะเล',
+  'Apparel Retail': 'ค้าปลีกเครื่องแต่งกาย',
+  'Food Retail': 'ค้าปลีกอาหาร',
+  'Building Products': 'ผลิตภัณฑ์ก่อสร้าง',
+  'Metal Fabrications': 'ผลิตภัณฑ์โลหะ',
+  'Specialty Retail': 'ค้าปลีกเฉพาะทาง',
+  'Apparel Manufacturing': 'อุตสาหกรรมเครื่องแต่งกาย',
+  'Trucking': 'ขนส่งสินค้า',
+  'Major Chemicals': 'เคมีภัณฑ์',
+};
+
+const sectorLabel = (name) => {
+  if (!name) return null;
+  return isThai() ? (SECTOR_TH[name] ?? name) : name;
+};
+
+/** Where a name sits against the names it was screened with. */
+function peerPercent(row, group, key) {
+  const v = row?.peers?.[group]?.values?.[key];
+  return typeof v === 'number' ? v : null;
+}
+
+/**
+ * The small percentile beside a table figure.
+ *
+ * The number is the share of the screened names the row is better than, so 92
+ * means better than 92 of every 100. It is dim because it is context for the
+ * figure beside it, not a second score.
+ */
+function peerBadge(row, key) {
+  const v = peerPercent(row, 'universe', key);
+  if (v == null) return '';
+  const metric = PEER_METRICS.find((m) => m.key === key);
+  const title = t(metric.better === 'low' ? 'scr.peer.lower' : 'scr.peer.higher', {
+    n: v,
+    size: row.peers?.universe?.size ?? 0,
+    label: t(metric.label),
+  });
+  return `<i class="scr-pct" title="${escape(title)}">${v}</i>`;
+}
+
 function buildTable(rows, state, rerender) {
   const wrap = document.createElement('div');
   wrap.className = 'scr-table-wrap';
@@ -387,10 +475,10 @@ function buildTable(rows, state, rerender) {
       <th>${escape(t('scr.col.symbol'))}</th>
       <th class="num">${escape(t('scr.col.price'))}</th>
       <th class="num">${escape(t('scr.col.score'))}</th>
-      <th class="num">${escape(t('scr.col.roe'))}</th>
-      <th class="num">${escape(t('scr.col.de'))}</th>
-      <th class="num" title="${escape(t('scr.col.yieldHint'))}">${escape(t('scr.col.yield'))}</th>
-      <th class="num">${escape(t('scr.col.pe'))}</th>
+      <th class="num" title="${escape(t('scr.peer.colHint'))}">${escape(t('scr.col.roe'))}</th>
+      <th class="num" title="${escape(t('scr.peer.colHint'))}">${escape(t('scr.col.de'))}</th>
+      <th class="num" title="${escape(`${t('scr.col.yieldHint')} ${t('scr.peer.colHint')}`)}">${escape(t('scr.col.yield'))}</th>
+      <th class="num" title="${escape(t('scr.peer.colHint'))}">${escape(t('scr.col.pe'))}</th>
       <th class="num">${escape(t('scr.col.intrinsic'))}</th>
       <th class="num">${escape(t('scr.col.mos'))}</th>
     </tr></thead>`;
@@ -440,10 +528,10 @@ function buildTable(rows, state, rerender) {
       <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
       <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
-      <td class="num">${percent(row.roe3)}</td>
-      <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}</td>
-      <td class="num"${specialTitle ? ` title="${escape(specialTitle)}"` : ''}>${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}</td>
-      <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}</td>
+      <td class="num">${percent(row.roe3)}${peerBadge(row, 'roe')}</td>
+      <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}${peerBadge(row, 'de')}</td>
+      <td class="num"${specialTitle ? ` title="${escape(specialTitle)}"` : ''}>${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}${peerBadge(row, 'yield')}</td>
+      <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}${peerBadge(row, 'pe')}</td>
       <td class="num">${row.ddm.intrinsic == null ? '—' : row.ddm.intrinsic.toFixed(2)}</td>
       <td class="num ${row.ddm.mos > 0 ? 'is-up' : 'is-down'}">${row.ddm.mos == null ? '—' : `${row.ddm.mos.toFixed(0)}%`}</td>`;
     tr.addEventListener('click', () => openDetail(state, rerender, row.symbol));
@@ -493,6 +581,7 @@ function paintDetail(body, state, board, rerender) {
   body.appendChild(grid);
 
   body.appendChild(bandsBlock(detail));
+  body.appendChild(peerBlock(detail));
   body.appendChild(chartBlock(detail));
   body.appendChild(financialsBlock(detail));
 }
@@ -944,6 +1033,59 @@ function drawQuarterBars(canvas, rows, { stacked, format }) {
   rows.forEach((r, i) => {
     ctx.fillText(String(r.year), pad.left + slot * (i + 0.5), pad.top + plotH + 4);
   });
+}
+
+/**
+ * Where the name sits against its peers.
+ *
+ * The scorecard says whether the company clears the framework; this says how
+ * it compares with the names it was screened with and with the names in its
+ * own industry, which is the question a threshold cannot answer: ROE of 20% is
+ * a different statement beside a bank than beside a property developer.
+ */
+function peerBlock(detail) {
+  const box = document.createElement('div');
+  box.appendChild(section(t('scr.peer'), t('scr.peerHint')));
+
+  const peers = detail.peers;
+  if (!peers) {
+    const p = document.createElement('p');
+    p.className = 'section__hint';
+    p.textContent = t('scr.peer.none');
+    box.appendChild(p);
+    return box;
+  }
+
+  const sector = peers.sector ?? {};
+  const wrap = document.createElement('div');
+  wrap.className = 'scr-table-wrap';
+  const table = document.createElement('table');
+  table.className = 'scr-table scr-table--peers';
+  table.innerHTML = `<thead><tr>
+      <th>${escape(t('scr.peer.metric'))}</th>
+      <th class="num">${escape(t('scr.peer.value'))}</th>
+      <th class="num">${escape(t('scr.peer.universe', { n: peers.universe?.size ?? 0 }))}</th>
+      <th class="num">${escape(sector.name
+        ? t('scr.peer.sector', { name: sectorLabel(sector.name), n: sector.size ?? 0 })
+        : t('scr.peer.noSector'))}</th>
+    </tr></thead>`;
+  const tbody = document.createElement('tbody');
+  for (const metric of PEER_METRICS) {
+    const u = peerPercent(detail, 'universe', metric.key);
+    const s = peerPercent(detail, 'sector', metric.key);
+    const say = (v) => (v == null ? '—' : t(metric.better === 'low' ? 'scr.peer.lowerShort' : 'scr.peer.higherShort', { n: v }));
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${escape(t(metric.label))}</td>
+      <td class="num">${escape(metric.value(detail))}</td>
+      <td class="num">${escape(say(u))}</td>
+      <td class="num">${escape(say(s))}</td>`;
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  box.appendChild(wrap);
+  return box;
 }
 
 function bandsBlock(detail) {

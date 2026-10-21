@@ -14,6 +14,7 @@ import {
   computeBands,
   ddm,
   marginOfSafety,
+  peerPercentiles,
   presetById,
   scoreQuality,
   sustainableDividend,
@@ -146,6 +147,9 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     roe3: quality.roe3,
     roa3: quality.roa3,
     npm3: quality.npm3,
+    // The three-year earnings growth rate, lifted out of the checks so the peer
+    // comparison can rank it like any other measure.
+    epsCagr3: quality.growth?.eps3?.value ?? null,
     de: quality.de,
     icr: quality.icr,
     dividendYield: quality.dividendYield,
@@ -202,6 +206,11 @@ export async function loadDetail(tvSymbol, options = {}) {
   // The same history the charts draw also judges the growth rules, so the
   // scorecard in the deep dive and the score in the table agree.
   const row = buildRow(fin, { ...options, history });
+  // Where the name sits against its peers, from the last screen — a percentile
+  // needs the other names, and screening the universe again for one company
+  // would cost a minute.
+  const peers = peerCache.get(fin.symbol);
+  if (peers) row.peers = peers;
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
   const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
 
@@ -243,7 +252,32 @@ export async function loadDetail(tvSymbol, options = {}) {
  *
  * @returns {{ rows: object[], errors: object[], meta: object }}
  */
-export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, asOf = new Date() } = {}) {
+/**
+ * The measures the peer comparison ranks, and which way is better.
+ *
+ * A P/E of 12 is cheap against a market of 20 and expensive against a market of
+ * 8, so the comparison is only meaningful once the group is named. These are
+ * the measures a reader already looks at in the table.
+ */
+const PEER_SPECS = [
+  { key: 'roe', better: 'high', get: (row) => row.roe3 },
+  { key: 'npm', better: 'high', get: (row) => row.npm3 },
+  { key: 'pe', better: 'low', get: (row) => row.pe },
+  { key: 'yield', better: 'high', get: (row) => row.dividendYield },
+  { key: 'de', better: 'low', get: (row) => row.de },
+  { key: 'epsGrowth', better: 'high', get: (row) => row.epsCagr3 },
+];
+
+/**
+ * The last screen's peer comparison.
+ *
+ * The deep dive shows one company, and a percentile needs the others beside
+ * it, so the run leaves its comparison behind for the detail to read. A name
+ * that was never screened has no comparison, and says so.
+ */
+const peerCache = new Map();
+
+export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, asOf = new Date(), sectors = null } = {}) {
   const symbols = uniqueSymbols(rawSymbols);
   if (symbols.length === 0) {
     const err = new Error('no symbols to screen');
@@ -286,6 +320,28 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
   for (const item of settled) {
     if (item.ok) rows.push(item.row);
     else errors.push(item.error);
+  }
+
+  // Peer comparison: where each name sits inside the set that was screened,
+  // and inside its own sector. A threshold says a company is good; a
+  // percentile says how good, against the names it is actually competing with.
+  for (const row of rows) row.sector = sectors?.get(row.symbol) ?? null;
+  const sectorSizes = new Map();
+  for (const row of rows) {
+    if (row.sector) sectorSizes.set(row.sector, (sectorSizes.get(row.sector) ?? 0) + 1);
+  }
+  const universe = peerPercentiles(rows, PEER_SPECS);
+  const bySector = peerPercentiles(rows, PEER_SPECS, { groupBy: (row) => row.sector, minGroup: 5 });
+  for (const row of rows) {
+    row.peers = {
+      universe: { size: rows.length, values: universe.get(row) ?? {} },
+      sector: {
+        name: row.sector ?? null,
+        size: row.sector ? sectorSizes.get(row.sector) ?? 0 : 0,
+        values: bySector.get(row) ?? {},
+      },
+    };
+    peerCache.set(row.symbol, row.peers);
   }
 
   const presetDef = presetById(preset);
