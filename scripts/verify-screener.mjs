@@ -34,6 +34,7 @@ import {
 import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears, unitGap } from '../server/fin.js';
+import { backtestCompany, publishedOn, rebalanceDates, summariseBacktest } from '../server/backtest.js';
 import { aggregateAnnual, aggregateQuarterly, annualHistory, clearFinnomenaCache, finnomenaStatus, HISTORY_YEARS } from '../server/finnomena.js';
 import { mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -916,6 +917,71 @@ const unknownField = applyFilters(filterRows, [{ field: 'nonsense', op: '>=', va
 check('a field the server does not know is ignored', unknownField.every((v) => v.pass));
 check('no conditions leaves every name alone',
   applyFilters(filterRows, []).every((v) => v.pass));
+
+// ── The back test ───────────────────────────────────────────────────────────
+console.log('\n── Back test ──');
+
+check('a fiscal year is usable from its end plus the filing lag',
+  publishedOn({ fiscalYear: 2020, asOf: '2020-12-31' }) === '2021-03-31',
+  publishedOn({ fiscalYear: 2020, asOf: '2020-12-31' }));
+check('a September year end is usable from December',
+  publishedOn({ fiscalYear: 2020, asOf: '2020-09-30' }) === '2020-12-29',
+  publishedOn({ fiscalYear: 2020, asOf: '2020-09-30' }));
+
+const schedule = rebalanceDates([2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], 3);
+check('the rebalance dates run from the fourth year to the last with room to hold',
+  schedule.length === 4 && schedule[0] === '2019-03-31' && schedule.at(-1) === '2022-03-31',
+  schedule.join(','));
+
+// A company judged on what had been published, and not on what came later.
+const hist = [2016, 2017, 2018, 2019, 2020].map((y) => ({
+  fiscalYear: y,
+  asOf: `${y}-12-31`,
+  netIncome: 1000,
+  revenue: 10000,
+  eps: 1,
+  npm: 0.1,
+  de: 0.5,
+  roe: 0.2,
+  roa: 0.1,
+  operatingCashFlow: 1200,
+  totalDebt: 500,
+  equity: 5000,
+  assets: 9000,
+  dividendYield: 0.04,
+  close: 10,
+}));
+const closes = [];
+for (let y = 2015; y <= 2025; y += 1) closes.push({ date: `${y}-03-31`, close: y === 2022 ? 20 : 10 });
+const obs = backtestCompany({
+  history: hist,
+  dividends: [],
+  closes,
+  rebalances: ['2019-03-31'],
+  holdYears: 3,
+});
+check('the company is judged at the rebalance date', obs.length === 1, JSON.stringify(obs.length));
+check('the forward return is the price three years later', obs[0]?.forward === 1, obs[0]?.forward);
+check('the rules saw the years that had been published',
+  obs[0]?.checks.find((c) => c.id === 'roeLevel')?.pass === true,
+  JSON.stringify(obs[0]?.checks.find((c) => c.id === 'roeLevel')));
+
+// The summary: the two groups, and the portfolio against the universe.
+// The other company earns a tenth of the profit, so it fails the return rule,
+// and its price goes nowhere, so the two groups earned different amounts.
+const other = backtestCompany({
+  history: hist.map((y) => ({ ...y, netIncome: 100 })),
+  dividends: [],
+  closes: closes.map((c) => ({ ...c, close: 10 })),
+  rebalances: ['2019-03-31'],
+  holdYears: 3,
+});
+const summary = summariseBacktest([...obs, ...other], 'quality');
+const roeRow = summary.rules.find((r) => r.id === 'roeLevel');
+check('the rule is scored on the two groups', roeRow?.passed === 1 && roeRow?.failed === 1, JSON.stringify(roeRow));
+check('the edge is the difference between them', roeRow?.edge === 1, roeRow?.edge);
+check('the portfolio is compared with the universe',
+  summary.totals.periods === 1 && summary.totals.names === 2, JSON.stringify(summary.totals));
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 

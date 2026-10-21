@@ -1350,6 +1350,10 @@ select {
 .scr-filters__unit { color: var(--text-dim); font-size: 12px; min-width: 12px; }
 .scr-filters__actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
 
+/* The back test: what the rules would have earned. */
+.scr-backtest { margin-bottom: 12px; }
+.scr-backtest .scr-table-wrap { max-height: 320px; overflow: auto; margin: 6px 0; }
+
 /* The analysis view: a search box in front of the same detail page. */
 .scr-analyze { display: flex; flex-direction: column; gap: 10px; }
 .scr-analyze .row .input { flex: 1; }

@@ -127,6 +127,9 @@ export const api = {
   // twelve hours, so a repeat run is instant and a cold one is a few seconds.
   screenerUniverse: () => request('/api/screener/universe'),
   screenerRun: (body) => request('/api/screener/run', { method: 'POST', body }),
+  // The back test reads the statements and the closes the server already has,
+  // so it is quick once they are cached.
+  screenerBacktest: (body) => request('/api/screener/backtest', { method: 'POST', body }),
   screenerStock: (symbol, overrides = {}) =>
     request(`/api/screener/stock${qs({ symbol, ...overrides })}`),
 };

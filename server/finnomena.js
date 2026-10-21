@@ -85,8 +85,35 @@ let dataset = null;
 let datasetPath = null;
 let datasetInFlight = null;
 
-/** `years` rows are [fiscalYear, netIncome, revenue, eps, npm, de]. */
+/**
+ * A year row.
+ *
+ * The object form carries the whole statement line the rules need — the
+ * balance sheet and the cash flow as well as the profit — because a back test
+ * has to judge a company on the same rules a live one is judged on. The old
+ * array form is still read, so a file written before the back test still
+ * works.
+ */
 function yearFromFile(row) {
+  if (row && !Array.isArray(row)) {
+    return {
+      fiscalYear: num(row.y),
+      asOf: row.asOf ? String(row.asOf).slice(0, 10) : null,
+      netIncome: num(row.np),
+      revenue: num(row.rev),
+      eps: num(row.eps),
+      npm: num(row.npm),
+      de: num(row.de),
+      roe: num(row.roe),
+      roa: num(row.roa),
+      operatingCashFlow: num(row.cfo),
+      totalDebt: num(row.debt),
+      equity: num(row.equity),
+      assets: num(row.asset),
+      dividendYield: num(row.divYield),
+      close: num(row.close),
+    };
+  }
   return {
     fiscalYear: num(row?.[0]),
     netIncome: num(row?.[1]),
@@ -214,6 +241,17 @@ export function aggregateAnnual(rows) {
       eps: num(row.earning_per_share),
       npm: fraction(row.npm),
       de: num(row.debt_to_equity),
+      // The rest of the annual statement lines, so the history can be judged
+      // on the same rules as a live company: a back test needs the balance
+      // sheet and the cash flow, not only the profit.
+      roe: fraction(row.roe),
+      roa: fraction(row.roa),
+      operatingCashFlow: num(row.operating_activities),
+      totalDebt: num(row.total_debt),
+      equity: num(row.equity),
+      assets: num(row.asset),
+      dividendYield: fraction(row.dividend_yield),
+      close: num(row.close),
     });
   }
   return [...byYear.values()].sort((a, b) => a.fiscalYear - b.fiscalYear);

@@ -30,7 +30,8 @@ import { FundamentalsHistory } from './history.js';
 import { finnomenaStatus, initAnnualHistory } from './finnomena.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
-import { runScreen, loadDetail, UNIVERSES } from './screener-run.js';
+import { runScreen, loadDetail, UNIVERSES, SET100 } from './screener-run.js';
+import { runBacktest } from './backtest.js';
 import { constituents, refresh as refreshConstituents } from './setindex.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
@@ -548,6 +549,22 @@ app.post('/api/screener/run', asyncRoute(async (req, res) => {
     filters,
   });
   res.json(result);
+}));
+
+/**
+ * The back test: what the rules would have earned.
+ *
+ * A screen is a claim about the future. This is the claim being checked —
+ * the names a preset would have picked, at the dates it could have picked
+ * them, and what they did afterwards. It reads the statements and the closes
+ * the server already has, so the second run costs nothing.
+ */
+app.post('/api/screener/backtest', asyncRoute(async (req, res) => {
+  const body = req.body ?? {};
+  const preset = String(body.preset ?? 'quality');
+  const holdYears = Math.min(5, Math.max(1, Number(body.holdYears) || 3));
+  const symbols = Array.isArray(body.symbols) && body.symbols.length ? body.symbols : SET100;
+  res.json(await runBacktest({ symbols, preset, holdYears }));
 }));
 
 /** One company in full, with the series behind its valuation bands. */

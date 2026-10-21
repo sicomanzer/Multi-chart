@@ -73,12 +73,25 @@ async function main() {
         continue;
       }
       out[symbol] = {
-        years: history.years.map((y) => [y.fiscalYear, y.netIncome, y.revenue, y.eps, y.npm, y.de]),
-        quarters: history.quarters.flatMap((row) => row.quarters.map((q) => (
-          [q.fiscalYear, q.quarter, q.netIncome, q.revenue, q.eps, q.npm, q.de]
-        ))),
+        years: history.years.map((y) => ({
+          y: y.fiscalYear,
+          asOf: y.asOf,
+          np: y.netIncome,
+          rev: y.revenue,
+          eps: y.eps,
+          npm: y.npm,
+          de: y.de,
+          roe: y.roe,
+          roa: y.roa,
+          cfo: y.operatingCashFlow,
+          debt: y.totalDebt,
+          equity: y.equity,
+          asset: y.assets,
+          divYield: y.dividendYield,
+          close: y.close,
+        })),
       };
-      process.stdout.write(`  ${symbol} ${history.years.length}y ${history.quarters.length}q\n`);
+      process.stdout.write(`  ${symbol} ${history.years.length}y\n`);
     }
   });
   await Promise.all(runners);

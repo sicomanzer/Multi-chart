@@ -191,6 +191,10 @@ export function openScreener({ board, symbol = null, mode = 'screen' }) {
     filters: loadFilters(),
     filterDraft: null,
     filterOpen: false,
+    // The back test: what the rules would have earned.
+    backtest: null,
+    backtestOpen: false,
+    backtestLoading: false,
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
     overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
@@ -585,6 +589,35 @@ function paintToolbar(body, state, rerender, setAuto) {
   });
   controls.appendChild(filterBtn);
 
+  // The back test: the framework's own claim, checked against what the shares
+  // did. It is the only honest answer to "does this screen work?".
+  const btBtn = document.createElement('button');
+  btBtn.type = 'button';
+  btBtn.className = 'btn';
+  btBtn.textContent = t('scr.backtest.button');
+  btBtn.title = t('scr.backtest.hint');
+  btBtn.addEventListener('click', async () => {
+    state.backtestOpen = !state.backtestOpen;
+    // A different preset picks a different portfolio, so the old answer is no
+    // longer the answer.
+    const stale = state.backtest && state.backtest.preset !== state.preset;
+    if (state.backtestOpen && (!state.backtest || stale)) {
+      state.backtestLoading = true;
+      rerender();
+      try {
+        state.backtest = await api.screenerBacktest({ preset: state.preset, holdYears: 3 });
+      } catch (err) {
+        state.error = err;
+      } finally {
+        state.backtestLoading = false;
+        rerender();
+      }
+    } else {
+      rerender();
+    }
+  });
+  controls.appendChild(btBtn);
+
   // The screen re-prices itself while it is open, the way the board does. The
   // checkbox is the off switch for a reader who wants the table to hold still
   // while they compare a row against their notes.
@@ -601,6 +634,102 @@ function paintToolbar(body, state, rerender, setAuto) {
   bar.appendChild(controls);
   body.appendChild(bar);
   if (state.filterOpen) paintFilterPanel(body, state, rerender);
+  if (state.backtestOpen) paintBacktest(body, state, rerender);
+}
+
+/**
+ * What the rules would have earned.
+ *
+ * The scorecard says a company is good; this says whether picking the good
+ * companies was worth anything. The names a preset would have chosen, at the
+ * dates it could have chosen them, and what they did over the holding period
+ * — against every name in the universe, equally weighted.
+ */
+function paintBacktest(body, state, rerender) {
+  const box = document.createElement('div');
+  box.className = 'scr-backtest';
+  box.appendChild(section(t('scr.backtest.title'), t('scr.backtest.hint')));
+
+  if (state.backtestLoading || !state.backtest) {
+    const p = document.createElement('p');
+    p.className = 'section__hint';
+    p.textContent = t('scr.backtest.running');
+    box.appendChild(p);
+    body.appendChild(box);
+    return;
+  }
+
+  const result = state.backtest;
+  const totals = result.totals ?? {};
+  const summary = document.createElement('p');
+  summary.className = 'section__hint';
+  summary.textContent = t('scr.backtest.summary', {
+    hold: result.holdYears,
+    periods: totals.periods ?? 0,
+    names: totals.names ?? 0,
+    portfolio: percent(totals.portfolio),
+    universe: percent(totals.universe),
+    edge: percent((totals.portfolio ?? 0) - (totals.universe ?? 0)),
+  });
+  box.appendChild(summary);
+
+  const periodTable = document.createElement('table');
+  periodTable.className = 'scr-table';
+  periodTable.innerHTML = `<thead><tr>
+      <th>${escape(t('scr.backtest.date'))}</th>
+      <th class="num">${escape(t('scr.backtest.names'))}</th>
+      <th class="num">${escape(t('scr.backtest.picked'))}</th>
+      <th class="num">${escape(t('scr.backtest.portfolio'))}</th>
+      <th class="num">${escape(t('scr.backtest.universe'))}</th>
+    </tr></thead>`;
+  const periodBody = document.createElement('tbody');
+  for (const p of result.periods ?? []) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${escape(p.date)}</td>
+      <td class="num">${p.names}</td>
+      <td class="num">${p.picked}</td>
+      <td class="num ${p.portfolio >= p.universe ? 'is-up' : 'is-down'}">${percent(p.portfolio)}</td>
+      <td class="num">${percent(p.universe)}</td>`;
+    periodBody.appendChild(tr);
+  }
+  periodTable.appendChild(periodBody);
+  const periodWrap = document.createElement('div');
+  periodWrap.className = 'scr-table-wrap';
+  periodWrap.appendChild(periodTable);
+  box.appendChild(periodWrap);
+
+  const ruleTable = document.createElement('table');
+  ruleTable.className = 'scr-table';
+  ruleTable.innerHTML = `<thead><tr>
+      <th>${escape(t('scr.backtest.rule'))}</th>
+      <th class="num">${escape(t('scr.backtest.pass'))}</th>
+      <th class="num">${escape(t('scr.backtest.fail'))}</th>
+      <th class="num">${escape(t('scr.backtest.edge'))}</th>
+    </tr></thead>`;
+  const ruleBody = document.createElement('tbody');
+  for (const r of result.rules ?? []) {
+    const tr = document.createElement('tr');
+    const edge = r.edge ?? 0;
+    tr.innerHTML = `
+      <td>${escape(t(`scr.check.${r.id}`, null, r.id))}</td>
+      <td class="num">${r.passed} (${percent(r.passReturn)})</td>
+      <td class="num">${r.failed} (${percent(r.failReturn)})</td>
+      <td class="num ${edge >= 0 ? 'is-up' : 'is-down'}">${percent(edge)}</td>`;
+    ruleBody.appendChild(tr);
+  }
+  ruleTable.appendChild(ruleBody);
+  const ruleWrap = document.createElement('div');
+  ruleWrap.className = 'scr-table-wrap';
+  ruleWrap.appendChild(ruleTable);
+  box.appendChild(ruleWrap);
+
+  const notes = document.createElement('p');
+  notes.className = 'section__hint';
+  notes.textContent = t('scr.backtest.notes');
+  box.appendChild(notes);
+
+  body.appendChild(box);
 }
 
 /**

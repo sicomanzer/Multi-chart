@@ -550,6 +550,21 @@ condition: a company with no P/E because it lost money does not pass "P/E
 under 15". The conditions are kept between sessions, because a screen built
 last week is a screen worth having again today.
 
+**Does the screen work?** A back test in the toolbar answers it: the names a
+preset would have picked, at the dates it could have picked them, and what they
+did over the holding period, against every name in the universe at the same
+dates. Nothing is known before it was published — a fiscal year is usable from
+its end plus the ninety-day filing lag, the same rule the bands use — and the
+benchmark is the universe itself, equally weighted, because there is no index
+of what the screen would have picked. The table under it scores each rule on
+its own: the average forward return of the names that cleared it and of the
+names that did not. A rule whose two groups earned the same did nothing.
+
+Three rules cannot be judged from the ten-year history — the interest cover
+needs the interest expense, the free cash flow needs the capital spending, and
+the leverage rule counts a wider debt than the screen's interest-bearing one —
+and they are left out rather than guessed.
+
 **How good, not just good.** A threshold says a company is good; a percentile
 says how good. Every row carries the share of the screened names it is better
 than, for ROE, net margin, P/E, dividend yield and leverage — 92 means better
