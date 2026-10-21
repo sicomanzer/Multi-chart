@@ -578,21 +578,45 @@ it is not a peer group at all: a percentile drawn from three companies is not a
 percentile.
 
 Financials are judged on a narrower framework on purpose. A bank funds itself
-with deposits, so "interest-bearing debt to equity below 1.0" reads 0.38 for
-KBANK where the exchange publishes 5.77; its operating cash flow is the movement
-in loans and deposits, not cash earnings; and free cash flow after capex is an
-industrial measurement. Those five rules are marked *not applicable* for banks,
-insurers and consumer lenders — skipped by the score, and skipped by a preset
-that would otherwise make them mandatory. A rule that is merely *unknown* is
-still strict: an unevaluated mandatory check disqualifies a row, because "we
-could not tell" is not the same as "does not apply".
+with deposits, so "debt to equity below 1.0" reads 5.77 for KBANK; its operating
+cash flow is the movement in loans and deposits, not cash earnings; and free
+cash flow after capex is an industrial measurement. Those five rules are marked
+*not applicable* for banks, insurers and consumer lenders — skipped by the
+score, and skipped by a preset that would otherwise make them mandatory. A rule
+that is merely *unknown* is still strict: an unevaluated mandatory check
+disqualifies a row, because "we could not tell" is not the same as "does not
+apply".
 
 Ratios use average balances: net income over the average of opening and closing
 equity and assets, which is both the standard definition and the one the
-exchange publishes. Net margin uses total revenue. D/E is interest-bearing debt
-over equity; the exchange publishes the same shape but classifies leases and
-other borrowings differently, so the two will not tie out name by name (CPALL
-3.20 here against 1.96 there, ADVANC 1.79 against 2.92).
+exchange publishes. Net margin uses total revenue.
+
+**The leverage is the exchange's measure, not Yahoo's.** Yahoo's "total debt"
+leaves out the lease liabilities a hospital or an airport runs on: BH reads 0.00
+on Yahoo and 0.17 on the exchange, and a rule that counts less debt than the
+reader can see is not a rule. The long history carries the figure the exchange
+publishes, so the screen and set.or.th agree — the median gap across the index
+is zero.
+
+**Two sources, one set of filings.** Yahoo's statements and the ten-year history
+are independent readings of the same filings, and they agree closely on every
+name that has not had a figure mangled. When they do not — one source says a
+profit of a hundred billion where the other says a loss — one of them is wrong
+and the screen cannot tell which, so the year is left out and the coverage
+shows it. BANPU's 2025 row is such a case: the two sources disagree on the sign
+of the profit, and the name is now screened on nothing rather than on rubbish.
+
+**Checked against the exchange.** `node scripts/verify-set-parity.mjs` pulls
+set.or.th's own figures for the whole index — the way the browser does, with the
+page's cookies — and prints every difference against the screen's. The medians
+are within half a percent on the multiple, the trailing earnings, the return on
+equity and the net profit. What remains is understood and deliberate: the
+exchange computes a multiple from earnings in *total* while the screen uses
+earnings attributable to the owners, so a company with large minority interests
+reads dearer here than there; the yield is the last completed fiscal year with
+the specials left out, where the exchange publishes the trailing twelve
+months; and the net margin divides by the revenue line, where the exchange
+divides by total revenue and counts the other income.
 
 Presets differ in which rules are **mandatory**, not in how the score is
 computed, which is why the same company can be strong for one mandate and

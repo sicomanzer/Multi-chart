@@ -31,7 +31,7 @@ import {
   sustainableDividend,
   trailingDividend,
 } from '../server/screener.js';
-import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
+import { DEFAULTS, SET_LARGE_CAPS, SET100, reconcileYears } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears, unitGap } from '../server/fin.js';
 import { backtestCompany, publishedOn, rebalanceDates, summariseBacktest } from '../server/backtest.js';
@@ -982,6 +982,26 @@ check('the rule is scored on the two groups', roeRow?.passed === 1 && roeRow?.fa
 check('the edge is the difference between them', roeRow?.edge === 1, roeRow?.edge);
 check('the portfolio is compared with the universe',
   summary.totals.periods === 1 && summary.totals.names === 2, JSON.stringify(summary.totals));
+
+// ── Two sources, one set of filings ──────────────────────────────────────────
+console.log('\n── Reconciling the sources ──');
+
+const ours = [{ fiscalYear: 2025, netIncome: 100, de: 0.5 }];
+const theirs = [{ fiscalYear: 2025, netIncome: 102, de: 1.2 }];
+check('a year the two sources agree on is kept', reconcileYears(ours, theirs).length === 1);
+check('the leverage is read the way the exchange reads it',
+  reconcileYears(ours, theirs)[0].de === 1.2, reconcileYears(ours, theirs)[0].de);
+check('a year whose profit has the wrong sign is left out',
+  reconcileYears([{ fiscalYear: 2025, netIncome: 100, de: 0.5 }],
+    [{ fiscalYear: 2025, netIncome: -100, de: 1.2 }]).length === 0);
+check('a year one source has and the other does not is kept',
+  reconcileYears([{ fiscalYear: 2024, netIncome: 100, de: 0.5 }],
+    [{ fiscalYear: 2025, netIncome: 102, de: 1.2 }]).length === 1);
+check('a zero in one source is missing information, not a contradiction',
+  reconcileYears([{ fiscalYear: 2025, netIncome: 100, de: 0.5 }],
+    [{ fiscalYear: 2025, netIncome: 0, de: 1.2 }]).length === 1);
+check('a company with no statements cannot be scored',
+  scoreQuality({ years: [], dividends: [{ date: '2025-06-01', amount: 1 }], price: 20, asOf }).score === 0);
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 

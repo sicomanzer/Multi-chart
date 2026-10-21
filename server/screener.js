@@ -647,7 +647,11 @@ export function scoreQuality({
     if (check.pass === true) earned += weight;
     else if (check.warn) earned += weight * 0.5;
   }
-  const score = possible > 0 ? Math.round((earned / possible) * 100) : 0;
+  // With no statements at all there is no framework to apply, and a name whose
+  // numbers could not be read must not be handed a score built from its
+  // dividend alone.
+  const judged = years.length > 0;
+  const score = judged && possible > 0 ? Math.round((earned / possible) * 100) : 0;
   // How much of the framework actually applied, so a score built on four of
   // fourteen rules can be recognised as thin rather than taken at face value.
   const coverage = totalWeight > 0 ? possible / totalWeight : 0;

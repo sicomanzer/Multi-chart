@@ -92,19 +92,62 @@ export function currentMultiples(fin) {
  * table and the calculator would disagree about the same company, which is
  * exactly the kind of mismatch that makes a screen untrustworthy.
  */
+/**
+ * The years both sources agree on, with the leverage read the way the exchange
+ * reads it.
+ *
+ * Yahoo's statements and the long history are two independent readings of the
+ * same filings, and they agree closely on every name that has not had a figure
+ * mangled. When they do not — one source says a profit of a hundred billion
+ * where the other says a loss — one of them is wrong and the screen cannot tell
+ * which, so the year is left out. A rule that reads a mangled number is
+ * reading rubbish, and a missing year shows up in the coverage.
+ *
+ * The leverage comes from the same history, because Yahoo's "total debt" leaves
+ * out the lease liabilities a hospital or an airport runs on: BH looks
+ * debt-free at 0.00 when the exchange publishes 0.17, and a rule that counts
+ * debt below 1.0 has to count the same debt the reader sees.
+ */
+export function reconcileYears(years, history) {
+  const byYear = new Map((history ?? []).map((h) => [h.fiscalYear, h]));
+  return years
+    .map((year) => {
+      const other = byYear.get(year.fiscalYear);
+      if (!other) return year;
+      const de = other.de;
+      return de == null ? year : { ...year, de };
+    })
+    .filter((year) => {
+      const other = byYear.get(year.fiscalYear);
+      if (!other) return true;
+      const a = year.netIncome;
+      const b = other.netIncome;
+      if (typeof a !== 'number' || typeof b !== 'number') return true;
+      if (a === 0 && b === 0) return true;
+      // A figure of zero in one source is missing information, not a
+      // contradiction: the year is judged on the source that has it.
+      if (b === 0) return true;
+      // A sign that disagrees is a mangled figure, whatever the size.
+      if (a !== 0 && Math.sign(a) !== Math.sign(b)) return false;
+      const ratio = Math.abs(a / b);
+      return ratio >= 0.4 && ratio <= 2.5;
+    });
+}
+
 export function buildRow(fin, { overrides = {}, asOf = new Date(), history = null } = {}) {
   const ttmEps = fin.ttm?.eps ?? null;
+  const trusted = reconcileYears(fin.years, history?.years ?? []);
   const quality = scoreQuality({
-    years: fin.years,
+    years: trusted,
     dividends: fin.dividends,
     price: fin.price,
     asOf,
     ttmEps,
     isFinancial: fin.isFinancial === true,
-    history,
+    history: history ? { years: trusted } : null,
   });
 
-  const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf, ttmEps });
+  const dividend = sustainableDividend({ years: trusted, dividends: fin.dividends, asOf, ttmEps });
   const d0 = dividend.d0;
   const g1 = clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 });
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
@@ -126,7 +169,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   // number.
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
 
-  const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
+  const bands = computeBands(fin.closes, trusted, { peCurrent, pbvCurrent });
 
   return {
     symbol: fin.symbol,
@@ -183,7 +226,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
         ? { current: bands.pbv.current, mean: bands.pbv.mean, sd: bands.pbv.sd, z: bands.pbv.z, levels: bands.pbv.levels, median: bands.pbv.median, min: bands.pbv.min, max: bands.pbv.max, skipped: bands.pbv.skipped, cap: bands.pbv.cap }
         : null,
     },
-    yearCount: fin.years.length,
+    yearCount: trusted.length,
   };
 }
 
@@ -213,7 +256,8 @@ export async function loadDetail(tvSymbol, options = {}) {
   const peers = peerCache.get(fin.symbol);
   if (peers) row.peers = peers;
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
-  const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
+  const trusted = reconcileYears(fin.years, history?.years ?? []);
+  const bands = computeBands(fin.closes, trusted, { peCurrent, pbvCurrent });
 
   // DPS split by the quarter the cash actually landed in, from the ex-date
   // record rather than the fiscal-year statements: the ex-dates reach back
@@ -234,9 +278,9 @@ export async function loadDetail(tvSymbol, options = {}) {
 
   return {
     ...row,
-    years: fin.years,
+    years: trusted,
     ttm: fin.ttm,
-    yearCount: fin.years.length,
+    yearCount: trusted.length,
     dividends: fin.dividends.slice(-80),
     pePoints: bands.pe?.points ?? [],
     peLevels: bands.pe?.levels ?? null,
