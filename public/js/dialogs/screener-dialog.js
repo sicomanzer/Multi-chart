@@ -17,7 +17,7 @@
  * copy is a second answer waiting to disagree with the first.
  */
 import { modal, escape, section, toast } from '../ui.js';
-import { t, tp } from '../i18n.js';
+import { t, tp, timeString } from '../i18n.js';
 import { api } from '../api.js';
 
 /** Preset ids, in the order the chips are shown. */
@@ -62,6 +62,16 @@ const money = (v, currency = '') =>
     : `${v.toFixed(2)}${currency ? ` ${currency}` : ''}`;
 
 /**
+ * How often an open screen re-prices itself.
+ *
+ * The board polls every ten seconds because a chart is read in real time; a
+ * screen is read over minutes, and a run over a hundred names costs a hundred
+ * quote lookups. A minute is the interval at which the table still shows what
+ * the button would return, without turning the exchange into a hot loop.
+ */
+const AUTO_MS = 60_000;
+
+/**
  * Score → colour band.
  *
  * The thresholds are the presets' own: a name at 65 clears the moat screen, a
@@ -86,6 +96,11 @@ export function openScreener({ board, symbol = null }) {
     lists: [],
     result: null,
     loading: false,
+    // A background refresh keeps the table on screen while it re-prices; the
+    // foreground one is allowed to replace it with a spinner.
+    refreshing: false,
+    auto: true,
+    updatedAt: null,
     error: null,
     detail: null,
     detailSymbol: null,
@@ -95,6 +110,20 @@ export function openScreener({ board, symbol = null }) {
   };
 
   let render = () => {};
+  let timer = null;
+
+  // One tick at a time: a run slower than the interval must not stack a second
+  // one behind it, and the detail view refreshes its own figures.
+  const tick = () => {
+    if (!state.auto || state.loading || state.refreshing || state.detailSymbol) return;
+    runScreen(state, render, { background: true });
+  };
+  const setAuto = (on, { immediate = false } = {}) => {
+    state.auto = on;
+    clearInterval(timer);
+    timer = on ? setInterval(tick, AUTO_MS) : null;
+    if (on && immediate) tick();
+  };
 
   const handle = modal({
     title: t('scr.title'),
@@ -103,9 +132,10 @@ export function openScreener({ board, symbol = null }) {
     render: (body) => {
       // One repaint closes over everything it needs, so every interaction below
       // can call the same function rather than threading state back out.
-      render = () => paint(body, state, board);
+      render = () => paint(body, state, board, setAuto);
       render();
     },
+    onClose: () => clearInterval(timer),
     footer: (foot) => {
       foot.innerHTML = `<span class="spacer"></span>
         <button class="btn" data-close>${escape(t('common.close'))}</button>`;
@@ -116,6 +146,8 @@ export function openScreener({ board, symbol = null }) {
     if (symbol) openDetail(state, render, symbol);
     else runScreen(state, render);
   });
+
+  setAuto(state.auto);
 
   return handle;
 }
@@ -133,17 +165,28 @@ async function loadUniverses(state, render) {
   render();
 }
 
-async function runScreen(state, render) {
-  state.loading = true;
-  state.error = null;
-  render();
+async function runScreen(state, render, { background = false } = {}) {
+  if (background) {
+    state.refreshing = true;
+  } else {
+    state.loading = true;
+    state.error = null;
+    render();
+  }
   try {
     state.result = await api.screenerRun({ universe: state.universe, preset: state.preset });
+    state.updatedAt = Date.now();
+    state.error = null;
   } catch (err) {
-    state.error = err;
-    state.result = null;
+    // A refresh that fails leaves the last good table alone; a first run that
+    // fails has nothing else to show.
+    if (!background) {
+      state.error = err;
+      state.result = null;
+    }
   } finally {
     state.loading = false;
+    state.refreshing = false;
     render();
   }
 }
@@ -173,8 +216,11 @@ async function refreshDetail(state, render) {
   }
 }
 
-function paint(body, state, board) {
-  const rerender = () => paint(body, state, board);
+function paint(body, state, board, setAuto) {
+  // A background refresh rebuilds the table every minute; without this the
+  // reader is thrown back to the top of a hundred rows each time.
+  const scrolled = body.querySelector('.scr-table-wrap')?.scrollTop ?? 0;
+  const rerender = () => paint(body, state, board, setAuto);
   body.innerHTML = '';
   body.classList.add('screener-body');
 
@@ -182,13 +228,16 @@ function paint(body, state, board) {
     paintDetail(body, state, board, rerender);
     return;
   }
-  paintToolbar(body, state, rerender);
+  paintToolbar(body, state, rerender, setAuto);
   paintResults(body, state, rerender);
+
+  const wrap = body.querySelector('.scr-table-wrap');
+  if (wrap && scrolled) wrap.scrollTop = scrolled;
 }
 
 // ── Search view ─────────────────────────────────────────────────────────────
 
-function paintToolbar(body, state, rerender) {
+function paintToolbar(body, state, rerender, setAuto) {
   const bar = document.createElement('div');
   bar.className = 'scr-toolbar';
 
@@ -233,6 +282,19 @@ function paintToolbar(body, state, rerender) {
   run.addEventListener('click', () => runScreen(state, rerender));
   controls.appendChild(run);
 
+  // The screen re-prices itself while it is open, the way the board does. The
+  // checkbox is the off switch for a reader who wants the table to hold still
+  // while they compare a row against their notes.
+  const auto = document.createElement('label');
+  auto.className = 'scr-auto';
+  auto.title = t('scr.auto.hint');
+  const box = document.createElement('input');
+  box.type = 'checkbox';
+  box.checked = state.auto;
+  box.addEventListener('change', () => setAuto(box.checked, { immediate: true }));
+  auto.append(box, document.createTextNode(t('scr.auto')));
+  controls.appendChild(auto);
+
   bar.appendChild(controls);
   body.appendChild(bar);
 }
@@ -264,6 +326,14 @@ function paintResults(body, state, rerender) {
     failed: meta.failed,
     seconds: (meta.tookMs / 1000).toFixed(1),
   });
+  if (state.updatedAt) {
+    // How fresh the table is, so an auto-refresh is visible rather than
+    // something the reader has to take on faith.
+    const stamp = document.createElement('span');
+    stamp.className = 'scr-updated';
+    stamp.textContent = ` · ${t('scr.updated', { time: timeString(new Date(state.updatedAt)) })}`;
+    summary.appendChild(stamp);
+  }
   body.appendChild(summary);
 
   if (rows.length === 0) {

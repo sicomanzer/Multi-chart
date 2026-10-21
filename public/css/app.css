@@ -1172,6 +1172,10 @@ select {
 
 .scr-presets { display: flex; flex-wrap: wrap; gap: 4px; }
 .scr-controls { display: flex; align-items: center; gap: 6px; }
+.scr-auto { display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
+  color: var(--text-faint); cursor: pointer; user-select: none; }
+.scr-auto input { accent-color: var(--accent, #4c8dff); cursor: pointer; }
+.scr-updated { color: var(--text-faint); }
 
 .scr-chip {
   font: inherit;

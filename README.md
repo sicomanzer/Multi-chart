@@ -458,6 +458,13 @@ background. When that fails the written list stays in use — the index rebalanc
 twice a year, so a stale copy is a much smaller problem than a screen that will
 not start.
 
+**Re-priced while open.** An open screen re-runs itself every minute and stamps
+the summary with the time it did, so a table left on a second monitor is not an
+hour old. The run reuses the cached statements and only re-fetches quotes, which
+is why a warm pass over the SET100 takes about a tenth of a second; the checkbox
+next to the button turns the refresh off, and a failed refresh leaves the last
+good table in place instead of replacing it with an error.
+
 **Valuation.** Two-stage DDM with `g1 = g2 = 5.00%` and `r = 9%` by default, so
 the table, the presets and the calculator all quote the same intrinsic value
 before anyone moves a slider. The flat 5% is the assumption a reader can defend
