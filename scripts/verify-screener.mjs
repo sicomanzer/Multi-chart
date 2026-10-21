@@ -30,7 +30,7 @@ import {
   trailingDividend,
 } from '../server/screener.js';
 import { DEFAULTS, SET_LARGE_CAPS, SET100 } from '../server/screener-run.js';
-import { parseComposition } from '../server/setindex.js';
+import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears } from '../server/fin.js';
 
 const BASE = process.env.API ?? 'http://127.0.0.1:8787';
@@ -557,6 +557,61 @@ check('a truncated payload is refused instead of shrinking the index',
   throws(() => parseComposition({ composition: { stockInfos: [{ symbol: 'PTT' }] } })));
 check('a payload with no table is refused',
   throws(() => parseComposition({})));
+
+// The cache is what makes a stale list harmless: one fetch, then the written
+// copy until the TTL expires, and the written copy again if the exchange goes
+// away. `fetch` is stubbed so the test never touches set.or.th.
+const realFetch = globalThis.fetch;
+const realNow = Date.now;
+const fakeSymbols = Array.from({ length: 100 }, (_, i) => `T${i}`);
+const fakeResponse = (json) => ({
+  ok: true,
+  headers: { getSetCookie: () => ['ak_bmsc=test; Path=/'] },
+  json: async () => json,
+});
+let calls = 0;
+const stubFetch = (ok = true) => async (url) => {
+  calls += 1;
+  if (!ok) return { ok: false, status: 403, headers: { getSetCookie: () => [] }, json: async () => ({}) };
+  if (String(url).includes('/composition')) {
+    return fakeResponse({ composition: { stockInfos: fakeSymbols.map((symbol) => ({ symbol })) } });
+  }
+  return fakeResponse({});
+};
+
+globalThis.fetch = stubFetch(true);
+clearConstituentCache();
+const written = ['WRITTEN'];
+const first = constituents('set100', written);
+check('an empty cache answers with the written list', first === written, first.join(','));
+await refresh('set100');
+const live = constituents('set100', written);
+check('the exchange list replaces the written one once it lands',
+  live.length === 100 && live[0] === 'T0', `${live.length}`);
+
+const before = calls;
+check('a list inside the TTL is served without another request',
+  constituents('set100', written) === live && calls === before, `${calls - before} extra`);
+
+// Past the TTL the reader still gets the cached list, and a refresh starts.
+Date.now = () => realNow() + 13 * 60 * 60 * 1000;
+check('a stale list is still served while it refreshes',
+  constituents('set100', written) === live);
+await refresh('set100');
+check('the refresh after the TTL goes back to the exchange', calls > before, calls);
+const afterTtl = constituents('set100', written);
+
+// Failure path: keep the last good list, never throw.
+const realWarn = console.warn;
+console.warn = () => {};
+globalThis.fetch = stubFetch(false);
+Date.now = () => realNow() + 26 * 60 * 60 * 1000;
+const failed = await refresh('set100');
+console.warn = realWarn;
+check('a failed refresh resolves quietly', failed === null, failed);
+Date.now = realNow;
+check('and the last good list stays in use', constituents('set100', written) === afterTtl);
+globalThis.fetch = realFetch;
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 
