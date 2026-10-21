@@ -144,7 +144,7 @@ export function fiscalYearDividend(years, dividends, asOf = new Date()) {
  * statement and the same window a year earlier; then the smaller of the two is
  * used and `hasSpecial` tells the UI why.
  */
-export function sustainableDividend({ years, dividends, asOf = new Date() }) {
+export function sustainableDividend({ years, dividends, asOf = new Date(), ttmEps = null }) {
   const last = years.at(-1);
   const ttm = trailingDividend(dividends, asOf);
   const fy = fiscalYearDividend(years, dividends, asOf);
@@ -176,10 +176,16 @@ export function sustainableDividend({ years, dividends, asOf = new Date() }) {
     : null;
 
   // A spike has to clear both the statement and the same window a year earlier
-  // — one of them alone is often just a timing difference.
+  // — one of them alone is often just a timing difference. It also has to be
+  // unfunded: a company that tripled its dividend because it tripled its
+  // earnings (BTG: 0.50 → 1.50 on EPS 1.27 → 3.46, a 43% payout) is paying a
+  // new rate, not a one-off, and capping it at the old rate understates both
+  // the yield and the value.
+  const payout = ttmEps != null && ttmEps > 0 ? annual / ttmEps : null;
+  const funded = payout != null && payout <= 1;
   const inflated = fromStatement != null && annual > fromStatement * 1.5;
   const spiked = prior > 0 && annual > prior * 1.5;
-  const special = annual > 0 && inflated && (prior === 0 || spiked);
+  const special = annual > 0 && inflated && (prior === 0 || (spiked && !funded));
 
   const d0 = special ? Math.min(annual, fromStatement) : annual || fromStatement || 0;
 
@@ -507,7 +513,7 @@ export function scoreQuality({
   fcfPositive, Math.max(1, last4.length - 1),
   { of: last4.length, ...(isFinancial ? { na: true } : {}) });
 
-  const dividend = sustainableDividend({ years, dividends, asOf });
+  const dividend = sustainableDividend({ years, dividends, asOf, ttmEps });
   const dividendYield = price > 0 && dividend.d0 > 0 ? dividend.d0 / price : null;
   add('dividendYield', dividendYield != null ? dividendYield >= 0.04 : null, dividendYield, 0.04,
     {

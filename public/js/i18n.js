@@ -549,6 +549,7 @@ const EN = {
   'scr.added': '{symbol} added to the board',
   'scr.alreadyOnBoard': '{symbol} is already on the board',
   'scr.special': 'Trailing cash includes a special dividend; the valuation uses the recurring rate',
+  'scr.specialHint': 'Full year payout {all}, recurring {recurring} — the valuation uses the recurring rate',
   'scr.years.one': '{n} year',
   'scr.years.other': '{n} years',
 
@@ -1181,6 +1182,7 @@ const TH = {
   'scr.added': 'เพิ่ม {symbol} เข้ากระดานแล้ว',
   'scr.alreadyOnBoard': '{symbol} อยู่บนกระดานอยู่แล้ว',
   'scr.special': 'เงินปันผล 12 เดือนล่าสุดมีปันผลพิเศษ การประเมินมูลค่าใช้เฉพาะอัตราปกติ',
+  'scr.specialHint': 'จ่ายทั้งปี {all} · ยีลด์ปกติ {recurring} — การประเมินมูลค่าใช้ยีลด์ปกติ',
   'scr.years.one': '{n} ปี',
   'scr.years.other': '{n} ปี',
 

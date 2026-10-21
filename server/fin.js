@@ -333,11 +333,20 @@ async function convert(base, quote) {
   }
 
   if (fx === 1) {
+    // Yahoo's quote carries a trailing EPS too, but it is not always the same
+    // figure as its own quarterly series: GPSC's quote read 3.55 while the
+    // series — and the exchange — said 2.40. Prefer the quarterly series when
+    // it is current, and keep the quote for the cases it exists to solve: a
+    // series that has gone stale (GULF's last point was a year old) and the
+    // currency mismatch below.
+    const fresh = base.ttm.eps != null
+      && base.ttm.epsAsOf != null
+      && Date.now() - Date.parse(base.ttm.epsAsOf) < 270 * 86_400_000;
     return {
       ...base,
       ttm: {
         ...base.ttm,
-        eps: quoteEps ?? base.ttm.eps,
+        eps: fresh ? base.ttm.eps : (quoteEps ?? base.ttm.eps),
         bvps: quote?.bookValue ?? base.ttm.bvps,
       },
       fx: 1,

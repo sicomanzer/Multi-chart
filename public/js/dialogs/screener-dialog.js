@@ -347,13 +347,23 @@ function buildTable(rows, state, rerender) {
     // a screen is for.
     tr.className = row.pass ? '' : 'is-out';
     if (!row.pass && row.failReason) tr.title = t('scr.rejected', { reason: rejectReason(row) });
+    // When a year carries a special, the column shows the recurring rate and
+    // the tooltip shows the year's full payout — the figure the exchange
+    // publishes. Both numbers in one place is the only way to answer "why is
+    // this different from set.or.th" without hiding the conservative one.
+    const specialTitle = row.hasSpecialDividend && row.annualDps != null && row.price > 0
+      ? t('scr.specialHint', {
+        all: percent(row.annualDps / row.price, 2),
+        recurring: percent(row.dividendYield, 2),
+      })
+      : '';
     tr.innerHTML = `
       <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
       <td class="num"><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
       <td class="num">${percent(row.roe3)}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}</td>
-      <td class="num">${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}</td>
+      <td class="num"${specialTitle ? ` title="${escape(specialTitle)}"` : ''}>${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}</td>
       <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}</td>
       <td class="num">${row.ddm.intrinsic == null ? '—' : row.ddm.intrinsic.toFixed(2)}</td>
       <td class="num ${row.ddm.mos > 0 ? 'is-up' : 'is-down'}">${row.ddm.mos == null ? '—' : `${row.ddm.mos.toFixed(0)}%`}</td>`;

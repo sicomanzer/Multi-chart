@@ -100,7 +100,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     isFinancial: fin.isFinancial === true,
   });
 
-  const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf });
+  const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf, ttmEps });
   const d0 = dividend.d0;
   const g1 = clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 });
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
@@ -150,6 +150,9 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     streak: quality.streak,
     ttmDps: dividend.ttm,
     dps: d0,
+    // The year's full payout, specials included — what the exchange's own yield
+    // is built from, shown next to the recurring rate when they differ.
+    annualDps: dividend.annual,
     dividendFy: dividend.fiscalYear,
     hasSpecialDividend: dividend.hasSpecial,
     ddm: {

@@ -216,6 +216,23 @@ check('a special dividend is not capitalised into the perpetuity',
 check('the special is still reported as cash received', near(withSpecial.ttm, 40, 1e-9), withSpecial.ttm);
 check('the special is flagged for the UI', withSpecial.hasSpecial === true);
 
+// A raise that earnings paid for is not a special: BTG tripled its dividend
+// (0.50 → 1.50) in the same year EPS went 1.27 → 3.46, a 43% payout. The
+// statement lags by a year for an annual payer, so the old rule capped it at
+// the previous rate and reported 2.50% for a 7.43% payer.
+const funded = sustainableDividend({
+  years: [{ fiscalYear: 2025, asOf: '2025-12-31', dpsStatement: 0.5 }],
+  dividends: [
+    { date: '2025-03-11', amount: 0.5 }, // the previous year's rate
+    { date: '2026-03-10', amount: 1.5 },
+  ],
+  asOf: new Date('2026-10-21T00:00:00Z'),
+  ttmEps: 3.46,
+});
+check('a dividend the earnings fund is followed, not capped',
+  near(funded.d0, 1.5, 1e-9), funded.d0);
+check('and it is not marked as a special', funded.hasSpecial === false);
+
 const holdingCompany = sustainableDividend({
   years: [{ dpsStatement: 2.83 }], // inflated by dividends paid to minorities
   dividends: [{ date: '2026-03-01', amount: 0.66 }],
