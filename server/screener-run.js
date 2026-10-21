@@ -19,7 +19,8 @@ import {
   sustainableDividend,
   sustainableGrowth,
 } from './screener.js';
-import { normalizeSymbol, uniqueSymbols } from './symbols.js';
+import { normalizeSymbol, toYahooSymbol, uniqueSymbols } from './symbols.js';
+import { quoteBatch } from './quotes.js';
 
 /** Yahoo tolerates a handful of parallel requests; more earns a 429. */
 const CONCURRENCY = 5;
@@ -88,6 +89,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
     price: fin.price,
     asOf,
     ttmEps,
+    isFinancial: fin.isFinancial === true,
   });
 
   const dividend = sustainableDividend({ years: fin.years, dividends: fin.dividends, asOf });
@@ -169,7 +171,15 @@ export function buildRow(fin, { overrides = {}, asOf = new Date() } = {}) {
 
 /** Full detail for the deep dive, including the series the chart draws. */
 export async function loadDetail(tvSymbol, options = {}) {
-  const fin = await loadFinancials(tvSymbol);
+  const symbol = normalizeSymbol(tvSymbol);
+  if (!symbol) {
+    const err = new Error('symbol required');
+    err.status = 400;
+    throw err;
+  }
+  const yahoo = toYahooSymbol(symbol);
+  const quotes = await quoteBatch([yahoo]);
+  const fin = await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null });
   const row = buildRow(fin, options);
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
   const bands = computeBands(fin.closes, fin.years, { peCurrent, pbvCurrent });
@@ -204,9 +214,14 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
   const rows = [];
   const errors = [];
 
+  // One batched quote call for the whole universe. It is what keeps a baht
+  // price from being divided by a dollar EPS, and it costs two requests for a
+  // hundred names rather than one per name.
+  const quotes = await quoteBatch(symbols.map(toYahooSymbol));
+
   const settled = await mapLimit(symbols, CONCURRENCY, async (symbol) => {
     try {
-      const fin = await loadFinancials(symbol);
+      const fin = await loadFinancials(symbol, { quote: quotes.get(toYahooSymbol(symbol)) ?? null });
       return { ok: true, row: buildRow(fin, { overrides, asOf }) };
     } catch (err) {
       return {

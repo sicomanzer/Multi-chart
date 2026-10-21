@@ -79,33 +79,58 @@ export function trailingDividend(dividends, asOf = new Date()) {
  * ADVANC as if the special repeated every year forever, which is how a screen
  * produces absurd margins of safety.
  *
- * The annual cash-flow statement is the better anchor: it is per fiscal year,
- * so a one-off paid in 2026 lands in the FY2026 statement and cannot
- * contaminate the recurring figure taken from FY2025. `ttm` is still returned,
- * because "you would have received this much cash" is worth showing — it is
- * just not the number that gets discounted.
+ * The trailing twelve months is the default anchor because it is the only
+ * figure that is true by construction: it is what the exchange actually paid.
+ * The exception is a one-off. ADVANC's 2026 record contains a 27.41 special on
+ * top of the usual 8.69 instalment — real cash, and the price really did gap on
+ * the ex-date — and a two-stage model that capitalises it into a perpetuity
+ * would value ADVANC as if the special repeated every year forever.
+ *
+ * So the trailing figure is used unless it spikes against both the annual
+ * statement and the same window a year earlier; then the smaller of the two is
+ * used and `hasSpecial` tells the UI why.
  */
 export function sustainableDividend({ years, dividends, asOf = new Date() }) {
   const last = years.at(-1);
+  const ttm = trailingDividend(dividends, asOf);
+  // The same window a year earlier, so a one-off can be told from a new rate.
+  const prior = trailingDividend(dividends, new Date(asOf.getTime() - 365 * 86_400_000));
+
+  // The annual cash-flow line is only an anchor when it looks like a full year
+  // of distributions. A company that pays its final after the year end leaves a
+  // figure that is an instalment, not a year — STECON paid 0.55 in March 2026
+  // against a FY2025 line of 0.004 — and taking the minimum against it reported
+  // a 0.02% yield for a 4.7% payer. A statement far below the company's own
+  // recent history is ignored rather than trusted.
+  const history = years
+    .map((y) => y.dpsStatement)
+    .filter((v) => typeof v === 'number' && v > 0)
+    .sort((a, b) => a - b);
+  const typical = history.length ? history[Math.floor(history.length / 2)] : null;
   const fromStatement = last?.dpsStatement != null && last.dpsStatement > 0
+    && (typical == null || last.dpsStatement >= typical * 0.5)
     ? last.dpsStatement
     : null;
-  const ttm = trailingDividend(dividends, asOf);
 
-  // Both estimates fail, but in opposite directions and for unrelated reasons:
-  // the ex-date record picks up one-off specials (ADVANC 2026) while the
-  // cash-flow statement counts dividends paid to minorities in subsidiaries
-  // (CPF reads 2.83 against a real 0.66). Taking the lower of the two discards
-  // whichever estimate was inflated, and errs on the conservative side when
-  // both are defensible — the right direction for a margin of safety.
-  const d0 = fromStatement != null ? Math.min(fromStatement, ttm || fromStatement) : ttm;
+  // What a holder received over the last twelve months is the best estimate of
+  // the run-rate, because it is the only figure that is true by construction.
+  // The exception is a spike: ADVANC's 27.41 special in February 2026 nearly
+  // tripled the cash received, and capitalising it forever is how a screen
+  // produces absurd margins of safety. A spike has to clear both the statement
+  // and the same window a year earlier — one of them alone is often just a
+  // timing difference.
+  const inflated = fromStatement != null && ttm > fromStatement * 1.5;
+  const spiked = prior > 0 && ttm > prior * 1.5;
+  const special = ttm > 0 && inflated && (prior === 0 || spiked);
+
+  const d0 = special ? Math.min(ttm, fromStatement) : ttm || fromStatement || 0;
 
   return {
     d0,
     ttm,
     fromStatement,
     // Worth flagging in the UI: the cash received was well above the recurring rate.
-    hasSpecial: d0 > 0 && ttm > d0 * 1.4,
+    hasSpecial: special,
   };
 }
 
@@ -368,8 +393,20 @@ function downsample(points, max) {
  * number. A check that cannot be evaluated — a bank has no meaningful interest
  * coverage, a company has no dividend — passes as `null`, neither earning nor
  * losing points, so a missing data point never masquerades as a red flag.
+ *
+ * `isFinancial` goes further: for a bank, insurer or consumer lender the
+ * leverage and cash-flow rules are not merely unmeasured, they measure the
+ * wrong thing. Those checks are marked `na` and skipped by the score and by
+ * presets, while a check that is `null` for lack of data stays strict.
  */
-export function scoreQuality({ years, dividends, price, asOf = new Date(), ttmEps = null }) {
+export function scoreQuality({
+  years,
+  dividends,
+  price,
+  asOf = new Date(),
+  ttmEps = null,
+  isFinancial = false,
+}) {
   const last3 = recent(years, 3);
   const last4 = recent(years, 4);
   const checks = [];
@@ -380,8 +417,10 @@ export function scoreQuality({ years, dividends, price, asOf = new Date(), ttmEp
   const roe3 = average(last3.map((y) => y.roe));
   add('roeLevel', roe3 != null ? roe3 >= 0.15 : null, roe3, 0.15);
 
-  const roeYearsAbove = last4.filter((y) => typeof y.roe === 'number' && y.roe >= 0.15).length;
-  add('roeConsistency', last4.length ? roeYearsAbove >= Math.min(3, last4.length) : null,
+  const roeKnown = last4.map((y) => y.roe);
+  const roeYearsAbove = roeKnown.filter((v) => typeof v === 'number' && v >= 0.15).length;
+  const roeComplete = roeKnown.length > 0 && roeKnown.every((v) => typeof v === 'number');
+  add('roeConsistency', roeComplete ? roeYearsAbove >= Math.min(3, last4.length) : null,
     roeYearsAbove, Math.min(3, last4.length), { of: last4.length });
 
   const roa3 = average(last3.map((y) => y.roa));
@@ -394,32 +433,57 @@ export function scoreQuality({ years, dividends, price, asOf = new Date(), ttmEp
   const npmTrend = npmSeries.length >= 2 ? npmSeries[npmSeries.length - 1] - npmSeries[0] : null;
   add('npmTrend', npmTrend != null ? npmTrend >= 0 : null, npmTrend, 0);
 
-  // Every one of the last three years profitable — "consistently", not "on average".
-  const profitable = last3.length ? last3.every((y) => typeof y.netIncome === 'number' && y.netIncome > 0) : null;
-  add('npmPositive', profitable, last3.filter((y) => y.netIncome > 0).length, last3.length, { of: last3.length });
+  // Every one of the last three years profitable — "consistently", not "on
+  // average". A year the source has no net income for is unknown, not a loss:
+  // treating it as one turned a gap in Yahoo's history into a red flag.
+  const income3 = last3.map((y) => y.netIncome);
+  const incomeComplete = income3.length === 3 && income3.every((v) => typeof v === 'number');
+  add('npmPositive', incomeComplete ? income3.every((v) => v > 0) : null,
+    income3.filter((v) => typeof v === 'number' && v > 0).length, income3.length, { of: last3.length });
 
   const de = years.at(-1)?.de ?? null;
   // 1.5 is the framework's allowance for capital-intensive utilities; `warn`
   // keeps a 1.2 name visible without pretending it passed the strict bound.
-  add('debtLevel', de != null ? de <= 1.0 : null, de, 1.0, { warn: de != null && de <= 1.5 });
+  //
+  // A lender's leverage is its business model, and the debt line Yahoo reports
+  // for one is not even the funding: KBANK's deposits sit outside `totalDebt`,
+  // so the ratio reads 0.38 where the exchange publishes 5.77. Scoring that
+  // would hand every bank ten free points and tell the reader nothing.
+  add('debtLevel', isFinancial ? null : de != null ? de <= 1.0 : null, de, 1.0,
+    { warn: !isFinancial && de != null && de <= 1.5, ...(isFinancial ? { na: true } : {}) });
 
   const icr = years.at(-1)?.interestCoverage ?? null;
-  add('interestCoverage', icr != null ? icr >= 3 : null, icr, 3);
+  add('interestCoverage', isFinancial ? null : icr != null ? icr >= 3 : null, icr, 3,
+    isFinancial ? { na: true } : {});
 
-  const cfo3 = last3.map((y) => y.operatingCashFlow).filter((v) => typeof v === 'number');
-  add('cfoPositive', cfo3.length ? cfo3.every((v) => v > 0) : null,
-    cfo3.filter((v) => v > 0).length, cfo3.length, { of: cfo3.length });
+  // Operating cash flow at a bank is the movement in deposits and loans, and at
+  // an insurer it is the movement in reserves. It is not a measure of the
+  // business earning cash, and neither is "free" cash flow after capex.
+  const cfo3 = last3.map((y) => y.operatingCashFlow);
+  const cfoComplete = cfo3.length === 3 && cfo3.every((v) => typeof v === 'number');
+  add('cfoPositive', isFinancial ? null : cfoComplete ? cfo3.every((v) => v > 0) : null,
+    cfo3.filter((v) => typeof v === 'number' && v > 0).length, cfo3.length,
+    { of: last3.length, ...(isFinancial ? { na: true } : {}) });
 
-  const cfoBeats = last3.filter(
+  const cfoBeatsKnown = last3.filter(
     (y) => typeof y.operatingCashFlow === 'number' && typeof y.netIncome === 'number' &&
       y.netIncome > 0 && y.operatingCashFlow > y.netIncome,
   ).length;
-  add('cfoBeatsEarnings', last3.length ? cfoBeats >= Math.min(2, last3.length) : null,
-    cfoBeats, Math.min(2, last3.length), { of: last3.length });
+  const cfoBeatsComplete = last3.length === 3 && last3.every(
+    (y) => typeof y.operatingCashFlow === 'number' && typeof y.netIncome === 'number',
+  );
+  add('cfoBeatsEarnings', isFinancial ? null : cfoBeatsComplete
+    ? cfoBeatsKnown >= Math.min(2, last3.length) : null,
+  cfoBeatsKnown, Math.min(2, last3.length),
+  { of: last3.length, ...(isFinancial ? { na: true } : {}) });
 
-  const fcfPositive = last4.filter((y) => typeof y.freeCashFlow === 'number' && y.freeCashFlow > 0).length;
-  add('fcfPositive', last4.length ? fcfPositive >= Math.max(1, last4.length - 1) : null,
-    fcfPositive, Math.max(1, last4.length - 1), { of: last4.length });
+  const fcfKnown = last4.map((y) => y.freeCashFlow);
+  const fcfComplete = fcfKnown.length > 0 && fcfKnown.every((v) => typeof v === 'number');
+  const fcfPositive = fcfKnown.filter((v) => typeof v === 'number' && v > 0).length;
+  add('fcfPositive', isFinancial || !fcfComplete ? null
+    : fcfPositive >= Math.max(1, last4.length - 1),
+  fcfPositive, Math.max(1, last4.length - 1),
+  { of: last4.length, ...(isFinancial ? { na: true } : {}) });
 
   const dividend = sustainableDividend({ years, dividends, asOf });
   const dividendYield = price > 0 && dividend.d0 > 0 ? dividend.d0 / price : null;
@@ -555,6 +619,10 @@ export function presetById(id) {
 export function applyPreset(row, preset) {
   for (const id of preset.requires) {
     const check = row.checks.find((c) => c.id === id);
+    // A rule that does not apply to this business — cash flow at a bank — is
+    // skipped rather than treated as unknown. Missing data is still strict: the
+    // difference between "cannot apply" and "we could not tell" matters.
+    if (check?.na === true) continue;
     if (!check || check.pass !== true) {
       return { pass: false, reason: `requires:${id}` };
     }

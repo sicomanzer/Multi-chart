@@ -23,6 +23,7 @@
  * visible instead of averaged away.
  */
 import { toYahooSymbol, normalizeSymbol, bareSymbol } from './symbols.js';
+import { profile } from './quotes.js';
 
 const TIMESERIES = 'https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries';
 const CHART = 'https://query1.finance.yahoo.com/v8/finance/chart';
@@ -67,11 +68,14 @@ const CURRENT_TYPES = [
  *
  * Yahoo dates a statement by the period it covers, not by the day it was
  * filed. Using that date as the "known at" date would let the band chart use
- * FY2024 earnings on 1 January 2025 — six weeks before anyone could read them.
- * Thai listed companies file within three months; two is the common case for
- * large caps, so this errs late rather than early.
+ * FY2024 earnings on 1 January 2025 — three months before anyone could read
+ * them. Thai listed companies must file within three months of the year end,
+ * and the stragglers use all of it, so the lag is the deadline, not the median:
+ * ninety days is the first date on which every issuer has published. A shorter
+ * lag makes the band history quietly clairvoyant for the companies that file
+ * late, which is precisely the bias the lag exists to remove.
  */
-const FILING_LAG_DAYS = 60;
+const FILING_LAG_DAYS = 90;
 
 /** Statements barely move, so a long TTL costs nothing and saves a lot upstream. */
 const STATEMENT_TTL_MS = 12 * 60 * 60 * 1000;
@@ -202,11 +206,16 @@ function ratio(numerator, denominator) {
  * — the same discipline the fundamentals sidecar follows, and for the same
  * reason: it keeps the screen honest about units.
  *
+ * `fx` converts statement amounts into the trading currency. It is 1 for the
+ * baht reporters that make up all but a couple of the SET100; for a company
+ * that files in dollars it is the dollar rate, so that a baht price and a
+ * dollar EPS never meet in the same multiple.
+ *
  * Exported because it is the one pure step between Yahoo's raw rows and every
  * number the screen publishes, which makes it the right place to pin down the
  * per-share definitions in the verification script.
  */
-export function deriveYears(byDate, dividends) {
+export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
   const dps = dpsByYear(dividends);
   const years = Object.entries(byDate)
     .sort(([a], [b]) => a.localeCompare(b))
@@ -217,6 +226,7 @@ export function deriveYears(byDate, dividends) {
       const dividendsPaid = typeof cashDividendsPaid === 'number'
         ? Math.abs(cashDividendsPaid)
         : null;
+      const money = (v) => (typeof v === 'number' && Number.isFinite(v) ? v * fx : null);
       return {
         fiscalYear,
         asOf: date,
@@ -224,28 +234,41 @@ export function deriveYears(byDate, dividends) {
         knownFrom: new Date(Date.parse(`${date}T00:00:00Z`) + FILING_LAG_DAYS * 86_400_000)
           .toISOString()
           .slice(0, 10),
-        revenue: row.totalRevenue ?? null,
-        netIncome: row.netIncome ?? null,
-        equity: row.stockholdersEquity ?? null,
-        assets: row.totalAssets ?? null,
-        totalDebt: row.totalDebt ?? null,
-        ebit: row.eBIT ?? row.ebit ?? null,
+        revenue: money(row.totalRevenue),
+        netIncome: money(row.netIncome),
+        equity: money(row.stockholdersEquity),
+        assets: money(row.totalAssets),
+        totalDebt: money(row.totalDebt),
+        ebit: money(row.eBIT ?? row.ebit),
         interestExpense: typeof row.interestExpense === 'number'
-          ? Math.abs(row.interestExpense)
+          ? Math.abs(row.interestExpense) * fx
           : null,
-        operatingCashFlow: row.operatingCashFlow ?? null,
-        freeCashFlow: row.freeCashFlow ?? null,
-        eps: row.dilutedEPS ?? row.basicEPS ?? null,
+        operatingCashFlow: money(row.operatingCashFlow),
+        freeCashFlow: money(row.freeCashFlow),
+        eps: money(row.dilutedEPS ?? row.basicEPS),
         shares: row.ordinarySharesNumber ?? null,
-        dividendsPaid,
+        dividendsPaid: money(dividendsPaid),
         // Calendar-year cash actually received, which is what a holder earns.
+        // Paid in the trading currency, so it is never converted.
         dpsPaid: dps[fiscalYear] ?? null,
       };
     });
 
-  for (const y of years) {
-    y.roe = ratio(y.netIncome, y.equity);
-    y.roa = ratio(y.netIncome, y.assets);
+  for (let i = 0; i < years.length; i += 1) {
+    const y = years[i];
+    const prev = years[i - 1];
+    // A ratio against the closing balance flatters a company that is shrinking
+    // and punishes one that is growing, and it is not what the exchange
+    // publishes either. The average of the opening and closing balance is the
+    // standard denominator; the first year of a truncated history has no
+    // opening balance, so it falls back to its own closing one.
+    const average = (opening, closing) => (
+      typeof opening === 'number' && Number.isFinite(opening) && typeof closing === 'number'
+        ? (opening + closing) / 2
+        : closing
+    );
+    y.roe = ratio(y.netIncome, average(prev?.equity, y.equity));
+    y.roa = ratio(y.netIncome, average(prev?.assets, y.assets));
     y.npm = ratio(y.netIncome, y.revenue);
     y.de = ratio(y.totalDebt, y.equity);
     y.interestCoverage = y.interestExpense ? ratio(y.ebit, y.interestExpense) : null;
@@ -273,8 +296,102 @@ export function deriveYears(byDate, dividends) {
   return years;
 }
 
+/**
+ * The statement figures, converted to the currency the shares trade in, plus
+ * the one judgement the statements cannot make on their own.
+ *
+ * Yahoo publishes statements in the reporting currency and prices in the
+ * trading currency. For a company that files in dollars — BANPU in the SET100 —
+ * a baht price over a dollar EPS is not a P/E, and the error is the exchange
+ * rate, roughly 33x. The quote snapshot carries the same trailing EPS already
+ * converted, so the ratio between the two is the conversion factor for the
+ * whole history.
+ *
+ * A ratio far from one is only a *suspicion*: a stale trailing EPS produces the
+ * same shape, and GULF's trailing point was a year old and read 3x below the
+ * quote. The label settles it — the ratio is applied only when Yahoo also says
+ * the reporting currency differs from the trading one. When in doubt nothing is
+ * converted, because a wrong factor is worse than a missing one.
+ */
+async function convert(base, quote) {
+  const statementEps = base.ttm.eps;
+  const quoteEps = quote?.epsTtm ?? null;
+  let fx = 1;
+  if (
+    quoteEps != null
+    && statementEps != null
+    && Math.abs(statementEps) > 1e-9
+    && Number.isFinite(quoteEps / statementEps)
+  ) {
+    const ratio = quoteEps / statementEps;
+    if (ratio > 2 || ratio < 0.5) {
+      const p = await profile(base.yahoo);
+      if (p?.financialCurrency && p.financialCurrency !== (quote.currency ?? base.currency ?? 'THB')) {
+        fx = ratio;
+      }
+    }
+  }
+
+  if (fx === 1) {
+    return {
+      ...base,
+      ttm: {
+        ...base.ttm,
+        eps: quoteEps ?? base.ttm.eps,
+        bvps: quote?.bookValue ?? base.ttm.bvps,
+      },
+      fx: 1,
+    };
+  }
+
+  const years = base.years.map((y) => ({
+    ...y,
+    revenue: y.revenue == null ? null : y.revenue * fx,
+    netIncome: y.netIncome == null ? null : y.netIncome * fx,
+    equity: y.equity == null ? null : y.equity * fx,
+    assets: y.assets == null ? null : y.assets * fx,
+    totalDebt: y.totalDebt == null ? null : y.totalDebt * fx,
+    ebit: y.ebit == null ? null : y.ebit * fx,
+    interestExpense: y.interestExpense == null ? null : y.interestExpense * fx,
+    operatingCashFlow: y.operatingCashFlow == null ? null : y.operatingCashFlow * fx,
+    freeCashFlow: y.freeCashFlow == null ? null : y.freeCashFlow * fx,
+    eps: y.eps == null ? null : y.eps * fx,
+    dividendsPaid: y.dividendsPaid == null ? null : y.dividendsPaid * fx,
+    dpsStatement: y.dpsStatement == null ? null : y.dpsStatement * fx,
+    bvps: y.bvps == null ? null : y.bvps * fx,
+  }));
+
+  return {
+    ...base,
+    years,
+    ttm: {
+      ...base.ttm,
+      eps: quoteEps ?? (base.ttm.eps == null ? null : base.ttm.eps * fx),
+      bvps: quote?.bookValue ?? (base.ttm.bvps == null ? null : base.ttm.bvps * fx),
+    },
+    fx,
+  };
+}
+
+/**
+ * Whether the industrial rules apply at all.
+ *
+ * A bank funds itself with deposits and an insurer with reserves; "debt to
+ * equity below 1.0", "cash flow from operations is positive" and "free cash
+ * flow covers the dividend" are statements about a manufacturer, not about a
+ * balance-sheet business. Yahoo supplies no EBIT for these names, which is the
+ * first signal; the sector label decides, because a utility can also report no
+ * EBIT and it still has to meet the industrial tests.
+ */
+async function isFinancial(base) {
+  const last3 = base.years.slice(-3);
+  if (last3.length === 0 || last3.some((y) => y.ebit != null)) return false;
+  const p = await profile(base.yahoo);
+  return /financial/i.test(p?.sector ?? '');
+}
+
 /** Load one symbol's statements, dividend record and daily closes. */
-export async function loadFinancials(tvSymbol) {
+export async function loadFinancials(tvSymbol, { quote = null } = {}) {
   const symbol = normalizeSymbol(tvSymbol);
   if (!symbol) {
     const err = new Error('symbol required');
@@ -283,7 +400,7 @@ export async function loadFinancials(tvSymbol) {
   }
   const yahoo = toYahooSymbol(symbol);
 
-  return cached(statements, symbol, STATEMENT_TTL_MS, async () => {
+  const base = await cached(statements, symbol, STATEMENT_TTL_MS, async () => {
     const now = Math.floor(Date.now() / 1000);
     // 2000-01-01 onward: the endpoint returns every year it has either way,
     // and asking from the epoch just makes older listings complete.
@@ -301,7 +418,13 @@ export async function loadFinancials(tvSymbol) {
 
     const chartResult = chart?.chart?.result?.[0] ?? null;
     const dividends = parseDividends(chartResult);
-    const years = deriveYears(parseTimeseries(timeSeries), dividends);
+    // A fiscal year with no revenue, no profit and no EPS is a partial record,
+    // not a year of results — GULF's FY2025 row carries a balance sheet and
+    // nothing else. Keeping it would make the latest year's leverage the one
+    // number the score reads while every income rule looked at an older year.
+    const years = deriveYears(parseTimeseries(timeSeries), dividends).filter(
+      (y) => y.revenue != null || y.netIncome != null || y.eps != null,
+    );
     const closes = parsePriceSeries(chartResult);
     const lastClose = closes.length ? closes[closes.length - 1].close : null;
 
@@ -344,6 +467,9 @@ export async function loadFinancials(tvSymbol) {
       },
     };
   });
+
+  const converted = await convert(base, quote);
+  return { ...converted, isFinancial: await isFinancial(converted) };
 }
 
 export function clearFinancialCache() {

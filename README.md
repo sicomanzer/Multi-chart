@@ -357,9 +357,20 @@ than hidden:
 | --- | --- | --- |
 | Annual statements (net income, equity, debt, EBIT, cash flow, EPS, shares) | Yahoo `ws/fundamentals-timeseries` | 4–5 fiscal years |
 | Trailing EPS, latest-quarter equity and share count | the same endpoint (`trailing*`, `quarterly*`) | latest quarter |
+| Per-share figures in the trading currency | Yahoo `v7/finance/quote` (crumb) | now |
 | Dividend ex-dates and amounts | Yahoo `chart?events=div` | 10–15 years |
 | Daily closes | Yahoo `chart` | 15 years |
 | Current price | the last close in that chart | now |
+
+**Statements are in the reporting currency; prices are not.** BANPU files in US
+dollars and trades in baht, so a baht price over a dollar EPS is not a P/E — it
+is a P/E divided by the exchange rate, and the same error runs through P/BV, the
+yield and the dividend model. The quote endpoint publishes trailing EPS and book
+value already converted, so those are what the current multiples use; the
+statement history is converted with the ratio between the two EPS figures, and
+only when Yahoo also labels the reporting currency as foreign. A ratio far from
+one is a suspicion, not a fact: a stale trailing point produces the same shape,
+and converting on that alone would have tripled GULF's revenue.
 
 **Four years, not ten.** Yahoo serves four annual periods per symbol to a free
 client, consistently across SET names. That covers the framework's "3–5
@@ -372,9 +383,11 @@ expensive in the past.
 
 **Published, not merely ended.** Yahoo dates a statement by the period it
 covers, so FY2024 is stamped `2024-12-31` — a day on which nobody had seen it.
-Each year therefore carries a `knownFrom` date of the fiscal year end plus sixty
-days (Thai issuers have three months to file, and large caps file sooner), and
-the band refuses to use a year before that date.
+Each year therefore carries a `knownFrom` date of the fiscal year end plus ninety
+days, the filing deadline Thai issuers must meet, and the band refuses to use a
+year before that date. The median issuer files sooner, but a shorter lag is
+clairvoyant for the ones that use the full three months — the exact bias the lag
+exists to remove.
 
 **The right-hand edge is today's multiple, not last year's.** The history has to
 be annual because that is the only series that exists for every year, but the
@@ -399,11 +412,15 @@ independent estimates exist and both fail, in opposite directions:
 - the ex-date record picks up one-off specials — ADVANC's 2026 payment was
   27.41 on top of the usual 8.69, so trailing cash shows a 10.9% yield that
   will not repeat (the price did really gap 404 → 380 on the ex-date)
-- the cash-flow statement counts dividends paid to minorities — CPF reads 2.83
-  per share against a real 0.66
+- the cash-flow statement counts dividends paid to minorities (CPF reads 2.83
+  per share against a real 0.66) and can lag a final that is paid after the year
+  end (STECON's FY2025 line is 0.004 against 0.55 actually paid)
 
-Taking the lower of the two discards whichever was inflated. The recurring
-figure goes into the DDM; the trailing cash figure is still shown, marked `*`.
+The trailing twelve months is the default because it is the only figure that is
+true by construction. It is overridden only when it spikes against *both* the
+statement and the same window a year earlier; then the smaller figure is used
+and the row marks it. The same rule covers a genuine step-up: SCGP's dividend
+rose from 0.55 to 0.75 without looking like a one-off, and is followed.
 
 **Payout pairs trailing cash with trailing earnings.** The fiscal-year version
 looked tidy and was wrong twice over: `dividendsPaid` carries the minority
@@ -434,10 +451,26 @@ at or below `g2` the model refuses to answer instead of returning infinity.
 **Scoring.** Fourteen rules in four groups — quality (40 points), solvency (20),
 cash conversion (20), shareholder returns (20) — so a high yield on a business
 that fails the first three can never carry a name into the results. A rule that
-cannot be judged is neutral, not a failure: banks have no meaningful interest
-cover, and no dividend means no dividend rules, neither of which should read as
-a red flag. The row carries a `coverage` figure so a score built on half the
-framework is recognisable as thin.
+cannot be judged is neutral, not a failure: no dividend means no dividend rules,
+which should not read as a red flag. The row carries a `coverage` figure so a
+score built on half the framework is recognisable as thin.
+
+Financials are judged on a narrower framework on purpose. A bank funds itself
+with deposits, so "interest-bearing debt to equity below 1.0" reads 0.38 for
+KBANK where the exchange publishes 5.77; its operating cash flow is the movement
+in loans and deposits, not cash earnings; and free cash flow after capex is an
+industrial measurement. Those five rules are marked *not applicable* for banks,
+insurers and consumer lenders — skipped by the score, and skipped by a preset
+that would otherwise make them mandatory. A rule that is merely *unknown* is
+still strict: an unevaluated mandatory check disqualifies a row, because "we
+could not tell" is not the same as "does not apply".
+
+Ratios use average balances: net income over the average of opening and closing
+equity and assets, which is both the standard definition and the one the
+exchange publishes. Net margin uses total revenue. D/E is interest-bearing debt
+over equity; the exchange publishes the same shape but classifies leases and
+other borrowings differently, so the two will not tie out name by name (CPALL
+3.20 here against 1.96 there, ADVANC 1.79 against 2.92).
 
 Presets differ in which rules are **mandatory**, not in how the score is
 computed, which is why the same company can be strong for one mandate and
@@ -449,8 +482,9 @@ parallel upstream requests.
 
 The engine is pure and covered by `scripts/verify-screener.mjs` — the DDM
 against its closed form, the bands for the no-hindsight and filing-lag
-properties, the dividend basis on both failure modes, the per-share definitions
-(DPS, trailing payout) and the scoring on a healthy company, a bank, a
+properties, the dividend basis on both failure modes plus an instalment and a
+real raise, the per-share definitions (DPS, trailing payout), average-balance
+ROE/ROA, currency conversion, and the scoring on a healthy company, a bank, a
 non-payer and a broken one.
 
 ---
@@ -547,6 +581,11 @@ server/
   workspace-store.js    board persistence (atomic, debounced)
   fundamentals.py       long-lived sidecar: TradingView screener ratios
   fundamentals.js       sidecar client: queue, timeouts, per-symbol cache
+  fin.js                statements, dividends and ratios per symbol
+  screener.js           scoring rules, DDM, P/E and P/BV bands (pure)
+  screener-run.js       runner, presets, universes, deep-dive payload
+  quotes.js             Yahoo quote snapshot and sector profile (crumb)
+  setindex.js           live SET100 constituents from set.or.th
 public/
   index.html
   css/app.css

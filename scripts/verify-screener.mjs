@@ -179,6 +179,29 @@ check('an inflated statement figure loses to the ex-date record',
 
 check('the statement alone is used when there is no ex-date record',
   near(sustainableDividend({ years: [{ dpsStatement: 1.5 }], dividends: [], asOf }).d0, 1.5));
+
+// The statement can also be too small: a final paid after the year end leaves
+// only an instalment behind. The trailing record is the only complete year.
+const instalment = sustainableDividend({
+  years: [{ dpsStatement: 0.3 }, { dpsStatement: 0.15 }, { dpsStatement: 0.004 }],
+  dividends: [{ date: '2026-03-09', amount: 0.55 }],
+  asOf,
+});
+check('a statement that is only an instalment does not cap the dividend',
+  near(instalment.d0, 0.55, 1e-9), instalment.d0);
+
+// And a genuine step-up is followed rather than treated as a special.
+const raised = sustainableDividend({
+  years: [{ dpsStatement: 0.55 }],
+  dividends: [
+    { date: '2025-08-08', amount: 0.25 },
+    { date: '2026-03-31', amount: 0.35 },
+    { date: '2026-08-04', amount: 0.4 },
+  ],
+  asOf,
+});
+check('a real raise is followed, not capped', near(raised.d0, 0.75, 1e-9), raised.d0);
+check('a real raise is not flagged as a special', raised.hasSpecial === false);
 check('no dividend at all reports zero',
   sustainableDividend({ years: [{}], dividends: [], asOf }).d0 === 0);
 check('the trailing window is twelve months',
@@ -211,7 +234,7 @@ check('the statement DPS is the group total divided by shares',
 check('the reported DPS is what a holder actually received',
   near(ptt.dps, 2.2, 1e-9), ptt.dps);
 check('the fiscal year end is not treated as the day of filing',
-  ptt.knownFrom === '2026-03-01', ptt.knownFrom);
+  ptt.knownFrom === '2026-03-31', ptt.knownFrom);
 
 // The opposite shape: a cash-flow line that is incomplete rather than inflated
 // (BANPU reports 0.02 against 0.55 actually paid). The ex-date record wins in
@@ -223,6 +246,40 @@ check('a deflated statement figure does not win either',
   near(banpu.dps, 0.55, 1e-9), banpu.dps);
 check('with no ex-date record the statement is the only source',
   near(deriveYears({ '2025-12-31': { dilutedEPS: 1, ordinarySharesNumber: 100, cashDividendsPaid: -50 } }, [])[0].dps, 0.5));
+
+// A ratio against the closing balance flatters a shrinking company and punishes
+// a growing one. The denominator is the average of the opening and closing
+// balance, which is also the definition the exchange publishes.
+const growing = deriveYears({
+  '2024-12-31': { netIncome: 10, stockholdersEquity: 100, totalAssets: 200, dilutedEPS: 1, ordinarySharesNumber: 10 },
+  '2025-12-31': { netIncome: 30, stockholdersEquity: 200, totalAssets: 300, dilutedEPS: 3, ordinarySharesNumber: 10 },
+}, []);
+check('ROE uses the average of opening and closing equity',
+  near(growing[1].roe, 30 / 150, 1e-12), growing[1].roe);
+check('ROA uses the average of opening and closing assets',
+  near(growing[1].roa, 30 / 250, 1e-12), growing[1].roa);
+check('the first year of a truncated history falls back to its closing balance',
+  near(growing[0].roe, 10 / 100, 1e-12), growing[0].roe);
+
+// A company that files in dollars: amounts and per-share figures are converted
+// to the trading currency, ratios are not touched, and the ex-date dividend is
+// already in the trading currency so it must not be converted twice.
+const dollars = deriveYears({
+  '2025-12-31': {
+    netIncome: 10, stockholdersEquity: 100, totalAssets: 200, totalRevenue: 300,
+    dilutedEPS: 1, ordinarySharesNumber: 10, cashDividendsPaid: -20,
+  },
+}, [{ date: new Date('2025-05-10'), amount: 6 }], { fx: 30 });
+check('statement amounts are converted to the trading currency',
+  near(dollars[0].netIncome, 300, 1e-9) && near(dollars[0].eps, 30, 1e-9),
+  `${dollars[0].netIncome} / ${dollars[0].eps}`);
+check('the statement DPS is converted with the rest',
+  near(dollars[0].dpsStatement, 60, 1e-9), dollars[0].dpsStatement);
+check('the ex-date dividend is already in the trading currency',
+  near(dollars[0].dps, 6, 1e-9), dollars[0].dps);
+check('ratios are currency-free and unchanged by the conversion',
+  near(dollars[0].roe, 0.1, 1e-12) && near(dollars[0].npm, 10 / 300, 1e-12),
+  `${dollars[0].roe} / ${dollars[0].npm}`);
 
 // ── Quality score ───────────────────────────────────────────────────────────
 
@@ -293,6 +350,26 @@ const bankIcr = bank.checks.find((c) => c.id === 'interestCoverage');
 check('a bank is not failed for missing interest cover', bankIcr.pass === null, JSON.stringify(bankIcr));
 check('an unevaluated rule still leaves the rest of the score intact', bank.score === 100, bank.score);
 check('coverage reports how much of the framework applied', near(bank.coverage, 0.9, 1e-9), bank.coverage);
+
+// A financial business as a whole. Leverage is its business model, operating
+// cash flow is the movement in deposits and loans, and free cash flow after
+// capex is an industrial measurement. All five rules must be left out of both
+// sides of the score, and a mandatory one must not disqualify the name either.
+const financial = scoreQuality({ years, dividends, price: 20, asOf, isFinancial: true });
+const financialCheck = (id) => financial.checks.find((c) => c.id === id);
+const industrial = ['debtLevel', 'interestCoverage', 'cfoPositive', 'cfoBeatsEarnings', 'fcfPositive'];
+check('a financial is not scored on industrial leverage or cash flow',
+  industrial.every((id) => financialCheck(id).pass === null && financialCheck(id).na === true),
+  industrial.map((id) => `${id}:${financialCheck(id).pass}/${financialCheck(id).na}`).join(' '));
+check('the score is built only from the rules that apply',
+  near(financial.coverage, 0.6, 1e-9), financial.coverage);
+const financialRow = { score: financial.score, checks: financial.checks, ddm: { mos: 20 } };
+check('a mandatory rule that cannot apply does not disqualify a financial',
+  applyPreset(financialRow, presetById('moat')).pass === true,
+  applyPreset(financialRow, presetById('moat')).reason);
+check('a mandatory rule that is merely unknown still disqualifies',
+  applyPreset({ ...financialRow, checks: financial.checks.map((c) => (c.id === 'cfoPositive' ? { id: 'cfoPositive', pass: null } : c)) },
+    presetById('moat')).pass === false);
 
 const noDividend = scoreQuality({
   years: years.map((y) => ({ ...y, dpsStatement: null, dpsPaid: null })),
