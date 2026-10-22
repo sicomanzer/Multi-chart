@@ -35,6 +35,8 @@ import { DEFAULTS, SET_LARGE_CAPS, SET100, reconcileYears } from '../server/scre
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears, unitGap } from '../server/fin.js';
 import { backtestCompany, publishedOn, rebalanceDates, summariseBacktest } from '../server/backtest.js';
+import { simulatePeriod } from '../server/portfolio.js';
+import { TrackedStore } from '../server/tracked-store.js';
 import { aggregateAnnual, aggregateQuarterly, annualHistory, clearFinnomenaCache, finnomenaStatus, HISTORY_YEARS } from '../server/finnomena.js';
 import { mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -1002,6 +1004,131 @@ check('a zero in one source is missing information, not a contradiction',
     [{ fiscalYear: 2025, netIncome: 0, de: 1.2 }]).length === 1);
 check('a company with no statements cannot be scored',
   scoreQuality({ years: [], dividends: [{ date: '2025-06-01', amount: 1 }], price: 20, asOf }).score === 0);
+
+// ── Two things a rule cannot see on its own ─────────────────────────────────
+console.log('\n── Warnings ──');
+
+// A profit that did not turn into cash.
+const oneOffYears = [2022, 2023, 2024, 2025].map((fy) => year({
+  fiscalYear: fy,
+  asOf: `${fy}-12-31`,
+  netIncome: 1000,
+  operatingCashFlow: 200,
+}));
+const oneOff = scoreQuality({ years: oneOffYears, dividends, price: 20, asOf });
+check('a profit with no cash behind it is flagged',
+  oneOff.checks.find((c) => c.id === 'cfoBeatsEarnings')?.oneOff === true,
+  JSON.stringify(oneOff.checks.find((c) => c.id === 'cfoBeatsEarnings')));
+
+// Earnings per share can grow while the profit does not, if the company is
+// buying its own stock back.
+const buybackYears = [2022, 2023, 2024, 2025].map((fy, i) => year({
+  fiscalYear: fy,
+  asOf: `${fy}-12-31`,
+  netIncome: 1000,
+  eps: 2 + i * 0.27,
+  shares: 50 - i * 5,
+}));
+const buyback = scoreQuality({ years: buybackYears, dividends, price: 20, asOf });
+check('growth that came from buying shares back is flagged',
+  buyback.checks.find((c) => c.id === 'epsGrowth')?.buyback === true,
+  JSON.stringify(buyback.checks.find((c) => c.id === 'epsGrowth')));
+
+// ── The money ───────────────────────────────────────────────────────────────
+console.log('\n── The portfolio ──');
+
+// A price path a hand can follow: two names, a flat price and a rising one,
+// with a dividend on the way.
+const pathCloses = {
+  'SET:AAA': [
+    { date: '2020-01-02', close: 10 },
+    { date: '2020-02-03', close: 10 },
+    { date: '2020-03-02', close: 10 },
+    { date: '2020-04-01', close: 10 },
+    { date: '2020-05-04', close: 10 },
+  ],
+  'SET:BBB': [
+    { date: '2020-01-02', close: 20 },
+    { date: '2020-02-03', close: 25 },
+    { date: '2020-03-02', close: 30 },
+    { date: '2020-04-01', close: 30 },
+    { date: '2020-05-04', close: 30 },
+  ],
+};
+const pathDividends = {
+  'SET:AAA': [{ date: '2020-03-10', amount: 1 }],
+  'SET:BBB': [],
+};
+const pathPicks = [
+  { symbol: 'SET:AAA', price: 10, intrinsic: 20 },
+  { symbol: 'SET:BBB', price: 20, intrinsic: 20 },
+];
+
+// All at once: 100,000 split evenly. AAA stays at 10 and pays 1 a share, so
+// 5,000 units are worth 50,000 plus 5,000 of dividend; BBB goes from 20 to 30,
+// so 2,500 units are worth 75,000.
+const lump = simulatePeriod({
+  picks: pathPicks, closesBySymbol: pathCloses, dividendsBySymbol: pathDividends,
+  from: '2020-01-02', to: '2020-05-04', capital: 100000, monthly: 1000,
+});
+check('all at once buys on the first day',
+  near(lump.lump.value, 50000 + 5000 + 75000, 1e-6) && near(lump.lump.deployed, 100000, 1e-6),
+  JSON.stringify(lump.lump));
+
+// A slice a month: 1,000 a month into each name, five months, so 10,000 goes
+// to work and 90,000 is still sitting in cash.
+const dca = simulatePeriod({
+  picks: pathPicks, closesBySymbol: pathCloses, dividendsBySymbol: pathDividends,
+  from: '2020-01-02', to: '2020-05-04', capital: 100000, monthly: 1000,
+});
+check('a slice a month buys every month, not on the first day',
+  near(dca.dca.deployed, 10000, 1e-6) && near(dca.dca.cash, 90000, 1e-6),
+  JSON.stringify(dca.dca));
+
+// Waiting: BBB is above its value of 20 from February on, so it is never
+// bought; AAA is below its value of 20 the whole way.
+const wait = simulatePeriod({
+  picks: pathPicks, closesBySymbol: pathCloses, dividendsBySymbol: pathDividends,
+  from: '2020-01-02', to: '2020-05-04', capital: 100000, monthly: 1000,
+  thresholds: { 'SET:AAA': 20, 'SET:BBB': 20 },
+});
+check('waiting buys only what fell to the price worth paying',
+  wait.wait.deployed > 0 && wait.wait.deployed < dca.dca.deployed,
+  JSON.stringify(wait.wait));
+
+// The dividends are the reader's money: the same holding, with and without.
+const withDividends = simulatePeriod({
+  picks: pathPicks, closesBySymbol: pathCloses, dividendsBySymbol: pathDividends,
+  from: '2020-01-02', to: '2020-05-04', capital: 100000, monthly: 1000,
+});
+const withoutDividends = simulatePeriod({
+  picks: pathPicks, closesBySymbol: pathCloses, dividendsBySymbol: {},
+  from: '2020-01-02', to: '2020-05-04', capital: 100000, monthly: 1000,
+});
+check('the dividends are counted as cash',
+  withDividends.lump.value > withoutDividends.lump.value,
+  `${withDividends.lump.value} vs ${withoutDividends.lump.value}`);
+
+// ── The names being followed ────────────────────────────────────────────────
+console.log('\n── The tracked list ──');
+
+const trackedFile = join(tmpdir(), `tracked-test-${Date.now()}.json`);
+const trackedStore = new TrackedStore(trackedFile);
+await trackedStore.load();
+check('a new list is empty', trackedStore.list().length === 0);
+const added = trackedStore.save({ symbol: 'SET:BH', name: 'Bumrungrad', note: 'watching the yield', at: { price: 190, pe: 20 } });
+check('a name is added with its numbers', added.symbol === 'SET:BH' && added.at.pe === 20, JSON.stringify(added));
+trackedStore.update(added.id, { status: 'bought', note: 'bought at 190' });
+check('a name can be marked and annotated',
+  trackedStore.get(added.id).status === 'bought' && trackedStore.get(added.id).note === 'bought at 190');
+check('the same name is not added twice', trackedStore.findBySymbol('set:bh')?.id === added.id);
+trackedStore.save({ symbol: 'SET:MEGA' });
+check('a second name joins the list', trackedStore.list().length === 2);
+trackedStore.remove(added.id);
+check('a name can be removed', trackedStore.list().length === 1);
+trackedStore.replaceAll([{ symbol: 'SET:PTT' }, { symbol: '' }]);
+check('a backup replaces the list, and a nameless entry is dropped',
+  trackedStore.list().length === 1 && trackedStore.list()[0].symbol === 'SET:PTT', JSON.stringify(trackedStore.list()));
 
 // ── Routes (no upstream calls) ──────────────────────────────────────────────
 

@@ -154,6 +154,22 @@ export class WatchlistStore {
       }));
   }
 
+  /** The whole records, for a backup file. */
+  all() {
+    return [...this.watchlists.values()].map((w) => ({ ...w, symbols: [...w.symbols] }));
+  }
+
+  /** Replace the whole set — used when a backup file is imported. */
+  replaceAll(entries) {
+    this.watchlists.clear();
+    for (const raw of entries ?? []) {
+      const wl = sanitizeWatchlist(raw);
+      this.watchlists.set(wl.id, wl);
+    }
+    this._scheduleWrite();
+    return this.list();
+  }
+
   get(id) {
     return this.watchlists.get(id) ?? null;
   }

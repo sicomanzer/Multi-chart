@@ -84,6 +84,16 @@ export const api = {
     body: { symbols },
   }),
 
+  // The names being followed: a screen gives a shortlist, this is what happens
+  // next.
+  tracked: () => request('/api/tracked'),
+  addTracked: (body) => request('/api/tracked', { method: 'POST', body }),
+  updateTracked: (id, body) => request(`/api/tracked/${id}`, { method: 'PATCH', body }),
+  removeTracked: (id) => request(`/api/tracked/${id}`, { method: 'DELETE' }),
+  // Everything the reader has made, in one file.
+  backup: () => request('/api/backup'),
+  restoreBackup: (body) => request('/api/backup', { method: 'POST', body }),
+
   symbols: (q, country = 'thailand', limit = 25) =>
     request(`/api/symbols${qs({ q, country, limit })}`),
 

@@ -23,6 +23,9 @@ import { api } from '../api.js';
 /** Preset ids, in the order the chips are shown. */
 const PRESETS = ['moat', 'quality', 'dividend', 'value', 'all'];
 
+/** The medals of the ranking. */
+const MEDALS = ['🥇', '🥈', '🥉'];
+
 /**
  * The measures a reader can filter on.
  *
@@ -137,6 +140,12 @@ const money = (v, currency = '') =>
     ? '—'
     : `${v.toFixed(2)}${currency ? ` ${currency}` : ''}`;
 
+/** A sum of money, in baht, the way a reader would write it. */
+const baht = (v) =>
+  v == null || !Number.isFinite(v)
+    ? '—'
+    : `${Math.round(v).toLocaleString('th-TH')} ฿`;
+
 /**
  * How often an open screen re-prices itself.
  *
@@ -167,7 +176,9 @@ function scoreTone(score) {
  */
 export function openScreener({ board, symbol = null, mode = 'screen' }) {
   const state = {
-    preset: 'moat',
+    // The income line is the one this reader comes for, so it is the one the
+    // screen opens on.
+    preset: 'dividend',
     universe: 'set100',
     lists: [],
     result: null,
@@ -195,6 +206,21 @@ export function openScreener({ board, symbol = null, mode = 'screen' }) {
     backtest: null,
     backtestOpen: false,
     backtestLoading: false,
+    // How much money the buy plan is planning.
+    planCapital: 10_000_000,
+    planFolded: false,
+    planOpen: false,
+    // Where the themes stand, as the back test has measured them.
+    presetRanks: {},
+    // How long the money is held, and what the money is.
+    holdYears: 5,
+    simulation: {
+      capital: 5000000,
+      monthly: 25000,
+      topN: 5,
+      waitMode: 'value',
+      waitDrop: 0.1,
+    },
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
     overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
@@ -280,6 +306,8 @@ async function runScreen(state, render, { background = false } = {}) {
     });
     state.updatedAt = Date.now();
     state.error = null;
+    // Where the themes stand, measured by the back test.
+    if (state.result.presetRanks) state.presetRanks = state.result.presetRanks;
   } catch (err) {
     // A refresh that fails leaves the last good table alone; a first run that
     // fails has nothing else to show.
@@ -534,8 +562,13 @@ function paintToolbar(body, state, rerender, setAuto) {
     const chip = document.createElement('button');
     chip.type = 'button';
     chip.className = `scr-chip${state.preset === id ? ' is-on' : ''}`;
-    chip.textContent = t(`scr.preset.${id}`);
-    chip.title = t(`scr.preset.${id}.hint`);
+    // The medal of the theme's place, when the back test has measured it.
+    const place = state.presetRanks?.[id];
+    const medal = place && place <= 3 ? MEDALS[place - 1] : '';
+    chip.innerHTML = `${medal ? `<span class="scr-medal">${medal}</span>` : ''}${escape(t(`scr.preset.${id}`))}`;
+    chip.title = medal
+      ? `${t('scr.presetRank', { n: place })} — ${t(`scr.preset.${id}.hint`)}`
+      : t(`scr.preset.${id}.hint`);
     chip.addEventListener('click', () => {
       state.preset = id;
       runScreen(state, rerender);
@@ -589,6 +622,22 @@ function paintToolbar(body, state, rerender, setAuto) {
   });
   controls.appendChild(filterBtn);
 
+  // The buy plan: what the reader would do with the names on the screen. It is
+  // a view of its own, so the table of names keeps the whole screen and the
+  // plan gets the whole screen when it is asked for.
+  if (state.preset === 'dividend') {
+    const planBtn = document.createElement('button');
+    planBtn.type = 'button';
+    planBtn.className = `btn${state.planOpen ? ' is-on' : ''}`;
+    planBtn.textContent = t('scr.plan.button');
+    planBtn.title = t('scr.plan.hint');
+    planBtn.addEventListener('click', () => {
+      state.planOpen = !state.planOpen;
+      rerender();
+    });
+    controls.appendChild(planBtn);
+  }
+
   // The back test: the framework's own claim, checked against what the shares
   // did. It is the only honest answer to "does this screen work?".
   const btBtn = document.createElement('button');
@@ -605,7 +654,11 @@ function paintToolbar(body, state, rerender, setAuto) {
       state.backtestLoading = true;
       rerender();
       try {
-        state.backtest = await api.screenerBacktest({ preset: state.preset, holdYears: 3 });
+        state.backtest = await api.screenerBacktest({
+          preset: state.preset,
+          holdYears: state.holdYears,
+          simulation: state.simulation,
+        });
       } catch (err) {
         state.error = err;
       } finally {
@@ -649,6 +702,9 @@ function paintBacktest(body, state, rerender) {
   const box = document.createElement('div');
   box.className = 'scr-backtest';
   box.appendChild(section(t('scr.backtest.title'), t('scr.backtest.hint')));
+
+  // The controls: how long the money is held, and how much of it there is.
+  box.appendChild(paintBacktestControls(state, rerender));
 
   if (state.backtestLoading || !state.backtest) {
     const p = document.createElement('p');
@@ -729,7 +785,192 @@ function paintBacktest(body, state, rerender) {
   notes.textContent = t('scr.backtest.notes');
   box.appendChild(notes);
 
+  // The money.
+  if (result.simulation) box.appendChild(paintSimulation(result.simulation));
+
   body.appendChild(box);
+}
+
+/**
+ * The controls: how long the money is held, and how much of it there is.
+ *
+ * The holding period changes the whole answer, and so does the size of the
+ * shortlist, so both are here rather than buried in the server.
+ */
+function paintBacktestControls(state, rerender) {
+  const row = document.createElement('div');
+  row.className = 'scr-backtest__controls';
+
+  const field = (label, node) => {
+    const wrap = document.createElement('label');
+    wrap.className = 'scr-field';
+    wrap.appendChild(document.createTextNode(label));
+    wrap.appendChild(node);
+    return wrap;
+  };
+
+  const hold = document.createElement('select');
+  hold.className = 'input input--sm';
+  for (const years of [3, 5]) {
+    const opt = document.createElement('option');
+    opt.value = String(years);
+    opt.textContent = t('scr.backtest.holdOption', { years });
+    if (state.holdYears === years) opt.selected = true;
+    hold.appendChild(opt);
+  }
+  hold.addEventListener('change', () => {
+    state.holdYears = Number(hold.value);
+    runBacktest(state, rerender);
+  });
+
+  const number = (key, min, step) => {
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.className = 'input input--sm';
+    input.min = String(min);
+    input.step = String(step);
+    input.value = String(state.simulation[key]);
+    input.addEventListener('change', () => {
+      const value = Number(input.value);
+      if (!Number.isFinite(value) || value <= 0) {
+        input.value = String(state.simulation[key]);
+        return;
+      }
+      state.simulation[key] = value;
+      runBacktest(state, rerender);
+    });
+    return input;
+  };
+
+  row.append(
+    field(t('scr.backtest.hold'), hold),
+    field(t('scr.backtest.capital'), number('capital', 10000, 100000)),
+    field(t('scr.backtest.monthly'), number('monthly', 1000, 5000)),
+    field(t('scr.backtest.top'), number('topN', 1, 1)),
+  );
+
+  // What "a price worth paying" means. The two ways of saying it ask
+  // different questions, and the reader picks.
+  const wait = document.createElement('select');
+  wait.className = 'input input--sm';
+  for (const mode of ['value', 'drop']) {
+    const opt = document.createElement('option');
+    opt.value = mode;
+    opt.textContent = t(`scr.sim.waitMode.${mode}`);
+    if ((state.simulation.waitMode ?? 'value') === mode) opt.selected = true;
+    wait.appendChild(opt);
+  }
+  wait.addEventListener('change', () => {
+    state.simulation.waitMode = wait.value;
+    runBacktest(state, rerender);
+  });
+  const drop = document.createElement('input');
+  drop.type = 'number';
+  drop.className = 'input input--sm';
+  drop.min = '0';
+  drop.max = '90';
+  drop.step = '1';
+  drop.value = String(Math.round((state.simulation.waitDrop ?? 0.1) * 100));
+  drop.addEventListener('change', () => {
+    const value = Number(drop.value);
+    if (!Number.isFinite(value) || value < 0) {
+      drop.value = String(Math.round((state.simulation.waitDrop ?? 0.1) * 100));
+      return;
+    }
+    state.simulation.waitDrop = Math.min(0.9, value / 100);
+    runBacktest(state, rerender);
+  });
+  row.append(
+    field(t('scr.sim.waitLabel'), wait),
+    field(t('scr.sim.waitDrop'), drop),
+  );
+  return row;
+}
+
+/** Run the back test again, with whatever the controls now say. */
+async function runBacktest(state, rerender) {
+  state.backtestLoading = true;
+  rerender();
+  try {
+    state.backtest = await api.screenerBacktest({
+      preset: state.preset,
+      holdYears: state.holdYears,
+      simulation: state.simulation,
+    });
+  } catch (err) {
+    state.error = err;
+  } finally {
+    state.backtestLoading = false;
+    rerender();
+  }
+}
+
+/**
+ * What the money would have done.
+ *
+ * The same five million, the same names the screen ranked first, and the three
+ * ways a reader might have put the money in — all at once, a slice every
+ * month, or only when the price came down to something worth paying. The
+ * market is in the last column, because a number on its own says nothing.
+ */
+function paintSimulation(sim) {
+  const wrap = document.createElement('div');
+  wrap.className = 'scr-simulation';
+
+  wrap.appendChild(section(t('scr.sim.title'), t('scr.sim.hint')));
+
+  const averages = sim.averages ?? {};
+  const summary = document.createElement('p');
+  summary.className = 'section__hint';
+  summary.textContent = t('scr.sim.summary', {
+    capital: baht(sim.capital),
+    monthly: baht(sim.monthly),
+    top: sim.topN,
+    lump: percent(averages.lump),
+    dca: percent(averages.dca),
+    wait: percent(averages.wait),
+    universe: percent(sim.universe),
+  });
+  wrap.appendChild(summary);
+
+  const table = document.createElement('table');
+  table.className = 'scr-table';
+  table.innerHTML = `<thead><tr>
+      <th>${escape(t('scr.sim.period'))}</th>
+      <th>${escape(t('scr.sim.names'))}</th>
+      <th class="num">${escape(t('scr.sim.lump'))}</th>
+      <th class="num">${escape(t('scr.sim.dca'))}</th>
+      <th class="num">${escape(t('scr.sim.wait'))}</th>
+      <th class="num">${escape(t('scr.sim.universe'))}</th>
+    </tr></thead>`;
+  const tbody = document.createElement('tbody');
+  for (const p of sim.periods ?? []) {
+    const tr = document.createElement('tr');
+    const names = (p.picks ?? []).map((x) => x.symbol.replace('SET:', '')).join(', ');
+    const cell = (r) => (r == null
+      ? '<td class="num">—</td>'
+      : `<td class="num ${r >= 0 ? 'is-up' : 'is-down'}">${baht(r.value)}<br><span class="scr-sim__ret">${percent(r.return)}</span></td>`);
+    tr.innerHTML = `
+      <td>${escape(p.date)} → ${escape(p.to)}</td>
+      <td class="scr-sim__names">${escape(names || '—')}</td>
+      ${cell(p.result?.lump)}
+      ${cell(p.result?.dca)}
+      ${cell(p.result?.wait)}
+      <td class="num">${percent(p.universe)}</td>`;
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  const tableWrap = document.createElement('div');
+  tableWrap.className = 'scr-table-wrap';
+  tableWrap.appendChild(table);
+  wrap.appendChild(tableWrap);
+
+  const notes = document.createElement('p');
+  notes.className = 'section__hint';
+  notes.textContent = t('scr.sim.notes');
+  wrap.appendChild(notes);
+
+  return wrap;
 }
 
 /**
@@ -890,6 +1131,10 @@ function paintResults(body, state, rerender) {
     empty.className = 'section__hint';
     empty.textContent = t('scr.empty');
     body.appendChild(empty);
+  } else if (state.planOpen && state.preset === 'dividend') {
+    // The plan gets the whole screen, so every row of it can be read without
+    // hunting: the research table is one click away.
+    body.appendChild(paintBuyPlan(state, rerender));
   } else {
     body.appendChild(buildTable(rows, state, rerender));
   }
@@ -940,6 +1185,183 @@ const PEER_METRICS = [
   { key: 'yield', label: 'scr.col.yield', better: 'high', value: (row) => percent(row.dividendYield) },
   { key: 'de', label: 'scr.col.de', better: 'low', value: (row) => (row.de == null ? '—' : row.de.toFixed(2)) },
 ];
+
+/**
+ * The buy plan.
+ *
+ * A screen is a list of names; a plan says what to do with them. For the
+ * income line that is four things for every name — what it pays, what it
+ * costs, the price worth paying for it, and the price at which the income has
+ * been priced out of it — and one thing for the list as a whole: how much
+ * money it takes, and how much of it comes back every year.
+ *
+ * The rules for selling are printed with it, because a list without an exit
+ * is not a plan: an income name that has risen until it no longer pays is a
+ * different thing from the one the screen picked.
+ */
+function paintBuyPlan(state, rerender) {
+  const result = state.result;
+  const rows = (result?.rows ?? []).filter((r) => r.pass);
+  if (!rows.length) return document.createComment('');
+
+  const box = document.createElement('div');
+  box.className = `scr-plan${state.planFolded ? ' is-folded' : ''}`;
+
+  const capital = state.planCapital ?? 10_000_000;
+  // The theme's own floor: the price at which a name no longer pays enough to
+  // belong here. It comes from the rule, not from a number typed in here.
+  const floor = rows[0]?.checks?.find((c) => c.id === 'dividendYield')?.threshold ?? 0.04;
+  const perName = capital / rows.length;
+
+  // The plan can be folded away, so the reader can give the whole screen to
+  // the table of names when that is what they came for.
+  const head = document.createElement('div');
+  head.className = 'scr-plan__head';
+  head.appendChild(section(t('scr.plan.title'), t('scr.plan.hint')));
+  const fold = document.createElement('button');
+  fold.type = 'button';
+  fold.className = 'btn btn--sm';
+  fold.textContent = state.planFolded ? t('scr.plan.show') : t('scr.plan.hide');  fold.addEventListener('click', () => {
+    state.planFolded = !state.planFolded;
+    rerender();
+  });
+  head.appendChild(fold);
+  box.appendChild(head);
+
+  // The controls.
+  const controls = document.createElement('div');
+  controls.className = 'scr-plan__controls';
+  const moneyField = document.createElement('label');
+  moneyField.className = 'scr-field';
+  moneyField.appendChild(document.createTextNode(t('scr.plan.capital')));
+  const money = document.createElement('input');
+  money.type = 'number';
+  money.className = 'input input--sm';
+  money.min = '10000';
+  money.step = '100000';
+  money.value = String(capital);
+  money.addEventListener('change', () => {
+    const value = Number(money.value);
+    if (!Number.isFinite(value) || value <= 0) {
+      money.value = String(capital);
+      return;
+    }
+    state.planCapital = value;
+    rerender();
+  });
+  moneyField.appendChild(money);
+  controls.appendChild(moneyField);
+
+  const addAll = document.createElement('button');
+  addAll.type = 'button';
+  addAll.className = 'btn btn--sm';
+  addAll.textContent = t('scr.plan.trackAll');
+  addAll.addEventListener('click', async () => {
+    addAll.disabled = true;
+    let added = 0;
+    for (const row of rows) {
+      try {
+        await api.addTracked({
+          symbol: row.symbol,
+          name: row.name,
+          note: t('scr.plan.note', { yield: percent(row.dividendYield) }),
+          at: {
+            price: row.price,
+            pe: row.pe,
+            yield: row.dividendYield,
+            score: row.score,
+            intrinsic: row.ddm?.intrinsic ?? null,
+          },
+        });
+        added += 1;
+      } catch {
+        // A name the list already holds is not a failure.
+      }
+    }
+    addAll.disabled = false;
+    toast(t('scr.plan.tracked', { n: added }), { type: 'success' });
+  });
+  controls.appendChild(addAll);
+  box.appendChild(controls);
+
+  // The list, and what it adds up to.
+  const income = rows.reduce((sum, r) => sum + (r.dps ?? 0) * (perName / (r.price || 1)), 0);
+  const sectors = new Map();
+  for (const row of rows) {
+    const key = row.sector || '—';
+    sectors.set(key, (sectors.get(key) ?? 0) + 1);
+  }
+  const worstSector = [...sectors.entries()].sort((a, b) => b[1] - a[1])[0];
+  const summary = document.createElement('p');
+  summary.className = 'section__hint';
+  summary.textContent = t('scr.plan.summary', {
+    names: rows.length,
+    each: baht(perName),
+    income: baht(income),
+    yield: percent(rows.reduce((s, r) => s + (r.dividendYield ?? 0), 0) / rows.length),
+    sector: worstSector ? t('scr.plan.sector', { name: SECTOR_TH[worstSector[0]] ?? worstSector[0], n: worstSector[1] }) : '',
+  });
+  box.appendChild(summary);
+
+  if (worstSector && worstSector[1] >= Math.ceil(rows.length / 3)) {
+    const warn = document.createElement('p');
+    warn.className = 'section__hint is-warn';
+    warn.textContent = t('scr.plan.sectorWarn', {
+      name: SECTOR_TH[worstSector[0]] ?? worstSector[0],
+      n: worstSector[1],
+      cap: Math.ceil(rows.length / 3),
+    });
+    box.appendChild(warn);
+  }
+
+  const table = document.createElement('table');
+  table.className = 'scr-table';
+  table.innerHTML = `<thead><tr>
+      <th>${escape(t('scr.plan.name'))}</th>
+      <th class="num">${escape(t('scr.plan.price'))}</th>
+      <th class="num">${escape(t('scr.plan.score'))}</th>
+      <th class="num">${escape(t('scr.plan.dps'))}</th>
+      <th class="num">${escape(t('scr.plan.yield'))}</th>
+      <th class="num">${escape(t('scr.plan.payout'))}</th>
+      <th class="num">${escape(t('scr.plan.streak'))}</th>
+      <th class="num">${escape(t('scr.plan.buy'))}</th>
+      <th class="num">${escape(t('scr.plan.sell'))}</th>
+      <th class="num">${escape(t('scr.plan.income'))}</th>
+    </tr></thead>`;
+  const tbody = document.createElement('tbody');
+  for (const row of rows) {
+    const dps = row.dps ?? row.ttmDps ?? null;
+    // The price at which the income has been priced out: the dividend per
+    // share divided by the floor the theme sets.
+    const sellAt = dps && floor ? dps / floor : null;
+    const units = row.price ? perName / row.price : 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
+      <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
+      <td class="num">${row.score}</td>
+      <td class="num">${dps == null ? '—' : dps.toFixed(2)}</td>
+      <td class="num">${percent(row.dividendYield)}</td>
+      <td class="num">${row.payout == null ? '—' : `${(row.payout * 100).toFixed(0)}%`}</td>
+      <td class="num">${row.streak == null ? '—' : row.streak}</td>
+      <td class="num">${row.ddm?.intrinsic == null ? '—' : row.ddm.intrinsic.toFixed(2)}</td>
+      <td class="num">${sellAt == null ? '—' : sellAt.toFixed(2)}</td>
+      <td class="num">${units > 0 ? baht(units * (dps ?? 0)) : '—'}</td>`;
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  const wrap = document.createElement('div');
+  wrap.className = 'scr-table-wrap';
+  wrap.appendChild(table);
+  box.appendChild(wrap);
+
+  const rules = document.createElement('p');
+  rules.className = 'section__hint scr-plan__rules';
+  rules.textContent = t('scr.plan.rules', { floor: percent(floor, 0) });
+  box.appendChild(rules);
+
+  return box;
+}
 
 /**
  * The exchange's sector names, in Thai.
@@ -1041,6 +1463,10 @@ function buildTable(rows, state, rerender) {
   // reading as a sorting bug.
   const passing = rows.filter((row) => row.pass).length;
   let divided = false;
+  // The first three of the ranking are marked, because the order is the
+  // screen's opinion and the reader should be able to see the top of it
+  // without counting rows.
+  let rank = 0;
   for (const row of rows) {
     if (!row.pass && !divided) {
       divided = true;
@@ -1076,8 +1502,11 @@ function buildTable(rows, state, rerender) {
     const coverageTitle = row.coverage != null && row.coverage < 1
       ? t('scr.coverageHint', { n: Math.round(row.coverage * 100) })
       : '';
+    // The medal of the ranking: first, second, third, and nothing after that.
+    const medal = row.pass && rank < 3 ? MEDALS[rank] : '';
+    if (row.pass) rank += 1;
     tr.innerHTML = `
-      <td><b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
+      <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
       <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
       <td class="num">${percent(row.roe3)}${peerBadge(row, 'roe')}</td>
@@ -1189,13 +1618,24 @@ function scorecard(detail) {
     const verdict = check.pass === true ? 'pass'
       : check.pass === null ? 'na'
         : check.warn ? 'warn' : 'fail';
+    // What the rule has actually done, measured by the back test.
+    const edge = Number.isFinite(check.edge)
+      ? `<i class="scr-edge ${check.edge >= 0 ? 'is-up' : 'is-down'}"
+           title="${escape(t('scr.check.edgeHint', { n: (check.edge * 100).toFixed(1) }))}">${(check.edge * 100).toFixed(0)}%</i>`
+      : '';
+    // Two things a rule cannot see on its own.
+    const warn = check.oneOff
+      ? `<i class="scr-flag" title="${escape(t('scr.check.oneOff'))}">!</i>`
+      : check.buyback
+        ? `<i class="scr-flag" title="${escape(t('scr.check.buyback'))}">!</i>`
+        : '';
     const row = document.createElement('div');
     row.className = `scr-check is-${verdict}`;
     row.innerHTML = `
       <span class="scr-check__mark">${verdict === 'pass' ? '✓' : verdict === 'na' ? '–' : verdict === 'warn' ? '!' : '✕'}</span>
-      <span class="scr-check__label">${escape(t(`scr.check.${id}`))}</span>
+      <span class="scr-check__label">${escape(t(`scr.check.${id}`))}${warn}</span>
       <span class="scr-check__value">${escape(formatCheckValue(check))}</span>
-      <span class="scr-check__verdict">${escape(t(`scr.verdict.${verdict}`))}</span>`;
+      <span class="scr-check__verdict">${escape(t(`scr.verdict.${verdict}`))}${edge}</span>`;
     row.title = t(`scr.check.${id}.hint`, { threshold: formatThreshold(check) });
     list.appendChild(row);
   }

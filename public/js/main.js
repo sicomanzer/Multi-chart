@@ -19,6 +19,7 @@ import { openIndicatorPicker } from './dialogs/indicator-dialog.js';
 import { openWatchlists } from './dialogs/watchlist-dialog.js';
 import { openOversoldList } from './dialogs/oversold-dialog.js';
 import { openScreener } from './dialogs/screener-dialog.js';
+import { openTracked } from './dialogs/tracked-dialog.js';
 
 const LOCAL_KEY = 'mctd:last-workspace';
 
@@ -44,6 +45,7 @@ const el = {
   addChartBtn: document.getElementById('addChartBtn'),
   watchlistBtn: document.getElementById('watchlistBtn'),
   screenerBtn: document.getElementById('screenerBtn'),
+  trackedBtn: document.getElementById('trackedBtn'),
   analyzeBtn: document.getElementById('analyzeBtn'),
   oversoldBtn: document.getElementById('oversoldBtn'),
   emptyAddBtn: document.getElementById('emptyAddBtn'),
@@ -194,6 +196,8 @@ function wireTopbar(board) {
   el.watchlistBtn.addEventListener('click', () =>
     openWatchlists({ board, onChanged: () => refreshWorkspaceList(board) }));
   el.screenerBtn.addEventListener('click', () => openScreener({ board }));
+  // The names being followed: what was looked at, why, and where it is now.
+  el.trackedBtn.addEventListener('click', () => openTracked({ board }));
   // One company in full: the same dialog the screener opens for a row, with a
   // search box in front of it.
   el.analyzeBtn.addEventListener('click', () => openScreener({ board, mode: 'analyze' }));

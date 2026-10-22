@@ -238,6 +238,22 @@ function dividendStreak(dividends, asOf = new Date()) {
  * which makes the perpetuity negative or infinite. A screen that quietly
  * printed `Infinity` there would rank those names first, so it prints nothing.
  */
+/**
+ * The default assumptions of the dividend discount model.
+ *
+ * Nine per cent is the required return, five per cent is the growth a Thai
+ * company can be expected to keep for five years without the reader having to
+ * believe more than that. The back test uses the same numbers as the screen,
+ * so the value it records for a company in 2019 is the value the reader would
+ * have written down in 2019.
+ */
+export const DEFAULTS = {
+  r: 0.09,
+  g1: 0.05,
+  g2: 0.05,
+  years: 5,
+};
+
 export function ddm({ d0, g1, g2 = 0.03, r = 0.09, years = 5 }) {
   const safe = {
     d0: Number(d0),
@@ -544,8 +560,28 @@ export function scoreQuality({
   // growing 5% a year is the median. A rule that every name passes is not a
   // rule, and one that only a handful passes says nothing but "cyclical".
   const growth = growthMetrics(history);
+  // Growth that came from buying back shares.
+  //
+  // Earnings per share can grow while the profit does not, if the company is
+  // buying its own stock back. That is not a business getting bigger, and a
+  // growth rule that cannot tell the difference is really measuring the share
+  // count.
+  const buyback = (() => {
+    const last = years.at(-1);
+    const first = years.at(-4);
+    if (!last || !first) return false;
+    const epsFrom = first.eps;
+    const epsTo = last.eps;
+    const profitFrom = first.netIncome;
+    const profitTo = last.netIncome;
+    if (!(epsFrom > 0) || !(profitFrom > 0) || !(profitTo > 0)) return false;
+    const epsGrowth = (epsTo / epsFrom) ** (1 / 3) - 1;
+    const profitGrowth = (profitTo / profitFrom) ** (1 / 3) - 1;
+    const sharesFell = last.shares && first.shares && last.shares < first.shares * 0.98;
+    return Boolean(sharesFell) && epsGrowth > 0.05 && profitGrowth < epsGrowth - 0.05;
+  })();
   add('epsGrowth', growthVerdict(growth?.eps3, 0.10),
-    growth?.eps3?.value ?? null, 0.10, { years: 3 });
+    growth?.eps3?.value ?? null, 0.10, { years: 3, buyback });
   add('revenueGrowth', growthVerdict(growth?.revenue5, 0.05),
     growth?.revenue5?.value ?? null, 0.05, { years: 5 });
   // Eight profitable years out of ten is "earnings that do not stop". Fewer
@@ -585,10 +621,19 @@ export function scoreQuality({
   const cfoBeatsComplete = last3.length === 3 && last3.every(
     (y) => typeof y.operatingCashFlow === 'number' && typeof y.netIncome === 'number',
   );
+  // A profit with no cash behind it.
+  //
+  // A one-off gain — a swap, an asset sale, a compensation from a
+  // compensation — reads as profit and leaves nothing in the bank, and a screen
+  // that only reads the profit will call it a business that earns. The cash
+  // flow is the tell, and it is the same tell the rule above uses.
+  const oneOff = last3.some((y) => typeof y.netIncome === 'number' && typeof y.operatingCashFlow === 'number'
+    && y.netIncome > 0 && y.operatingCashFlow > 0
+    && y.netIncome > y.operatingCashFlow * 1.5);
   add('cfoBeatsEarnings', isFinancial ? null : cfoBeatsComplete
     ? cfoBeatsKnown >= Math.min(2, last3.length) : null,
   cfoBeatsKnown, Math.min(2, last3.length),
-  { of: last3.length, ...(isFinancial ? { na: true } : {}) });
+  { of: last3.length, oneOff, ...(isFinancial ? { na: true } : {}) });
 
   const fcfKnown = last4.map((y) => y.freeCashFlow);
   const fcfComplete = fcfKnown.length > 0 && fcfKnown.every((v) => typeof v === 'number');

@@ -10,7 +10,7 @@
     "dev": "node --watch server/index.js",
     "test": "node scripts/run-tests.mjs",
     "verify": "node scripts/verify-indicators.mjs",
-    "check": "node scripts/check-syntax.mjs"
+    "check": "node scripts/check-syntax.mjs && node scripts/check-encoding.mjs"
   },
   "engines": {
     "node": ">=20"

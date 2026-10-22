@@ -17,8 +17,13 @@
  * Two writers (two browser tabs, or the CLI) can both append the same
  * symbol/date; the later line wins on load. That is the intended behaviour — the
  * numbers are the same, and a duplicate is cheaper than a lock.
+ *
+ * The container's filesystem is wiped on every deploy, so the daily job keeps a
+ * copy of each day in `data/history/`, one file per day, and the loader reads
+ * those as well. The series is then the repository's rather than the
+ * container's, and it survives a deploy.
  */
-import { mkdir, readFile, appendFile, stat } from 'node:fs/promises';
+import { mkdir, readFile, appendFile, stat, readdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
 /** Refuse to grow without bound: ~30 MB is a decade of daily snapshots. */
@@ -44,6 +49,9 @@ export class FundamentalsHistory {
   }
 
   async load() {
+    // The daily copies first, then the live file: the same day recorded twice
+    // is the live file's line that wins, and it is the more recent of the two.
+    await this._loadCopies();
     try {
       const text = await readFile(this.filePath, 'utf8');
       let bad = 0;
@@ -67,6 +75,40 @@ export class FundamentalsHistory {
     }
     this.loaded = true;
     return this;
+  }
+
+  /**
+   * The daily copies the job keeps in the repository.
+   *
+   * One file per day under `data/history/`, written by the daily job and
+   * committed, so the series outlives the container it was recorded in.
+   */
+  async _loadCopies() {
+    const dir = join(dirname(this.filePath), 'history');
+    let names = [];
+    try {
+      names = (await readdir(dir)).filter((n) => n.endsWith('.jsonl')).sort();
+    } catch {
+      return;                               // no copies yet; the normal first run
+    }
+    for (const name of names) {
+      try {
+        const text = await readFile(join(dir, name), 'utf8');
+        for (const line of text.split('\n')) {
+          const trimmed = line.trim();
+          if (!trimmed) continue;
+          try {
+            const rec = JSON.parse(trimmed);
+            if (rec?.s && rec?.d) this._index(rec);
+          } catch {
+            // A torn line in a copy is not worth stopping for.
+          }
+        }
+      } catch (err) {
+        console.warn(`[history] could not read the copy ${name}: ${err.message}`);
+      }
+    }
+    if (names.length) console.log(`[history] read ${names.length} daily copy/copies from ${dir}`);
   }
 
   _index(rec) {
@@ -158,6 +200,15 @@ export class FundamentalsHistory {
       rows.push(point);
     }
     return rows.sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  /** The rows recorded on one day, for the daily job to carry into the repository. */
+  rowsForDate(date) {
+    const out = [];
+    for (const rec of this.points.values()) {
+      if (rec.d === date) out.push(JSON.stringify(rec));
+    }
+    return out.join('\n');
   }
 
   /** Latest recorded point per symbol, for "what did I last see". */

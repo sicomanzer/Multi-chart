@@ -7,13 +7,13 @@
  * from the current board, edit membership, and push the whole list onto the
  * board in one action.
  *
- * Deliberately a modal rather than a side panel โ€” a 60-chart board is already
+ * Deliberately a modal rather than a side panel — a 60-chart board is already
  * tight on a laptop, and a permanent drawer would compete with the charts it
  * exists to serve.
  *
  * Naming and deleting happen inline, not through `window.prompt` /
  * `window.confirm`. Native dialogs are blocked outright in plenty of contexts
- * โ€” embedded frames, automation, some kiosk and in-app browsers โ€” and they
+ * — embedded frames, automation, some kiosk and in-app browsers — and they
  * return null rather than throwing, so a blocked prompt is indistinguishable
  * from a cancelled one and a `if (answer == null) return;` guard turns the
  * failure into silence. An inline field cannot fail that way, and it can be
@@ -31,7 +31,7 @@ import { t, tp, tfLabel } from '../i18n.js';
  * @param {object} opts
  * @param {import('../board.js').Board} opts.board
  * @param {() => void} [opts.onChanged] called after the board has been modified
- *   or a list has been created, renamed, duplicated or deleted โ€” whatever
+ *   or a list has been created, renamed, duplicated or deleted — whatever
  *   else is showing the list of watchlists needs to re-read it
  */
 export function openWatchlists({ board, onChanged }) {
@@ -79,7 +79,7 @@ export function openWatchlists({ board, onChanged }) {
     },
   });
 
-  // โ”€โ”€ state โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€
+  // ── state ──────────────────────────────────────────────────────────────────
 
   async function refresh() {
     const data = await api.watchlists();
@@ -105,7 +105,7 @@ export function openWatchlists({ board, onChanged }) {
    * Run a mutation, reporting failure instead of dropping it.
    *
    * Every server call here is fallible, and a swallowed rejection looks exactly
-   * like a button that does nothing โ€” which is the bug this dialog was written
+   * like a button that does nothing — which is the bug this dialog was written
    * to avoid in the first place.
    */
   async function attempt(label, fn) {
@@ -118,7 +118,7 @@ export function openWatchlists({ board, onChanged }) {
     }
   }
 
-  // โ”€โ”€ inline name editor, shared by create / rename / seed โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€
+  // ── inline name editor, shared by create / rename / seed ───────────────────
 
   /**
    * A text field with its own confirm and cancel.
@@ -126,7 +126,7 @@ export function openWatchlists({ board, onChanged }) {
    * Enter commits, Escape cancels, and the field is focused and pre-selected on
    * the next frame so it can be typed over without a second click. Commit is
    * ignored while the value is empty rather than silently creating a nameless
-   * list โ€” the server would accept one, but that is not what anybody means.
+   * list — the server would accept one, but that is not what anybody means.
    */
   function nameEditor({ value, placeholder, submitLabel, onSubmit, onCancel }) {
     const wrap = document.createElement('form');
@@ -163,7 +163,7 @@ export function openWatchlists({ board, onChanged }) {
     return wrap;
   }
 
-  // โ”€โ”€ left pane: the lists โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€
+  // ── left pane: the lists ───────────────────────────────────────────────────
 
   function renderLists() {
     left.innerHTML = '';
@@ -228,19 +228,19 @@ export function openWatchlists({ board, onChanged }) {
       row.type = 'button';
       row.className = `wl-list${list.id === selectedId ? ' is-active' : ''}`;
       const preview = list.count
-        ? list.preview.map((s) => s.split(':')[1]).join(' · ')
+        ? list.preview.map((s) => s.split(':')[1]).join(' ? ')
         : t('wl.previewEmpty');
       row.innerHTML = `
         <b>${escape(list.name)}</b>
         <span class="wl-list__count">${list.count}</span>
-        <span class="wl-list__preview">${escape(preview)}${list.count > list.preview.length ? ' …' : ''}</span>`;
+        <span class="wl-list__preview">${escape(preview)}${list.count > list.preview.length ? ' �' : ''}</span>`;
       row.addEventListener('click', async () => {
         selectedId = list.id;
         current = await api.watchlist(list.id).catch(() => null);
         // Selecting a list narrows the board to it. Clicking the list that is
         // already narrowing clears it again, so the control has one obvious
         // meaning: "show me these, or show me everything".
-        // Canonical `EXCHANGE:TICKER`, which is what the board compares against โ€”
+        // Canonical `EXCHANGE:TICKER`, which is what the board compares against —
         // stripping the exchange would match nothing.
         const symbols = new Set(current?.symbols ?? []);
         board.toggleFilter(symbols.size ? symbols : null, list.name, list.id);
@@ -283,7 +283,7 @@ export function openWatchlists({ board, onChanged }) {
     }
   }
 
-  // โ”€โ”€ right pane: one list โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€โ”€
+  // ── right pane: one list ───────────────────────────────────────────────────
 
   function renderDetail() {
     right.innerHTML = '';
@@ -371,7 +371,7 @@ export function openWatchlists({ board, onChanged }) {
   function detailBody() {
     const frag = document.createDocumentFragment();
 
-    // โ”€โ”€ add symbols โ”€โ”€
+    // ── add symbols ──
     frag.appendChild(section(t('wl.addSymbols'), t('wl.addSymbolsHint')));
 
     const input = document.createElement('input');
@@ -415,7 +415,7 @@ export function openWatchlists({ board, onChanged }) {
     row.append(input, searchBtn, addBtn);
     frag.appendChild(row);
 
-    // โ”€โ”€ membership โ”€โ”€
+    // ── membership ──
     const max = board.meta?.maxWatchlistSymbols;
     frag.appendChild(section(
       `${t('wl.symbols')} (${current.symbols.length}${max ? ` / ${max}` : ''})`,
@@ -432,10 +432,10 @@ export function openWatchlists({ board, onChanged }) {
       const chip = document.createElement('div');
       chip.className = `wl-symbol${drawn.has(symbol) ? ' is-on-board' : ''}`;
       chip.innerHTML = `
-        <i class="wl-symbol__on" title="${escape(t('wl.onBoard'))}">●</i>
+        <i class="wl-symbol__on" title="${escape(t('wl.onBoard'))}">?</i>
         <b>${escape(symbol.split(':')[1])}</b>
         <span>${escape(symbol.split(':')[0])}</span>`;
-      const x = btn('✕', 'icon-btn wl-symbol__x', async () => {
+      const x = btn('?', 'icon-btn wl-symbol__x', async () => {
         const ok = await attempt(t('wl.act.remove'), async () => {
           await api.removeWatchlistSymbols(current.id, [symbol]);
           await refresh();
@@ -449,7 +449,7 @@ export function openWatchlists({ board, onChanged }) {
     }
     frag.appendChild(list);
 
-    // โ”€โ”€ load onto the board โ”€โ”€
+    // ── load onto the board ──
     frag.appendChild(section(t('wl.loadTitle')));
 
     const opts = document.createElement('div');
@@ -459,7 +459,7 @@ export function openWatchlists({ board, onChanged }) {
     tfField.className = 'input input--select';
     tfField.innerHTML = `<option value="">${escape(t('wl.boardDefault', { tf: board.workspace.settings.defaultTimeframe }))}</option>`
       + board.meta.timeframes
-        .map((tf) => `<option value="${escape(tf.id)}">${escape(tf.id)} — ${escape(tfLabel(tf.id, tf.label))}</option>`)
+        .map((tf) => `<option value="${escape(tf.id)}">${escape(tf.id)} � ${escape(tfLabel(tf.id, tf.label))}</option>`)
         .join('');
     tfField.addEventListener('change', () => { loadTimeframe = tfField.value; });
 
@@ -487,14 +487,14 @@ export function openWatchlists({ board, onChanged }) {
     if (result.overCapacity.length) {
       parts.push(tp('wl.report.full', result.overCapacity.length, { limit: result.limit }));
     }
-    toast(parts.join(' · '), {
+    toast(parts.join(' ? '), {
       type: result.overCapacity.length ? 'error' : 'success',
       timeout: result.overCapacity.length ? 7000 : 3500,
     });
     render();
   }
 
-  // Load before the first paint โ€” rendering empty panes and then filling them
+  // Load before the first paint — rendering empty panes and then filling them
   // makes the dialog look broken on a cold or slow connection.
   refresh()
     .then(render)

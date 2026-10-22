@@ -550,6 +550,22 @@ condition: a company with no P/E because it lost money does not pass "P/E
 under 15". The conditions are kept between sessions, because a screen built
 last week is a screen worth having again today.
 
+**The names you are following.** A screen gives a shortlist and then the reader
+is on their own: a shortlist is a list of tickers, and a ticker does not
+remember why it was looked at or what it cost to look. The *Following* list
+keeps each name with the reason it was worth looking at, the score, the
+multiple and the yield it had that day, and where those numbers are now. The
+daily record supplies the trend, so the line of the multiple and the yield
+fills in as the days go by rather than being drawn from nothing. The file is
+tracked in the repository, so the list a reader leaves behind is the list their
+successor opens.
+
+**One file to carry everything.** The container's filesystem is wiped on every
+deploy, so the boards, the lists and the names being followed are worth taking
+with you: *Settings → Backup* writes them all into one JSON file, and
+*Restore from a file* puts them back. The daily job does the same thing for the
+history file, so the series outlives the container it was recorded in.
+
 **Does the screen work?** A back test in the toolbar answers it: the names a
 preset would have picked, at the dates it could have picked them, and what they
 did over the holding period, against every name in the universe at the same
@@ -562,8 +578,49 @@ names that did not. A rule whose two groups earned the same did nothing.
 
 Three rules cannot be judged from the ten-year history — the interest cover
 needs the interest expense, the free cash flow needs the capital spending, and
-the leverage rule counts a wider debt than the screen's interest-bearing one —
-and they are left out rather than guessed.
+the leverage rule counts the exchange's wider debt — and they are left out
+rather than guessed.
+
+**What the money would have done.** The rules are an abstraction; a reader
+wants a number with money in it. The same panel takes the money — how much of
+it, how much a month, how many names to hold, and for how long — and answers
+with three ways of putting it to work: all at once on the first day, a slice
+every month, or only when the price came down to something worth paying. The
+level worth paying is the same dividend discount model the screen quotes, on
+the figures that were available that day, so it is the value the reader would
+have written down then and not the one the model quotes today.
+
+The rules of that game are worth stating plainly, because they decide the
+answer. The dividends are counted as cash — for the portfolio and for the
+market alike, because a screen judged on the price alone would be judged on
+the wrong thing for an income mandate. Money that has not been deployed earns
+nothing, so a strategy that waits carries the cost of waiting in its own
+figures. And the shortlist is the table's own order, because "the first five"
+is a sentence about the table the reader was looking at.
+
+It is also a portfolio of five or ten names, not of eighty: the difference
+between a screen that works and a handful of stocks that happened to work is
+concentration, and the panel shows the answer for a shortlist of any size so
+the reader can see which one it is.
+
+**The scorecard carries the evidence.** Beside every rule is the number the
+back test measured for it: how much more the names that cleared it earned over
+the years the screen can be tested on, against the names that did not. A rule
+whose edge is negative has cost the reader money, and saying so is the point
+of showing it — a framework that has not been tested is an opinion. Two things
+a rule cannot see on its own are flagged as well: a profit that did not turn
+into cash, which is what a one-off gain looks like from the outside, and
+earnings per share that grew while the profit did not, which is what buying
+shares back looks like.
+
+**The medals.** The first three names of the screen carry a medal, because the
+order is the screen's opinion and the reader should be able to see the top of
+it without counting rows. The theme buttons carry one too: the themes are
+ranked by the back test — the names each theme would have picked, held over
+the same years — so the medal on a theme and the evidence beside each rule are
+the same measurement and not two different ones. The ranking is measured over
+the three-year hold, and it arrives with the rules' own evidence, on the first
+refresh after the test has run.
 
 **How good, not just good.** A threshold says a company is good; a percentile
 says how good. Every row carries the share of the screened names it is better

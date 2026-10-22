@@ -31,3 +31,9 @@ Thumbs.db
 # Local overrides
 *.local
 data/*.jsonl
+# The daily copies the job keeps are the repository's copy of the series, so
+# they are tracked; the live file in the container is not.
+!data/history/*.jsonl
+# The measured rule edges are a cache: the app rebuilds them in the background
+# and they change every time the test is run.
+data/rule-edges.json

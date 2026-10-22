@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "tracked": [
+    {
+      "id": "tr_mvitfz2rsjhwy",
+      "symbol": "SET:ICHI",
+      "name": "Ichitan Group Public Company Limited",
+      "note": "",
+      "status": "watching",
+      "addedAt": 1792629707859,
+      "updatedAt": 1792636303094,
+      "at": {
+        "price": 13.399999618530273,
+        "pe": 13.705873168308234,
+        "yield": 0.0820895545757224,
+        "score": 94,
+        "intrinsic": 28.875000000000004
+      }
+    }
+  ]
+}

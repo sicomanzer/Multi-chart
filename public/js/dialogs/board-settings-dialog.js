@@ -1,8 +1,9 @@
 /**
  * Board settings dialog: layout, theme, polling, cross-chart behaviour.
  */
-import { modal, section, selectField, checkbox, escape } from '../ui.js';
+import { modal, section, selectField, checkbox, escape, toast } from '../ui.js';
 import { t, tp, tfLabel } from '../i18n.js';
+import { api } from '../api.js';
 
 export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [], onSave, onRefreshRatios, onSnapshotHistory, historyStatus = null }) {
   const next = { ...settings };
@@ -123,6 +124,69 @@ export function openBoardSettings({ settings, meta, mcpStatus, metricCatalog = [
       historyField.appendChild(snapshotBtn);
       renderHistoryNote(historyNote, historyStatus);
       body.appendChild(historyField);
+
+      // The reader's own work, carried out by hand.
+      //
+      // The container's filesystem is wiped on every deploy, so the boards, the
+      // lists and the names being followed are worth taking with you. One file
+      // holds all of it; importing replaces what is there.
+      const backupField = document.createElement('div');
+      backupField.className = 'field';
+      backupField.innerHTML = `<span class="field__label">${escape(t('bs.backup'))}</span>`;
+      const backupNote = document.createElement('p');
+      backupNote.className = 'section__hint';
+      backupNote.textContent = t('bs.backupHint');
+      backupField.appendChild(backupNote);
+
+      const exportBtn = document.createElement('button');
+      exportBtn.className = 'btn';
+      exportBtn.type = 'button';
+      exportBtn.textContent = t('bs.backupExport');
+      exportBtn.addEventListener('click', async () => {
+        exportBtn.disabled = true;
+        try {
+          const data = await api.backup();
+          const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `multi-chart-backup-${new Date().toISOString().slice(0, 10)}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (err) {
+          toast(t('bs.backupFailed', { msg: err.message }), { type: 'error' });
+        } finally {
+          exportBtn.disabled = false;
+        }
+      });
+
+      const importBtn = document.createElement('button');
+      importBtn.className = 'btn';
+      importBtn.type = 'button';
+      importBtn.textContent = t('bs.backupImport');
+      const importInput = document.createElement('input');
+      importInput.type = 'file';
+      importInput.accept = 'application/json,.json';
+      importInput.hidden = true;
+      importInput.addEventListener('change', async () => {
+        const file = importInput.files?.[0];
+        if (!file) return;
+        importBtn.disabled = true;
+        try {
+          const data = JSON.parse(await file.text());
+          await api.restoreBackup(data);
+          toast(t('bs.backupRestored'), { type: 'success' });
+          // The boards and the lists have changed underneath the app.
+          window.location.reload();
+        } catch (err) {
+          toast(t('bs.backupFailed', { msg: err.message }), { type: 'error' });
+          importBtn.disabled = false;
+        }
+      });
+      importBtn.addEventListener('click', () => importInput.click());
+
+      backupField.append(exportBtn, importBtn, importInput);
+      body.appendChild(backupField);
 
       const metricsWrap = document.createElement('div');
       metricsWrap.className = 'field';

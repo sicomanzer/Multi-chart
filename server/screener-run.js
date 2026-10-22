@@ -14,6 +14,7 @@ import {
   applyPreset,
   computeBands,
   ddm,
+  DEFAULTS,
   marginOfSafety,
   peerPercentiles,
   presetById,
@@ -23,6 +24,7 @@ import {
 import { normalizeSymbol, toYahooSymbol, uniqueSymbols } from './symbols.js';
 import { quoteBatch } from './quotes.js';
 import { annualHistory } from './finnomena.js';
+import { cachedRuleEdges, cachedPresetRanks, ensureRuleEdges } from './backtest.js';
 
 /** Yahoo tolerates a handful of parallel requests; more earns a 429. */
 const CONCURRENCY = 5;
@@ -37,12 +39,7 @@ const CONCURRENCY = 5;
  * but the number on screen no longer depends on a growth estimate derived from
  * four years of EPS.
  */
-export const DEFAULTS = {
-  r: 0.09,
-  g1: 0.05,
-  g2: 0.05,
-  years: 5,
-};
+export { DEFAULTS };
 
 async function mapLimit(items, limit, worker) {
   const out = new Array(items.length);
@@ -147,8 +144,19 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     history: history ? { years: trusted } : null,
   });
 
-  const dividend = sustainableDividend({ years: trusted, dividends: fin.dividends, asOf, ttmEps });
-  const d0 = dividend.d0;
+  // What each rule has actually done, attached to the rule it belongs to.
+  //
+  // A score says a company is good; the back test says whether picking the
+  // good companies was worth anything. The edges are measured over the index
+  // and kept for a day, so the run happens in the background and the answer
+  // arrives on the next refresh.
+  const edges = cachedRuleEdges();
+  for (const check of quality.checks) {
+    const edge = edges.get(check.id);
+    if (edge && Number.isFinite(edge.edge)) check.edge = edge.edge;
+  }
+
+  const dividend = sustainableDividend({ years: trusted, dividends: fin.dividends, asOf, ttmEps });  const d0 = dividend.d0;
   const g1 = clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 });
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
   const g2 = clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.20 });
@@ -389,6 +397,24 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
     peerCache.set(row.symbol, row.peers);
   }
 
+  // What each rule has actually done, attached to the rule it belongs to.
+  //
+  // A score says a company is good; the back test says whether picking the
+  // good companies was worth anything. The edges are measured over the index
+  // and kept for a day, so the run happens in the background and the answer
+  // arrives on the next refresh.
+  const edges = cachedRuleEdges();
+  for (const row of rows) {
+    for (const check of row.checks) {
+      const edge = edges.get(check.id);
+      if (edge && Number.isFinite(edge.edge)) check.edge = edge.edge;
+    }
+  }
+  ensureRuleEdges(SET100);
+
+  // The edge run is started here rather than on the first detail, so the answer
+  // is waiting by the time the reader opens a company.
+  ensureRuleEdges(SET100);
   const presetDef = presetById(preset);
   // The reader's own conditions narrow the universe first; the preset then
   // applies on top, so a name has to clear both.
@@ -428,6 +454,9 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
     rows: [...kept, ...rejected],
     matched: kept.length,
     errors,
+    // How the themes have done, so the reader can see which of them the
+    // evidence puts in front. The same run that measured the rules.
+    presetRanks: cachedPresetRanks(),
     meta: {
       preset,
       presetLabel: presetDef.id,

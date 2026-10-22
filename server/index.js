@@ -20,6 +20,7 @@
 import { fileURLToPath } from 'node:url';
 import { dirname, join, normalize, resolve } from 'node:path';
 import { randomUUID, timingSafeEqual } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
 
 import express from 'express';
 
@@ -30,8 +31,9 @@ import { FundamentalsHistory } from './history.js';
 import { finnomenaStatus, initAnnualHistory } from './finnomena.js';
 import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
+import { TrackedStore } from './tracked-store.js';
 import { runScreen, loadDetail, UNIVERSES, SET100 } from './screener-run.js';
-import { runBacktest } from './backtest.js';
+import { runBacktest, initRuleEdges } from './backtest.js';
 import { constituents, refresh as refreshConstituents } from './setindex.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
@@ -113,6 +115,12 @@ await store.load();
 const watchlists = new WatchlistStore(join(DATA_DIR, 'watchlists.json'));
 await watchlists.load();
 
+// The names being followed: a screen gives a shortlist, this is what happens
+// next. The file is tracked in the repository, so the list a reader leaves
+// behind is the list their successor opens.
+const tracked = new TrackedStore(join(DATA_DIR, 'tracked.json'));
+await tracked.load();
+
 // Fundamentals (P/E, P/BV, D/E, dividend yield) are not exposed by any MCP
 // tool, so they come from a small local sidecar that drives the same
 // tradingview-screener package the MCP itself uses.
@@ -128,6 +136,10 @@ await history.load();
 // so reading it at startup costs nothing and the health endpoint can report
 // whether the deploy really carries it.
 const annualSymbols = await initAnnualHistory();
+
+// What each rule has done, measured by the back test. The answer is saved so a
+// container that sleeps and wakes does not pay for the run again.
+const edgeRules = await initRuleEdges(join(DATA_DIR, 'rule-edges.json'));
 
 /**
  * Snapshot these symbols' ratios into the history file.
@@ -416,7 +428,16 @@ app.get('/api/fundamentals/history/summary', (_req, res) => {
 });
 
 app.post('/api/fundamentals/history/snapshot', asyncRoute(async (req, res) => {
-  const symbols = parseSymbolList(req.body?.symbols);
+  // With no body the app decides what to record: the board and the names being
+  // followed. That is what the daily job needs — it should not have to know
+  // which symbols the reader happens to care about today.
+  let symbols = parseSymbolList(req.body?.symbols);
+  if (symbols.length === 0) {
+    symbols = [
+      ...store.list().flatMap((w) => store.get(w.id)?.charts?.map((c) => c.symbol) ?? []),
+      ...tracked.list().map((e) => e.symbol),
+    ];
+  }
   if (symbols.length === 0) {
     return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbols is required' } });
   }
@@ -426,6 +447,23 @@ app.post('/api/fundamentals/history/snapshot', asyncRoute(async (req, res) => {
   // `tracked` lives on the module, not on the store, so add it here or the UI
   // renders "× 0 ratios".
   res.json({ ...result, summary: { ...history.summary(), tracked: TRACKED_METRICS } });
+}));
+
+/**
+ * The history file itself, for the daily job to carry back into the repository.
+ *
+ * The container's filesystem is wiped on every deploy, and the file is what the
+ * trend features read. The job records the day and then fetches this, so the
+ * series survives the next deploy.
+ */
+app.get('/api/fundamentals/history/file', asyncRoute(async (req, res) => {
+  const date = req.query.date ? String(req.query.date) : null;
+  if (date) {
+    res.type('text/plain').send(history.rowsForDate(date));
+    return;
+  }
+  const text = await readFile(history.filePath, 'utf8').catch(() => '');
+  res.type('text/plain').send(text);
 }));
 
 app.post('/api/fundamentals/cache/clear', (_req, res) => {
@@ -564,7 +602,21 @@ app.post('/api/screener/backtest', asyncRoute(async (req, res) => {
   const preset = String(body.preset ?? 'quality');
   const holdYears = Math.min(5, Math.max(1, Number(body.holdYears) || 3));
   const symbols = Array.isArray(body.symbols) && body.symbols.length ? body.symbols : SET100;
-  res.json(await runBacktest({ symbols, preset, holdYears }));
+  // The money part is optional: the back test on its own is a question about
+  // the rules, and the simulation is a question about a reader's own money.
+  const sim = body.simulation;
+  const simulation = sim && typeof sim === 'object'
+    ? {
+      capital: Math.min(1_000_000_000, Math.max(10_000, Number(sim.capital) || 5_000_000)),
+      monthly: Math.min(10_000_000, Math.max(1_000, Number(sim.monthly) || 25_000)),
+      topN: Math.min(20, Math.max(1, Number(sim.topN) || 5)),
+      // What "a price worth paying" means: the value the framework put on the
+      // company that day, or a set fall below the price the screen saw.
+      waitMode: sim.waitMode === 'drop' ? 'drop' : 'value',
+      waitDrop: Math.min(0.9, Math.max(0, Number(sim.waitDrop) || 0.1)),
+    }
+    : null;
+  res.json(await runBacktest({ symbols, preset, holdYears, simulation }));
 }));
 
 /** One company in full, with the series behind its valuation bands. */
@@ -680,6 +732,73 @@ app.delete('/api/workspaces/:id', (req, res) => {
 
 app.get('/api/watchlists', (_req, res) => {
   res.json({ watchlists: watchlists.list(), summary: watchlists.summary() });
+});
+
+// ── The names being followed ─────────────────────────────────────────────────
+//
+// A screen gives a shortlist; this is where the shortlist becomes a decision
+// with a date on it. The numbers the name was added at are kept, so the list
+// can show what has changed since rather than only what is true today.
+
+app.get('/api/tracked', (_req, res) => {
+  res.json({ tracked: tracked.list() });
+});
+
+app.post('/api/tracked', (req, res) => {
+  const body = req.body ?? {};
+  const symbol = body.symbol;
+  if (!symbol) {
+    return res.status(400).json({ error: { code: 'BAD_REQUEST', message: 'symbol is required' } });
+  }
+  const existing = tracked.findBySymbol(symbol);
+  if (existing) {
+    // Adding the same name twice updates it rather than making a second row.
+    const entry = tracked.update(existing.id, body);
+    return res.json(entry);
+  }
+  const entry = tracked.save(body);
+  console.log(`[tracked] ${entry.symbol} added (${entry.status})`);
+  res.status(201).json(entry);
+});
+
+app.patch('/api/tracked/:id', (req, res) => {
+  const entry = tracked.update(req.params.id, req.body ?? {});
+  if (!entry) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such entry' } });
+  res.json(entry);
+});
+
+app.delete('/api/tracked/:id', (req, res) => {
+  const removed = tracked.remove(req.params.id);
+  if (!removed) return res.status(404).json({ error: { code: 'NOT_FOUND', message: 'no such entry' } });
+  res.json({ ok: true });
+});
+
+// ── Backup ───────────────────────────────────────────────────────────────────
+//
+// The container's filesystem is wiped on every deploy, so the boards, the lists
+// and the names being followed are worth carrying out by hand. The file is one
+// JSON document and the import replaces what is there.
+
+app.get('/api/backup', (_req, res) => {
+  res.json({
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    workspaces: store.all(),
+    watchlists: watchlists.all(),
+    tracked: tracked.all(),
+  });
+});
+
+app.post('/api/backup', (req, res) => {
+  const body = req.body ?? {};
+  const imported = {
+    workspaces: Array.isArray(body.workspaces) ? store.replaceAll(body.workspaces) : null,
+    watchlists: Array.isArray(body.watchlists) ? watchlists.replaceAll(body.watchlists) : null,
+    tracked: Array.isArray(body.tracked) ? tracked.replaceAll(body.tracked) : null,
+  };
+  console.log(`[backup] imported: ${imported.workspaces?.length ?? 0} board(s), `
+    + `${imported.watchlists?.length ?? 0} list(s), ${imported.tracked?.length ?? 0} tracked`);
+  res.json({ ok: true, imported });
 });
 
 app.post('/api/watchlists', (req, res) => {

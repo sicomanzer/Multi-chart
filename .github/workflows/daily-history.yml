@@ -1,0 +1,65 @@
+# Record the day's ratios, and carry them into the repository.
+#
+# The container's filesystem is wiped on every deploy, and the history file is
+# what the trend features read. Without this job the series only grows on the
+# days somebody opens the app — which is not a series.
+#
+# The app records the day and the job fetches it back, so the copy in the
+# repository is the app's own and needs no interpretation.
+#
+# Two secrets are needed, both in the repository's settings:
+#   DECK_URL       the deployed app, e.g. https://multi-chart-desk.onrender.com
+#   DECK_PASSWORD  the same password the app is protected with
+name: Daily history
+
+on:
+  schedule:
+    # 22:00 UTC is five in the morning in Bangkok, before the market opens and
+    # before the day's prices are set.
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Record today's ratios
+        env:
+          DECK_URL: ${{ secrets.DECK_URL }}
+          DECK_PASSWORD: ${{ secrets.DECK_PASSWORD }}
+        run: |
+          set -euo pipefail
+          curl -sS -f -u "deck:$DECK_PASSWORD" \
+            -X POST "$DECK_URL/api/fundamentals/history/snapshot" \
+            -H 'content-type: application/json' -d '{}'
+          echo
+
+      - name: Carry the day into the repository
+        env:
+          DECK_URL: ${{ secrets.DECK_URL }}
+          DECK_PASSWORD: ${{ secrets.DECK_PASSWORD }}
+        run: |
+          set -euo pipefail
+          day="$(TZ=Asia/Bangkok date +%Y-%m-%d)"
+          mkdir -p data/history
+          curl -sS -f -u "deck:$DECK_PASSWORD" \
+            "$DECK_URL/api/fundamentals/history/file?date=$day" \
+            -o "data/history/$day.jsonl"
+          if [ ! -s "data/history/$day.jsonl" ]; then
+            echo "nothing was recorded today"
+            exit 0
+          fi
+          git config user.name "sicomanzer"
+          git config user.email "sicomanzer@users.noreply.github.com"
+          git add "data/history/$day.jsonl"
+          if git diff --cached --quiet; then
+            echo "today was already recorded"
+          else
+            git commit -m "History snapshot: $day"
+            git push
+          fi

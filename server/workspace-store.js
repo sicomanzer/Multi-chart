@@ -277,6 +277,22 @@ export class WorkspaceStore {
     return this.workspaces.get(id) ?? null;
   }
 
+  /** The whole records, for a backup file. */
+  all() {
+    return [...this.workspaces.values()].map((w) => ({ ...w }));
+  }
+
+  /** Replace the whole set — used when a backup file is imported. */
+  replaceAll(entries) {
+    this.workspaces.clear();
+    for (const raw of entries ?? []) {
+      const ws = sanitizeWorkspace(raw);
+      this.workspaces.set(ws.id, ws);
+    }
+    this._scheduleWrite();
+    return this.list();
+  }
+
   /**
    * Persist a workspace.
    *
