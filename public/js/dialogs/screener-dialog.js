@@ -1396,6 +1396,11 @@ function paintBuyPlan(state, rerender) {
   rules.textContent = t('scr.plan.rules', { floor: percent(floor, 0) });
   box.appendChild(rules);
 
+  const legend = document.createElement('p');
+  legend.className = 'section__hint';
+  legend.textContent = t('scr.plan.legend', { floor: percent(floor, 0) });
+  box.appendChild(legend);
+
   return box;
 }
 
