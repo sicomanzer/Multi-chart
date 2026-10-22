@@ -824,21 +824,34 @@ function paintBacktestControls(state, rerender) {
   });
 
   const number = (key, min, step) => {
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.className = 'input input--sm';
-    input.min = String(min);
-    input.step = String(step);
-    input.value = String(state.simulation[key]);
-    input.addEventListener('change', () => {
-      const value = Number(input.value);
-      if (!Number.isFinite(value) || value <= 0) {
-        input.value = String(state.simulation[key]);
-        return;
-      }
-      state.simulation[key] = value;
-      runBacktest(state, rerender);
-    });
+    const input = key === 'topN'
+      ? (() => {
+        const plain = document.createElement('input');
+        plain.type = 'number';
+        plain.className = 'input input--sm';
+        plain.min = '1';
+        plain.step = '1';
+        plain.value = String(state.simulation[key]);
+        plain.addEventListener('change', () => {
+          const value = Number(plain.value);
+          if (!Number.isFinite(value) || value <= 0) {
+            plain.value = String(state.simulation[key]);
+            return;
+          }
+          state.simulation[key] = value;
+          runBacktest(state, rerender);
+        });
+        return plain;
+      })()
+      : numberField({
+        value: state.simulation[key],
+        min,
+        step,
+        onChange: (value) => {
+          state.simulation[key] = value;
+          runBacktest(state, rerender);
+        },
+      });
     return input;
   };
 
@@ -1187,6 +1200,35 @@ const PEER_METRICS = [
 ];
 
 /**
+ * A number the reader types into, shown with the thousands separator.
+ *
+ * A number input cannot carry a separator — the value would not parse — so
+ * the field is a text field that is read as digits, and written back with the
+ * separator when the reader leaves it.
+ */
+function numberField({ value, min = 0, step = 1, onChange, placeholder = null }) {
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.inputMode = 'numeric';
+  input.className = 'input input--sm';
+  input.value = value.toLocaleString('en-US');
+  if (placeholder) input.placeholder = placeholder;
+  const plain = () => { input.value = String(value); };
+  const tidy = () => { input.value = value.toLocaleString('en-US'); };
+  input.addEventListener('focus', plain);
+  input.addEventListener('change', () => {
+    const parsed = Number(input.value.replace(/[^0-9.]/g, ''));
+    if (!Number.isFinite(parsed) || parsed <= min) {
+      tidy();
+      return;
+    }
+    onChange(parsed);
+  });
+  input.addEventListener('blur', tidy);
+  return input;
+}
+
+/**
  * The buy plan.
  *
  * A screen is a list of names; a plan says what to do with them. For the
@@ -1234,20 +1276,14 @@ function paintBuyPlan(state, rerender) {
   const moneyField = document.createElement('label');
   moneyField.className = 'scr-field';
   moneyField.appendChild(document.createTextNode(t('scr.plan.capital')));
-  const money = document.createElement('input');
-  money.type = 'number';
-  money.className = 'input input--sm';
-  money.min = '10000';
-  money.step = '100000';
-  money.value = String(capital);
-  money.addEventListener('change', () => {
-    const value = Number(money.value);
-    if (!Number.isFinite(value) || value <= 0) {
-      money.value = String(capital);
-      return;
-    }
-    state.planCapital = value;
-    rerender();
+  const money = numberField({
+    value: capital,
+    min: 10_000,
+    step: 100_000,
+    onChange: (value) => {
+      state.planCapital = value;
+      rerender();
+    },
   });
   moneyField.appendChild(money);
   controls.appendChild(moneyField);
