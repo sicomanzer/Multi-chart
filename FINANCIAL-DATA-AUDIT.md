@@ -2,7 +2,7 @@
 
 วันที่ตรวจ: 2026-10-23  
 ขอบเขต: ข้อมูลงบการเงิน, ราคา, ปันผล, สูตร, screener, valuation และ backtest ของเว็บ Multi-chart  
-สภาพแวดล้อม: โค้ด local ที่พอร์ต 8788 (โค้ดใหม่) เทียบกับข้อมูลต้นทางจริง; deploy `https://multi-chart-desk.onrender.com` ได้รับ commit `6d14539` แล้ว (ตรวจ `/api/health` เมื่อ 2026-10-23 16:07: status ok, ready, annualHistory 109 symbols; uptime รีเซ็ตเป็น 25s แสดงว่าเป็น instance ใหม่) — route screener บน deploy ต้องยืนยันตัวตน จึงตรวจค่าจาก API สาธารณะไม่ได้; งาน low-yield guard/Graham number รอบนี้ยังเป็น local (ยังไม่ push)  
+สภาพแวดล้อม: โค้ด local ที่พอร์ต 8788 (โค้ดใหม่) เทียบกับข้อมูลต้นทางจริง; deploy `https://multi-chart-desk.onrender.com` เดิมได้รับ commit `6d14539` (ตรวจ `/api/health` เมื่อ 2026-10-23 16:07: status ok, ready, annualHistory 109 symbols; uptime 25s) — งาน low-yield guard/Graham number/unfunded-payout scenario ถูก push ขึ้น `origin/main` เป็น `ec6a587` แล้ว และ `/api/health` หลัง push ยัง `status=ok`, `ready=true` (uptime 527s แสดงว่า instance เพิ่งเริ่ม) แต่ route/static บน deploy ต้องยืนยันตัวตน จึงยังตรวจ UI จากภายนอกไม่ได้; ตรวจ UI บน local 8788 แล้วว่า BDMS แสดง base guard + scenario 18.72 + Flat 5% 26.25  
 เกณฑ์: ความถูกต้องระดับเงินจริง — ไม่มีข้อมูลดีกว่าข้อมูลผิด, ห้ามแทนข้อมูลหายด้วย 0, ห้ามใช้ข้อมูลอนาคตในอดีต, ห้ามใช้สูตรเดียวกับทุกบริษัทโดยไม่ตรวจความเหมาะสม
 
 > หมายเหตุ: ตัวเลขในรายงานนี้เป็นผลจากข้อมูล ณ วันที่ตรวจ ราคาและงบอาจเปลี่ยนหลังวันนี้ ค่าที่เป็น "ก่อนแก้" มาจากระบบเดิมที่บันทึกไว้ระหว่าง audit; ค่าที่เป็น "หลังแก้" มาจากเซิร์ฟเวอร์ 8788 ที่รันโค้ดใน working tree นี้
