@@ -33,7 +33,7 @@
 - บั๊กที่ร้ายที่สุดคือ **BANPU**: ค่า FX ติดลบถูกนำไปคูณทั้งประวัติ ทำให้กำไร/ขาดทุนกลับเครื่องหมาย และระบบเดิมยังให้คะแนน/มูลค่าจากข้อมูลที่ขัดกันเอง ตอนนี้ระบบ **ไม่ให้คะแนน** และรายงาน `dataIssue = eps-sign-conflict`
 - **Payout ratio เดิมผิดระบบ**: ใช้ปันผลรายปีหารด้วย EPS TTM (คนละงวด) ทำให้ PTT ถูกอ่าน 52.97% แทน 73.02%, CPF 65.78% แทน 40.06%, TVO 67.56% แทน 80.08% หลังแก้เป็น FY/FY ตัวเลขตรงกับแหล่งทางการ
 - **Income preset เปลี่ยนสมาชิก** เพราะข้อมูลถูกแก้ ไม่ใช่เพราะเปลี่ยนเกณฑ์: union เดิม 6 ตัว → ใหม่ 5 ตัว (TVO 80.08% และ TACC 84.0% หลุด; KAMART 80.0% เข้า; MC 100% หลุด)
-- **Valuation แก้ default/guard แล้ว แต่ยังมี model risk**: เดิม DDM ใช้ g1 = g2 = 5% ทำให้ two-stage ยุบเป็น Gordon growth; เปลี่ยน default เป็น g1 = 5% ระยะ 5 ปี และ g2 = 3% ระยะยาวแล้ว เพิ่ม payout guard (KCE 171.4%, MC 100%) และ low-yield guard (DELTA 0.26%) ให้คืน null แทน intrinsic/MOS ที่ไม่มีความหมาย; เพิ่ม Graham number เป็น cross-check ใน stock detail — แต่ยังไม่มี DCF, Graham growth formula และ sector model
+- **Valuation แก้ default/guard แล้ว แต่ยังมี model risk**: เดิม DDM ใช้ g1 = g2 = 5% ทำให้ two-stage ยุบเป็น Gordon growth; เปลี่ยน default เป็น g1 = 5% ระยะ 5 ปี และ g2 = 3% ระยะยาวแล้ว เพิ่ม payout guard (KCE 171.4%, MC 100%, BDMS 100%) และ low-yield guard (DELTA 0.26%) ให้คืน null แทน intrinsic/MOS ที่ไม่มีความหมาย; stock detail แสดง **scenario** สำหรับ payout ≥100% พร้อม warning (ไม่ใช้ใน preset) และมี Graham number เป็น cross-check — แต่ยังไม่มี DCF, Graham growth formula และ sector model
 - **ข้อมูล long history ยังไม่ครบทุกจักรวาล**: เพิ่ม TVO และ JAS เข้า `data/annual-history.json` แล้ว (109 symbols); GST ยังดึงไม่ได้ (Finnomena ไม่มีข้อมูล) → growth ของ GST เป็น UNKNOWN ตามนโยบาย
 
 ---
@@ -110,8 +110,8 @@
 | ผลก่อนแก้ | PTT intrinsic 60.38 (MOS +31.3%) แต่ถ้า g = 3% ได้ 39.48 (MOS −5.1%); ADVANC 394.04 vs 257.69 ที่ g = 3%; SCB 296.10 vs 193.64; TVO 51.71 vs 33.82 |
 | ผลหลังแก้ default | g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว: PTT 43.05 (+3.6%), ADVANC 280.93 (−19.6%), SCB 211.11 (+28.2%), TVO 36.87 (+21.3%), CPF 23.39 (+14.5%), PTTEP 163.76 (+0.5%) |
 | ความเหมาะสม | g_sustainable = ROE × (1−payout): PTT 2.35%, SCB 1.87%, CPF 3.06%, TVO 3.10%, ADVANC 2.64% — g2 = 3% ใกล้ sustainable มากกว่า 5% เดิม; g1 = 5% ยังเป็น near-term assumption ที่สูงกว่า sustainable ของ PTT/SCB/ADVANC |
-| การแก้ | เปลี่ยน `DEFAULTS.g2` เป็น 3% และ UI default; เพิ่ม **payout guard** (`payout ≥ 100%` → `payout-not-funded`) และ **low-yield guard** (`yield < 1%` → `yield-too-low`) ใน `ddm()`; ส่ง `payout`/`yieldRate` จาก `buildRow()`/backtest; เพิ่ม **Graham number cross-check** ใน stock detail; เพิ่ม i18n EN/TH และ regression tests |
-| สถานะ | **FIXED — PASS (default/guards + Graham cross-check); RISK คงเหลือ (DCF/Graham growth formula/sector)** |
+| การแก้ | เปลี่ยน `DEFAULTS.g2` เป็น 3% และ UI default; เพิ่ม **payout guard** (`payout ≥ 100%` → `payout-not-funded`) และ **low-yield guard** (`yield < 1%` → `yield-too-low`) ใน `ddm()`; ส่ง `payout`/`yieldRate` จาก `buildRow()`/backtest; เพิ่ม **Graham number cross-check** ใน stock detail; เพิ่ม **unfunded-payout scenario** (`allowUnfunded`) ที่ติดป้ายชัดเจนและไม่เข้า preset; เพิ่ม i18n EN/TH และ regression tests |
+| สถานะ | **FIXED — PASS (default/guards + Graham cross-check + labelled scenario); RISK คงเหลือ (DCF/Graham growth formula/sector)** |
 
 ### P2-01 — ROE ใช้กำไรรวมแทนกำไรที่เป็นของผู้ถือหุ้นแม่
 
@@ -235,13 +235,13 @@
 | KCE | 53 | 1.70% | 171.43% | — | — | `payout-not-funded` (171.4%) |
 | DELTA | 86 | 0.26% | 30.15% | — | — | `yield-too-low` (0.26%); Graham cross-check 21.36 |
 
-> Graham number `sqrt(22.5 × EPS × BVPS)` แสดงใน stock detail เป็น cross-check ไม่ใช่ราคาเป้าหมาย; DCF และ Graham growth formula ยังไม่มี
+> Graham number `sqrt(22.5 × EPS × BVPS)` แสดงใน stock detail เป็น cross-check ไม่ใช่ราคาเป้าหมาย; สำหรับ payout ≥100% stock detail แสดง DDM scenario พร้อม warning (ค่าฐานยังถูก guard); DCF และ Graham growth formula ยังไม่มี
 
 ---
 
 ## 5. ข้อจำกัดและความเสี่ยงคงเหลือ
 
-1. **DDM อย่างเดียว**: ไม่มี DCF/Graham growth formula; DDM ใช้กับบริษัทที่จ่ายปันผล ≥1% และ payout <100% เท่านั้น; DELTA ถูก low-yield guard แล้ว; มี Graham number เป็น cross-check แต่ธนาคาร/REIT ยังไม่มี sector model (ดู `VALUATION-VALIDATION.md`)
+1. **DDM อย่างเดียว**: ไม่มี DCF/Graham growth formula; DDM ใช้กับบริษัทที่จ่ายปันผล ≥1% และ payout <100% เท่านั้น; DELTA ถูก low-yield guard แล้ว; stock detail มี scenario สำหรับ payout ≥100% แต่ไม่ใช้ใน preset; มี Graham number เป็น cross-check แต่ธนาคาร/REIT ยังไม่มี sector model (ดู `VALUATION-VALIDATION.md`)
 2. **Backtest ตัวอย่างเล็ก**: 4 ช่วง 3 ปี, n ประมาณ 1.8–2.0 ต่อช่วง; ช่วงทับซ้อน; survivorship/revision bias; ไม่ใช่หลักฐานผลตอบแทนอนาคต
 3. **ข้อมูล long history**: 109 symbols; GST ยังขาด; หุ้นที่ไม่อยู่ในไฟล์จะได้ growth UNKNOWN (ปลอดภัยกว่าเดา)
 4. **File EPS บางปี** ยัง mix core/reported; guard ฝั่ง live/backtest จับ sign/magnitude แต่ไม่ได้แก้ไฟล์ต้นทางทั้งหมด (DELTA shares)
@@ -263,6 +263,7 @@
 | Price/date/halt | P1 | PASS (fixed) |
 | DDM default/guard | P1 | **PASS (fixed)** |
 | DDM low-yield guard (DELTA) | P1 | **PASS (fixed)** |
+| Unfunded-payout scenario (BDMS) | P2 | **PASS (labelled; not preset)** |
 | Graham number cross-check | P2 | **PASS (stock detail)** |
 | DCF / Graham growth formula / sector model | RISK | **OPEN** |
 | TVO payout 80.08% vs 80% ceiling | DECISION | **OPEN (ceiling unchanged)** |

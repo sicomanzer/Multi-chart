@@ -1824,6 +1824,30 @@ function calculator(detail, state, rerender) {
   }
   box.appendChild(out);
 
+  // A payout at/above earnings blocks the base DDM, but the reader may still
+  // want to compare assumptions with another site. Show that arithmetic as a
+  // clearly labelled scenario; it never feeds the screener or a preset.
+  const scenario = detail.ddmScenario;
+  if (!ddm.ok && scenario?.ok) {
+    const sbox = document.createElement('div');
+    sbox.className = 'scr-calc__out is-warn';
+    const smos = scenario.mos == null ? '—' : `${scenario.mos.toFixed(1)}%`;
+    let rows = `
+      <p class="section__hint">${escape(t('scr.ddm.scenarioTitle'))}</p>
+      <p class="section__hint">${escape(t('scr.ddm.scenarioHint'))}</p>
+      <div><span>${escape(t('scr.ddm.scenarioValue'))}</span>
+        <b>${money(scenario.intrinsic, detail.currency)}</b></div>
+      <div><span>${escape(t('scr.mos'))}</span>
+        <b class="${scenario.mos > 0 ? 'is-up' : 'is-down'}">${smos}</b></div>`;
+    const flat = detail.ddmScenarioFlat;
+    if (flat?.ok && Math.abs(flat.intrinsic - scenario.intrinsic) > 0.005) {
+      rows += `<div><span>${escape(t('scr.ddm.scenarioFlat'))}</span>
+        <b>${money(flat.intrinsic, detail.currency)}</b></div>`;
+    }
+    sbox.innerHTML = rows;
+    box.appendChild(sbox);
+  }
+
   // A second opinion that does not use growth at all. It is deliberately
   // separate from the DDM: the two models disagree for good reasons, and
   // showing only one number would hide that.

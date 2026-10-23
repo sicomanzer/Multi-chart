@@ -1,8 +1,8 @@
 # Valuation Validation — Multi-chart
 
-วันที่ตรวจ: 2026-10-23 (รอบที่ 3 หลังเพิ่ม low-yield guard/Graham cross-check)  
+วันที่ตรวจ: 2026-10-23 (รอบที่ 4 หลังเพิ่ม unfunded-payout scenario)  
 ขอบเขต: intrinsic value, margin of safety, DDM, historical P/E–P/BV bands และ sensitivity  
-ข้อสรุปสั้น: **สูตร DDM ถูกต้อง (PASS)**; **default เปลี่ยนเป็น g1 = 5% / g2 = 3% แล้ว (PASS)**; **KCE/MC ถูก payout guard และ DELTA ถูก low-yield guard (PASS)**; **มี Graham number เป็น cross-check (PASS)**; แต่ **DCF/Graham growth formula และ sector model ยังไม่มี (BLOCKED)**
+ข้อสรุปสั้น: **สูตร DDM ถูกต้อง (PASS)**; **default เปลี่ยนเป็น g1 = 5% / g2 = 3% แล้ว (PASS)**; **KCE/MC/BDMS ถูก payout guard และ DELTA ถูก low-yield guard (PASS)**; **มี Graham number เป็น cross-check (PASS)**; **มี scenario สำหรับ payout ≥100% แต่ไม่ใช้ใน preset**; แต่ **DCF/Graham growth formula และ sector model ยังไม่มี (BLOCKED)**
 
 > ระบบนี้ยังไม่มี DCF และ Graham growth formula — มี two-stage DDM, MOS, historical bands และ Graham number cross-check  
 > รายงานนี้จึงไม่ถือว่า DCF/Graham growth formula “ผ่าน”; ระบุเป็น BLOCKED ตามความเป็นจริง
@@ -14,6 +14,7 @@
 | เครื่องมือ | สถานะ | ใช้ที่ไหน |
 |---|---|---|
 | Two-stage DDM | มี | ตาราง screener, stock detail, calculator |
+| DDM scenario (payout ≥100%) | มี (stock detail; ไม่ใช้ใน preset) | calculator แสดงพร้อม warning |
 | Margin of safety (MOS) | มี | ตาราง, preset `value` |
 | Historical P/E band | มี | stock detail |
 | Historical P/BV band | มี | stock detail |
@@ -93,6 +94,16 @@ G = sqrt(22.5 × EPS × BVPS)
 
 **สูตรทดสอบ**: EPS 3.15, BVPS 42.15 → sqrt(22.5 × 3.15 × 42.15) = **54.6569414622** (ตรงกับระบบ)  
 **ข้อจำกัด**: Graham number ลงโทษบริษัท asset-light/ROE สูงโดยธรรมชาติ (ADVANC, KCE, DELTA) — ต้องอ่านคู่กับ DDM/คุณภาพ ไม่ใช่ใช้แทนกัน
+
+### 2.5 DDM scenario สำหรับ payout ≥ 100% (BDMS)
+
+ค่าฐานยังถูก guard:
+- BDMS payout 100.0% → `ddm.ok=false`, `reason='payout-not-funded'`, intrinsic/MOS = null
+
+ถ้าผู้ใช้ต้องการเทียบสมมติฐาน (เช่นกับเว็บอื่น) stock detail จะแสดง **scenario** ที่ติดป้ายชัดเจน:
+- ตาม slider ปัจจุบัน: `g1=5%`, `g2=3%`, `r=9%`, `n=5` → **18.72**, MOS **−3.7%**
+- Flat 5%: `g1=g2=5%`, `r=9%`, `n=5` → **26.25**, MOS **+26.1%**
+- scenario นี้ **ไม่ถูกใช้ใน screener, preset `value` หรือ backtest**; เป็นเพียงการคำนวณเชิงสมมติ
 
 **เทียบก่อน/หลังแก้ default**
 
@@ -176,7 +187,7 @@ G = sqrt(22.5 × EPS × BVPS)
 1. **default ใหม่เป็น two-stage จริง**: g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว; ไม่ยุบเป็น Gordon แล้ว
 2. **g2 = 3% ใกล้ long-run inflation/GDP** และใกล้ sustainable growth ของ PTT/CPF/TVO มากกว่า 5% เดิม
 3. **g1 = 5% ยังเป็น near-term assumption** ที่สูงกว่า sustainable ของ PTT/SCB/ADVANC; เป็นความเสี่ยงของ stage-one
-4. **KCE/MC ถูก guard** ด้วย `payout-not-funded` (payout ≥ 100%) → ไม่มี intrinsic/MOS ที่สร้างจากปันผลเกินกำไร; หลักเดียวกันนี้ครอบทุกตัวที่ payout ≥ 100% (เช่น ICHI 107.8%, BDMS 100%)
+4. **KCE/MC/BDMS ถูก guard** ด้วย `payout-not-funded` (payout ≥ 100%) → ไม่มี intrinsic/MOS ที่สร้างจากปันผลเกินกำไร; หลักเดียวกันนี้ครอบทุกตัวที่ payout ≥ 100% (เช่น ICHI 107.8%, BDMS 100%); stock detail แสดง **scenario** พร้อม warning แยกจากค่าฐาน
 5. **DELTA ถูก low-yield guard แล้ว**: yield 0.26% < 1% → `yield-too-low`, ไม่มี intrinsic/MOS จาก DDM; Graham number ยังแสดงเป็น cross-check แต่ต่ำมากเพราะเป็น defensive formula
 6. **มี Graham number cross-check แต่ยังไม่มี DCF/Graham growth formula**: บริษัทไม่จ่ายปันผล/ปันผลต่ำยังไม่มี DCF; Graham number ใช้ได้เฉพาะ EPS/BVPS เป็นบวกและไม่เหมาะกับ asset-light/ROE สูง
 7. **ไม่มี sector model**: ธนาคาร/REIT/cyclical ใช้ DDM เดียวกัน; DDM ของ SCB ไม่ได้สะท้อน capital adequacy/credit cycle
@@ -222,6 +233,7 @@ G = sqrt(22.5 × EPS × BVPS)
 - เพิ่ม **payout guard**: `payout ≥ 100%` → `ok:false`, `reason='payout-not-funded'`, ไม่มี intrinsic/MOS
 - เพิ่ม **low-yield guard**: yield > 0 และ < 1% → `ok:false`, `reason='yield-too-low'` (DELTA 0.26%)
 - เพิ่ม **Graham number cross-check** `sqrt(22.5 × EPS × BVPS)` ใน stock detail; ไม่ใช่ DCF/ราคาเป้าหมาย
+- เพิ่ม **unfunded-payout scenario** ใน stock detail: `allowUnfunded` ใช้เฉพาะเมื่อผู้ใช้เลือกดูสมมติ; ค่าฐานยังถูก guard และ scenario ไม่เข้า screener/preset/backtest
 - เพิ่มข้อความ EN/TH ใน calculator และเทสต์ regression
 - คงปุ่ม **Flat 5% scenario** ไว้เป็นกรณีทดสอบ ไม่ใช่ค่าเริ่มต้น
 
@@ -243,8 +255,9 @@ G = sqrt(22.5 × EPS × BVPS)
 | Historical bands / look-ahead | PASS |
 | ADVANC special estimate | PASS (estimate; −1.9%) |
 | DDM default g1=5%, g2=3% | **PASS (แก้แล้ว)** |
-| DDM กับ KCE/MC | **PASS (payout guard)** |
+| DDM กับ KCE/MC/BDMS | **PASS (payout guard)** |
 | DDM กับ DELTA | **PASS (low-yield guard)** |
+| Unfunded-payout scenario (BDMS) | **PASS (scenario only; not preset)** |
 | Graham number cross-check | **PASS** (มีใน stock detail; เป็น cross-check) |
 | DCF | **BLOCKED** (ไม่มีในระบบ; ข้อมูล WACC/net debt ยังไม่พอ) |
 | Graham growth formula | **BLOCKED** (ไม่มี; ต้องมี AAA yield/g ที่อ้างอิงได้) |

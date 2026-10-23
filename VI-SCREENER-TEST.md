@@ -81,7 +81,7 @@
 
 > BANPU เป็น `—` ทุกช่องเพราะ `dataIssue`; ค่าที่เหลือมาจาก stock detail ณ วันเดียวกับราคา  
 > DDM ใช้ default g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว, r = 9%; MC (payout 100%) และ ICHI (107.8%)/BDMS (100%) ก็ถูก guard เป็น `—` เช่นกัน  
-> `value` preset บน set-large ยัง matched 16 ตัว; DELTA/KCE/MC/ICHI/BDMS ถูกตัดด้วย `no-mos` จาก guard; Graham number แสดงใน stock detail เป็น cross-check
+> `value` preset บน set-large ยัง matched 16 ตัว; DELTA/KCE/MC/ICHI/BDMS ถูกตัดด้วย `no-mos` จาก guard; Graham number แสดงใน stock detail เป็น cross-check; BDMS แสดง DDM scenario พร้อม warning แต่ไม่เข้า preset
 
 ### 3.2 Income preset — สมาชิกที่ผ่าน
 
@@ -162,8 +162,9 @@
 | BANPU dataIssue | PASS |
 | MC stub payout | PASS |
 | DDM default g1=5%/g2=3% | PASS |
-| DDM payout guard (KCE/MC) | PASS |
+| DDM payout guard (KCE/MC/BDMS) | PASS |
 | DDM low-yield guard (DELTA) | PASS |
+| Unfunded-payout scenario (BDMS) | PASS (stock detail; not preset) |
 | Graham number cross-check | PASS (stock detail) |
 | DCF / Graham growth formula / sector model | RISK (OPEN) |
 | TVO 80.08% vs 80% ceiling | DECISION (ceiling unchanged) |

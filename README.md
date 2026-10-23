@@ -510,7 +510,10 @@ below `g2`, when the dividend is at/above earnings (`payout-not-funded`), or
 when the yield is below 1% (`yield-too-low`), rather than returning infinity
 or a value built on an unfunded or negligible distribution. The stock detail
 also shows the Graham number `sqrt(22.5 × EPS × BVPS)` as a deliberately
-blunt cross-check; it is not a DCF and not a target price.
+blunt cross-check; it is not a DCF and not a target price. When the payout is
+at or above earnings, the detail shows a clearly labelled DDM scenario with a
+warning; it never feeds the screener, presets or backtest. The Flat 5% button
+is the assumption set used by several other DDM calculators.
 
 **Scoring.** Seventeen rules in five groups — quality (40 points), growth (20),
 solvency (20), cash conversion (20), shareholder returns (20), 120 in all — so a

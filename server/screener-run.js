@@ -204,6 +204,8 @@ function unknownRow(fin, reason) {
     dividendFy: null,
     hasSpecialDividend: false,
     ddm: { ok: false, reason, intrinsic: null, mos: null, g1: null, g2: null, r: null, years: null, d0: null },
+    ddmScenario: null,
+    ddmScenarioFlat: null,
     graham: { ok: false, reason, value: null, mos: null, eps: null, bvps: null },
     bands: { basis: null, pe: null, pbv: null },
     yearCount: 0,
@@ -259,6 +261,36 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     d0, g1, g2, r, years, payout: quality.payout, yieldRate: quality.dividendYield,
   });
   const mos = valuation.ok ? marginOfSafety(valuation.intrinsic, fin.price) : null;
+
+  // When the only blocker is an unfunded payout, stock detail can show a
+  // clearly labelled scenario. It is never used by the screener, presets or
+  // backtest; it exists so the reader can compare assumptions instead of
+  // being handed a blank box.
+  const scenarioFor = (value) => (value?.ok
+    ? {
+      ok: true,
+      intrinsic: value.intrinsic,
+      mos: marginOfSafety(value.intrinsic, fin.price),
+      g1: value.inputs.g1,
+      g2: value.inputs.g2,
+      r: value.inputs.r,
+      years: value.inputs.years,
+      d0,
+      scenario: true,
+    }
+    : null);
+  const unfundedScenario = !valuation.ok && valuation.reason === 'payout-not-funded'
+    ? scenarioFor(ddm({
+      d0, g1, g2, r, years, payout: quality.payout, yieldRate: quality.dividendYield,
+      allowUnfunded: true,
+    }))
+    : null;
+  const flatScenario = !valuation.ok && valuation.reason === 'payout-not-funded'
+    ? scenarioFor(ddm({
+      d0, g1: 0.05, g2: 0.05, r, years, payout: quality.payout,
+      yieldRate: quality.dividendYield, allowUnfunded: true,
+    }))
+    : null;
 
   // Today's multiples, on today's denominators.
   //
@@ -321,6 +353,8 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
       years,
       d0,
     },
+    ddmScenario: unfundedScenario,
+    ddmScenarioFlat: flatScenario,
     // A second, much blunter opinion. It uses today's EPS and book value and
     // no growth forecast; it is a cross-check, not a replacement for the DDM.
     graham: (() => {

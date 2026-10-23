@@ -290,6 +290,10 @@ function dividendStreak(dividends, asOf = new Date()) {
  * dividend is too small for the arithmetic to be an income valuation). A
  * screen that quietly printed `Infinity` or a value built on an unfunded or
  * negligible dividend would rank those names first, so it prints nothing.
+ *
+ * `allowUnfunded` exists only for a clearly labelled scenario in stock detail.
+ * It bypasses the payout guard but marks the result `scenario: true`; the
+ * screener and presets never set it.
  */
 /**
  * The default assumptions of the dividend discount model.
@@ -321,6 +325,7 @@ export const MIN_DDM_YIELD = 0.01;
 
 export function ddm({
   d0, g1, g2 = 0.03, r = 0.09, years = 5, payout = null, yieldRate = null,
+  allowUnfunded = false,
 }) {
   const safe = {
     d0: Number(d0),
@@ -341,7 +346,7 @@ export function ddm({
   // already being funded from the balance sheet. Refuse to value it rather
   // than print a flattering number.
   const payoutRatio = payout == null ? null : Number(payout);
-  if (payoutRatio != null && Number.isFinite(payoutRatio) && payoutRatio >= 1) {
+  if (!allowUnfunded && payoutRatio != null && Number.isFinite(payoutRatio) && payoutRatio >= 1) {
     return { ok: false, reason: 'payout-not-funded', intrinsic: null, mos: null };
   }
   // A DDM is a dividend model. At a 0.26% yield the dividend is a rounding
@@ -370,6 +375,9 @@ export function ddm({
     presentValue: present,
     terminalValue: terminal,
     inputs: safe,
+    // True only when the caller explicitly asked to bypass the payout guard.
+    // The number is an assumption stress-test, not the base valuation.
+    scenario: Boolean(allowUnfunded && payoutRatio != null && payoutRatio >= 1),
   };
 }
 

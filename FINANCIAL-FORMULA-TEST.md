@@ -201,6 +201,18 @@ G = sqrt(22.5 × EPS × BVPS)
 
 ---
 
+### 1.8c Unfunded-payout scenario (BDMS)
+
+ค่าฐานยังถูก guard: `payout=1.0` + `allowUnfunded=false` → `payout-not-funded`
+
+| g1 | g2 | r | n | payout | allowUnfunded | ค่าคาดหวัง | ค่าระบบ | สถานะ |
+|---:|---:|---:|---:|---:|---|---:|---:|---|
+| 5% | 3% | 9% | 5 | 100% | true | 18.7154163726 | 18.7154163726 | PASS (scenario) |
+| 5% | 5% | 9% | 5 | 100% | true | 26.25 | 26.25 | PASS (Flat 5%) |
+| 5% | 3% | 9% | 5 | 100% | false | ok=false | ok=false | PASS (base guard) |
+
+> `allowUnfunded` ใช้เฉพาะ stock detail และติด `scenario=true`; ไม่ใช้ใน screener, preset `value` หรือ backtest
+
 ### 1.9 Margin of safety
 
 **สูตร**
@@ -353,6 +365,7 @@ portfolioCompound = Π(1 + portfolio_period) − 1
 | Payout / yield (FY/FY) | PASS (ADVANC เป็น estimate) |
 | EPS/revenue CAGR / stability | PASS |
 | DDM / MOS | PASS (สูตร + default g1=5%/g2=3% + payout guard + low-yield guard) |
+| Unfunded-payout scenario | PASS (stock detail; `scenario=true`; ไม่ใช้ใน preset) |
 | Graham number cross-check | PASS (stock detail; ไม่ใช่ DCF/ราคาเป้าหมาย) |
 | DCF / Graham growth formula | **BLOCKED** (ยังไม่มีในระบบ; ข้อมูล WACC/net debt/AAA yield ไม่พอ) |
 | Sector model (bank/REIT) | **BLOCKED** (ยังไม่มี) |

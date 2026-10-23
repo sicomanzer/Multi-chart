@@ -1304,6 +1304,8 @@ select {
 .scr-calc__out > div { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; }
 .scr-calc__out span { color: var(--text-dim); }
 .scr-calc__out b { font-family: var(--mono); font-size: 13px; }
+.scr-calc__out.is-warn { border-top-color: var(--warn); }
+.scr-calc__out.is-warn .section__hint:first-child { color: var(--warn); }
 
 .scr-bands { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 900px) { .scr-bands { grid-template-columns: 1fr; } }

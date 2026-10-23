@@ -642,6 +642,10 @@ const EN = {
   'scr.ddm.not-computable': 'Not computable from these inputs.',
   'scr.ddm.payout-not-funded': 'The dividend is at or above earnings, so the DDM is not a meaningful valuation.',
   'scr.ddm.yield-too-low': 'The dividend yield is below 1%, so the DDM is not a meaningful valuation for this name.',
+  'scr.ddm.scenarioTitle': 'DDM scenario — payout at/above earnings',
+  'scr.ddm.scenarioHint': 'This is not the base valuation. The dividend cannot fund the growth shown; use it only to compare assumptions. The screener and presets still exclude this name.',
+  'scr.ddm.scenarioValue': 'Scenario value (current sliders)',
+  'scr.ddm.scenarioFlat': 'Flat 5% scenario',
 
   'scr.check.roeLevel': 'ROE above 15%',
   'scr.check.roeLevel.hint': 'Return on equity, average of the last three years — needs {threshold}',
@@ -1461,6 +1465,10 @@ const TH = {
   'scr.ddm.not-computable': 'คำนวณจากค่าที่ให้มาไม่ได้',
   'scr.ddm.payout-not-funded': 'เงินปันผลเท่าหรือเกินกำไร จึงไม่ใช้ DDM ประเมินมูลค่า',
   'scr.ddm.yield-too-low': 'อัตราผลตอบแทนปันผลต่ำกว่า 1% จึงไม่ใช้ DDM ประเมินมูลค่าหุ้นตัวนี้',
+  'scr.ddm.scenarioTitle': 'DDM แบบสมมติ — ปันผลเท่าหรือเกินกำไร',
+  'scr.ddm.scenarioHint': 'นี่ไม่ใช่ค่าฐาน เพราะปันผลไม่สามารถรองรับการเติบโตที่สมมติได้ ใช้เพื่อเทียบสมมติฐานเท่านั้น; screener และ preset ยังตัดหุ้นตัวนี้ออก',
+  'scr.ddm.scenarioValue': 'ค่าสมมติ (ตาม slider)',
+  'scr.ddm.scenarioFlat': 'สมมติ Flat 5%',
 
   'scr.check.roeLevel': 'ROE เกิน 15%',
   'scr.check.roeLevel.hint': 'ผลตอบแทนต่อส่วนผู้ถือหุ้น เฉลี่ย 3 ปีล่าสุด — ต้องถึง {threshold}',

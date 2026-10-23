@@ -119,6 +119,20 @@ check('a yield at the DDM floor is still valued',
   ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.01 }).ok === true,
   ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.01 }).ok);
 
+const unfundedScenario = ddm({
+  d0: 1, g1: 0.05, g2: 0.03, r: 0.09, years: 5, payout: 1, allowUnfunded: true,
+});
+check('an explicit unfunded scenario is labelled as a scenario',
+  unfundedScenario.ok === true && unfundedScenario.scenario === true,
+  unfundedScenario);
+check('the unfunded scenario uses the same DDM arithmetic',
+  near(unfundedScenario.intrinsic, 18.715416372560988, 1e-9),
+  unfundedScenario.intrinsic);
+check('a flat 5% unfunded scenario matches the other site 26.25',
+  near(ddm({
+    d0: 1, g1: 0.05, g2: 0.05, r: 0.09, years: 5, payout: 1, allowUnfunded: true,
+  }).intrinsic, 26.25, 1e-9));
+
 // ── Bands ───────────────────────────────────────────────────────────────────
 
 console.log('\n── Valuation bands ──');
