@@ -64,6 +64,27 @@ const fraction = (v) => {
   return n == null ? null : n / 100;
 };
 
+/**
+ * The gross margin of a year, or nothing at all.
+ *
+ * The pair only means something when the cost of sales is reported and the
+ * arithmetic holds. The upstream prints the revenue itself where the line is
+ * missing — SCB reads exactly a hundred percent for nine years running — and
+ * prints a figure outside (0, 1) where the line has been mangled: an airline
+ * reads below zero through the pandemic years, a bank above one. Both are
+ * dropped rather than kept. A chart that shows a hundred percent for a bank is
+ * showing a placeholder, and the placeholder also sets the axis, so one bad
+ * year squashes every real bar beside it.
+ *
+ * The same test guards the short Yahoo reading, which carries no cost of sales
+ * for some names either.
+ */
+export function grossMargin(grossProfit, revenue) {
+  if (!Number.isFinite(grossProfit) || !Number.isFinite(revenue) || revenue <= 0) return null;
+  if (grossProfit <= 0 || grossProfit >= revenue) return null;
+  return grossProfit / revenue;
+}
+
 async function getJson(url) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
@@ -101,8 +122,10 @@ function yearFromFile(row) {
       asOf: row.asOf ? String(row.asOf).slice(0, 10) : null,
       netIncome: num(row.np),
       revenue: num(row.rev),
+      grossProfit: num(row.gp),
       eps: num(row.eps),
       npm: num(row.npm),
+      gpm: num(row.gpm),
       de: num(row.de),
       roe: num(row.roe),
       roa: num(row.roa),
@@ -233,11 +256,21 @@ export function aggregateAnnual(rows) {
     if (row?.quarter !== 9) continue; // 9 = the full fiscal year
     const fiscalYear = Number(row.fiscal);
     if (!Number.isFinite(fiscalYear)) continue;
+    const revenue = num(row.revenue);
+    // What was left of the revenue before the operating lines: the one
+    // statement figure that says whether the business itself makes money
+    // before the financing and the tax man are considered. The two figures
+    // come from the same statement, and the pair is kept only when it can
+    // mean something — see `grossMargin`.
+    const grossProfit = num(row.gross_profit);
+    const gpm = grossMargin(grossProfit, revenue);
     byYear.set(fiscalYear, {
       fiscalYear,
       asOf: row.end_of_year_date ? String(row.end_of_year_date).slice(0, 10) : null,
       netIncome: num(row.net_profit),
-      revenue: num(row.revenue),
+      revenue,
+      grossProfit: gpm == null ? null : grossProfit,
+      gpm,
       eps: num(row.earning_per_share),
       npm: fraction(row.npm),
       de: num(row.debt_to_equity),

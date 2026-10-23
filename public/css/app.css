@@ -1321,6 +1321,7 @@ select {
 .scr-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 900px) { .scr-charts { grid-template-columns: 1fr; } }
 .scr-chart h4 { margin: 0 0 6px; font-size: 12px; }
+.scr-chart__note { margin: 6px 0 0; font-size: 11px; line-height: 1.45; color: var(--text-dim); }
 .scr-chart canvas { width: 100%; display: block; }
 .scr-chart__legend { display: flex; gap: 12px; font-size: 10px; color: var(--text-dim); margin-top: 4px; }
 .scr-chart__legend span { display: inline-flex; align-items: center; gap: 4px; }

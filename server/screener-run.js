@@ -296,6 +296,11 @@ export async function loadDetail(tvSymbol, options = {}) {
     pbvLevels: bands.pbv?.levels ?? null,
     dpsQuarterly,
     history: history ?? null,
+    // The rules that only a balance-sheet business is judged on are left out
+    // for a bank, an insurer or a lender. The charts read it too: gross margin
+    // is measured against a different denominator for a financial, so the chart
+    // says what it is measuring rather than looking like a number to compare.
+    isFinancial: fin.isFinancial === true,
     asOf: new Date().toISOString(),
   };
 }

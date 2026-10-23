@@ -1834,11 +1834,45 @@ function chartBlock(detail) {
   const percent = (v) => `${(v * 100).toFixed(1)}%`;
   const plainNumber = (v) => v.toFixed(2);
 
+  // Gross margin, year by year, from whichever reading carries it: the long
+  // history has ten years of it, the short statement reading has the last four
+  // and fills the years the history is missing. The two disagree once in a
+  // while — the history reading is preferred, because it is the one that
+  // reaches back — and the chart says which one it drew rather than hiding it.
+  const shortGpm = new Map(
+    years.filter((y) => Number.isFinite(y.gpm)).map((y) => [y.fiscalYear, y.gpm]),
+  );
+  const gpm = long.map((y) => (
+    Number.isFinite(y.gpm) ? y.gpm : (shortGpm.get(y.fiscalYear) ?? null)
+  ));
+
   const cells = [
     { label: t('scr.chart.netProfit'), values: long.map((y) => y.netIncome), color: '#a06cff', format: money },
     { label: t('scr.chart.revenue'), values: long.map((y) => y.revenue), color: '#2f7ff0', format: money },
     { label: t('scr.chart.eps'), values: long.map((y) => y.eps), color: '#1fb6d4', format: plainNumber },
+    {
+      label: t('scr.chart.gpm'),
+      values: gpm,
+      color: '#26c281',
+      format: percent,
+      // A bank's revenue is what it took in and its cost of sales is what it
+      // paid for money: the number is real and it means something else.
+      note: detail.isFinancial ? t('scr.chart.finWarn') : '',
+    },
     { label: t('scr.chart.npm'), values: long.map((y) => y.npm), color: '#e8418a', format: percent },
+    {
+      label: t('scr.chart.roe'),
+      // The quality of the growth the profit and revenue charts show: what the
+      // money already in the business earned, year by year. A return above a
+      // hundred percent is not a business that good — it is a balance sheet
+      // with almost no equity under it — and one such year would stretch the
+      // axis until every other bar was a sliver, so it is left out.
+      values: long.map((y) => (Number.isFinite(y.roe) && Math.abs(y.roe) <= 1 ? y.roe : null)),
+      color: '#26a69a',
+      format: percent,
+      // The return the framework asks of a name, the same 15% the rules score.
+      ref: 0.15,
+    },
     { label: t('scr.chart.dps'), rows: dps, format: plainNumber },
     { label: t('scr.chart.de'), values: long.map((y) => y.de), color: '#f0a020', format: plainNumber },
   ];
@@ -1849,6 +1883,12 @@ function chartBlock(detail) {
     const cell = document.createElement('div');
     cell.className = 'scr-chart';
     cell.innerHTML = `<h4>${escape(c.label)}</h4><canvas height="150"></canvas>`;
+    if (c.note) {
+      const note = document.createElement('p');
+      note.className = 'scr-chart__note';
+      note.textContent = c.note;
+      cell.appendChild(note);
+    }
     if (c.rows?.length) {
       const legend = document.createElement('div');
       legend.className = 'scr-chart__legend';
@@ -1861,15 +1901,26 @@ function chartBlock(detail) {
     requestAnimationFrame(() => {
       const canvas = cell.querySelector('canvas');
       if (c.rows?.length) drawQuarterBars(canvas, c.rows, { stacked: true, format: c.format });
-      else drawBars(canvas, { labels, values: c.values, color: c.color, format: c.format });
+      else drawBars(canvas, { labels, values: c.values, color: c.color, format: c.format, ref: c.ref });
     });
   }
   box.appendChild(grid);
   return box;
 }
 
-/** One simple bar chart: gridlines, axis labels, a bar per year. */
-function drawBars(canvas, { labels, values, color, format, showValues = false }) {
+/**
+ * One simple bar chart: gridlines, axis labels, a bar per year.
+ *
+ * The axis covers what the values cover. A chart of margins or leverage sits
+ * at zero and only ever climbs, so it is drawn exactly as it always was; a
+ * chart of returns has to reach below the line, because a year of losses puts
+ * the return under zero and a bar that ran off the bottom of the canvas would
+ * be a lie. Bars grow from the zero line in either direction.
+ *
+ * `ref` draws one dashed line over the bars — a threshold the reader is
+ * judging against, such as the return on equity the framework asks for.
+ */
+function drawBars(canvas, { labels, values, color, format, showValues = false, ref = null }) {
   if (!canvas) return;
   const dpr = window.devicePixelRatio || 1;
   const width = canvas.clientWidth || 300;
@@ -1884,8 +1935,11 @@ function drawBars(canvas, { labels, values, color, format, showValues = false })
   const nums = values.filter((v) => Number.isFinite(v));
   if (!nums.length || !labels.length) return;
 
-  const max = Math.max(...nums, 0) || 1;
-  const span = max * 1.15;
+  // The floor moves with the data: zero when every value is a gain, the worst
+  // loss otherwise. `|| 1` keeps a flat chart from dividing by nothing.
+  const max = Math.max(...nums, 0);
+  const min = Math.min(...nums, 0);
+  const span = (max - min) * 1.15 || 1;
 
   const style = getComputedStyle(document.documentElement);
   const line = style.getPropertyValue('--text-dim').trim() || '#888';
@@ -1894,7 +1948,7 @@ function drawBars(canvas, { labels, values, color, format, showValues = false })
   // The axis labels set the gutter: a clipped label is a wrong label.
   let gutter = 0;
   for (let i = 0; i <= 4; i += 1) {
-    gutter = Math.max(gutter, ctx.measureText(format((span * i) / 4, true)).width);
+    gutter = Math.max(gutter, ctx.measureText(format(min + (span * i) / 4, true)).width);
   }
   const pad = {
     top: 14,
@@ -1907,10 +1961,14 @@ function drawBars(canvas, { labels, values, color, format, showValues = false })
   const n = labels.length;
   const slot = plotW / n;
   const bw = Math.min(30, slot * 0.6);
-  const y = (v) => pad.top + plotH - (v / span) * plotH;
+  // The axis covers what the values cover: zero when every value is a gain, the
+  // worst loss otherwise. A year of losses draws below the line rather than
+  // running off the bottom of the canvas.
+  const y = (v) => pad.top + plotH - ((v - min) / span) * plotH;
+  const zero = y(0);
 
   for (let i = 0; i <= 4; i += 1) {
-    const v = (span * i) / 4;
+    const v = min + (span * i) / 4;
     const yy = y(v);
     ctx.strokeStyle = line;
     ctx.globalAlpha = 0.15;
@@ -1928,16 +1986,38 @@ function drawBars(canvas, { labels, values, color, format, showValues = false })
   values.forEach((v, i) => {
     if (!Number.isFinite(v)) return;
     const cx = pad.left + slot * (i + 0.5);
-    const top = y(v);
+    // Bars grow from the zero line in either direction, so a loss reads as a
+    // bar below the line rather than a gap.
+    const barTop = Math.min(y(v), zero);
     ctx.fillStyle = color;
-    ctx.fillRect(cx - bw / 2, top, bw, pad.top + plotH - top);
+    ctx.fillRect(cx - bw / 2, barTop, bw, Math.abs(zero - y(v)));
     if (showValues) {
       ctx.fillStyle = line;
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(format(v, false), cx, top - 1);
+      // The label sits over a gain and under a loss, never inside the bar.
+      ctx.textBaseline = v >= 0 ? 'bottom' : 'top';
+      ctx.fillText(format(v, false), cx, v >= 0 ? y(v) - 1 : y(v) + 1);
     }
   });
+
+  // A line the bars are judged against — the return the framework asks of a
+  // name — drawn last so no bar can hide it.
+  if (Number.isFinite(ref)) {
+    const yy = y(ref);
+    ctx.strokeStyle = line;
+    ctx.globalAlpha = 0.6;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, yy);
+    ctx.lineTo(pad.left + plotW, yy);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
+    ctx.fillStyle = line;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(format(ref, true), pad.left + plotW - 1, yy - 2);
+  }
 
   ctx.fillStyle = line;
   ctx.textAlign = 'center';

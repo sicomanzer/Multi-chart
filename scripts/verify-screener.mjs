@@ -715,14 +715,36 @@ console.log('\n── Long annual history ──');
 const rows = [
   { fiscal: 2024, quarter: 1, net_profit: '1', revenue: '10', npm: '5', debt_to_equity: '0.5', end_of_year_date: '2024-12-31' },
   { fiscal: 2024, quarter: 2, net_profit: '2', revenue: '20', npm: '6', debt_to_equity: '0.6' },
-  { fiscal: 2024, quarter: 9, net_profit: '7', revenue: '70', npm: '7', debt_to_equity: '0.7', end_of_year_date: '2024-12-31' },
-  { fiscal: 2025, quarter: 9, net_profit: '8', revenue: '80', npm: '8', debt_to_equity: '0.8', end_of_year_date: '2025-12-31' },
+  { fiscal: 2024, quarter: 9, net_profit: '7', revenue: '70', gross_profit: '42', gpm: '60', npm: '7', debt_to_equity: '0.7', end_of_year_date: '2024-12-31' },
+  { fiscal: 2025, quarter: 9, net_profit: '8', revenue: '80', gross_profit: '40', gpm: '50', npm: '8', debt_to_equity: '0.8', end_of_year_date: '2025-12-31' },
 ];
 const annual = aggregateAnnual(rows);
 check('only the annual row is kept, and the year is not double-counted',
   annual.length === 2 && annual[0].netIncome === 7 && annual[0].revenue === 70, JSON.stringify(annual));
 check('a margin reported as a percentage becomes a fraction',
   annual[0].npm === 0.07 && annual[1].npm === 0.08, `${annual[0].npm}`);
+check('the gross profit and its margin come through as amounts and a fraction',
+  annual[0].grossProfit === 42 && annual[0].gpm === 0.6 && annual[1].gpm === 0.5,
+  `${annual[0].grossProfit}/${annual[0].gpm}`);
+// The upstream prints the revenue itself where the cost-of-sales line is
+// missing — SCB read exactly 100% for nine years running — and prints figures
+// outside (0, 1) where the line has been mangled. None of them is a margin, and
+// a negative one would not fit an axis that starts at zero, so the year is left
+// blank rather than drawn: the placeholder also sets the axis, so one bad year
+// would squash every real bar beside it.
+const unreportable = [
+  { fiscal: 2016, quarter: 9, revenue: '100', gross_profit: '100' },
+  { fiscal: 2017, quarter: 9, revenue: '100', gross_profit: '104' },
+  { fiscal: 2018, quarter: 9, revenue: '100', gross_profit: '-20' },
+  { fiscal: 2019, quarter: 9, revenue: '100', gross_profit: '0' },
+].map((r) => aggregateAnnual([r])[0]);
+check('a gross line the arithmetic cannot support leaves the year blank',
+  unreportable.every((y) => y.gpm == null && y.grossProfit == null),
+  JSON.stringify(unreportable.map((y) => y.gpm)));
+check('a gross line of zero is a cost as wide as the revenue, not a margin',
+  unreportable[3].gpm == null);
+check('a year the upstream leaves the line out of has no margin, not a zero',
+  aggregateAnnual([{ fiscal: 2023, quarter: 9, revenue: '10', net_profit: '1' }])[0].gpm == null);
 check('the years come back in order',
   annual[0].fiscalYear === 2024 && annual[1].fiscalYear === 2025);
 check('empty input yields no years', aggregateAnnual([]).length === 0);
@@ -783,6 +805,12 @@ await writeFile(tmpFile, JSON.stringify({
       years: [[2020, 5, 50, 1, 0.1, 0.2]],
       quarters: [[2020, 1, 1, 10, 0.25, 0.1, 0.2]],
     },
+    // The object form carries the gross margin the charts draw, as a fraction
+    // — the same way the margin it has always carried is stored.
+    YYY: {
+      years: [{ y: 2021, np: 3, rev: 30, gp: 18, npm: 0.1, gpm: 0.6, de: 0.4 }],
+      quarters: [],
+    },
   },
 }), 'utf8');
 process.env.ANNUAL_HISTORY_FILE = tmpFile;
@@ -793,6 +821,10 @@ check('the tracked file answers before the network',
   fromFile?.years.length === 1 && fromFile.years[0].fiscalYear === 2020
     && fromFile.years[0].netIncome === 5 && fromFile.quarters.length === 1,
   JSON.stringify(fromFile));
+check('the object form reads back its gross profit and margin',
+  (await annualHistory('SET:YYY'))?.years[0]?.grossProfit === 18
+    && (await annualHistory('SET:YYY'))?.years[0]?.gpm === 0.6,
+  JSON.stringify((await annualHistory('SET:YYY'))?.years));
 check('the file carries the quarters too, grouped by year',
   fromFile?.quarters[0]?.fiscalYear === 2020 && fromFile?.quarters[0]?.quarters[0]?.quarter === 1
     && fromFile?.quarters[0]?.quarters[0]?.netIncome === 1,

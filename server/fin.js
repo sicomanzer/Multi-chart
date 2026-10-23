@@ -24,6 +24,10 @@
  */
 import { toYahooSymbol, normalizeSymbol, bareSymbol } from './symbols.js';
 import { profile } from './quotes.js';
+// The test a gross margin has to pass before it is one. It lives with the long
+// history because that is where the rule was written — the short reading
+// omits the cost-of-sales line for the same names it leaves out.
+import { grossMargin } from './finnomena.js';
 
 const TIMESERIES = 'https://query1.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries';
 const CHART = 'https://query1.finance.yahoo.com/v8/finance/chart';
@@ -32,6 +36,7 @@ const USER_AGENT = 'Mozilla/5.0 (compatible; multi-chart-trading-desk/1.0)';
 /** Annual statement lines we ask for. Missing ones come back absent, not null. */
 const ANNUAL_TYPES = [
   'annualTotalRevenue',
+  'annualGrossProfit',
   'annualNetIncome',
   'annualStockholdersEquity',
   'annualTotalAssets',
@@ -298,6 +303,7 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
           .toISOString()
           .slice(0, 10),
         revenue: money(row.totalRevenue),
+        grossProfit: money(row.grossProfit),
         netIncome: money(row.netIncome),
         equity: money(row.stockholdersEquity),
         assets: money(row.totalAssets),
@@ -333,6 +339,11 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
     y.roe = ratio(y.netIncome, average(prev?.equity, y.equity));
     y.roa = ratio(y.netIncome, average(prev?.assets, y.assets));
     y.npm = ratio(y.netIncome, y.revenue);
+    // Gross margin, from the statement's own gross-profit line. This is the one
+    // margin the short reading carries that the long one carries too, so the
+    // chart can fill a year the long history is missing — held to the same test,
+    // because a missing cost line reads as a margin of a hundred percent.
+    y.gpm = grossMargin(y.grossProfit, y.revenue);
     y.de = ratio(y.totalDebt, y.equity);
     y.interestCoverage = y.interestExpense ? ratio(y.ebit, y.interestExpense) : null;
     y.payoutRatio = y.dividendsPaid != null && y.netIncome
