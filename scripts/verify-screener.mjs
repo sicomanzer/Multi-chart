@@ -31,7 +31,7 @@ import {
   sustainableDividend,
   trailingDividend,
 } from '../server/screener.js';
-import { DEFAULTS, SET_LARGE_CAPS, SET100, reconcileYears } from '../server/screener-run.js';
+import { DEFAULTS, SET_LARGE_CAPS, SET100, buildRow, reconcileYears } from '../server/screener-run.js';
 import { clearConstituentCache, constituents, parseComposition, refresh } from '../server/setindex.js';
 import { deriveYears, unitGap } from '../server/fin.js';
 import { backtestCompany, publishedOn, rebalanceDates, summariseBacktest } from '../server/backtest.js';
@@ -474,14 +474,16 @@ check('a loss year in the base is a known failure, not an unknown one',
 check('and the growth rules still count against it',
   turnaround.evaluated === 18, `${turnaround.evaluated}`);
 
-// Payout pairs trailing cash with trailing earnings. On a doubled trailing EPS
-// the same dividend is 25% of profit, not the 50% the fiscal-year lines imply.
-const ttmPayout = scoreQuality({ years, dividends, price: 20, asOf, ttmEps: 4 });
-const payoutCheck = ttmPayout.checks.find((c) => c.id === 'payoutBand');
-check('payout is measured against trailing earnings',
-  near(payoutCheck.value, 0.25, 1e-9), payoutCheck.value);
-check('a payout that thin fails the framework band', payoutCheck.pass === false);
-check('and earns no half credit for being thin', payoutCheck.warn !== true, JSON.stringify(payoutCheck));
+// Payout pairs the fiscal year's dividend with the fiscal year's earnings. A
+// doubled trailing EPS does not change the dividend declared for the year or
+// the profit earned in it; mixing the two periods reported PTT at 53% when its
+// own FY2025 payout was 73% (2.30 / 3.15).
+const fyPayout = scoreQuality({ years, dividends, price: 20, asOf, ttmEps: 4 });
+const payoutCheck = fyPayout.checks.find((c) => c.id === 'payoutBand');
+check('payout is measured against the same fiscal year\'s earnings',
+  near(payoutCheck.value, 0.5, 1e-9), payoutCheck.value);
+check('a payout of half the year\'s profit is inside the band', payoutCheck.pass === true);
+check('and it is not marked as a warning', payoutCheck.warn !== true, JSON.stringify(payoutCheck));
 const noTtmPayout = scoreQuality({ years, dividends, price: 20, asOf });
 check('without trailing earnings the fiscal year is the fallback',
   near(noTtmPayout.checks.find((c) => c.id === 'payoutBand').value, 0.5, 1e-9),
@@ -994,6 +996,190 @@ const unknownField = applyFilters(filterRows, [{ field: 'nonsense', op: '>=', va
 check('a field the server does not know is ignored', unknownField.every((v) => v.pass));
 check('no conditions leaves every name alone',
   applyFilters(filterRows, []).every((v) => v.pass));
+
+// ── Audit regressions ──────────────────────────────────────────────────────
+console.log('\n── Audit regressions ──');
+
+// 1. Negative equity must not read as low leverage. THAI's insolvency years
+// produced a negative D/E, which a `de <= 1.0` rule would have passed.
+const negativeEquity = deriveYears({
+  '2025-12-31': {
+    netIncome: -10,
+    totalRevenue: 100,
+    totalDebt: 50,
+    stockholdersEquity: -20,
+    totalAssets: 100,
+    dilutedEPS: -0.5,
+    ordinarySharesNumber: 20,
+  },
+}, []);
+check('negative equity leaves debt/equity unknown',
+  negativeEquity[0].de === null && negativeEquity[0].negativeEquity === true,
+  JSON.stringify(negativeEquity[0]));
+check('negative equity leaves ROE unknown', negativeEquity[0].roe === null);
+
+// 2. An EPS whose sign disagrees with the profit is not a per-share figure.
+// TU 2023 reports a 13.9bn loss alongside a positive 1.21 "EPS" (core).
+const epsSign = deriveYears({
+  '2025-12-31': {
+    netIncome: -100,
+    totalRevenue: 100,
+    stockholdersEquity: 50,
+    totalAssets: 200,
+    dilutedEPS: 1,
+    ordinarySharesNumber: 100,
+  },
+}, []);
+check('an EPS with the wrong sign is not used',
+  epsSign[0].eps === null && epsSign[0].epsConflict === true,
+  JSON.stringify(epsSign[0]));
+
+// 3. An EPS that implies a share count wildly different from the statement's
+// own share count is a data error, not growth (DELTA 2016/2020/2022).
+const epsSize = deriveYears({
+  '2025-12-31': {
+    netIncome: 100,
+    totalRevenue: 1000,
+    stockholdersEquity: 500,
+    totalAssets: 1000,
+    dilutedEPS: 1,
+    ordinarySharesNumber: 1000,
+  },
+}, []);
+check('an EPS implying a different share count is not used',
+  epsSize[0].eps === null && epsSize[0].epsConflict === true,
+  JSON.stringify(epsSize[0]));
+
+// 4. Growth uses the long history for revenue and profit, but only the
+// reconciled Yahoo years for EPS. The old buildRow passed `trusted` (four
+// years) as the growth history, so revenueGrowth (6y) and earningsStability
+// (8y) were null for every company even though the ten-year file had them.
+const growthYahoo = [2022, 2023, 2024, 2025].map((fy, i) => year({
+  fiscalYear: fy,
+  asOf: `${fy}-12-31`,
+  eps: 2 * 1.1 ** i,
+  netIncome: 100 * 1.1 ** i,
+  revenue: 1000 * 1.06 ** i,
+}));
+const growthFile = Array.from({ length: 10 }, (_, i) => {
+  const fy = 2016 + i;
+  return {
+    fiscalYear: fy,
+    asOf: `${fy}-12-31`,
+    eps: 2 * 1.1 ** (fy - 2022),
+    netIncome: 100 * 1.1 ** (fy - 2022),
+    revenue: 1000 * 1.06 ** (fy - 2022),
+    de: 0.4,
+  };
+});
+const growthFin = {
+  symbol: 'SET:GROWTH',
+  bare: 'GROWTH',
+  name: 'Growth fixture',
+  currency: 'THB',
+  price: 30,
+  priceDate: '2026-10-01',
+  closes: [],
+  dividends: ['2022', '2023', '2024', '2025', '2026'].map((y) => ({ date: `${y}-06-01`, amount: 1 })),
+  years: growthYahoo,
+  ttm: { eps: 2 * 1.1 ** 3, epsAsOf: '2026-06-30', epsBasis: 'trailing', bvps: 10, bvpsAsOf: '2026-06-30' },
+  isFinancial: false,
+  dataIssue: null,
+};
+const growthRow = buildRow(growthFin, { history: { years: growthFile } });
+const growthCheck = (id) => growthRow.checks.find((c) => c.id === id);
+check('buildRow uses the long history for revenue growth',
+  growthCheck('revenueGrowth')?.pass !== null
+  && near(growthCheck('revenueGrowth')?.value, 0.06, 0.005),
+  JSON.stringify(growthCheck('revenueGrowth')));
+check('buildRow uses the long history for earnings stability',
+  growthCheck('earningsStability')?.pass === true,
+  JSON.stringify(growthCheck('earningsStability')));
+check('buildRow uses the Yahoo years for EPS growth',
+  growthCheck('epsGrowth')?.pass !== null
+  && near(growthCheck('epsGrowth')?.value, 0.1, 0.01),
+  JSON.stringify(growthCheck('epsGrowth')));
+
+// 5. A missing required check is UNKNOWN, not a failed rule.
+const incomePreset = presetById('income');
+const unknownRow = {
+  score: 60,
+  checks: incomePreset.requires.map((id) => ({
+    id,
+    pass: id === 'payoutCeiling' ? null : true,
+  })),
+};
+const unknownVerdict = applyPreset(unknownRow, incomePreset);
+check('a missing required check is labelled unknown',
+  unknownVerdict.pass === false && unknownVerdict.reason === 'unknown:payoutCeiling',
+  JSON.stringify(unknownVerdict));
+
+// 6. A reader's filter on a missing value is UNKNOWN, not a fail.
+const unknownFilter = applyFilters([{ pe: null }], [{ field: 'pe', op: '<', value: 15 }]);
+check('a filter on a missing value is labelled unknown',
+  unknownFilter[0].pass === false && unknownFilter[0].reason === 'unknown:pe',
+  JSON.stringify(unknownFilter[0]));
+
+// 7. A special dividend is estimated from the non-special instalment growth,
+// not from the lagged cash-flow figure. ADVANC FY2025: 6.89 + 27.41 (the
+// 19.00 special), prior year 4.87 + 5.74, official regular 15.30.
+const advancDividend = sustainableDividend({
+  years: [2022, 2023, 2024, 2025].map((fy) => ({
+    fiscalYear: fy,
+    asOf: `${fy}-12-31`,
+    dpsStatement: fy === 2025 ? 12.63 : 9,
+  })),
+  dividends: [
+    { date: '2024-08-19', amount: 4.87 },
+    { date: '2025-02-20', amount: 5.74 },
+    { date: '2025-08-19', amount: 6.89 },
+    { date: '2026-02-27', amount: 27.41 },
+    { date: '2026-08-19', amount: 8.69 },
+  ],
+  asOf: new Date('2026-10-23T00:00:00Z'),
+  ttmEps: 18,
+});
+check('a special dividend is capped at the estimated recurring rate',
+  advancDividend.hasSpecial === true && near(advancDividend.d0, 15.01, 0.02),
+  JSON.stringify(advancDividend));
+
+// 8. The payout denominator is the year the dividend belongs to, not the last
+// row. MC has a 2026 stub with no EPS yet; the FY2025 payout is 0.96 / 0.96 =
+// 100%, which is over the ceiling and is a fail, not an unknown.
+const stubYears = [
+  year({ fiscalYear: 2024, asOf: '2024-12-31', eps: 0.9, netIncome: 90, revenue: 1000 }),
+  year({ fiscalYear: 2025, asOf: '2025-12-31', eps: 0.96, netIncome: 96, revenue: 1000, dpsStatement: 0.96, dpsPaid: 0.96 }),
+  year({ fiscalYear: 2026, asOf: '2026-06-30', eps: null, netIncome: 70, revenue: 1000, dpsStatement: null, dpsPaid: 0.52 }),
+];
+const stubDividends = [
+  { date: '2024-09-01', amount: 0.9 },
+  { date: '2025-09-01', amount: 0.96 },
+];
+const stubScore = scoreQuality({
+  years: stubYears,
+  dividends: stubDividends,
+  price: 10,
+  asOf: new Date('2026-10-23T00:00:00Z'),
+  ttmEps: 0.96,
+});
+const stubPayout = stubScore.checks.find((c) => c.id === 'payoutCeiling');
+check('the payout uses the fiscal year the dividend belongs to',
+  near(stubScore.payout, 1, 1e-9), JSON.stringify(stubScore.payout));
+check('a payout over the ceiling fails even when a later stub has no EPS',
+  stubPayout.pass === false, JSON.stringify(stubPayout));
+
+// 9. The back-test's headline compounds overlapping windows; the mean window
+// is reported beside it so a 3-year holding period is not read as a 12-year
+// compound.
+const overlapping = [
+  [{ date: '2019-03-31', symbol: 'A', name: 'A', score: 100, forwardTotal: 0.1, checks: [], yield: 0.05, mos: 10, price: 10, intrinsic: 12 }],
+  [{ date: '2020-03-31', symbol: 'A', name: 'A', score: 100, forwardTotal: 0.1, checks: [], yield: 0.05, mos: 10, price: 10, intrinsic: 12 }],
+];
+const overlappingTotals = summariseBacktest(overlapping, 'quality').totals;
+check('overlapping windows are compounded and also reported as a mean',
+  near(overlappingTotals.portfolio, 0.21, 1e-9)
+  && near(overlappingTotals.portfolioMean, 0.1, 1e-9),
+  JSON.stringify(overlappingTotals));
 
 // ── The back test ───────────────────────────────────────────────────────────
 console.log('\n── Back test ──');

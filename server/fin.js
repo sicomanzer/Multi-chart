@@ -38,6 +38,7 @@ const ANNUAL_TYPES = [
   'annualTotalRevenue',
   'annualGrossProfit',
   'annualNetIncome',
+  'annualNetIncomeCommonStockholders',
   'annualStockholdersEquity',
   'annualTotalAssets',
   'annualTotalDebt',
@@ -305,6 +306,10 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
         revenue: money(row.totalRevenue),
         grossProfit: money(row.grossProfit),
         netIncome: money(row.netIncome),
+        // Profit attributable to the parent's shareholders. ROE pairs this with
+        // the parent's equity; total net income includes the minority's share
+        // of subsidiaries and does not belong over the parent's book value.
+        netIncomeCommon: money(row.netIncomeCommonStockholders),
         equity: money(row.stockholdersEquity),
         assets: money(row.totalAssets),
         totalDebt: money(row.totalDebt),
@@ -336,7 +341,7 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
         ? (opening + closing) / 2
         : closing
     );
-    y.roe = ratio(y.netIncome, average(prev?.equity, y.equity));
+    y.roe = ratio(y.netIncomeCommon ?? y.netIncome, average(prev?.equity, y.equity));
     y.roa = ratio(y.netIncome, average(prev?.assets, y.assets));
     y.npm = ratio(y.netIncome, y.revenue);
     // Gross margin, from the statement's own gross-profit line. This is the one
@@ -366,6 +371,34 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
     // against 0.55 received, because its cash-flow line is the one that is
     // incomplete.)
     y.dps = y.dpsPaid ?? y.dpsStatement;
+
+    // An EPS that disagrees with the profit it is supposed to divide is not a
+    // per-share figure at all — Yahoo's BANPU row reads 0.993 while the same
+    // statement reports a loss, and DELTA's 2016/2020 rows imply a share count
+    // a third of every other year. A growth rule reading either would reward a
+    // turnaround or a data gap. The year keeps its profit and revenue; only the
+    // per-share series is marked unknown.
+    if (typeof y.eps === 'number' && typeof y.netIncome === 'number'
+      && y.netIncome !== 0 && y.eps !== 0) {
+      const signConflict = Math.sign(y.eps) !== Math.sign(y.netIncome);
+      const implied = y.shares ? y.eps * y.shares : null;
+      const magnitudeConflict = implied != null
+        && Math.abs(implied - y.netIncome) / Math.abs(y.netIncome) > 0.6;
+      if (signConflict || magnitudeConflict) {
+        y.epsConflict = true;
+        y.eps = null;
+      }
+    }
+
+    // A negative book value makes debt/equity and ROE meaningless. THAI read a
+    // negative D/E through its insolvency years, and a rule that only checks
+    // `de <= 1.0` would have called that low leverage. Missing is the honest
+    // answer, and the rules treat it as unknown rather than a pass.
+    if (typeof y.equity === 'number' && y.equity <= 0) {
+      y.negativeEquity = true;
+      y.de = null;
+      y.roe = null;
+    }
   }
   return years;
 }
@@ -422,6 +455,11 @@ async function convert(base, quote) {
   // one and the other is out by a hundred.
   let fx = 1;
   let unit = 1;
+  // Set when the reporting currency differs but the EPS evidence cannot be
+  // trusted to derive the rate. The caller must not score the name: a baht
+  // price over a dollar profit is not a multiple, and a negative factor is
+  // worse than no factor at all.
+  let fxIssue = null;
   if (
     quoteEps != null
     && statementEps != null
@@ -429,7 +467,7 @@ async function convert(base, quote) {
     && Number.isFinite(quoteEps / statementEps)
   ) {
     const ratio = quoteEps / statementEps;
-    if (ratio > 2 || ratio < 0.5) {
+    if (ratio > 0 && (ratio > 2 || ratio < 0.5)) {
       // A ratio far from one is only a suspicion: a stale trailing EPS produces
       // the same shape, and GULF's trailing point was a year old and read 3x
       // below the quote. The label settles it — the ratio is applied only when
@@ -437,6 +475,15 @@ async function convert(base, quote) {
       const p = await profile(base.yahoo);
       if (p?.financialCurrency && p.financialCurrency !== (quote.currency ?? base.currency ?? 'THB')) {
         fx = ratio;
+      }
+    } else if (ratio <= 0) {
+      // Opposite signs mean one of the two EPS figures is stale or wrong
+      // (BANPU: +2.733 in the annual series against -0.35 in the quote). A
+      // negative rate would flip every profit and loss in the history and turn
+      // a loss into a profit, so the rate is refused and the row is flagged.
+      const p = await profile(base.yahoo);
+      if (p?.financialCurrency && p.financialCurrency !== (quote.currency ?? base.currency ?? 'THB')) {
+        fxIssue = 'eps-sign-conflict';
       }
     } else {
       // The rate is close to one, so the currencies cannot be far apart — but
@@ -471,6 +518,14 @@ async function convert(base, quote) {
     && base.ttm.epsAsOf != null
     && Date.now() - Date.parse(base.ttm.epsAsOf) < 270 * 86_400_000;
   const eps = fresh ? base.ttm.eps : (quoteEps ?? base.ttm.eps);
+  // A negative or non-finite factor would reverse every sign in the history.
+  // It cannot happen after the guard above, but a bad rate is exactly the kind
+  // of error that must fail closed rather than silently corrupt a screen.
+  if (!(fx > 0) || !Number.isFinite(fx) || !(unit > 0) || !Number.isFinite(unit)) {
+    fx = 1;
+    unit = 1;
+    fxIssue = fxIssue ?? 'fx-invalid';
+  }
   const scale = fx * unit;
   // The statement figure is in the reporting currency and needs both
   // corrections; the quote's figure is already in the currency the line trades
@@ -486,6 +541,7 @@ async function convert(base, quote) {
         bvps: quote?.bookValue ?? base.ttm.bvps,
       },
       fx: 1,
+      fxIssue,
     };
   }
 
@@ -493,6 +549,7 @@ async function convert(base, quote) {
     ...y,
     revenue: y.revenue == null ? null : y.revenue * scale,
     netIncome: y.netIncome == null ? null : y.netIncome * scale,
+    netIncomeCommon: y.netIncomeCommon == null ? null : y.netIncomeCommon * scale,
     equity: y.equity == null ? null : y.equity * scale,
     assets: y.assets == null ? null : y.assets * scale,
     totalDebt: y.totalDebt == null ? null : y.totalDebt * scale,
@@ -517,6 +574,7 @@ async function convert(base, quote) {
         : (base.ttm.bvps == null ? null : base.ttm.bvps * scale),
     },
     fx: scale,
+    fxIssue,
   };
 }
 
@@ -630,7 +688,37 @@ export async function loadFinancials(tvSymbol, { quote = null } = {}) {
   });
 
   const converted = await convert(base, quote);
-  return { ...converted, isFinancial: await isFinancial(converted) };
+  // The quote is the current price; the chart is the history. They usually end
+  // on the same day, but after a suspension the chart can stop weeks earlier —
+  // BANPU's last close was 2026-08-11 while the quote resumed on 2026-10-22
+  // after the amalgamation. Prefer the newer one and keep both dates, so the
+  // screen never values today's shares with a price from a different company.
+  const quotePrice = quote?.price > 0 ? quote.price : null;
+  const quoteDate = quote?.priceTime ?? null;
+  const chartDate = converted.priceDate;
+  const useQuote = quotePrice != null && (!chartDate || !quoteDate || quoteDate >= chartDate);
+  const price = useQuote ? quotePrice : converted.price;
+  const priceDate = useQuote ? (quoteDate ?? chartDate) : chartDate;
+  const priceSource = useQuote ? 'quote' : 'chart';
+
+  // A chart that stops more than a month before the quote is not a weekend or a
+  // holiday; it is a suspension or a corporate action. The statements describe
+  // the old entity, so the name is returned as unknown rather than scored.
+  const reference = quoteDate ?? new Date().toISOString().slice(0, 10);
+  const staleDays = chartDate ? daysBetween(chartDate, reference) : null;
+  const halt = staleDays != null && staleDays > 30 ? 'trading-halt' : null;
+  const dataIssue = converted.fxIssue ?? halt;
+
+  return {
+    ...converted,
+    price,
+    priceDate,
+    priceSource,
+    chartLastDate: chartDate,
+    staleDays,
+    dataIssue,
+    isFinancial: await isFinancial(converted),
+  };
 }
 
 export function clearFinancialCache() {

@@ -729,6 +729,21 @@ function paintBacktest(body, state, rerender) {
   });
   box.appendChild(summary);
 
+  // The summary's `portfolio` compounds overlapping windows, which is not the
+  // return of a single holding period. The mean window is the number a reader
+  // can compare with the table's per-period returns.
+  if (totals.portfolioMean != null) {
+    const average = document.createElement('p');
+    average.className = 'section__hint';
+    average.textContent = t('scr.backtest.average', {
+      hold: result.holdYears,
+      periods: totals.periods ?? 0,
+      avg: percent(totals.portfolioMean),
+      compound: percent(totals.portfolio),
+    });
+    box.appendChild(average);
+  }
+
   const periodTable = document.createElement('table');
   periodTable.className = 'scr-table';
   periodTable.innerHTML = `<thead><tr>
@@ -1183,6 +1198,15 @@ function rejectReason(row) {
     const field = FILTER_FIELDS.find((f) => f.key === key);
     return t('scr.reject.filter', { field: field ? t(field.label) : key });
   }
+  // Missing data is not a failed condition. The server distinguishes the two
+  // (`unknown:` vs `filter:`/`requires:`), and the sentence has to as well.
+  if (reason.startsWith('unknown:')) {
+    const key = reason.slice('unknown:'.length);
+    if (key === 'data') return t('scr.reject.unknownData');
+    const field = FILTER_FIELDS.find((f) => f.key === key);
+    if (field) return t('scr.reject.unknownField', { field: t(field.label) });
+    return t('scr.reject.unknownCheck', { check: t(`scr.check.${key}`, null, key) });
+  }
   return t(`scr.reject.${reason}`, null, reason);
 }
 
@@ -1549,7 +1573,7 @@ function buildTable(rows, state, rerender) {
     tr.innerHTML = `
       <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
-      <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score}</span></td>
+      <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score == null ? '—' : row.score}</span></td>
       <td class="num">${percent(row.roe3)}${peerBadge(row, 'roe')}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}${peerBadge(row, 'de')}</td>
       <td class="num"${specialTitle ? ` title="${escape(specialTitle)}"` : ''}>${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}${peerBadge(row, 'yield')}</td>
@@ -1596,6 +1620,22 @@ function paintDetail(body, state, board, rerender) {
 
   body.appendChild(headline(detail, board));
 
+  // A name the server refused to score is not a name with a zero. Say why, and
+  // show only the series that are still meaningful; the scorecard, the
+  // calculator and the valuation bands would all present a number built on
+  // data the server has already rejected.
+  if (detail.dataIssue) {
+    const warn = document.createElement('p');
+    warn.className = 'section__hint is-error';
+    warn.textContent = t('scr.dataIssue', {
+      reason: t(`scr.dataIssue.${detail.dataIssue}`, null, detail.dataIssue),
+    });
+    body.appendChild(warn);
+    body.appendChild(chartBlock(detail));
+    body.appendChild(financialsBlock(detail));
+    return;
+  }
+
   const grid = document.createElement('div');
   grid.className = 'scr-detail-grid';
   grid.appendChild(scorecard(detail));
@@ -1613,9 +1653,10 @@ function headline(detail, board) {
   el.className = 'scr-headline';
   el.innerHTML = `
     <div>
-      <h3>${escape(detail.bare)} <span class="scr-score is-${scoreTone(detail.score)}">${detail.score}</span></h3>
+      <h3>${escape(detail.bare)} <span class="scr-score is-${scoreTone(detail.score)}">${detail.score == null ? '—' : detail.score}</span></h3>
       <p class="section__hint">${escape(detail.name ?? '')} · ${escape(detail.currency ?? '')}
-        · ${escape(t('scr.price'))} ${money(detail.price)}</p>
+        · ${escape(t('scr.price'))} ${money(detail.price)}
+        · ${escape(t('scr.priceAsOf'))} ${escape(detail.priceDate ?? '—')}</p>
     </div>`;
 
   const actions = document.createElement('div');

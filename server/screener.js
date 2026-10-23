@@ -198,7 +198,51 @@ export function sustainableDividend({ years, dividends, asOf = new Date(), ttmEp
   const spiked = prior > 0 && annual > prior * 1.5;
   const special = annual > 0 && inflated && (prior === 0 || (spiked && !funded));
 
-  const d0 = special ? Math.min(annual, fromStatement) : annual || fromStatement || 0;
+  // When a special is present, estimate the recurring rate from the payments
+  // that are not the spike, grown at the same rate as the same instalments a
+  // year earlier. For ADVANC the current window is 6.89 (interim) + 27.41
+  // (final including the 19.00 special); the prior window is 4.87 + 5.74, so
+  // the recurring rate is 10.61 x (6.89 / 4.87) = 15.01, against the official
+  // regular 15.30. The old cap used the cash-flow statement's 12.63, which is
+  // the prior final plus the current interim — a lagged figure, not this
+  // year's recurring dividend, and it understated the yield enough to drop a
+  // 4.55% payer out of a 4% income screen.
+  //
+  // The estimate is deliberately not used when there is no prior window to
+  // compare with; there the statement's cash figure is the conservative
+  // fallback. It is still an estimate: Yahoo does not split a payment into
+  // regular and special, so the UI keeps `hasSpecial` and shows both rates.
+  const paymentsBetween = (from, to) => dividends
+    .filter((d) => {
+      const t = new Date(d.date);
+      return t > from && t <= to;
+    })
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+  let recurring = null;
+  if (special) {
+    if (fy && prior > 0) {
+      const current = paymentsBetween(fy.from, fy.to);
+      const before = paymentsBetween(addMonths(fy.from, -12), addMonths(fy.to, -12));
+      if (current.length >= 2 && current.length === before.length) {
+        let specialAt = 0;
+        for (let i = 1; i < current.length; i += 1) {
+          if (current[i].amount > current[specialAt].amount) specialAt = i;
+        }
+        const regularCurrent = current.reduce((sum, d, i) => (i === specialAt ? sum : sum + d.amount), 0);
+        const regularPrior = before.reduce((sum, d, i) => (i === specialAt ? sum : sum + d.amount), 0);
+        if (regularPrior > 0) {
+          const growth = regularCurrent / regularPrior;
+          if (growth > 0.5 && growth < 2) recurring = prior * growth;
+        }
+      }
+      if (recurring == null) recurring = prior;
+    }
+    if (recurring == null) recurring = fromStatement;
+  }
+
+  const d0 = special
+    ? Math.min(annual, recurring ?? annual)
+    : annual || fromStatement || 0;
 
   return {
     d0,
@@ -662,15 +706,21 @@ export function scoreQuality({
   // Paying more than 70% of profit is flagged even though it still passes the
   // "is it being paid" question — the framework wants room to reinvest.
   //
-  // The ratio pairs trailing cash with trailing earnings. Mixing a fiscal-year
-  // numerator with a fiscal-year denominator looked tidy but was wrong twice
-  // over: `dividendsPaid` carries the minority owners' share (PTT read 93%
-  // against a true 70%) and a dividend declared in March is paid out of the
-  // previous year's profit, so the two lines described different years.
-  const paidPerShare = last?.dps ?? last?.dpsStatement ?? last?.dpsPaid ?? null;
-  const payout = ttmEps > 0 && dividend.d0 > 0
-    ? dividend.d0 / ttmEps
-    : last?.eps > 0 && paidPerShare != null ? paidPerShare / last.eps : null;
+  // The numerator and the denominator must describe the same fiscal year. The
+  // earlier version paired the fiscal-year dividend with trailing EPS, which
+  // reported PTT at 53% when the exchange's own FY2025 payout was 73% (2.30 /
+  // 3.15), SCB at 87% against 80%, and CPF at 66% against 40%.
+  //
+  // It also has to be the fiscal year the dividend belongs to, not simply the
+  // last row. MC has a 2026 stub with no EPS yet, while the dividend is the
+  // FY2025 one (0.96 on EPS 0.96). Reading the stub made the payout null and
+  // the name "unknown" when the answer — 100%, over the ceiling — was known.
+  const payoutYear = dividend.fiscalYear != null
+    ? years.find((y) => y.fiscalYear === dividend.fiscalYear) ?? last
+    : last;
+  const payout = payoutYear?.eps > 0 && dividend.d0 > 0
+    ? dividend.d0 / payoutYear.eps
+    : null;
   const payoutOk = payout != null ? payout >= 0.40 && payout <= 0.70 : null;
   // Only the shoulder above the band is a warning: 70–80% is still covered but
   // leaves no room to reinvest. A payout *below* the band is not a warning, it
@@ -827,13 +877,20 @@ export function presetById(id) {
  * long-dividend list.
  */
 export function applyPreset(row, preset) {
+  // A row whose data is unusable is neither a pass nor an ordinary failure. It
+  // is unknown, and the UI must say so rather than printing a zero.
+  if (row?.dataIssue || row?.score == null) {
+    return { pass: false, reason: 'unknown:data' };
+  }
   for (const id of preset.requires) {
     const check = row.checks.find((c) => c.id === id);
     // A rule that does not apply to this business — cash flow at a bank — is
     // skipped rather than treated as unknown. Missing data is still strict: the
     // difference between "cannot apply" and "we could not tell" matters.
     if (check?.na === true) continue;
-    if (!check || check.pass !== true) {
+    if (!check) return { pass: false, reason: `unknown:${id}` };
+    if (check.pass === null) return { pass: false, reason: `unknown:${id}` };
+    if (check.pass !== true) {
       return { pass: false, reason: `requires:${id}` };
     }
   }
@@ -949,7 +1006,7 @@ export function applyFilters(rows, filters) {
       if (!field) continue;
       const value = field.get(row);
       if (typeof value !== 'number' || !Number.isFinite(value)) {
-        return { row, pass: false, reason: `filter:${f.field}` };
+        return { row, pass: false, reason: `unknown:${f.field}` };
       }
       const target = Number(f.value);
       if (!Number.isFinite(target)) continue;

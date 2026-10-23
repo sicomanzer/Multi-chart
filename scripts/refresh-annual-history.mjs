@@ -20,7 +20,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { liveAnnualHistory, clearFinnomenaCache, HISTORY_YEARS } from '../server/finnomena.js';
-import { SET100 } from '../server/screener-run.js';
+import { SET100, SET_LARGE_CAPS } from '../server/screener-run.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
@@ -30,7 +30,7 @@ const OUT = resolve(ROOT, outArg >= 0 ? process.argv[outArg + 1] : 'data/annual-
 
 /** Every symbol the app knows about: the index, the boards and the lists. */
 async function collectSymbols() {
-  const symbols = new Set(SET100.map((s) => String(s).toUpperCase()));
+  const symbols = new Set([...SET100, ...SET_LARGE_CAPS].map((s) => String(s).toUpperCase()));
   for (const file of ['data/workspaces.json', 'data/watchlists.json']) {
     try {
       const raw = JSON.parse(await readFile(join(ROOT, file), 'utf8'));

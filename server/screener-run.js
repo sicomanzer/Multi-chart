@@ -131,9 +131,96 @@ export function reconcileYears(years, history) {
     });
 }
 
+/**
+ * The long history, with only the reconciled Yahoo years allowed to supply EPS.
+ *
+ * The tracked file is the only source old enough for a five-year revenue CAGR
+ * and an eight-year profit record, but its EPS column mixes definitions on some
+ * names (a reported loss with a positive core EPS). Revenue and net income are
+ * reported consistently, so those come from the file; the per-share series is
+ * taken from the same four Yahoo years the rest of the score uses.
+ */
+function buildGrowthHistory(trusted, history) {
+  const source = history?.years ?? [];
+  if (!source.length) return null;
+  const latest = trusted.at(-1)?.fiscalYear;
+  if (!Number.isFinite(latest)) return null;
+  const trustedByYear = new Map(trusted.map((y) => [y.fiscalYear, y]));
+  const byYear = new Map();
+  for (const y of source) {
+    if (Number.isFinite(y?.fiscalYear) && y.fiscalYear <= latest) byYear.set(y.fiscalYear, y);
+  }
+  for (const y of trusted) {
+    byYear.set(y.fiscalYear, { ...(byYear.get(y.fiscalYear) ?? {}), ...y });
+  }
+  return [...byYear.values()]
+    .sort((a, b) => a.fiscalYear - b.fiscalYear)
+    .map((y) => {
+      const t = trustedByYear.get(y.fiscalYear);
+      return { ...y, eps: t?.eps ?? null, shares: t?.shares ?? null };
+    });
+}
+
+/**
+ * A row that is deliberately not scored.
+ *
+ * Used when the data itself is the problem — the reporting currency could not
+ * be converted without a sign flip, or the chart stopped before the quote
+ * because the shares were suspended or replaced. A zero would look like a
+ * failed company; `null` and `unknown:data` say what actually happened.
+ */
+function unknownRow(fin, reason) {
+  return {
+    symbol: fin.symbol,
+    bare: fin.bare,
+    name: fin.name,
+    currency: fin.currency,
+    price: fin.price,
+    priceDate: fin.priceDate,
+    priceSource: fin.priceSource ?? null,
+    pe: null,
+    pbv: null,
+    ttmEps: null,
+    ttmEpsBasis: null,
+    ttmBvps: null,
+    score: null,
+    coverage: 0,
+    passed: 0,
+    failed: 0,
+    checks: [],
+    roe3: null,
+    roa3: null,
+    npm3: null,
+    epsCagr3: null,
+    de: null,
+    icr: null,
+    dividendYield: null,
+    payout: null,
+    streak: 0,
+    ttmDps: null,
+    dps: null,
+    annualDps: null,
+    dividendFy: null,
+    hasSpecialDividend: false,
+    ddm: { ok: false, reason, intrinsic: null, mos: null, g1: null, g2: null, r: null, years: null, d0: null },
+    bands: { basis: null, pe: null, pbv: null },
+    yearCount: 0,
+    dataIssue: reason,
+    failReason: 'unknown:data',
+  };
+}
+
 export function buildRow(fin, { overrides = {}, asOf = new Date(), history = null } = {}) {
+  if (fin.dataIssue) return unknownRow(fin, fin.dataIssue);
   const ttmEps = fin.ttm?.eps ?? null;
   const trusted = reconcileYears(fin.years, history?.years ?? []);
+  // Growth needs a longer run than the four annual statement rows Yahoo keeps.
+  // The tracked history supplies the older revenue and profit, but its EPS is
+  // not trustworthy for every name: several rows mix core earnings with the
+  // reported net income (TU 2023: a reported loss and a positive "EPS"). So the
+  // long history is used for revenue and profit, and only the four reconciled
+  // Yahoo years are allowed to supply the per-share series.
+  const growthYears = buildGrowthHistory(trusted, history);
   const quality = scoreQuality({
     years: trusted,
     dividends: fin.dividends,
@@ -141,7 +228,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     asOf,
     ttmEps,
     isFinancial: fin.isFinancial === true,
-    history: history ? { years: trusted } : null,
+    history: growthYears ? { years: growthYears } : null,
   });
 
   // What each rule has actually done, attached to the rule it belongs to.
@@ -186,6 +273,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     currency: fin.currency,
     price: fin.price,
     priceDate: fin.priceDate,
+    priceSource: fin.priceSource ?? null,
     pe: peCurrent,
     pbv: pbvCurrent,
     ttmEps,

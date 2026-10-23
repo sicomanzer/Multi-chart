@@ -78,6 +78,15 @@ function engineYear(row, prev, dps) {
       ? top / bottom
       : null
   );
+  // The long history is a second source and its EPS column is not always the
+  // reported figure: TU's 2023 row carries a net loss of 13.9bn and a positive
+  // 1.21 "EPS" (core earnings). A growth rule that read that would reward a
+  // loss. The same guard as the live path: a sign that disagrees with the
+  // profit is not a per-share number.
+  const epsConflict = typeof row.eps === 'number' && typeof row.netIncome === 'number'
+    && row.netIncome !== 0 && row.eps !== 0
+    && Math.sign(row.eps) !== Math.sign(row.netIncome);
+  const equityPositive = typeof row.equity === 'number' && row.equity > 0;
   return {
     fiscalYear: row.fiscalYear,
     asOf: row.asOf ?? null,
@@ -91,17 +100,21 @@ function engineYear(row, prev, dps) {
     interestExpense: null,
     operatingCashFlow: row.operatingCashFlow ?? null,
     freeCashFlow: null,
-    eps: row.eps ?? null,
+    eps: epsConflict ? null : (row.eps ?? null),
     shares: null,
     dividendsPaid: null,
     dpsPaid: dps,
     dps,
-    roe: ratio(row.netIncome, average(prev?.equity, row.equity)),
+    roe: equityPositive ? ratio(row.netIncome, average(prev?.equity, row.equity)) : null,
     roa: ratio(row.netIncome, average(prev?.assets, row.assets)),
     npm: row.npm ?? ratio(row.netIncome, row.revenue),
-    de: row.de ?? ratio(row.totalDebt, row.equity),
+    // Negative equity makes leverage and ROE meaningless; THAI's insolvency
+    // years produced a negative D/E that a `de <= 1.0` rule would have passed.
+    de: equityPositive ? (row.de ?? ratio(row.totalDebt, row.equity)) : null,
     interestCoverage: null,
     bvps: null,
+    epsConflict,
+    negativeEquity: typeof row.equity === 'number' && row.equity <= 0,
   };
 }
 
@@ -328,6 +341,16 @@ export function summariseBacktest(observations, presetId = 'quality') {
     if (!usable.length) return null;
     return usable.reduce((acc, v) => acc * (1 + v), 1) - 1;
   };
+  // The compound above multiplies overlapping windows: four three-year periods
+  // starting a year apart span about six years, not three. The mean is the
+  // honest "what did one window return" figure; the compound is a cumulative
+  // number over overlapping windows, not a single holding-period return.
+  const mean = (values) => {
+    const usable = values.filter((v) => typeof v === 'number' && Number.isFinite(v));
+    return usable.length ? usable.reduce((sum, v) => sum + v, 0) / usable.length : null;
+  };
+  const portfolioMean = mean(perPeriod.map((p) => p.portfolio));
+  const universeMean = mean(perPeriod.map((p) => p.universe));
 
   return {
     preset: preset.id,
@@ -338,6 +361,8 @@ export function summariseBacktest(observations, presetId = 'quality') {
       names: flat.length,
       portfolio: compound(perPeriod.map((p) => p.portfolio)),
       universe: compound(perPeriod.map((p) => p.universe)),
+      portfolioMean,
+      universeMean,
     },
   };
 }

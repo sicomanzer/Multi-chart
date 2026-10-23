@@ -124,6 +124,12 @@ export async function quoteBatch(yahooSymbols) {
         const value = {
           currency: q.currency ?? null,
           price: q.regularMarketPrice ?? null,
+          // The day the quote's price belongs to. A chart can end weeks before
+          // the quote (a suspension, a data gap), and the screen has to be able
+          // to tell which one is current.
+          priceTime: q.regularMarketTime
+            ? new Date(q.regularMarketTime * 1000).toISOString().slice(0, 10)
+            : null,
           epsTtm: q.epsTrailingTwelveMonths ?? null,
           bookValue: q.bookValue ?? null,
           priceToBook: q.priceToBook ?? null,
