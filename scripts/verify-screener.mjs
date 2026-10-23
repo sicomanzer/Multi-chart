@@ -24,6 +24,7 @@ import {
   computeBands,
   ddm,
   fiscalYearDividend,
+  grahamNumber,
   marginOfSafety,
   peerPercentiles,
   presetById,
@@ -72,6 +73,12 @@ check('margin of safety is negative above intrinsic value',
 check('margin of safety of an exact-price buy is zero', near(marginOfSafety(10, 10), 0));
 check('margin of safety needs a positive intrinsic value', marginOfSafety(0, 10) === null);
 
+const graham = grahamNumber(3.15, 42.15);
+check('Graham number is sqrt(22.5 × EPS × BVPS)',
+  near(graham.value, 54.65694146217843, 1e-9), graham.value);
+check('Graham number needs positive EPS and book value',
+  grahamNumber(-1, 42.15).ok === false && grahamNumber(3.15, 0).ok === false);
+
 check('a higher stage-one growth rate raises the value',
   ddm({ d0: 1, g1: 0.08, g2: 0.03, r: 0.09 }).intrinsic >
   ddm({ d0: 1, g1: 0.04, g2: 0.03, r: 0.09 }).intrinsic);
@@ -104,6 +111,13 @@ check('a payout above earnings is not valued by the DDM',
 check('a funded payout is still valued',
   ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 0.5 }).ok === true,
   ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 0.5 }).ok);
+check('a yield below the DDM floor is not valued',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.0026 }).ok === false
+  && ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.0026 }).reason === 'yield-too-low',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.0026 }).reason);
+check('a yield at the DDM floor is still valued',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.01 }).ok === true,
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, yieldRate: 0.01 }).ok);
 
 // ── Bands ───────────────────────────────────────────────────────────────────
 

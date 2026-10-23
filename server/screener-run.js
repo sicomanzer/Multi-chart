@@ -15,6 +15,7 @@ import {
   computeBands,
   ddm,
   DEFAULTS,
+  grahamNumber,
   marginOfSafety,
   peerPercentiles,
   presetById,
@@ -203,6 +204,7 @@ function unknownRow(fin, reason) {
     dividendFy: null,
     hasSpecialDividend: false,
     ddm: { ok: false, reason, intrinsic: null, mos: null, g1: null, g2: null, r: null, years: null, d0: null },
+    graham: { ok: false, reason, value: null, mos: null, eps: null, bvps: null },
     bands: { basis: null, pe: null, pbv: null },
     yearCount: 0,
     dataIssue: reason,
@@ -253,7 +255,9 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   // The payout is not an input to the arithmetic; it is a test of whether the
   // arithmetic is meaningful. A dividend that is all of (or more than) the
   // profit cannot fund the growth the model assumes.
-  const valuation = ddm({ d0, g1, g2, r, years, payout: quality.payout });
+  const valuation = ddm({
+    d0, g1, g2, r, years, payout: quality.payout, yieldRate: quality.dividendYield,
+  });
   const mos = valuation.ok ? marginOfSafety(valuation.intrinsic, fin.price) : null;
 
   // Today's multiples, on today's denominators.
@@ -317,6 +321,19 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
       years,
       d0,
     },
+    // A second, much blunter opinion. It uses today's EPS and book value and
+    // no growth forecast; it is a cross-check, not a replacement for the DDM.
+    graham: (() => {
+      const g = grahamNumber(fin.ttm?.eps, fin.ttm?.bvps);
+      return {
+        ok: g.ok,
+        reason: g.reason ?? null,
+        value: g.value ?? null,
+        mos: g.ok ? marginOfSafety(g.value, fin.price) : null,
+        eps: fin.ttm?.eps ?? null,
+        bvps: fin.ttm?.bvps ?? null,
+      };
+    })(),
     bands: {
       basis: bands.basis,
       pe: bands.pe

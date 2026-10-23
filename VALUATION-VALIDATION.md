@@ -1,11 +1,11 @@
 # Valuation Validation — Multi-chart
 
-วันที่ตรวจ: 2026-10-23 (รอบที่ 2 หลังแก้ default/guard)  
+วันที่ตรวจ: 2026-10-23 (รอบที่ 3 หลังเพิ่ม low-yield guard/Graham cross-check)  
 ขอบเขต: intrinsic value, margin of safety, DDM, historical P/E–P/BV bands และ sensitivity  
-ข้อสรุปสั้น: **สูตร DDM ถูกต้อง (PASS)**; **default เปลี่ยนเป็น g1 = 5% / g2 = 3% แล้ว (PASS)**; **KCE/MC ถูก guard ไม่ให้ DDM ประเมิน (PASS)**; แต่ **DCF/Graham ยังไม่มี (BLOCKED)** และ **DELTA/ธนาคารยังเป็น model-fit risk**
+ข้อสรุปสั้น: **สูตร DDM ถูกต้อง (PASS)**; **default เปลี่ยนเป็น g1 = 5% / g2 = 3% แล้ว (PASS)**; **KCE/MC ถูก payout guard และ DELTA ถูก low-yield guard (PASS)**; **มี Graham number เป็น cross-check (PASS)**; แต่ **DCF/Graham growth formula และ sector model ยังไม่มี (BLOCKED)**
 
-> ระบบนี้ไม่มี DCF และไม่มี Graham formula ในโค้ด — มีเพียง two-stage DDM, MOS และ historical bands  
-> รายงานนี้จึงไม่ถือว่า DCF/Graham “ผ่าน”; ระบุเป็น BLOCKED ตามความเป็นจริง
+> ระบบนี้ยังไม่มี DCF และ Graham growth formula — มี two-stage DDM, MOS, historical bands และ Graham number cross-check  
+> รายงานนี้จึงไม่ถือว่า DCF/Graham growth formula “ผ่าน”; ระบุเป็น BLOCKED ตามความเป็นจริง
 
 ---
 
@@ -18,8 +18,9 @@
 | Historical P/E band | มี | stock detail |
 | Historical P/BV band | มี | stock detail |
 | Sensitivity sliders (r, g1, g2, years) | มี (manual) | calculator |
+| Graham number `sqrt(22.5 × EPS × BVPS)` | มี (cross-check) | stock detail calculator |
 | DCF | **ไม่มี** | — |
-| Graham formula | **ไม่มี** | — |
+| Graham growth formula | **ไม่มี** | — |
 | Sector-specific model (bank/REIT) | **ไม่มี** | — |
 
 ---
@@ -61,13 +62,37 @@ P0 = Σ_{t=1..n} D0(1+g1)^t / (1+r)^t
 | CPF | 1.25 | 20.00 | 23.39 | **+14.5%** | payout 40.06% |
 | SCB | 11.28 | 151.50 | 211.11 | **+28.2%** | bank |
 | KCE | 1.20 | 70.75 | **null** | **null** | `payout-not-funded` (171.4%) |
-| DELTA | 0.60 | 234.00 | 11.23 | −1983.8% | DDM ไม่เหมาะกับ growth/cyclical |
+| DELTA | 0.60 | 234.00 | **null** | **null** | `yield-too-low` (0.26%) |
 | MC | 0.96 | 11.40 | **null** | **null** | `payout-not-funded` (100%) |
 | PTTEP | 8.75 | 163.00 | 163.76 | +0.5% | payout 57.6% |
 | MEGA | 1.60 | 34.50 | 29.94 | −15.2% | payout 73.1% |
 | TTW | 0.60 | 9.95 | 11.23 | +11.4% | payout 73.2% |
 | KAMART | 0.44 | 7.05 | 8.23 | +14.4% | payout 80.0% |
 | PRM | 0.50 | 8.75 | 9.36 | +6.5% | payout 52.1% |
+
+### 2.4 Graham number (cross-check)
+
+```
+G = sqrt(22.5 × EPS × BVPS)
+```
+
+ใช้ EPS และ BVPS ปัจจุบัน (ไม่ forecast growth) และแสดงเป็น **second opinion** ไม่ใช่ราคาเป้าหมาย  
+ถ้า EPS หรือ BVPS ≤ 0 → `ok=false` และไม่แสดงตัวเลข
+
+| Symbol | EPS | BVPS | Graham | ราคา | MOS |
+|---|---:|---:|---:|---:|---:|
+| PTT | 4.342 | 42.161 | 64.18 | 41.50 | +35.3% |
+| SCB | 12.923 | 143.849 | 204.51 | 151.50 | +25.9% |
+| CPF | 1.900 | 27.379 | 34.21 | 20.00 | +41.5% |
+| TVO | 2.916 | 13.620 | 29.89 | 29.00 | +3.0% |
+| PTTEP | 17.430 | 144.379 | 237.95 | 163.00 | +31.5% |
+| PRM | 0.995 | 5.568 | 11.17 | 8.75 | +21.6% |
+| ADVANC | 18.000 | 17.576 | 84.37 | 336.00 | −298.2% |
+| KCE | 0.788 | 10.968 | 13.94 | 70.75 | −407.5% |
+| DELTA | 2.400 | 8.451 | 21.36 | 234.00 | −995.4% |
+
+**สูตรทดสอบ**: EPS 3.15, BVPS 42.15 → sqrt(22.5 × 3.15 × 42.15) = **54.6569414622** (ตรงกับระบบ)  
+**ข้อจำกัด**: Graham number ลงโทษบริษัท asset-light/ROE สูงโดยธรรมชาติ (ADVANC, KCE, DELTA) — ต้องอ่านคู่กับ DDM/คุณภาพ ไม่ใช่ใช้แทนกัน
 
 **เทียบก่อน/หลังแก้ default**
 
@@ -144,7 +169,7 @@ P0 = Σ_{t=1..n} D0(1+g1)^t / (1+r)^t
 | PRM | 18.91% | 52.08% | 9.06% | 5% | 3% | อนุรักษ์นิยม |
 | KCE | 10.30% | 171.43% | −7.36% | — | — | **DDM ถูก guard** |
 | MC | 19.48% | 100.00% | 0.00% | — | — | **DDM ถูก guard** |
-| DELTA | 27.97% | 30.15% | 19.54% | 5% | 3% | **DDM ไม่เหมาะ** (growth/cyclical) |
+| DELTA | 27.97% | 30.15% | 19.54% | — | — | **DDM ถูก low-yield guard** (0.26%) |
 
 ### 4.2 ข้อค้นพบด้านความเหมาะสม
 
@@ -152,8 +177,8 @@ P0 = Σ_{t=1..n} D0(1+g1)^t / (1+r)^t
 2. **g2 = 3% ใกล้ long-run inflation/GDP** และใกล้ sustainable growth ของ PTT/CPF/TVO มากกว่า 5% เดิม
 3. **g1 = 5% ยังเป็น near-term assumption** ที่สูงกว่า sustainable ของ PTT/SCB/ADVANC; เป็นความเสี่ยงของ stage-one
 4. **KCE/MC ถูก guard** ด้วย `payout-not-funded` (payout ≥ 100%) → ไม่มี intrinsic/MOS ที่สร้างจากปันผลเกินกำไร; หลักเดียวกันนี้ครอบทุกตัวที่ payout ≥ 100% (เช่น ICHI 107.8%, BDMS 100%)
-5. **DELTA ยังไม่ถูก guard**: yield 0.26% และ payout 30% ทำให้ DDM ให้ 11.23 vs ราคา 234 (MOS −1983.8%) — ตัวเลขถูกตามสูตรแต่ไม่เหมาะกับธุรกิจ growth/cyclical; ควรใช้ DCF/relative valuation แทน
-6. **ไม่มี DCF/Graham**: บริษัทไม่จ่ายปันผลหรือปันผลต่ำยังไม่มีมูลค่าที่เหมาะสมจากระบบ
+5. **DELTA ถูก low-yield guard แล้ว**: yield 0.26% < 1% → `yield-too-low`, ไม่มี intrinsic/MOS จาก DDM; Graham number ยังแสดงเป็น cross-check แต่ต่ำมากเพราะเป็น defensive formula
+6. **มี Graham number cross-check แต่ยังไม่มี DCF/Graham growth formula**: บริษัทไม่จ่ายปันผล/ปันผลต่ำยังไม่มี DCF; Graham number ใช้ได้เฉพาะ EPS/BVPS เป็นบวกและไม่เหมาะกับ asset-light/ROE สูง
 7. **ไม่มี sector model**: ธนาคาร/REIT/cyclical ใช้ DDM เดียวกัน; DDM ของ SCB ไม่ได้สะท้อน capital adequacy/credit cycle
 8. **ไม่มี sensitivity อัตโนมัติ**: ผู้ใช้ต้องเลื่อน slider เอง; ยังไม่มี range/ตารางใน UI
 
@@ -195,14 +220,16 @@ P0 = Σ_{t=1..n} D0(1+g1)^t / (1+r)^t
 ### ทำแล้ว
 - เปลี่ยน default `g2` เป็น **3%** ทั้ง server (`DEFAULTS`) และ UI; `g1` ยัง 5% ระยะ 5 ปี
 - เพิ่ม **payout guard**: `payout ≥ 100%` → `ok:false`, `reason='payout-not-funded'`, ไม่มี intrinsic/MOS
+- เพิ่ม **low-yield guard**: yield > 0 และ < 1% → `ok:false`, `reason='yield-too-low'` (DELTA 0.26%)
+- เพิ่ม **Graham number cross-check** `sqrt(22.5 × EPS × BVPS)` ใน stock detail; ไม่ใช่ DCF/ราคาเป้าหมาย
 - เพิ่มข้อความ EN/TH ใน calculator และเทสต์ regression
 - คงปุ่ม **Flat 5% scenario** ไว้เป็นกรณีทดสอบ ไม่ใช่ค่าเริ่มต้น
 
 ### ยังเหลือ (ต้องตัดสินใจ)
-1. เพิ่ม **DCF** สำหรับบริษัทไม่จ่ายปันผล/ปันผลต่ำ และ **Graham** เป็น cross-check
-2. เพิ่ม **sensitivity matrix** (r × g2) ใน UI แทน slider เดี่ยว
-3. แยกโมเดล **bank/REIT** (capital, NAV, distribution yield) แทน DDM กลาง
-4. พิจารณา **low-yield guard** สำหรับ DELTA (yield 0.26%) หรือแสดง warning ว่า DDM ไม่เหมาะ
+1. เพิ่ม **DCF** สำหรับบริษัทไม่จ่ายปันผล/ปันผลต่ำ; ต้องมี FCF, cash/net debt, shares และ WACC ที่ตรวจสอบได้
+2. เพิ่ม **Graham growth formula** (8.5 + 2g) — ต้องมี AAA yield และ g ที่มีแหล่งอ้างอิง; ตอนนี้มีเพียง Graham number
+3. เพิ่ม **sensitivity matrix** (r × g2) ใน UI แทน slider เดี่ยว
+4. แยกโมเดล **bank/REIT** (capital, NAV, distribution yield) แทน DDM กลาง
 5. แสดง **range** (bear/base/bull) ไม่ใช่ point estimate
 
 ---
@@ -216,9 +243,10 @@ P0 = Σ_{t=1..n} D0(1+g1)^t / (1+r)^t
 | Historical bands / look-ahead | PASS |
 | ADVANC special estimate | PASS (estimate; −1.9%) |
 | DDM default g1=5%, g2=3% | **PASS (แก้แล้ว)** |
-| DDM กับ KCE/MC | **PASS (guard แล้ว)** |
-| DDM กับ DELTA | **RISK (ยังไม่เหมาะ)** |
-| DCF | **BLOCKED** (ไม่มีในระบบ) |
-| Graham | **BLOCKED** (ไม่มีในระบบ) |
+| DDM กับ KCE/MC | **PASS (payout guard)** |
+| DDM กับ DELTA | **PASS (low-yield guard)** |
+| Graham number cross-check | **PASS** (มีใน stock detail; เป็น cross-check) |
+| DCF | **BLOCKED** (ไม่มีในระบบ; ข้อมูล WACC/net debt ยังไม่พอ) |
+| Graham growth formula | **BLOCKED** (ไม่มี; ต้องมี AAA yield/g ที่อ้างอิงได้) |
 | Sensitivity matrix | **PARTIAL** (มี slider, ไม่มี matrix) |
 | Sector model | **BLOCKED** (ไม่มี) |

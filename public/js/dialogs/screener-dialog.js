@@ -1823,6 +1823,27 @@ function calculator(detail, state, rerender) {
       <div><span>${escape(t('scr.dps.ttm'))}</span><b>${money(detail.ttmDps)}</b></div>`;
   }
   box.appendChild(out);
+
+  // A second opinion that does not use growth at all. It is deliberately
+  // separate from the DDM: the two models disagree for good reasons, and
+  // showing only one number would hide that.
+  const graham = detail.graham;
+  if (graham) {
+    const cross = document.createElement('div');
+    cross.className = 'scr-calc__out';
+    if (graham.ok) {
+      const gmos = graham.mos == null ? '—' : `${graham.mos.toFixed(1)}%`;
+      cross.innerHTML = `
+        <p class="section__hint">${escape(t('scr.grahamHint'))}</p>
+        <div><span>${escape(t('scr.graham'))}</span>
+          <b>${money(graham.value, detail.currency)}</b></div>
+        <div><span>${escape(t('scr.mos'))}</span>
+          <b class="${graham.mos > 0 ? 'is-up' : 'is-down'}">${gmos}</b></div>`;
+    } else {
+      cross.innerHTML = `<p class="section__hint">${escape(t('scr.grahamNa'))}</p>`;
+    }
+    box.appendChild(cross);
+  }
   return box;
 }
 

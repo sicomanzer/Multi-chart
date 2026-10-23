@@ -506,8 +506,11 @@ slider. The 5% near-term rate is a visible assumption, while the 3% terminal
 rate is anchored closer to long-run inflation/GDP; the old flat 5% pair is now
 an explicit "Flat 5% scenario" for stress testing. The sliders can still move
 either rate independently, and the model refuses to answer when `r` is at or
-below `g2`, or when the dividend is at/above earnings (`payout-not-funded`),
-rather than returning infinity or a value built on an unfunded distribution.
+below `g2`, when the dividend is at/above earnings (`payout-not-funded`), or
+when the yield is below 1% (`yield-too-low`), rather than returning infinity
+or a value built on an unfunded or negligible distribution. The stock detail
+also shows the Graham number `sqrt(22.5 × EPS × BVPS)` as a deliberately
+blunt cross-check; it is not a DCF and not a target price.
 
 **Scoring.** Seventeen rules in five groups — quality (40 points), growth (20),
 solvency (20), cash conversion (20), shareholder returns (20), 120 in all — so a

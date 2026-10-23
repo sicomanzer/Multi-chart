@@ -174,6 +174,31 @@ P0 = Σ_{t=1..n} D0(1+g1)^t / (1+r)^t
 
 **ข้อสังเกต**: เมื่อ g1 = g2 สูตรยุบเป็น `d0(1+g)/(r−g)`; default ใหม่เป็น g1 = 5% / g2 = 3% จึงเป็น two-stage จริง ส่วนปุ่ม Flat 5% ยังอยู่เป็น scenario ทดสอบ ไม่ใช่ค่าเริ่มต้น (ดู `VALUATION-VALIDATION.md`)
 
+**Low-yield guard**
+
+| yield | d0 | g1 | g2 | r | n | ค่าคาดหวัง | ค่าระบบ | สถานะ |
+|---:|---:|---:|---:|---:|---:|---|---|---|
+| 0.26% | 1.00 | 5% | 3% | 9% | 5 | ok=false (`yield-too-low`) | ok=false | PASS |
+| 1.00% | 1.00 | 5% | 3% | 9% | 5 | 18.7154163726 | 18.7154163726 | PASS |
+
+> เกณฑ์ 1% คือเส้นแบ่งว่า DDM ยังเป็น “income valuation” หรือเป็นหุ้น growth/cyclical ที่จ่ายปันผลเล็กน้อย; DELTA 0.26% ถูกตัด ไม่คืน intrinsic/MOS
+
+### 1.8b Graham number (cross-check)
+
+**สูตร**
+```
+G = sqrt(22.5 × EPS × BVPS)
+ถ้า EPS <= 0 หรือ BVPS <= 0 → ok=false
+```
+
+| EPS | BVPS | ค่าคาดหวัง | ค่าระบบ | คลาดเคลื่อน | สถานะ |
+|---:|---:|---:|---:|---:|---|
+| 3.15 | 42.15 | 54.6569414622 | 54.6569414622 | 0.00 | PASS |
+| −1.00 | 42.15 | null | null | — | PASS |
+| 3.15 | 0.00 | null | null | — | PASS |
+
+**ข้อจำกัด**: เป็น defensive cross-check (P/E 15 × P/BV 1.5) ไม่ใช่ DCF และไม่ใช่ราคาเป้าหมาย; หุ้น asset-light/ROE สูงจะดู “แพง” โดยธรรมชาติ
+
 ---
 
 ### 1.9 Margin of safety
@@ -327,7 +352,10 @@ portfolioCompound = Π(1 + portfolio_period) − 1
 | ROE / ROA / NPM / D/E / ICR | PASS |
 | Payout / yield (FY/FY) | PASS (ADVANC เป็น estimate) |
 | EPS/revenue CAGR / stability | PASS |
-| DDM / MOS | PASS (สูตร + default g1=5%/g2=3% + payout guard); RISK คงเหลือ (DELTA/DCF/sector) |
+| DDM / MOS | PASS (สูตร + default g1=5%/g2=3% + payout guard + low-yield guard) |
+| Graham number cross-check | PASS (stock detail; ไม่ใช่ DCF/ราคาเป้าหมาย) |
+| DCF / Graham growth formula | **BLOCKED** (ยังไม่มีในระบบ; ข้อมูล WACC/net debt/AAA yield ไม่พอ) |
+| Sector model (bank/REIT) | **BLOCKED** (ยังไม่มี) |
 | Bands / look-ahead | PASS |
 | FX / unit gap | PASS |
 | Score / coverage | PASS |

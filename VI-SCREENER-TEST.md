@@ -77,10 +77,11 @@
 | SCB | 46 | 7.45% | 80.00% | 11.72 | 1.05 | 211.11 | +28.2% | bank; ROA < 7% |
 | TVO | 85 | 6.79% | 80.08% | 9.95 | 2.13 | 36.87 | +21.3% | payout เกิน 0.08 pp |
 | KCE | 53 | 1.70% | 171.43% | 89.84 | 6.45 | — | — | `payout-not-funded`; yield ต่ำ |
-| DELTA | 86 | 0.26% | 30.15% | 97.50 | 27.69 | 11.23 | −1983.8% | DDM ไม่เหมาะกับ growth/cyclical |
+| DELTA | 86 | 0.26% | 30.15% | 97.50 | 27.69 | — | — | `yield-too-low`; Graham cross-check 21.36 |
 
 > BANPU เป็น `—` ทุกช่องเพราะ `dataIssue`; ค่าที่เหลือมาจาก stock detail ณ วันเดียวกับราคา  
-> DDM ใช้ default g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว, r = 9%; MC (payout 100%) และ ICHI (107.8%)/BDMS (100%) ก็ถูก guard เป็น `—` เช่นกัน
+> DDM ใช้ default g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว, r = 9%; MC (payout 100%) และ ICHI (107.8%)/BDMS (100%) ก็ถูก guard เป็น `—` เช่นกัน  
+> `value` preset บน set-large ยัง matched 16 ตัว; DELTA/KCE/MC/ICHI/BDMS ถูกตัดด้วย `no-mos` จาก guard; Graham number แสดงใน stock detail เป็น cross-check
 
 ### 3.2 Income preset — สมาชิกที่ผ่าน
 
@@ -144,7 +145,7 @@
 3. **แบงก์**: ROA <7% ทำให้แบงก์ส่วนใหญ่ไม่ผ่าน income; นี่เป็นข้อจำกัดของเกณฑ์ ไม่ใช่ bug
 4. **Survivorship/revision bias**: SET100 ปัจจุบันย้อนหลัง; ข้อมูลงบอาจถูก revise
 5. **Backtest ตัวอย่างเล็ก**: 4 ช่วง 3 ปี, n 1.8–2.0 ต่อช่วง; ดู `FINANCIAL-DATA-AUDIT.md`
-6. **DDM อย่างเดียว**: ไม่มี DCF/Graham; `value` preset ใช้ MOS จาก DDM; default ใหม่ g1=5%/g2=3% และ KCE/MC ถูก guard แต่ DELTA/ธนาคารยังเป็น model-fit risk
+6. **DDM + Graham number**: ไม่มี DCF/Graham growth formula; `value` preset ใช้ MOS จาก DDM; default ใหม่ g1=5%/g2=3%, KCE/MC ถูก payout guard, DELTA ถูก low-yield guard; Graham number เป็น cross-check ใน stock detail แต่ธนาคาร/REIT ยังไม่มี sector model
 7. **ข้อมูล long history**: 109 symbols; GST ยังขาด; หุ้นนอกไฟล์ได้ growth UNKNOWN
 
 ---
@@ -162,7 +163,10 @@
 | MC stub payout | PASS |
 | DDM default g1=5%/g2=3% | PASS |
 | DDM payout guard (KCE/MC) | PASS |
-| DDM model fit (DELTA/DCF/sector) | RISK (OPEN) |
+| DDM low-yield guard (DELTA) | PASS |
+| Graham number cross-check | PASS (stock detail) |
+| DCF / Graham growth formula / sector model | RISK (OPEN) |
+| TVO 80.08% vs 80% ceiling | DECISION (ceiling unchanged) |
 | Special dividend | PASS (estimate) |
 | Coverage/universe | PARTIAL (GST BLOCKED) |
 | Backtest/valuation caveats | PASS (รายงานแล้ว) |

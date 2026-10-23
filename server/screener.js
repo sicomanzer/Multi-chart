@@ -284,11 +284,12 @@ function dividendStreak(dividends, asOf = new Date()) {
  *      + D0(1+g1)^n (1+g2) / ((r - g2)(1+r)^n)
  *
  * Returns a `reason` instead of a number when the inputs cannot support a
- * valuation — no dividend, a discount rate at or below terminal growth, or a
- * payout at/above earnings, which means the distribution is not funded by the
- * profit the model is capitalising. A screen that quietly printed `Infinity`
- * or a value built on an unfunded dividend would rank those names first, so it
- * prints nothing.
+ * valuation — no dividend, a discount rate at or below terminal growth, a
+ * payout at/above earnings (the distribution is not funded by the profit the
+ * model is capitalising), or a dividend yield below the model's floor (the
+ * dividend is too small for the arithmetic to be an income valuation). A
+ * screen that quietly printed `Infinity` or a value built on an unfunded or
+ * negligible dividend would rank those names first, so it prints nothing.
  */
 /**
  * The default assumptions of the dividend discount model.
@@ -307,7 +308,20 @@ export const DEFAULTS = {
   years: 5,
 };
 
-export function ddm({ d0, g1, g2 = 0.03, r = 0.09, years = 5, payout = null }) {
+/**
+ * The dividend yield below which a DDM is not an income valuation.
+ *
+ * DELTA yields 0.26%. With a 5% near-term growth cap the arithmetic still
+ * produces a number, but almost all of it is terminal value and the answer
+ * says more about the assumption than about the company. One per cent is the
+ * line between "this is a dividend story" and "this is a growth/cyclical name
+ * that happens to pay something"; the latter needs a different model.
+ */
+export const MIN_DDM_YIELD = 0.01;
+
+export function ddm({
+  d0, g1, g2 = 0.03, r = 0.09, years = 5, payout = null, yieldRate = null,
+}) {
   const safe = {
     d0: Number(d0),
     g1: Number(g1),
@@ -329,6 +343,13 @@ export function ddm({ d0, g1, g2 = 0.03, r = 0.09, years = 5, payout = null }) {
   const payoutRatio = payout == null ? null : Number(payout);
   if (payoutRatio != null && Number.isFinite(payoutRatio) && payoutRatio >= 1) {
     return { ok: false, reason: 'payout-not-funded', intrinsic: null, mos: null };
+  }
+  // A DDM is a dividend model. At a 0.26% yield the dividend is a rounding
+  // error in the return, and the terminal value does almost all of the work;
+  // printing a target price there would overstate how much the model knows.
+  const y = yieldRate == null ? null : Number(yieldRate);
+  if (y != null && Number.isFinite(y) && y > 0 && y < MIN_DDM_YIELD) {
+    return { ok: false, reason: 'yield-too-low', intrinsic: null, mos: null };
   }
 
   let present = 0;
@@ -358,6 +379,29 @@ export function marginOfSafety(intrinsic, price) {
     return null;
   }
   return ((intrinsic - price) / intrinsic) * 100;
+}
+
+/**
+ * The Graham number: sqrt(22.5 × EPS × BVPS).
+ *
+ * This is the defensive-investor cross-check, not the growth formula and not a
+ * discounted cash-flow model. 22.5 is the product of a P/E ceiling of 15 and a
+ * P/BV ceiling of 1.5; it says what a conservative buyer would pay for the
+ * earnings and book value that exist today, without forecasting growth. It is
+ * deliberately blind to quality and to the sector, so it is shown beside the
+ * DDM as a second opinion rather than as the answer.
+ */
+export function grahamNumber(eps, bvps) {
+  const e = Number(eps);
+  const b = Number(bvps);
+  if (!Number.isFinite(e) || !Number.isFinite(b) || e <= 0 || b <= 0) {
+    return { ok: false, reason: 'not-computable', value: null };
+  }
+  const value = Math.sqrt(22.5 * e * b);
+  if (!Number.isFinite(value) || value <= 0) {
+    return { ok: false, reason: 'not-computable', value: null };
+  }
+  return { ok: true, reason: null, value };
 }
 
 /**
