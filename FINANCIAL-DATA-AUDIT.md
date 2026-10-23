@@ -24,7 +24,7 @@
 | ระดับ | จำนวน | สถานะ |
 |---|---:|---|
 | P0 — ทำให้ตัวเลขกลับเครื่องหมาย/ผิดทั้งเส้น | 1 | แก้แล้ว |
-| P1 — ตัวเลขเงินผิดหรือประเมินผิดอย่างมีนัย | 6 | แก้แล้ว 5, เปิด 1 (valuation model) |
+| P1 — ตัวเลขเงินผิดหรือประเมินผิดอย่างมีนัย | 6 | แก้แล้ว 6; เหลือ RISK ด้าน model fit (DELTA/DCF) |
 | P2 — ความครบถ้วน/ความสอดคล้องของแหล่งข้อมูล | 7 | แก้แล้ว 5, เปิด 2 |
 | P3 — การแสดงผล/ป้ายกำกับ | 1 | แก้แล้ว |
 
@@ -33,7 +33,7 @@
 - บั๊กที่ร้ายที่สุดคือ **BANPU**: ค่า FX ติดลบถูกนำไปคูณทั้งประวัติ ทำให้กำไร/ขาดทุนกลับเครื่องหมาย และระบบเดิมยังให้คะแนน/มูลค่าจากข้อมูลที่ขัดกันเอง ตอนนี้ระบบ **ไม่ให้คะแนน** และรายงาน `dataIssue = eps-sign-conflict`
 - **Payout ratio เดิมผิดระบบ**: ใช้ปันผลรายปีหารด้วย EPS TTM (คนละงวด) ทำให้ PTT ถูกอ่าน 52.97% แทน 73.02%, CPF 65.78% แทน 40.06%, TVO 67.56% แทน 80.08% หลังแก้เป็น FY/FY ตัวเลขตรงกับแหล่งทางการ
 - **Income preset เปลี่ยนสมาชิก** เพราะข้อมูลถูกแก้ ไม่ใช่เพราะเปลี่ยนเกณฑ์: union เดิม 6 ตัว → ใหม่ 5 ตัว (TVO 80.08% และ TACC 84.0% หลุด; KAMART 80.0% เข้า; MC 100% หลุด)
-- **Valuation ยังเป็นความเสี่ยงเปิด**: DDM ใช้ g1 = g2 = 5% เป็นค่าเริ่มต้น ทำให้สูตร two-stage ยุบเป็น Gordon growth และให้มูลค่าสูงเกินสำหรับบริษัทที่การเติบโตอย่างยั่งยืนต่ำกว่า 5% (PTT, SCB, CPF, TVO, ADVANC) — ต้องรายงาน ไม่ควรเปลี่ยนแทนผู้ใช้
+- **Valuation แก้ default/guard แล้ว แต่ยังมี model risk**: เดิม DDM ใช้ g1 = g2 = 5% ทำให้ two-stage ยุบเป็น Gordon growth; เปลี่ยน default เป็น g1 = 5% ระยะ 5 ปี และ g2 = 3% ระยะยาวแล้ว และเพิ่ม guard payout ≥ 100% (KCE 171.4%, MC 100%) ให้คืน null แทน intrinsic/MOS ที่สร้างจากปันผลเกินกำไร — ยังไม่มี DCF/Graham และ DELTA/ธนาคารยังเป็น model-fit risk
 - **ข้อมูล long history ยังไม่ครบทุกจักรวาล**: เพิ่ม TVO และ JAS เข้า `data/annual-history.json` แล้ว (109 symbols); GST ยังดึงไม่ได้ (Finnomena ไม่มีข้อมูล) → growth ของ GST เป็น UNKNOWN ตามนโยบาย
 
 ---
@@ -102,15 +102,16 @@
 | ผล | BANPU price 14.50 @ 2026-10-22 (quote), chart last 2026-08-11, 72 วัน; normal rows มี `priceSource = quote` |
 | สถานะ | **FIXED — PASS** |
 
-### P1-06 — DDM default ทำให้ two-stage ยุบเป็น Gordon และใช้ g = 5% กับทุกบริษัท
+### P1-06 — DDM default ยุบเป็น Gordon และใช้ g = 5% กับทุกบริษัท (แก้แล้ว)
 
 | หัวข้อ | รายละเอียด |
 |---|---|
 | อาการ | UI ตั้ง `g1 = g2 = 5%`, `r = 9%`, `years = 5`; เมื่อ g1 = g2 สูตร two-stage เท่ากับ `d0 × (1+g)/(r−g)` ทุกกรณี |
-| ผล | PTT intrinsic 60.38 (MOS +31.3%) แต่ถ้า g = 3% ได้ 39.48 (MOS −5.1%); ADVANC 394.04 vs 257.69 ที่ g = 3%; SCB 296.10 vs 193.64; TVO 51.71 vs 33.82 |
-| ความเหมาะสม | g_sustainable = ROE × (1−payout): PTT 2.35%, SCB 1.87%, CPF 3.06%, TVO 3.10%, ADVANC 2.64% — ต่ำกว่า 5% ทุกตัว; การใช้ 5% จึง overvalue กลุ่มนี้ |
-| การแก้ | **ยังไม่แก้** — เป็นการตัดสินใจเชิงนโยบาย (ค่า default/สูตร) ไม่ใช่ bug ข้อมูล; รายงานใน `VALUATION-VALIDATION.md` |
-| สถานะ | **OPEN — RISK (FAIL สำหรับการใช้ point estimate โดยไม่ดู sensitivity)** |
+| ผลก่อนแก้ | PTT intrinsic 60.38 (MOS +31.3%) แต่ถ้า g = 3% ได้ 39.48 (MOS −5.1%); ADVANC 394.04 vs 257.69 ที่ g = 3%; SCB 296.10 vs 193.64; TVO 51.71 vs 33.82 |
+| ผลหลังแก้ default | g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว: PTT 43.05 (+3.6%), ADVANC 280.93 (−19.6%), SCB 211.11 (+28.2%), TVO 36.87 (+21.3%), CPF 23.39 (+14.5%), PTTEP 163.76 (+0.5%) |
+| ความเหมาะสม | g_sustainable = ROE × (1−payout): PTT 2.35%, SCB 1.87%, CPF 3.06%, TVO 3.10%, ADVANC 2.64% — g2 = 3% ใกล้ sustainable มากกว่า 5% เดิม; g1 = 5% ยังเป็น near-term assumption ที่สูงกว่า sustainable ของ PTT/SCB/ADVANC |
+| การแก้ | เปลี่ยน `DEFAULTS.g2` เป็น 3% และ UI default; เพิ่ม **payout guard** ใน `ddm()` (`payout ≥ 100%` → `ok:false`, `reason='payout-not-funded'`) และส่ง `payout` จาก `buildRow()`/backtest; เพิ่ม i18n EN/TH และ regression tests |
+| สถานะ | **FIXED — PASS (default/guard); RISK คงเหลือ (DELTA/DCF/sector)** |
 
 ### P2-01 — ROE ใช้กำไรรวมแทนกำไรที่เป็นของผู้ถือหุ้นแม่
 
@@ -226,19 +227,19 @@
 | Symbol | Score | Yield | Payout | DDM intrinsic | MOS | หมายเหตุ |
 |---|---:|---:|---:|---:|---:|---|
 | BANPU | null | — | — | — | — | `dataIssue = eps-sign-conflict`; ไม่ให้คะแนน |
-| PTT | 64 | 5.54% | 73.02% | 60.38 | +31.3% | payoutBand warn |
-| ADVANC | 87 | 4.47% | 93.24% | 394.04 | +14.7% | special dividend; เกิน ceiling |
-| CPF | 57 | 6.25% | 40.06% | 32.81 | +39.0% | ROA/ROE ต่ำ |
-| SCB | 46 | 7.45% | 80.00% | 296.10 | +48.8% | bank; ROA < 7% |
-| TVO | 85 | 6.79% | 80.08% | 51.71 | +43.9% | เกิน ceiling 0.08 pp |
-| KCE | 53 | 1.70% | 171.43% | 31.50 | −124.6% | จ่ายเกินกำไร |
-| DELTA | 86 | 0.26% | 30.15% | 15.75 | −1385.7% | DDM ไม่เหมาะกับ growth/cyclical |
+| PTT | 64 | 5.54% | 73.02% | 43.05 | +3.6% | payoutBand warn |
+| ADVANC | 87 | 4.47% | 93.24% | 280.93 | −19.6% | special dividend; เกิน ceiling |
+| CPF | 57 | 6.25% | 40.06% | 23.39 | +14.5% | ROA/ROE ต่ำ |
+| SCB | 46 | 7.45% | 80.00% | 211.11 | +28.2% | bank; ROA < 7% |
+| TVO | 85 | 6.79% | 80.08% | 36.87 | +21.3% | เกิน ceiling 0.08 pp |
+| KCE | 53 | 1.70% | 171.43% | — | — | `payout-not-funded` (171.4%) |
+| DELTA | 86 | 0.26% | 30.15% | 11.23 | −1983.8% | DDM ไม่เหมาะกับ growth/cyclical |
 
 ---
 
 ## 5. ข้อจำกัดและความเสี่ยงคงเหลือ
 
-1. **DDM อย่างเดียว**: ไม่มี DCF/Graham; DDM ใช้กับทุกบริษัท และ default g = 5% ทำให้ overvalue กลุ่ม payout สูง/ROE ต่ำ (ดู `VALUATION-VALIDATION.md`)
+1. **DDM อย่างเดียว**: ไม่มี DCF/Graham; DDM ยังใช้กับทุกบริษัท แต่ default เปลี่ยนเป็น g1 = 5%/g2 = 3% และ guard payout ≥ 100% แล้ว; DELTA (yield 0.26%) และธนาคารยังเป็น model-fit risk (ดู `VALUATION-VALIDATION.md`)
 2. **Backtest ตัวอย่างเล็ก**: 4 ช่วง 3 ปี, n ประมาณ 1.8–2.0 ต่อช่วง; ช่วงทับซ้อน; survivorship/revision bias; ไม่ใช่หลักฐานผลตอบแทนอนาคต
 3. **ข้อมูล long history**: 109 symbols; GST ยังขาด; หุ้นที่ไม่อยู่ในไฟล์จะได้ growth UNKNOWN (ปลอดภัยกว่าเดา)
 4. **File EPS บางปี** ยัง mix core/reported; guard ฝั่ง live/backtest จับ sign/magnitude แต่ไม่ได้แก้ไฟล์ต้นทางทั้งหมด (DELTA shares)
@@ -258,7 +259,8 @@
 | Growth long history | P1 | PASS (fixed; GST blocked) |
 | ADVANC special dividend | P1 | PASS (estimate) |
 | Price/date/halt | P1 | PASS (fixed) |
-| DDM default/model fit | P1 | **FAIL/RISK (open)** |
+| DDM default/guard | P1 | **PASS (fixed)** |
+| DDM model fit (DELTA/DCF/sector) | RISK | **OPEN** |
 | ROE attributable | P2 | PASS (fixed) |
 | Negative equity | P2 | PASS (fixed) |
 | EPS/NI conflicts | P2 | PASS live/backtest; DELTA file open |

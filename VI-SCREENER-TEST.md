@@ -71,15 +71,16 @@
 | Symbol | Score | Yield | Payout | P/E | P/BV | DDM | MOS | จุดสำคัญ |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
 | BANPU | null | — | — | — | — | — | — | `dataIssue=eps-sign-conflict`; ไม่ให้คะแนน |
-| PTT | 64 | 5.54% | 73.02% | 9.56 | 0.98 | 60.38 | +31.3% | ROE 8.7%, ROA 2.85% → income ไม่ผ่าน |
-| ADVANC | 87 | 4.47% | 93.24% | 18.67 | 19.12 | 394.04 | +14.7% | special dividend; payout เกิน 80% |
-| CPF | 57 | 6.25% | 40.06% | 10.52 | 0.73 | 32.81 | +39.0% | ROE/ROA ต่ำ; income score <70 |
-| SCB | 46 | 7.45% | 80.00% | 11.72 | 1.05 | 296.10 | +48.8% | bank; ROA < 7% |
-| TVO | 85 | 6.79% | 80.08% | 9.95 | 2.13 | 51.71 | +43.9% | payout เกิน 0.08 pp |
-| KCE | 53 | 1.70% | 171.43% | 89.84 | 6.45 | 31.50 | −124.6% | จ่ายเกินกำไร; yield ต่ำ |
-| DELTA | 86 | 0.26% | 30.15% | 97.50 | 27.69 | 15.75 | −1385.7% | DDM ไม่เหมาะกับ growth/cyclical |
+| PTT | 64 | 5.54% | 73.02% | 9.56 | 0.98 | 43.05 | +3.6% | ROE 8.7%, ROA 2.85% → income ไม่ผ่าน |
+| ADVANC | 87 | 4.47% | 93.24% | 18.67 | 19.12 | 280.93 | −19.6% | special dividend; payout เกิน 80% |
+| CPF | 57 | 6.25% | 40.06% | 10.52 | 0.73 | 23.39 | +14.5% | ROE/ROA ต่ำ; income score <70 |
+| SCB | 46 | 7.45% | 80.00% | 11.72 | 1.05 | 211.11 | +28.2% | bank; ROA < 7% |
+| TVO | 85 | 6.79% | 80.08% | 9.95 | 2.13 | 36.87 | +21.3% | payout เกิน 0.08 pp |
+| KCE | 53 | 1.70% | 171.43% | 89.84 | 6.45 | — | — | `payout-not-funded`; yield ต่ำ |
+| DELTA | 86 | 0.26% | 30.15% | 97.50 | 27.69 | 11.23 | −1983.8% | DDM ไม่เหมาะกับ growth/cyclical |
 
-> BANPU เป็น `—` ทุกช่องเพราะ `dataIssue`; ค่าที่เหลือมาจาก stock detail ณ วันเดียวกับราคา
+> BANPU เป็น `—` ทุกช่องเพราะ `dataIssue`; ค่าที่เหลือมาจาก stock detail ณ วันเดียวกับราคา  
+> DDM ใช้ default g1 = 5% ระยะ 5 ปี, g2 = 3% ระยะยาว, r = 9%; MC (payout 100%) และ ICHI (107.8%)/BDMS (100%) ก็ถูก guard เป็น `—` เช่นกัน
 
 ### 3.2 Income preset — สมาชิกที่ผ่าน
 
@@ -143,7 +144,7 @@
 3. **แบงก์**: ROA <7% ทำให้แบงก์ส่วนใหญ่ไม่ผ่าน income; นี่เป็นข้อจำกัดของเกณฑ์ ไม่ใช่ bug
 4. **Survivorship/revision bias**: SET100 ปัจจุบันย้อนหลัง; ข้อมูลงบอาจถูก revise
 5. **Backtest ตัวอย่างเล็ก**: 4 ช่วง 3 ปี, n 1.8–2.0 ต่อช่วง; ดู `FINANCIAL-DATA-AUDIT.md`
-6. **DDM อย่างเดียว**: ไม่มี DCF/Graham; `value` preset ใช้ MOS จาก DDM
+6. **DDM อย่างเดียว**: ไม่มี DCF/Graham; `value` preset ใช้ MOS จาก DDM; default ใหม่ g1=5%/g2=3% และ KCE/MC ถูก guard แต่ DELTA/ธนาคารยังเป็น model-fit risk
 7. **ข้อมูล long history**: 109 symbols; GST ยังขาด; หุ้นนอกไฟล์ได้ growth UNKNOWN
 
 ---
@@ -159,6 +160,9 @@
 | Income preset (ข้อมูลแก้แล้ว) | PASS — สมาชิกเปลี่ยนตามข้อมูล |
 | BANPU dataIssue | PASS |
 | MC stub payout | PASS |
+| DDM default g1=5%/g2=3% | PASS |
+| DDM payout guard (KCE/MC) | PASS |
+| DDM model fit (DELTA/DCF/sector) | RISK (OPEN) |
 | Special dividend | PASS (estimate) |
 | Coverage/universe | PARTIAL (GST BLOCKED) |
 | Backtest/valuation caveats | PASS (รายงานแล้ว) |

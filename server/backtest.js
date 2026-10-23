@@ -186,7 +186,7 @@ export function backtestCompany({
       asOf: new Date(`${date}T00:00:00Z`),
       ttmEps: rows.at(-1).eps,
     });
-    const valuation = ddm({ d0: dividend.d0, ...DEFAULTS });
+    const valuation = ddm({ d0: dividend.d0, ...DEFAULTS, payout: quality.payout });
     const intrinsic = valuation.ok ? valuation.intrinsic : null;
 
     // The dividends that arrived while the money was at work.

@@ -243,13 +243,17 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     if (edge && Number.isFinite(edge.edge)) check.edge = edge.edge;
   }
 
-  const dividend = sustainableDividend({ years: trusted, dividends: fin.dividends, asOf, ttmEps });  const d0 = dividend.d0;
+  const dividend = sustainableDividend({ years: trusted, dividends: fin.dividends, asOf, ttmEps });
+  const d0 = dividend.d0;
   const g1 = clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 });
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
   const g2 = clampInput(overrides.g2, DEFAULTS.g2, { min: 0, max: 0.20 });
   const years = clampInput(overrides.years, DEFAULTS.years, { min: 1, max: 15 });
 
-  const valuation = ddm({ d0, g1, g2, r, years });
+  // The payout is not an input to the arithmetic; it is a test of whether the
+  // arithmetic is meaningful. A dividend that is all of (or more than) the
+  // profit cannot fund the growth the model assumes.
+  const valuation = ddm({ d0, g1, g2, r, years, payout: quality.payout });
   const mos = valuation.ok ? marginOfSafety(valuation.intrinsic, fin.price) : null;
 
   // Today's multiples, on today's denominators.

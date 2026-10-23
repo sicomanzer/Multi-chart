@@ -499,13 +499,15 @@ is why a warm pass over the SET100 takes about a tenth of a second; the checkbox
 next to the button turns the refresh off, and a failed refresh leaves the last
 good table in place instead of replacing it with an error.
 
-**Valuation.** Two-stage DDM with `g1 = g2 = 5.00%` and `r = 9%` by default, so
-the table, the presets and the calculator all quote the same intrinsic value
-before anyone moves a slider. The flat 5% is the assumption a reader can defend
-without knowing the company; deriving `g1` from four years of EPS made the
-number depend on an estimate that was itself the weakest input. The sliders can
-still move either rate independently, and the model refuses to answer when `r`
-is at or below `g2` rather than returning infinity.
+**Valuation.** Two-stage DDM with `g1 = 5.00%` for the next five years,
+`g2 = 3.00%` in perpetuity and `r = 9%` by default, so the table, the presets
+and the calculator all quote the same intrinsic value before anyone moves a
+slider. The 5% near-term rate is a visible assumption, while the 3% terminal
+rate is anchored closer to long-run inflation/GDP; the old flat 5% pair is now
+an explicit "Flat 5% scenario" for stress testing. The sliders can still move
+either rate independently, and the model refuses to answer when `r` is at or
+below `g2`, or when the dividend is at/above earnings (`payout-not-funded`),
+rather than returning infinity or a value built on an unfunded distribution.
 
 **Scoring.** Seventeen rules in five groups — quality (40 points), growth (20),
 solvency (20), cash conversion (20), shareholder returns (20), 120 in all — so a

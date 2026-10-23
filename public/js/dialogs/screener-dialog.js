@@ -223,7 +223,7 @@ export function openScreener({ board, symbol = null, mode = 'screen' }) {
     },
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
-    overrides: { r: 0.09, g1: 0.05, g2: 0.05, years: 5 },
+    overrides: { r: 0.09, g1: 0.05, g2: 0.03, years: 5 },
   };
 
   let render = () => {};
@@ -324,7 +324,7 @@ async function runScreen(state, render, { background = false } = {}) {
 
 async function openDetail(state, render, symbol) {
   state.detailSymbol = symbol;
-  state.overrides = { r: 0.09, g1: 0.05, g2: 0.05, years: 5 };
+  state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5 };
   render();
   await refreshDetail(state, render);
 }
@@ -1803,7 +1803,7 @@ function calculator(detail, state, rerender) {
   reset.className = 'btn btn--sm';
   reset.textContent = t('scr.reset');
   reset.addEventListener('click', () => {
-    state.overrides = { r: 0.09, g1: 0.05, g2: 0.05, years: 5 };
+    state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5 };
     refreshDetail(state, rerender);
   });
   actions.appendChild(reset);

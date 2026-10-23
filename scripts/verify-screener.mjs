@@ -86,14 +86,24 @@ check('r at or below g2 is refused rather than returning infinity',
 check('the growth window is clamped',
   ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, years: 500 }).inputs.years === 20);
 
-// The shipped default is the flat pair, and at g1 = g2 the two-stage model
-// collapses to Gordon growth: V = D0(1+g)/(r-g). That identity is what makes
-// the default defensible — it is one assumption, not two.
-check('the default valuation is g1 = g2 = 5%',
-  DEFAULTS.g1 === 0.05 && DEFAULTS.g2 === 0.05, `${DEFAULTS.g1}/${DEFAULTS.g2}`);
+// The shipped default is 5% for the first five years and 3% in perpetuity.
+// The flat 5% pair is still available as a scenario; at g1 = g2 the two-stage
+// model collapses to Gordon growth, V = D0(1+g)/(r-g).
+check('the default valuation is g1 = 5%, g2 = 3%',
+  DEFAULTS.g1 === 0.05 && DEFAULTS.g2 === 0.03, `${DEFAULTS.g1}/${DEFAULTS.g2}`);
 check('flat growth collapses to D0(1+g)/(r-g)',
   near(ddm({ d0: 1, g1: 0.05, g2: 0.05, r: 0.09 }).intrinsic, 26.25, 1e-9),
   ddm({ d0: 1, g1: 0.05, g2: 0.05, r: 0.09 }).intrinsic);
+check('a payout at or above earnings is not valued by the DDM',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 1 }).ok === false
+  && ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 1 }).reason === 'payout-not-funded',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 1 }).reason);
+check('a payout above earnings is not valued by the DDM',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 1.714 }).reason === 'payout-not-funded',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 1.714 }).reason);
+check('a funded payout is still valued',
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 0.5 }).ok === true,
+  ddm({ d0: 1, g1: 0.05, g2: 0.03, r: 0.09, payout: 0.5 }).ok);
 
 // ── Bands ───────────────────────────────────────────────────────────────────
 

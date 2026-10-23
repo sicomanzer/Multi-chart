@@ -284,27 +284,30 @@ function dividendStreak(dividends, asOf = new Date()) {
  *      + D0(1+g1)^n (1+g2) / ((r - g2)(1+r)^n)
  *
  * Returns a `reason` instead of a number when the inputs cannot support a
- * valuation — no dividend, or a discount rate at or below terminal growth,
- * which makes the perpetuity negative or infinite. A screen that quietly
- * printed `Infinity` there would rank those names first, so it prints nothing.
+ * valuation — no dividend, a discount rate at or below terminal growth, or a
+ * payout at/above earnings, which means the distribution is not funded by the
+ * profit the model is capitalising. A screen that quietly printed `Infinity`
+ * or a value built on an unfunded dividend would rank those names first, so it
+ * prints nothing.
  */
 /**
  * The default assumptions of the dividend discount model.
  *
- * Nine per cent is the required return, five per cent is the growth a Thai
- * company can be expected to keep for five years without the reader having to
- * believe more than that. The back test uses the same numbers as the screen,
- * so the value it records for a company in 2019 is the value the reader would
- * have written down in 2019.
+ * Nine per cent is the required return. Five per cent is the near-term growth
+ * a Thai company can be expected to keep for five years; three per cent is the
+ * terminal rate, close to long-run inflation/GDP rather than a perpetual 5%
+ * that a mature payer cannot fund. The back test uses the same numbers as the
+ * screen, so the value it records for a company in 2019 is the value the reader
+ * would have written down in 2019.
  */
 export const DEFAULTS = {
   r: 0.09,
   g1: 0.05,
-  g2: 0.05,
+  g2: 0.03,
   years: 5,
 };
 
-export function ddm({ d0, g1, g2 = 0.03, r = 0.09, years = 5 }) {
+export function ddm({ d0, g1, g2 = 0.03, r = 0.09, years = 5, payout = null }) {
   const safe = {
     d0: Number(d0),
     g1: Number(g1),
@@ -317,6 +320,15 @@ export function ddm({ d0, g1, g2 = 0.03, r = 0.09, years = 5 }) {
   }
   if (!Number.isFinite(safe.r) || !Number.isFinite(safe.g2) || safe.r <= safe.g2) {
     return { ok: false, reason: 'r-not-above-g2', intrinsic: null, mos: null };
+  }
+  // A dividend that consumes all of the profit (or more) cannot fund the
+  // growth the model assumes. KCE paid 171% and MC 100% of earnings; a DDM
+  // built on those payments would put a value on a distribution that is
+  // already being funded from the balance sheet. Refuse to value it rather
+  // than print a flattering number.
+  const payoutRatio = payout == null ? null : Number(payout);
+  if (payoutRatio != null && Number.isFinite(payoutRatio) && payoutRatio >= 1) {
+    return { ok: false, reason: 'payout-not-funded', intrinsic: null, mos: null };
   }
 
   let present = 0;
