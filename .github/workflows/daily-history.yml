@@ -34,10 +34,34 @@ jobs:
           DECK_PASSWORD: ${{ secrets.DECK_PASSWORD }}
         run: |
           set -euo pipefail
-          curl -sS -f -u "deck:$DECK_PASSWORD" \
-            -X POST "$DECK_URL/api/fundamentals/history/snapshot" \
-            -H 'content-type: application/json' -d '{}'
-          echo
+          # The scanner behind the app rate-limits a shared datacenter address
+          # now and then: one attempt answers 429, the next gets through. Give
+          # it a few chances rather than losing the whole day to one unlucky
+          # request, and fail the job loudly if the app still has nothing to
+          # say — a silent green run is how a series stops growing unnoticed.
+          written=0
+          for attempt in 1 2 3 4; do
+            resp=""
+            if resp="$(curl -sS -f --max-time 300 -u "deck:$DECK_PASSWORD" \
+                -X POST "$DECK_URL/api/fundamentals/history/snapshot" \
+                -H 'content-type: application/json' -d '{}')"; then
+              written="$(jq -r '.written // 0' <<<"$resp" 2>/dev/null || echo 0)"
+              note="$(jq -r '.error // empty' <<<"$resp" 2>/dev/null || true)"
+              echo "attempt $attempt: written=$written ${note:-}"
+            else
+              echo "attempt $attempt: the app did not answer (curl exit $?)"
+            fi
+            if [ "$written" -gt 0 ] 2>/dev/null; then
+              break
+            fi
+            if [ "$attempt" -lt 4 ]; then
+              sleep 45
+            fi
+          done
+          if ! [ "$written" -gt 0 ] 2>/dev/null; then
+            echo "::error::the app recorded nothing in four attempts"
+            exit 1
+          fi
 
       - name: Carry the day into the repository
         env:
@@ -45,14 +69,19 @@ jobs:
           DECK_PASSWORD: ${{ secrets.DECK_PASSWORD }}
         run: |
           set -euo pipefail
-          day="$(TZ=Asia/Bangkok date +%Y-%m-%d)"
+          # The day is UTC on purpose: the app's clock in the container is UTC,
+          # so that is the day the rows carry, and at 22:00 UTC it is the
+          # trading day that has just closed. The Bangkok date is already
+          # tomorrow's at that hour — asking for it comes back empty every
+          # night while the job still reports success.
+          day="$(date -u +%Y-%m-%d)"
           mkdir -p data/history
-          curl -sS -f -u "deck:$DECK_PASSWORD" \
+          curl -sS -f --max-time 300 -u "deck:$DECK_PASSWORD" \
             "$DECK_URL/api/fundamentals/history/file?date=$day" \
             -o "data/history/$day.jsonl"
           if [ ! -s "data/history/$day.jsonl" ]; then
-            echo "nothing was recorded today"
-            exit 0
+            echo "::error::the app has no rows for $day — the day it recorded and the day this job asked for differ"
+            exit 1
           fi
           git config user.name "sicomanzer"
           git config user.email "sicomanzer@users.noreply.github.com"
