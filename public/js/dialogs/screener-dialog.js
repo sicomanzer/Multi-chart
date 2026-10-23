@@ -21,7 +21,7 @@ import { t, tp, timeString, isThai } from '../i18n.js';
 import { api } from '../api.js';
 
 /** Preset ids, in the order the chips are shown. */
-const PRESETS = ['moat', 'quality', 'dividend', 'value', 'all'];
+const PRESETS = ['moat', 'quality', 'dividend', 'income', 'value', 'all'];
 
 /** The medals of the ranking. */
 const MEDALS = ['🥇', '🥈', '🥉'];
@@ -104,12 +104,12 @@ const CHECK_ORDER = [
   'roeLevel', 'roeConsistency', 'roaLevel', 'npmLevel', 'npmTrend', 'npmPositive',
   'epsGrowth', 'revenueGrowth', 'earningsStability',
   'debtLevel', 'interestCoverage', 'cfoPositive', 'cfoBeatsEarnings', 'fcfPositive',
-  'dividendYield', 'payoutBand', 'dividendStreak',
+  'dividendYield', 'payoutBand', 'payoutCeiling', 'dividendStreak',
 ];
 
 /** Formats a check's measured value according to what the rule measures. */
 const RATIO_CHECKS = new Set([
-  'roeLevel', 'roaLevel', 'npmLevel', 'dividendYield', 'payoutBand', 'npmTrend',
+  'roeLevel', 'roaLevel', 'npmLevel', 'dividendYield', 'payoutBand', 'payoutCeiling', 'npmTrend',
   'epsGrowth', 'revenueGrowth',
 ]);
 /** Ratios quoted as a plain number, like the D/E the framework specifies. */

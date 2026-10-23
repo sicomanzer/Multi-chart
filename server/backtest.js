@@ -396,16 +396,29 @@ async function saveRuleEdges(rules, presets = {}) {
   }
 }
 
-export async function ruleEdges(symbols, { maxAgeMs = 24 * 60 * 60 * 1000 } = {}) {
-  const fresh = edgeCache.rules.size
-    && Object.keys(edgeCache.presets ?? {}).length
-    && Date.now() - edgeCache.at < maxAgeMs;
-  if (fresh) return edgeCache.rules;
+/**
+ * The themes the edge run measures.
+ *
+ * A cache counts as fresh only if it carries every one of them: a file
+ * saved before a preset existed is stale however recent its stamp says,
+ * and the new preset would go silently unmeasured — no medal, no place
+ * among the themes — for as long as the cache lived.
+ */
+const EDGE_PRESETS = ['moat', 'quality', 'dividend', 'income', 'value'];
+
+const EDGE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+const edgesFresh = (maxAgeMs = EDGE_MAX_AGE_MS) => edgeCache.rules.size > 0
+  && Date.now() - edgeCache.at < maxAgeMs
+  && EDGE_PRESETS.every((id) => id in (edgeCache.presets ?? {}));
+
+export async function ruleEdges(symbols, { maxAgeMs = EDGE_MAX_AGE_MS } = {}) {
+  if (edgesFresh(maxAgeMs)) return edgeCache.rules;
   const result = await runBacktest({
     symbols,
     preset: 'quality',
     holdYears: 3,
-    presets: ['moat', 'quality', 'dividend', 'value'],
+    presets: EDGE_PRESETS,
   });
   edgeCache = {
     at: Date.now(),
@@ -442,7 +455,9 @@ export function cachedPresetRanks() {
  * has a screen to read in the meantime.
  */
 export function ensureRuleEdges(symbols) {
-  const have = edgeCache.rules.size && Object.keys(edgeCache.presets ?? {}).length;
+  // The same freshness rule as the run itself: aged evidence is refreshed
+  // on the next screen instead of being kept for the life of the process.
+  const have = edgesFresh();
   if (have || edgeCache.running) return;
   edgeCache.running = true;
   ruleEdges(symbols)

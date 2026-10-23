@@ -393,14 +393,14 @@ const dividends = ['2021', '2022', '2023', '2024', '2025', '2026'].map((y) => ({
 
 const healthy = scoreQuality({ years, dividends, price: 20, asOf });
 check('a company that meets every rule scores 100', healthy.score === 100, healthy.score);
-check('all seventeen rules are evaluated', healthy.total === 17, healthy.total);
+check('all eighteen rules are evaluated', healthy.total === 18, healthy.total);
 check('nothing fails', healthy.failed === 0, healthy.failed);
 check('the dividend streak is counted', healthy.streak >= 5, healthy.streak);
 
 // Without the long history the three growth rules cannot be judged, so they
 // stay out of both sides of the fraction rather than counting as failures.
-check('a company with no long history is judged on the fourteen rules it has',
-  healthy.evaluated === 14 && healthy.coverage < 1, `${healthy.evaluated} of ${healthy.total}`);
+check('a company with no long history is judged on the fifteen rules it has',
+  healthy.evaluated === 15 && healthy.coverage < 1, `${healthy.evaluated} of ${healthy.total}`);
 
 // ── Growth from the long history ─────────────────────────────────────────────
 const longHistory = (eps, revenue, netIncome) => ({
@@ -430,7 +430,7 @@ check('a company that grows passes the growth rules',
 check('the growth rate is a compound annual rate over the calendar span',
   near(epsGrowth.value, 0.12, 1e-9), epsGrowth.value);
 check('the growth rules are counted in the score',
-  growthUp.evaluated === 17 && growthUp.coverage === 1, `${growthUp.evaluated}`);
+  growthUp.evaluated === 18 && growthUp.coverage === 1, `${growthUp.evaluated}`);
 
 const growthDown = scoreQuality({
   years,
@@ -472,7 +472,7 @@ const turnaroundCheck = turnaround.checks.find((c) => c.id === 'epsGrowth');
 check('a loss year in the base is a known failure, not an unknown one',
   turnaroundCheck.pass === false && turnaroundCheck.value === null, JSON.stringify(turnaroundCheck));
 check('and the growth rules still count against it',
-  turnaround.evaluated === 17, `${turnaround.evaluated}`);
+  turnaround.evaluated === 18, `${turnaround.evaluated}`);
 
 // Payout pairs trailing cash with trailing earnings. On a doubled trailing EPS
 // the same dividend is 25% of profit, not the 50% the fiscal-year lines imply.
@@ -486,6 +486,26 @@ const noTtmPayout = scoreQuality({ years, dividends, price: 20, asOf });
 check('without trailing earnings the fiscal year is the fallback',
   near(noTtmPayout.checks.find((c) => c.id === 'payoutBand').value, 0.5, 1e-9),
   noTtmPayout.checks.find((c) => c.id === 'payoutBand').value);
+
+// The ceiling without the floor: the same ratio, asked a different question.
+// The band says whether this is an income case at all; the ceiling says
+// whether the distribution can survive a bad year — and it decides
+// membership only, never the score.
+const ceilingCheck = (r) => r.checks.find((c) => c.id === 'payoutCeiling');
+check('the payout ceiling passes a company paying half its profit',
+  ceilingCheck(noTtmPayout).pass === true && near(ceilingCheck(noTtmPayout).value, 0.5, 1e-9),
+  JSON.stringify(ceilingCheck(noTtmPayout)));
+// The payout falls back to the fiscal year's own declared dividend over its
+// EPS, so the statement doubles — the same profit, all of it paid out.
+const overPaying = scoreQuality({
+  years: years.map((y) => ({ ...y, dpsStatement: 2, dpsPaid: 2 })),
+  dividends: dividends.map((d) => ({ ...d, amount: 2 })),
+  price: 20,
+  asOf,
+});
+check('the payout ceiling fails a company paying out all it earns',
+  ceilingCheck(overPaying).pass === false && near(ceilingCheck(overPaying).value, 1, 1e-9),
+  JSON.stringify(ceilingCheck(overPaying)));
 
 // A bank: no meaningful interest expense, so the rule cannot be judged. It must
 // come back neutral rather than failing a company for a metric that does not
@@ -602,6 +622,29 @@ const unknown = row({
   checks: row().checks.map((c) => (c.id === 'roeLevel' ? { id: 'roeLevel', pass: null } : c)),
 });
 check('an unevaluated mandatory rule also blocks', applyPreset(unknown, moat).pass === false);
+
+// The income preset — "sleep well". Its gates are the ones a bad year
+// attacks: the return's consistency, the whole asset base, the cash, the
+// record, the leverage, and the payout the company can keep paying.
+const income = presetById('income');
+const incomeRow = (overrides = {}) => row({
+  checks: [
+    ...row().checks,
+    { id: 'roeConsistency', pass: true },
+    { id: 'debtLevel', pass: true },
+    { id: 'payoutCeiling', pass: true },
+  ],
+  ...overrides,
+});
+check('the income preset keeps a row that clears every gate',
+  applyPreset(incomeRow(), income).pass === true);
+const overPayer = incomeRow({
+  checks: incomeRow().checks.map((c) => (c.id === 'payoutCeiling' ? { id: 'payoutCeiling', pass: false } : c)),
+});
+check('the income preset refuses a company paying more than it earns',
+  applyPreset(overPayer, income).pass === false);
+check('and says the payout ceiling was the reason',
+  applyPreset(overPayer, income).reason === 'requires:payoutCeiling');
 
 const value = presetById('value');
 check('deep value refuses a name with no margin of safety',
