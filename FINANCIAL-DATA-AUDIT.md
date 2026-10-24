@@ -265,7 +265,11 @@
 | DDM low-yield guard (DELTA) | P1 | **PASS (fixed)** |
 | Unfunded-payout scenario (BDMS) | P2 | **PASS (labelled; not preset)** |
 | Graham number cross-check | P2 | **PASS (stock detail)** |
-| DCF / Graham growth formula / sector model | RISK | **OPEN** |
+| DCF (FCFF) cross-check | RISK | **PASS (formula tested; stock detail only; non-financial)** |
+| Graham growth formula | RISK | **PASS (formula tested; dated AAA default; stock detail only)** |
+| Bank residual income | RISK | **PASS (formula tested; stock detail only)** |
+| REIT intrinsic model | RISK | **BLOCKED (no NAV / cap rate / occupancy)** |
+| New models in screener / preset / backtest | RISK | **OPEN (needs money-real backtest first)** |
 | TVO payout 80.08% vs 80% ceiling | DECISION | **KEEP 80% — TVO excluded from income preset** |
 | ROE attributable | P2 | PASS (fixed) |
 | Negative equity | P2 | PASS (fixed) |
@@ -288,3 +292,45 @@
 - `/api/health?deep=1` เพิ่ม `server` (`now`/`today`/`commit`), `candles`, `backtest`, `screener`; `fundamentals` มี `lastFetchAt`/`lastSuccessAt`/`lastErrorAt`/`ttlMs`; annual history มี `generatedAt`/`source`/`years`; history มี `lastWriteAt`
 - รีเฟรชทุก 20 วินาทีขณะเปิด dialog และหยุดเมื่อปิด
 - ทดสอบด้วย `scripts/verify-status.mjs` ผ่าน `npm test`
+
+---
+
+## 8. โมเดลประเมินมูลค่าใหม่ 3 ตัว (2026-10-24)
+
+เพิ่ม cross-check ใหม่ใน stock detail เท่านั้น (ไม่เข้า screener / preset / backtest):
+
+### 8.1 DCF (FCFF) — เฉพาะบริษัทไม่ใช่การเงิน
+
+- `FCFF = operating cash flow + ดอกเบี้ยจ่าย × (1 − อัตราภาษีจริง) + capex`; ใช้**มัธยฐาน 3 ปี** ไม่ใช้ปีเดียว
+- `net debt = total debt − cash` จากงบที่รายงาน (ไม่เดา cash)
+- WACC คำนวณจาก market cap, total debt, ดอกเบี้ยจ่ายจริง, ภาษีจริง, cost of equity จาก slider (clamp 4–25%)
+- Guard แบบ fail-closed: `negative-fcff`, `net-debt-unknown`, `wacc-not-above-g2`, `debt-exceeds-value`, `interest-unknown`, และ `not-applicable-financial` สำหรับธนาคาร/ประกันภัย
+- แสดง **terminal share** + **price-implied terminal growth** เสมอ; เตือนเมื่อ terminal share > 80%
+
+### 8.2 Graham growth
+
+- `V = EPS × (8.5 + 2g) × 4.4 ÷ AAA yield`; cap `g` ที่ 15%
+- AAA yield เป็นค่าเริ่มต้นที่มีวันที่: **ThaiBMA AAA 5-year 2.06% ณ 2026-Q3 (ประกาศ 2026-10-07)** override ได้ใน UI (1–6%)
+- ส่ง `aaaYieldSource` / `aaaYieldAsOf` กลับไปใน payload เพื่อไม่ให้ตัวเลขลอย
+
+### 8.3 Bank residual income
+
+- `V0 = B0 + Σ (ROE − r) × B_{t-1} / (1+r)^t` 10 ปี; **ไม่มี terminal excess return** (อนุรักษ์นิยม)
+- ใช้เฉพาะ `isFinancial === true`; ตัวอื่นได้ `not-financial`
+
+### 8.4 แหล่งข้อมูลที่เพิ่ม
+
+- เพิ่มฟิลด์ Yahoo annual: `cash`, `capex`, `taxProvision`, `pretaxIncome` (พร้อม FX / unit scaling เหมือนฟิลด์เดิม)
+- ตรวจกับ PTT.BK จริง: ครบทั้ง 4 ปีทุกฟิลด์ ก่อนต่อเข้า `fin.js`
+
+### 8.5 ผลทดสอบ
+
+- `scripts/verify-units.mjs` เพิ่มกลุ่ม `valuation cross-checks` 20 การตรวจ → รวม **108 unit tests ผ่านทั้งหมด**
+- `npm run check` ผ่าน (49 ไฟล์ parse, encoding ครบ); i18n parity **854/854** ไม่มีคีย์ซ้ำ
+- Smoke test จริง: PTT (DCF 276.43 / terminal share 86.8% / implied growth −19.43% / Graham growth 171.57), SCB (residual income 147.19 / DCF = `not-applicable-financial`)
+
+### 8.6 ยังเหลือ
+
+- REIT intrinsic model: ยัง **BLOCKED** — ไม่มี NAV / cap rate / occupancy
+- โมเดลใหม่เข้า screener/preset/backtest: ยัง **OPEN** — ต้องมี money-real backtest ก่อน
+- AAA yield ยังเป็นค่าคงที่ + วันที่ + override ไม่ใช่ live quote

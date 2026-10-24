@@ -671,6 +671,9 @@ app.get('/api/screener/stock', asyncRoute(async (req, res) => {
     g1: req.query.g1,
     g2: req.query.g2,
     years: req.query.years,
+    // The Graham growth check reads the AAA yield; it is an input with a dated
+    // default, not a hidden constant.
+    aaaYield: req.query.aaaYield,
   };
   const detail = await loadDetail(symbol, { overrides });
   res.json(detail);

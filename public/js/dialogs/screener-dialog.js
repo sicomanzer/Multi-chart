@@ -223,7 +223,7 @@ export function openScreener({ board, symbol = null, mode = 'screen' }) {
     },
     // The same defaults the server uses, so the table and the calculator quote
     // the same intrinsic value before anyone touches a slider.
-    overrides: { r: 0.09, g1: 0.05, g2: 0.03, years: 5 },
+    overrides: { r: 0.09, g1: 0.05, g2: 0.03, years: 5, aaaYield: 0.0206 },
   };
 
   let render = () => {};
@@ -324,7 +324,7 @@ async function runScreen(state, render, { background = false } = {}) {
 
 async function openDetail(state, render, symbol) {
   state.detailSymbol = symbol;
-  state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5 };
+  state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5, aaaYield: 0.0206 };
   render();
   await refreshDetail(state, render);
 }
@@ -337,6 +337,7 @@ async function refreshDetail(state, render) {
       r: state.overrides.r,
       g1: state.overrides.g1,
       g2: state.overrides.g2,
+      aaaYield: state.overrides.aaaYield,
     };
     state.detail = await api.screenerStock(state.detailSymbol, overrides);
     state.error = null;
@@ -1757,6 +1758,11 @@ function calculator(detail, state, rerender) {
       value: (state.overrides.g1 ?? ddm.g1) * 100, hint: t('scr.g1.hint') },
     { key: 'g2', label: t('scr.g2'), min: 0, max: 20, step: 0.25, value: state.overrides.g2 * 100,
       hint: t('scr.g2.hint') },
+    // The Graham growth formula divides by the AAA yield, so the yield is a
+    // first-class input rather than a constant buried in the code. The default
+    // carries the source and the quarter it was published in.
+    { key: 'aaaYield', label: t('scr.aaaYield'), min: 1, max: 6, step: 0.1,
+      value: (state.overrides.aaaYield ?? 0.0206) * 100, hint: t('scr.aaaYield.hint') },
   ];
 
   let debounce = null;
@@ -1803,7 +1809,7 @@ function calculator(detail, state, rerender) {
   reset.className = 'btn btn--sm';
   reset.textContent = t('scr.reset');
   reset.addEventListener('click', () => {
-    state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5 };
+    state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5, aaaYield: 0.0206 };
     refreshDetail(state, rerender);
   });
   actions.appendChild(reset);
@@ -1867,6 +1873,95 @@ function calculator(detail, state, rerender) {
       cross.innerHTML = `<p class="section__hint">${escape(t('scr.grahamNa'))}</p>`;
     }
     box.appendChild(cross);
+  }
+
+  // The three cross-checks. Each names its assumptions and refuses to print a
+  // number when they do not hold: a blank with a reason is the honest output.
+  const crossChecks = [detail.dcf, detail.grahamGrowth, detail.isFinancial ? detail.residualIncome : null]
+    .some((model) => Boolean(model));
+  if (crossChecks) box.appendChild(section(t('scr.crossChecks'), ''));
+
+  const dcf = detail.dcf;
+  if (dcf) {
+    const card = document.createElement('div');
+    card.className = 'scr-calc__out';
+    if (dcf.ok) {
+      const waccPct = dcf.wacc == null ? '—' : `${(dcf.wacc * 100).toFixed(2)}%`;
+      const debtPct = dcf.afterTaxCostOfDebt == null ? '—' : `${(dcf.afterTaxCostOfDebt * 100).toFixed(2)}%`;
+      const equityPct = dcf.costOfEquity == null ? '—' : `${(dcf.costOfEquity * 100).toFixed(2)}%`;
+      const dcfMos = dcf.mos == null ? '—' : `${dcf.mos.toFixed(1)}%`;
+      const terminalShare = dcf.terminalShare == null ? '—' : `${(dcf.terminalShare * 100).toFixed(0)}%`;
+      const implied = dcf.impliedGrowth == null
+        ? escape(t('scr.dcfImpliedNa'))
+        : `${(dcf.impliedGrowth * 100).toFixed(2)}%`;
+      const terminalWarn = dcf.terminalShare != null && dcf.terminalShare > 0.8
+        ? `<p class="section__hint is-warn">${escape(t('scr.dcfTerminalWarning'))}</p>`
+        : '';
+      card.innerHTML = `
+        <p class="section__hint">${escape(t('scr.dcfHint'))}</p>
+        <div><span>${escape(t('scr.dcfValue'))}</span>
+          <b>${money(dcf.value, detail.currency)}</b></div>
+        <div><span>${escape(t('scr.mos'))}</span>
+          <b class="${dcf.mos > 0 ? 'is-up' : 'is-down'}">${dcfMos}</b></div>
+        <div><span>${escape(t('scr.dcfWacc'))}</span><b>${waccPct}</b></div>
+        <div><span>${escape(t('scr.dcfCostEquity'))}</span><b>${equityPct}</b></div>
+        <div><span>${escape(t('scr.dcfCostDebt'))}</span><b>${debtPct}</b></div>
+        <div><span>${escape(t('scr.dcfNetDebt'))}</span><b>${baht(dcf.netDebt)}</b></div>
+        <div><span>${escape(t('scr.dcfFcff', { n: dcf.fcffYears ?? 0 }))}</span><b>${baht(dcf.fcff)}</b></div>
+        <div><span>${escape(t('scr.dcfTerminalShare'))}</span><b>${terminalShare}</b></div>
+        <div><span>${escape(t('scr.dcfImplied'))}</span><b>${implied}</b></div>
+        ${terminalWarn}`;
+    } else {
+      card.innerHTML = `<p class="section__hint">${escape(t(`scr.dcf.na.${dcf.reason ?? 'not-computable'}`))}</p>`;
+    }
+    box.appendChild(card);
+  }
+
+  const gg = detail.grahamGrowth;
+  if (gg) {
+    const card = document.createElement('div');
+    card.className = 'scr-calc__out';
+    if (gg.ok) {
+      const ggMos = gg.mos == null ? '—' : `${gg.mos.toFixed(1)}%`;
+      const capped = gg.gCapped
+        ? `<p class="section__hint">${escape(t('scr.grahamGrowthCapped'))}</p>`
+        : '';
+      card.innerHTML = `
+        <p class="section__hint">${escape(t('scr.grahamGrowthHint'))}</p>
+        <div><span>${escape(t('scr.grahamGrowth'))}</span>
+          <b>${money(gg.value, detail.currency)}</b></div>
+        <div><span>${escape(t('scr.mos'))}</span>
+          <b class="${gg.mos > 0 ? 'is-up' : 'is-down'}">${ggMos}</b></div>
+        <div><span>${escape(t('scr.grahamGrowthYield'))}</span>
+          <b>${(gg.aaaYield * 100).toFixed(2)}%</b></div>
+        ${capped}`;
+    } else {
+      card.innerHTML = `<p class="section__hint">${escape(t('scr.grahamGrowthNa'))}</p>`;
+    }
+    box.appendChild(card);
+  }
+
+  const ri = detail.residualIncome;
+  if (detail.isFinancial && ri) {
+    const card = document.createElement('div');
+    card.className = 'scr-calc__out';
+    if (ri.ok) {
+      const riMos = ri.mos == null ? '—' : `${ri.mos.toFixed(1)}%`;
+      const riRoe = ri.roe == null ? '—' : `${(ri.roe * 100).toFixed(2)}%`;
+      const riGrowth = ri.growth == null ? '—' : `${(ri.growth * 100).toFixed(2)}%`;
+      card.innerHTML = `
+        <p class="section__hint">${escape(t('scr.riHint'))}</p>
+        <div><span>${escape(t('scr.riValue'))}</span>
+          <b>${money(ri.value, detail.currency)}</b></div>
+        <div><span>${escape(t('scr.mos'))}</span>
+          <b class="${ri.mos > 0 ? 'is-up' : 'is-down'}">${riMos}</b></div>
+        <div><span>${escape(t('scr.riRoe'))}</span><b>${riRoe}</b></div>
+        <div><span>${escape(t('scr.riGrowth'))}</span><b>${riGrowth}</b></div>
+        <div><span>${escape(t('scr.riYears'))}</span><b>${ri.years ?? 10}</b></div>`;
+    } else {
+      card.innerHTML = `<p class="section__hint">${escape(t('scr.riNa'))}</p>`;
+    }
+    box.appendChild(card);
   }
   return box;
 }

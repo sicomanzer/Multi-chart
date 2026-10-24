@@ -50,6 +50,14 @@ const ANNUAL_TYPES = [
   'annualBasicEPS',
   'annualOrdinarySharesNumber',
   'annualCashDividendsPaid',
+  // The DCF cross-check needs the two lines the DDM never did: the cash it
+  // nets off debt, and the capex it takes out of operating cash flow.
+  'annualCashAndCashEquivalents',
+  'annualCapitalExpenditure',
+  // The effective tax rate is the tax provision over pre-tax profit; both are
+  // reported, so the rate is measured instead of assumed.
+  'annualTaxProvision',
+  'annualPretaxIncome',
 ];
 
 /**
@@ -319,6 +327,13 @@ export function deriveYears(byDate, dividends, { fx = 1 } = {}) {
           : null,
         operatingCashFlow: money(row.operatingCashFlow),
         freeCashFlow: money(row.freeCashFlow),
+        // Capex is reported as a negative cash outflow, which is the sign the
+        // FCFF arithmetic wants. Cash is a balance-sheet line; both are only
+        // used by the DCF cross-check, never by a rule.
+        capex: money(row.capitalExpenditure),
+        cash: money(row.cashAndCashEquivalents),
+        taxProvision: money(row.taxProvision),
+        pretaxIncome: money(row.pretaxIncome),
         eps: money(row.dilutedEPS ?? row.basicEPS),
         shares: row.ordinarySharesNumber ?? null,
         dividendsPaid: money(dividendsPaid),
@@ -557,6 +572,10 @@ async function convert(base, quote) {
     interestExpense: y.interestExpense == null ? null : y.interestExpense * scale,
     operatingCashFlow: y.operatingCashFlow == null ? null : y.operatingCashFlow * scale,
     freeCashFlow: y.freeCashFlow == null ? null : y.freeCashFlow * scale,
+    capex: y.capex == null ? null : y.capex * scale,
+    cash: y.cash == null ? null : y.cash * scale,
+    taxProvision: y.taxProvision == null ? null : y.taxProvision * scale,
+    pretaxIncome: y.pretaxIncome == null ? null : y.pretaxIncome * scale,
     eps: y.eps == null ? null : y.eps * scale,
     dividendsPaid: y.dividendsPaid == null ? null : y.dividendsPaid * scale,
     dpsStatement: y.dpsStatement == null ? null : y.dpsStatement * scale,

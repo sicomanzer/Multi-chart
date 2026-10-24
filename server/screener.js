@@ -412,6 +412,225 @@ export function grahamNumber(eps, bvps) {
   return { ok: true, reason: null, value };
 }
 
+const finite = (v) => typeof v === 'number' && Number.isFinite(v);
+const clampNum = (value, min, max) => Math.min(max, Math.max(min, value));
+
+/**
+ * The AAA yield the Graham growth formula discounts into.
+ *
+ * Graham wrote the formula against the AAA corporate bond yield because that
+ * is the alternative a bond buyer could take. ThaiBMA publishes a 5-year AAA
+ * corporate yield; at the end of Q3/2026 it was 2.06% (press release
+ * 2026-10-07). A fixed default with a date is the honest choice here: the
+ * number is an input to the formula, not a live market quote, and the reader
+ * can move it. A lower yield mechanically raises every Graham growth value,
+ * which is why the model is a labelled cross-check and not the base value.
+ */
+export const AAA_YIELD = 0.0206;
+export const AAA_YIELD_ASOF = '2026-Q3';
+export const AAA_YIELD_SOURCE = 'ThaiBMA AAA 5-year corporate bond yield, Q3/2026 (press release 2026-10-07)';
+
+/**
+ * A simple, fully visible cost of capital.
+ *
+ * The DCF needs a discount rate the reader can audit. Cost of equity is the
+ * same required return the DDM already uses, cost of debt is the interest the
+ * company actually paid over its reported debt, the tax rate is measured, and
+ * the weights are market capitalisation over debt. It is not a CAPM beta
+ * model; the assumptions it cannot measure are named rather than hidden.
+ */
+export function simpleWacc({
+  price, shares, totalDebt, interestExpense, taxRate = 0.20, costOfEquity = 0.09,
+} = {}) {
+  const debt = finite(totalDebt) && totalDebt > 0 ? totalDebt : 0;
+  const equity = finite(price) && price > 0 && finite(shares) && shares > 0 ? price * shares : null;
+  if (equity == null) return { ok: false, reason: 'not-computable', wacc: null };
+  if (debt > 0 && !(finite(interestExpense) && interestExpense > 0)) {
+    return { ok: false, reason: 'interest-unknown', wacc: null };
+  }
+  const tax = finite(taxRate) ? clampNum(taxRate, 0, 0.5) : 0.20;
+  const costOfDebt = debt > 0 ? clampNum(interestExpense / debt, 0.005, 0.20) : 0;
+  const afterTaxCostOfDebt = costOfDebt * (1 - tax);
+  const total = equity + debt;
+  const wacc = clampNum(
+    (equity / total) * costOfEquity + (debt / total) * afterTaxCostOfDebt,
+    0.04,
+    0.25,
+  );
+  return {
+    ok: true,
+    reason: null,
+    wacc,
+    costOfEquity,
+    costOfDebt,
+    afterTaxCostOfDebt,
+    taxRate: tax,
+    marketCap: equity,
+    equityWeight: equity / total,
+    debtWeight: debt / total,
+  };
+}
+
+/**
+ * Two-stage free-cash-flow-to-the-firm DCF.
+ *
+ *   EV = Σ FCFF0(1+g1)^t / (1+wacc)^t
+ *      + FCFF0(1+g1)^n (1+g2) / ((wacc−g2)(1+wacc)^n)
+ *   equity per share = (EV − net debt) / shares
+ *
+ * FCFF is normalised (the caller passes a median of recent years), net debt is
+ * reported debt less reported cash, and a negative equity value is refused
+ * rather than printed as a floor. This is a cross-check for a name the DDM
+ * cannot value; it is not used by the screener, a preset or the back test.
+ */
+export function dcf({
+  fcff, g1, g2 = 0.03, years = 5, wacc, netDebt = 0, shares, price = null,
+} = {}) {
+  const safe = {
+    fcff: Number(fcff),
+    g1: Number(g1),
+    g2: Number(g2),
+    wacc: Number(wacc),
+    netDebt: Number(netDebt),
+    years: Math.max(1, Math.min(20, Math.round(Number(years) || 5))),
+    shares: Number(shares),
+  };
+  if (!finite(safe.g1)) safe.g1 = 0.05;
+  if (!finite(safe.fcff) || safe.fcff <= 0) {
+    return { ok: false, reason: 'negative-fcff', value: null };
+  }
+  if (!finite(safe.netDebt)) {
+    return { ok: false, reason: 'net-debt-unknown', value: null };
+  }
+  if (!finite(safe.shares) || safe.shares <= 0) {
+    return { ok: false, reason: 'net-debt-unknown', value: null };
+  }
+  if (!finite(safe.wacc) || !finite(safe.g2) || safe.wacc <= safe.g2) {
+    return { ok: false, reason: 'wacc-not-above-g2', value: null };
+  }
+  let present = 0;
+  for (let t = 1; t <= safe.years; t += 1) {
+    present += (safe.fcff * Math.pow(1 + safe.g1, t)) / Math.pow(1 + safe.wacc, t);
+  }
+  const terminal = (safe.fcff * Math.pow(1 + safe.g1, safe.years) * (1 + safe.g2))
+    / ((safe.wacc - safe.g2) * Math.pow(1 + safe.wacc, safe.years));
+  const enterprise = present + terminal;
+  const equity = enterprise - safe.netDebt;
+  if (!finite(equity) || equity <= 0) {
+    return {
+      ok: false, reason: 'debt-exceeds-value', value: null, enterprise, presentValue: present, terminalValue: terminal,
+    };
+  }
+  const value = equity / safe.shares;
+  if (!finite(value) || value <= 0) {
+    return { ok: false, reason: 'debt-exceeds-value', value: null };
+  }
+  // How much of the answer is the terminal assumption. The DDM already leans
+  // on it; a low computed WACC leans on it much harder, so the share is
+  // reported beside the value rather than left for the reader to work out.
+  const terminalShare = terminal / enterprise;
+  // The market's own terminal growth, holding this WACC and stage-one growth.
+  // It is the honest comparison: a DCF value far above the price is a statement
+  // about the terminal assumption, and the reader should see what the price
+  // implies instead. Solved analytically from the Gordon terminal.
+  const current = Number(price);
+  let impliedGrowth = null;
+  if (finite(current) && current > 0 && finite(netDebt)) {
+    const required = current * safe.shares + safe.netDebt;
+    const terminalNeeded = required - present;
+    const carry = (safe.fcff * Math.pow(1 + safe.g1, safe.years)) / Math.pow(1 + safe.wacc, safe.years);
+    const denominator = terminalNeeded + carry;
+    if (terminalNeeded > 0 && Math.abs(denominator) > 1e-9) {
+      const solved = ((terminalNeeded * safe.wacc) - carry) / denominator;
+      if (finite(solved) && solved < safe.wacc) impliedGrowth = solved;
+    }
+  }
+  return {
+    ok: true,
+    reason: null,
+    value,
+    enterprise,
+    equity,
+    presentValue: present,
+    terminalValue: terminal,
+    terminalShare,
+    impliedGrowth,
+    inputs: safe,
+  };
+}
+
+/**
+ * The Graham growth formula: EPS × (8.5 + 2g) × 4.4 ÷ AAA yield.
+ *
+ * g is the same near-term growth the reader sets for the DDM, capped at 15%
+ * because the formula was never meant for an indefinite high-growth name. The
+ * yield is the ThaiBMA AAA 5-year rate with its date attached. This is a
+ * cross-check; it is extraordinarily sensitive to the yield and is never the
+ * base valuation.
+ */
+export function grahamGrowth({ eps, g, aaaYield = AAA_YIELD } = {}) {
+  const e = Number(eps);
+  const growth = Number(g);
+  const y = Number(aaaYield);
+  if (!finite(e) || e <= 0) return { ok: false, reason: 'not-computable', value: null };
+  if (!finite(y) || y <= 0) return { ok: false, reason: 'not-computable', value: null };
+  const rawPct = finite(growth) ? growth * 100 : 0;
+  const gPct = clampNum(rawPct, 0, 15);
+  const value = (e * (8.5 + 2 * gPct) * 4.4) / (y * 100);
+  if (!finite(value) || value <= 0) return { ok: false, reason: 'not-computable', value: null };
+  return {
+    ok: true,
+    reason: null,
+    value,
+    gPct,
+    growth: gPct / 100,
+    aaaYield: y,
+    capped: rawPct > 15,
+  };
+}
+
+/**
+ * Residual income for a balance-sheet business.
+ *
+ *   V0 = B0 + Σ (ROE − r) × B_{t-1} / (1+r)^t
+ *
+ * Book grows at the sustainable rate ROE × (1 − payout). There is no terminal
+ * excess return: assuming a bank earns above its cost of equity forever is the
+ * assumption that made the DDM flattering, and the point of this model is a
+ * conservative second opinion for the sector the DDM explains worst.
+ */
+export function residualIncome({ bvps, roe, payout = 0, r = 0.09, years = 10 } = {}) {
+  const book0 = Number(bvps);
+  const ret = Number(roe);
+  const rate = Number(r);
+  const p = Number(payout);
+  const n = Math.max(1, Math.min(20, Math.round(Number(years) || 10)));
+  if (!finite(book0) || book0 <= 0) return { ok: false, reason: 'negative-book', value: null };
+  if (!finite(ret) || !finite(rate) || rate <= 0) {
+    return { ok: false, reason: 'not-computable', value: null };
+  }
+  const payoutSafe = finite(p) ? clampNum(p, 0, 1) : 0;
+  const growth = clampNum(ret * (1 - payoutSafe), 0, 0.15);
+  let book = book0;
+  let value = book0;
+  for (let t = 1; t <= n; t += 1) {
+    value += ((ret - rate) * book) / Math.pow(1 + rate, t);
+    book *= (1 + growth);
+  }
+  if (!finite(value) || value <= 0) return { ok: false, reason: 'not-computable', value: null };
+  return {
+    ok: true,
+    reason: null,
+    value,
+    bvps: book0,
+    roe: ret,
+    payout: payoutSafe,
+    r: rate,
+    growth,
+    years: n,
+  };
+}
+
 /**
  * Multiples beyond these are not valuation observations.
  *

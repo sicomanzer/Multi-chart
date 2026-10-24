@@ -10,16 +10,23 @@
  */
 import { loadFinancials } from './fin.js';
 import {
+  AAA_YIELD,
+  AAA_YIELD_ASOF,
+  AAA_YIELD_SOURCE,
   applyFilters,
   applyPreset,
   computeBands,
+  dcf,
   ddm,
   DEFAULTS,
+  grahamGrowth,
   grahamNumber,
   marginOfSafety,
   peerPercentiles,
   presetById,
+  residualIncome,
   scoreQuality,
+  simpleWacc,
   sustainableDividend,
 } from './screener.js';
 import { normalizeSymbol, toYahooSymbol, uniqueSymbols } from './symbols.js';
@@ -207,6 +214,11 @@ function unknownRow(fin, reason) {
     ddmScenario: null,
     ddmScenarioFlat: null,
     graham: { ok: false, reason, value: null, mos: null, eps: null, bvps: null },
+    // The three models the deep dive carries as cross-checks. They are named
+    // here so a row with no statements still has the shape the UI reads.
+    dcf: { ok: false, reason, value: null, mos: null },
+    grahamGrowth: { ok: false, reason, value: null, mos: null },
+    residualIncome: { ok: false, reason, value: null, mos: null },
     bands: { basis: null, pe: null, pbv: null },
     yearCount: 0,
     dataIssue: reason,
@@ -306,6 +318,135 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
 
   const bands = computeBands(fin.closes, trusted, { peCurrent, pbvCurrent });
 
+  // ── cross-checks for the deep dive ─────────────────────────────────────────
+  //
+  // The DDM is the base valuation. These three are second opinions for the
+  // names it explains worst: a non-payer (DCF), a growth name (Graham growth)
+  // and a bank (residual income). None of them feeds the table, a preset or the
+  // back test; they exist so the reader can see where the models disagree.
+  //
+  // FCFF = operating cash flow + after-tax interest + capex. Capex is already
+  // negative in the statement, so it is added rather than subtracted.
+  const fcffFor = (year) => {
+    const ocf = year?.operatingCashFlow;
+    const capex = year?.capex;
+    if (!Number.isFinite(ocf) || !Number.isFinite(capex)) return null;
+    const interest = Number.isFinite(year?.interestExpense) ? Math.max(0, year.interestExpense) : 0;
+    const tax = Number.isFinite(year?.taxProvision)
+      && Number.isFinite(year?.pretaxIncome) && year.pretaxIncome > 0
+      ? Math.min(0.5, Math.max(0, year.taxProvision / year.pretaxIncome))
+      : 0.20;
+    const fcff = ocf + interest * (1 - tax) + capex;
+    return Number.isFinite(fcff) ? { fcff, tax } : null;
+  };
+  const fcffPoints = trusted.map((year) => fcffFor(year)).filter(Boolean).slice(-3);
+  const median = (values) => {
+    const sorted = [...values].sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  };
+  // One year's working-capital swing is not a forecast; the median of the last
+  // three complete years is the base the DCF grows.
+  const fcff0 = fcffPoints.length ? median(fcffPoints.map((p) => p.fcff)) : null;
+  const taxRate = fcffPoints.length ? median(fcffPoints.map((p) => p.tax)) : 0.20;
+  const balance = [...trusted].reverse().find((year) => (
+    Number.isFinite(year?.cash)
+    && Number.isFinite(year?.totalDebt)
+    && Number.isFinite(year?.shares)
+    && year.shares > 0
+  )) ?? null;
+  const aaaYield = clampInput(overrides.aaaYield, AAA_YIELD, { min: 0.005, max: 0.10 });
+
+  const waccResult = balance
+    ? simpleWacc({
+      price: fin.price,
+      shares: balance.shares,
+      totalDebt: balance.totalDebt,
+      interestExpense: balance.interestExpense,
+      taxRate,
+      costOfEquity: r,
+    })
+    : { ok: false, reason: 'not-computable', wacc: null };
+  const netDebt = balance ? balance.totalDebt - balance.cash : null;
+  // A bank's operating cash flow is the movement of deposits and loans, not a
+  // free cash flow the firm could hand to its owners, and its capex is not the
+  // capital that funds the book. Discounting that number would produce a
+  // plausible-looking figure with no economic meaning — the same reason the
+  // DDM's payout guard exists. Banks get the residual-income model instead.
+  const dcfApplies = fin.isFinancial !== true;
+  const dcfResult = (!dcfApplies)
+    ? { ok: false, reason: 'not-applicable-financial', value: null }
+    : (fcff0 != null && netDebt != null && waccResult.ok)
+      ? dcf({
+        fcff: fcff0,
+        g1,
+        g2,
+        years,
+        wacc: waccResult.wacc,
+        netDebt,
+        shares: balance.shares,
+        price: fin.price,
+      })
+      : { ok: false, reason: waccResult.reason ?? 'not-computable', value: null };
+  const dcfCheck = {
+    ok: dcfResult.ok,
+    reason: dcfResult.reason ?? null,
+    value: dcfResult.value ?? null,
+    mos: dcfResult.ok ? marginOfSafety(dcfResult.value, fin.price) : null,
+    wacc: waccResult.wacc ?? null,
+    costOfEquity: waccResult.costOfEquity ?? r,
+    costOfDebt: waccResult.costOfDebt ?? null,
+    afterTaxCostOfDebt: waccResult.afterTaxCostOfDebt ?? null,
+    taxRate: waccResult.taxRate ?? taxRate,
+    fcff: fcff0,
+    fcffYears: fcffPoints.length,
+    netDebt,
+    cash: balance?.cash ?? null,
+    totalDebt: balance?.totalDebt ?? null,
+    shares: balance?.shares ?? null,
+    terminalShare: dcfResult.terminalShare ?? null,
+    impliedGrowth: dcfResult.impliedGrowth ?? null,
+    g1,
+    g2,
+    years,
+  };
+
+  const grahamGrowthResult = grahamGrowth({ eps: fin.ttm?.eps ?? null, g: g1, aaaYield });
+  const grahamGrowthCheck = {
+    ok: grahamGrowthResult.ok,
+    reason: grahamGrowthResult.reason ?? null,
+    value: grahamGrowthResult.value ?? null,
+    mos: grahamGrowthResult.ok ? marginOfSafety(grahamGrowthResult.value, fin.price) : null,
+    eps: fin.ttm?.eps ?? null,
+    g: grahamGrowthResult.growth ?? g1,
+    gCapped: Boolean(grahamGrowthResult.capped),
+    aaaYield,
+    aaaYieldSource: AAA_YIELD_SOURCE,
+    aaaYieldAsOf: AAA_YIELD_ASOF,
+  };
+
+  const riResult = fin.isFinancial === true
+    ? residualIncome({
+      bvps: fin.ttm?.bvps ?? null,
+      roe: quality.roe3,
+      payout: quality.payout,
+      r,
+      years: 10,
+    })
+    : { ok: false, reason: 'not-financial', value: null };
+  const residualIncomeCheck = {
+    ok: riResult.ok,
+    reason: riResult.reason ?? null,
+    value: riResult.value ?? null,
+    mos: riResult.ok ? marginOfSafety(riResult.value, fin.price) : null,
+    bvps: riResult.bvps ?? (fin.ttm?.bvps ?? null),
+    roe: riResult.roe ?? quality.roe3 ?? null,
+    payout: riResult.payout ?? quality.payout ?? null,
+    r: riResult.r ?? r,
+    growth: riResult.growth ?? null,
+    years: riResult.years ?? 10,
+  };
+
   return {
     symbol: fin.symbol,
     bare: fin.bare,
@@ -368,6 +509,11 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
         bvps: fin.ttm?.bvps ?? null,
       };
     })(),
+    // Deep-dive cross-checks. They are computed for every row so the detail
+    // view has them, but no preset, filter or back test reads them.
+    dcf: dcfCheck,
+    grahamGrowth: grahamGrowthCheck,
+    residualIncome: residualIncomeCheck,
     bands: {
       basis: bands.basis,
       pe: bands.pe

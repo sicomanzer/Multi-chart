@@ -13,6 +13,13 @@ import { sanitizeWatchlist, MAX_SYMBOLS_PER_LIST } from '../server/watchlist-sto
 import { normalizeSymbol, toYahooSymbol, uniqueSymbols } from '../server/symbols.js';
 import { sanitizeParams, defaultParams, INDICATORS } from '../server/indicator-catalog.js';
 import { computeIndicator, SUPPORTED_INDICATORS } from '../public/js/ta.js';
+import {
+  AAA_YIELD,
+  dcf,
+  grahamGrowth,
+  residualIncome,
+  simpleWacc,
+} from '../server/screener.js';
 
 let failures = 0;
 let ran = 0;
@@ -242,6 +249,51 @@ const flat = Array.from({ length: 60 }, (_, i) => ({
 }));
 check('flat series: rsi is 100', lastOf(computeIndicator('rsi', flat, defaultParams('rsi'))) === 100);
 check('flat series: atr is 0', lastOf(computeIndicator('atr', flat, defaultParams('atr'))) === 0);
+
+// ── valuation cross-checks ───────────────────────────────────────────────────
+
+group('valuation cross-checks');
+
+const approx = (a, b, tol = 1e-6) => Number.isFinite(a) && Math.abs(a - b) <= tol;
+
+// Simple WACC: 1000 equity, 500 debt at 5% pre-tax, 20% tax, 9% cost of equity
+// -> 1000/1500×9% + 500/1500×4% = 7.333...%.
+const wacc = simpleWacc({
+  price: 10, shares: 100, totalDebt: 500, interestExpense: 25, taxRate: 0.2, costOfEquity: 0.09,
+});
+check('wacc blends equity and after-tax debt', approx(wacc.wacc, 0.07333333333333333, 1e-9), JSON.stringify(wacc));
+check('wacc measures the cost of debt', approx(wacc.costOfDebt, 0.05, 1e-9));
+check('wacc refuses debt with no interest', simpleWacc({ price: 10, shares: 100, totalDebt: 500 }).reason === 'interest-unknown');
+check('wacc with no debt is the cost of equity',
+  approx(simpleWacc({ price: 10, shares: 100, totalDebt: 0 }).wacc, 0.09, 1e-9));
+
+// The two-stage FCFF DCF, checked against the arithmetic the model documents.
+const dcfValue = dcf({ fcff: 100, g1: 0.05, g2: 0.03, years: 5, wacc: 0.09, netDebt: 200, shares: 100 });
+check('dcf discounts the cash flow and the terminal value', approx(dcfValue.value, 16.715416372560984, 1e-9), dcfValue.value);
+check('dcf subtracts net debt from enterprise value', approx(dcfValue.enterprise - 200, dcfValue.equity, 1e-9));
+check('dcf refuses a non-positive fcff',
+  dcf({ fcff: -1, g1: 0.05, wacc: 0.09, netDebt: 0, shares: 100 }).reason === 'negative-fcff');
+check('dcf refuses a wacc at or below terminal growth',
+  dcf({ fcff: 100, g1: 0.05, g2: 0.09, wacc: 0.09, netDebt: 0, shares: 100 }).reason === 'wacc-not-above-g2');
+check('dcf refuses debt that swallows the value',
+  dcf({ fcff: 1, g1: 0.05, g2: 0.03, years: 5, wacc: 0.09, netDebt: 10_000_000, shares: 100 }).reason === 'debt-exceeds-value');
+
+// Graham growth: 1 × (8.5 + 10) × 4.4 ÷ 2.06 = 39.5145...
+const gg = grahamGrowth({ eps: 1, g: 0.05 });
+check('graham growth uses the formula', approx(gg.value, 39.51456310679612, 1e-9), gg.value);
+check('graham growth caps g at 15%', grahamGrowth({ eps: 1, g: 0.30 }).gPct === 15);
+check('graham growth flags the cap', grahamGrowth({ eps: 1, g: 0.30 }).capped === true);
+check('graham growth needs positive eps', grahamGrowth({ eps: 0, g: 0.05 }).ok === false);
+check('the AAA default carries a dated source', approx(AAA_YIELD, 0.0206, 1e-9), String(AAA_YIELD));
+
+// Residual income: 100 book, 15% ROE, 40% payout, 9% cost of equity, 10 years.
+const ri = residualIncome({ bvps: 100, roe: 0.15, payout: 0.4, r: 0.09, years: 10 });
+check('residual income adds the excess return', approx(ri.value, 155.045871559633, 1e-9), ri.value);
+check('residual income grows book at the sustainable rate', approx(ri.growth, 0.09, 1e-9));
+check('residual income with no excess return is book value',
+  approx(residualIncome({ bvps: 100, roe: 0.09, payout: 0.4, r: 0.09, years: 10 }).value, 100, 1e-9));
+check('residual income refuses a negative book',
+  residualIncome({ bvps: -1, roe: 0.15, payout: 0, r: 0.09 }).reason === 'negative-book');
 
 console.log(`\n${failures ? `${failures} of ${ran} FAILED` : `all ${ran} passed`}\n`);
 process.exit(failures ? 1 : 0);

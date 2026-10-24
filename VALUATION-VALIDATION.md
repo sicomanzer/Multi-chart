@@ -1,11 +1,12 @@
 # Valuation Validation — Multi-chart
 
-วันที่ตรวจ: 2026-10-23 (รอบที่ 4 หลังเพิ่ม unfunded-payout scenario)  
-ขอบเขต: intrinsic value, margin of safety, DDM, historical P/E–P/BV bands และ sensitivity  
-ข้อสรุปสั้น: **สูตร DDM ถูกต้อง (PASS)**; **default เปลี่ยนเป็น g1 = 5% / g2 = 3% แล้ว (PASS)**; **KCE/MC/BDMS ถูก payout guard และ DELTA ถูก low-yield guard (PASS)**; **มี Graham number เป็น cross-check (PASS)**; **มี scenario สำหรับ payout ≥100% แต่ไม่ใช้ใน preset**; แต่ **DCF/Graham growth formula และ sector model ยังไม่มี (BLOCKED)**
+วันที่ตรวจ: 2026-10-24 (รอบที่ 5 — เพิ่ม DCF / Graham growth / bank residual income)  
+ขอบเขต: intrinsic value, margin of safety, DDM, DCF (FCFF), Graham growth, bank residual income, historical P/E–P/BV bands และ sensitivity  
+ข้อสรุปสั้น: **DDM (PASS)**; **default g1 = 5% / g2 = 3% (PASS)**; **payout guard + low-yield guard (PASS)**; **Graham number (PASS)**; **DCF (FCFF) cross-check สำหรับบริษัทไม่ใช่การเงิน (PASS — สูตร)**; **Graham growth formula พร้อม AAA yield ที่มีวันที่ (PASS — สูตร)**; **residual income สำหรับธนาคาร (PASS — สูตร)**
 
-> ระบบนี้ยังไม่มี DCF และ Graham growth formula — มี two-stage DDM, MOS, historical bands และ Graham number cross-check  
-> รายงานนี้จึงไม่ถือว่า DCF/Graham growth formula “ผ่าน”; ระบุเป็น BLOCKED ตามความเป็นจริง
+> **โมเดลใหม่ทั้งสามใช้เฉพาะใน stock detail เป็น cross-check เท่านั้น** — ไม่เข้า screener, preset หรือ backtest  
+> สูตรผ่านการทดสอบตัวเลข (unit test) แล้ว แต่ยังไม่ผ่าน **money-real backtest** จึงยังไม่ให้มีผลต่อการคัดเลือกหุ้น  
+> ค่าฐานของระบบยังเป็น two-stage DDM เหมือนเดิม; โมเดลใหม่เป็น “ความเห็นที่สอง” ให้อ่านเทียบ
 
 ---
 
@@ -18,11 +19,14 @@
 | Margin of safety (MOS) | มี | ตาราง, preset `value` |
 | Historical P/E band | มี | stock detail |
 | Historical P/BV band | มี | stock detail |
-| Sensitivity sliders (r, g1, g2, years) | มี (manual) | calculator |
+| Sensitivity sliders (r, g1, g2, years, AAA yield) | มี (manual) | calculator |
 | Graham number `sqrt(22.5 × EPS × BVPS)` | มี (cross-check) | stock detail calculator |
-| DCF | **ไม่มี** | — |
-| Graham growth formula | **ไม่มี** | — |
-| Sector-specific model (bank/REIT) | **ไม่มี** | — |
+| DCF (FCFF) | **มี (รอบที่ 5)** | stock detail — เฉพาะบริษัทไม่ใช่การเงิน |
+| Graham growth formula | **มี (รอบที่ 5)** | stock detail calculator |
+| Bank residual income | **มี (รอบที่ 5)** | stock detail — เฉพาะกลุ่มการเงิน |
+| REIT intrinsic model | **ไม่มี (BLOCKED)** | ไม่มี NAV / cap rate / occupancy |
+
+**ขอบเขตการใช้งาน (ย้ำ):** ทั้ง DCF, Graham growth และ residual income ถูกคำนวณในทุกแถวของ `buildRow` เพื่อให้ stock detail ใช้ได้ แต่ **ไม่มี preset, filter, screener score หรือ backtest ตัวใดอ่านค่าทั้งสามนี้** ค่าที่ใช้คัดเลือกหุ้นยังเป็น DDM + MOS ตามเดิม
 
 ---
 
@@ -188,10 +192,10 @@ G = sqrt(22.5 × EPS × BVPS)
 2. **g2 = 3% ใกล้ long-run inflation/GDP** และใกล้ sustainable growth ของ PTT/CPF/TVO มากกว่า 5% เดิม
 3. **g1 = 5% ยังเป็น near-term assumption** ที่สูงกว่า sustainable ของ PTT/SCB/ADVANC; เป็นความเสี่ยงของ stage-one
 4. **KCE/MC/BDMS ถูก guard** ด้วย `payout-not-funded` (payout ≥ 100%) → ไม่มี intrinsic/MOS ที่สร้างจากปันผลเกินกำไร; หลักเดียวกันนี้ครอบทุกตัวที่ payout ≥ 100% (เช่น ICHI 107.8%, BDMS 100%); stock detail แสดง **scenario** พร้อม warning แยกจากค่าฐาน
-5. **DELTA ถูก low-yield guard แล้ว**: yield 0.26% < 1% → `yield-too-low`, ไม่มี intrinsic/MOS จาก DDM; Graham number ยังแสดงเป็น cross-check แต่ต่ำมากเพราะเป็น defensive formula
-6. **มี Graham number cross-check แต่ยังไม่มี DCF/Graham growth formula**: บริษัทไม่จ่ายปันผล/ปันผลต่ำยังไม่มี DCF; Graham number ใช้ได้เฉพาะ EPS/BVPS เป็นบวกและไม่เหมาะกับ asset-light/ROE สูง
-7. **ไม่มี sector model**: ธนาคาร/REIT/cyclical ใช้ DDM เดียวกัน; DDM ของ SCB ไม่ได้สะท้อน capital adequacy/credit cycle
-8. **ไม่มี sensitivity อัตโนมัติ**: ผู้ใช้ต้องเลื่อน slider เอง; ยังไม่มี range/ตารางใน UI
+5. **DELTA ถูก low-yield guard แล้ว**: yield 0.26% < 1% → `yield-too-low`, ไม่มี intrinsic/MOS จาก DDM
+6. **มี cross-check เพิ่มแล้ว 3 ตัว (รอบที่ 5)**: DCF (FCFF) สำหรับบริษัทไม่ใช่การเงิน, Graham growth สำหรับหุ้น growth, และ residual income สำหรับธนาคาร — ทั้งสามแสดง **เฉพาะใน stock detail** และไม่ถูกนำไปคิดคะแนน/preset
+7. **ยังไม่มี REIT intrinsic model**: แหล่งข้อมูลปัจจุบันไม่มี NAV, cap rate หรือ occupancy; ถ้าทำตอนนี้จะเป็นการเดา (BLOCKED)
+8. **ยังไม่มี sensitivity อัตโนมัติ**: ผู้ใช้ต้องเลื่อน slider เอง; ยังไม่มี range/ตารางใน UI
 
 ---
 
@@ -228,20 +232,26 @@ G = sqrt(22.5 × EPS × BVPS)
 
 ## 7. ข้อเสนอที่ทำแล้ว / ยังเหลือ
 
-### ทำแล้ว
+### ทำแล้ว (รอบ 1–4)
 - เปลี่ยน default `g2` เป็น **3%** ทั้ง server (`DEFAULTS`) และ UI; `g1` ยัง 5% ระยะ 5 ปี
-- เพิ่ม **payout guard**: `payout ≥ 100%` → `ok:false`, `reason='payout-not-funded'`, ไม่มี intrinsic/MOS
-- เพิ่ม **low-yield guard**: yield > 0 และ < 1% → `ok:false`, `reason='yield-too-low'` (DELTA 0.26%)
-- เพิ่ม **Graham number cross-check** `sqrt(22.5 × EPS × BVPS)` ใน stock detail; ไม่ใช่ DCF/ราคาเป้าหมาย
-- เพิ่ม **unfunded-payout scenario** ใน stock detail: `allowUnfunded` ใช้เฉพาะเมื่อผู้ใช้เลือกดูสมมติ; ค่าฐานยังถูก guard และ scenario ไม่เข้า screener/preset/backtest
-- เพิ่มข้อความ EN/TH ใน calculator และเทสต์ regression
+- เพิ่ม **payout guard**: `payout ≥ 100%` → `ok:false`, `reason='payout-not-funded'`
+- เพิ่ม **low-yield guard**: yield > 0 และ < 1% → `ok:false`, `reason='yield-too-low'`
+- เพิ่ม **Graham number cross-check** และ **unfunded-payout scenario** (stock detail เท่านั้น)
 - คงปุ่ม **Flat 5% scenario** ไว้เป็นกรณีทดสอบ ไม่ใช่ค่าเริ่มต้น
 
+### ทำแล้ว (รอบที่ 5)
+- เพิ่ม **DCF (FCFF)**: two-stage, WACC คำนวณจากข้อมูลจริง, net debt จาก cash ที่รายงาน, guard ครบ (negative FCFF, net debt unknown, WACC ≤ g2, หนี้กลืนมูลค่า, และ **ไม่ใช้กับกลุ่มการเงิน**)
+- เพิ่ม **terminal-share + price-implied terminal growth** เป็นมาตรวัดความน่าเชื่อถือของ DCF พร้อม warning เมื่อ terminal share > 80%
+- เพิ่ม **Graham growth formula** `EPS × (8.5 + 2g) × 4.4 ÷ AAA yield` โดย AAA yield เป็นค่าเริ่มต้นที่มีวันที่ + override ได้
+- เพิ่ม **bank residual income** `V0 = B0 + Σ (ROE − r) × B_{t-1} / (1+r)^t` 10 ปี, ไม่มี terminal excess return, เฉพาะกลุ่มการเงิน
+- เพิ่ม **20 unit tests** ของสามโมเดล (รวม 108 tests ผ่านทั้งหมด) และข้อความ EN/TH
+- เพิ่มฟิลด์ Yahoo ที่จำเป็น: `cash`, `capex`, `taxProvision`, `pretaxIncome` (พร้อม FX/unit scaling)
+
 ### ยังเหลือ (ต้องตัดสินใจ)
-1. เพิ่ม **DCF** สำหรับบริษัทไม่จ่ายปันผล/ปันผลต่ำ; ต้องมี FCF, cash/net debt, shares และ WACC ที่ตรวจสอบได้
-2. เพิ่ม **Graham growth formula** (8.5 + 2g) — ต้องมี AAA yield และ g ที่มีแหล่งอ้างอิง; ตอนนี้มีเพียง Graham number
-3. เพิ่ม **sensitivity matrix** (r × g2) ใน UI แทน slider เดี่ยว
-4. แยกโมเดล **bank/REIT** (capital, NAV, distribution yield) แทน DDM กลาง
+1. **money-real backtest** ของโมเดลใหม่ก่อนจะยอมให้เข้า screener/preset — ตอนนี้ยังไม่ทำ
+2. **REIT intrinsic model** — ต้องมี NAV / cap rate / occupancy จากแหล่งที่ตรวจสอบได้ก่อน
+3. **AAA yield แบบ live** — ปัจจุบันเป็นค่าเริ่มต้นคงที่พร้อมวันที่ + override (ไม่ใช่ live quote)
+4. **sensitivity matrix** (r × g2) ใน UI แทน slider เดี่ยว
 5. แสดง **range** (bear/base/bull) ไม่ใช่ point estimate
 
 ---
@@ -258,8 +268,204 @@ G = sqrt(22.5 × EPS × BVPS)
 | DDM กับ KCE/MC/BDMS | **PASS (payout guard)** |
 | DDM กับ DELTA | **PASS (low-yield guard)** |
 | Unfunded-payout scenario (BDMS) | **PASS (scenario only; not preset)** |
-| Graham number cross-check | **PASS** (มีใน stock detail; เป็น cross-check) |
-| DCF | **BLOCKED** (ไม่มีในระบบ; ข้อมูล WACC/net debt ยังไม่พอ) |
-| Graham growth formula | **BLOCKED** (ไม่มี; ต้องมี AAA yield/g ที่อ้างอิงได้) |
+| Graham number cross-check | **PASS** |
+| DCF (FCFF) | **PASS (สูตร; stock detail; non-financial)** |
+| Graham growth formula | **PASS (สูตร; stock detail; AAA มีวันที่)** |
+| Bank residual income | **PASS (สูตร; stock detail; financials)** |
 | Sensitivity matrix | **PARTIAL** (มี slider, ไม่มี matrix) |
-| Sector model | **BLOCKED** (ไม่มี) |
+| REIT intrinsic model | **BLOCKED** (ไม่มี NAV/cap rate/occupancy) |
+| โมเดลใหม่ใน screener/preset/backtest | **OPEN** (ต้องผ่าน money-real backtest ก่อน) |
+
+---
+
+## 9. DCF (FCFF) — cross-check รอบที่ 5
+
+### 9.1 สูตร
+
+```
+EV = Σ_{t=1..n} FCFF0 (1+g1)^t / (1+wacc)^t
+   + FCFF0 (1+g1)^n (1+g2) / ((wacc−g2)(1+wacc)^n)
+
+equity per share = (EV − net debt) / shares
+```
+
+โดย
+
+```
+FCFF  = operating cash flow + ดอกเบี้ยจ่าย × (1 − อัตราภาษีจริง) + capex   (capex ติดลบอยู่แล้ว)
+FCFF0 = มัธยฐานของ FCFF 3 ปีล่าสุดที่กระทบยอดได้  (ไม่ใช้ปีเดียว เพราะ working capital แกว่ง)
+net debt = total debt − cash  (ทั้งคู่จากงบที่รายงาน)
+```
+
+### 9.2 WACC ที่คำนวณจากข้อมูลจริง (`simpleWacc`)
+
+```
+cost of debt        = ดอกเบี้ยจ่ายจริง / หนี้ที่รายงาน            (clamp 0.5%–20%)
+after-tax cost debt = cost of debt × (1 − อัตราภาษีจริง)
+wacc                = E/(E+D) × cost of equity + D/(E+D) × after-tax cost debt
+```
+
+- **E** = ราคา × จำนวนหุ้น (market cap), **D** = `totalDebt` ที่รายงาน
+- **cost of equity** = ค่า slider `r` (default 9%)
+- **อัตราภาษีจริง** = median ของ `taxProvision / pretaxIncome` (clamp 0–50%)
+- `wacc` ถูก clamp 4%–25%
+- ถ้ามีหนี้แต่ไม่มีดอกเบี้ยจ่าย → **ไม่คำนวณ** (`interest-unknown`) ไม่เดา
+
+### 9.3 Guards (fail-closed)
+
+| เงื่อนไข | reason | ผล |
+|---|---|---|
+| `FCFF0 ≤ 0` | `negative-fcff` | ไม่แสดงค่า |
+| cash / จำนวนหุ้น ขาด | `net-debt-unknown` | ไม่แสดงค่า |
+| `wacc ≤ g2` | `wacc-not-above-g2` | ไม่แสดงค่า |
+| หนี้ > มูลค่าคิดลด | `debt-exceeds-value` | ไม่แสดงค่า (ไม่ปัดเป็น 0) |
+| หนี้มีแต่ดอกเบี้ยไม่มี | `interest-unknown` | ไม่แสดงค่า |
+| กลุ่มการเงิน (bank/insurer) | `not-applicable-financial` | ไม่แสดงค่า — ใช้ residual income แทน |
+
+### 9.4 มาตรวัดความน่าเชื่อถือ (สำคัญ)
+
+เพราะ DCF เอนไปทาง terminal value มาก ระบบจึงแสดงเพิ่มเสมอ:
+- **terminal share** = terminal value / enterprise value — ถ้า **> 80%** จะขึ้น warning
+- **price-implied terminal growth** = อัตราเติบโตปลายทางที่ทำให้ `EV = market cap + net debt` (แก้สมการจาก Gordon)
+
+### 9.5 ผลจริง (PTT)
+
+| รายการ | ค่า |
+|---|---:|
+| DCF value / share | **276.43 THB** |
+| MOS | +85.0% |
+| WACC (คำนวณ) | 6.08% |
+| cost of equity (slider) | 9.00% |
+| cost of debt after tax | 2.59% |
+| อัตราภาษีจริง | 34.37% |
+| FCFF (median 3 ปี) | 231.12B |
+| net debt | 638.99B (cash 346.82B / debt 985.81B) |
+| shares | 28.324B |
+| **terminal share** | **86.8% → warning** |
+| **price implies terminal growth** | **−19.43%** |
+
+**การตีความ (ต้องอ่านให้ถูก):** ตัวเลข 276 บาท **ไม่ใช่** ราคาเป้าหมาย และไม่ใช่หลักฐานว่าหุ้นถูก  
+terminal share 86.8% แปลว่าค่ามาเกือบทั้งหมดจากสมมติฐานปลายทาง และราคาตลาดสื่ออัตราเติบโตปลายทางติดลบ (−19.4%)  
+→ ข้อสรุปที่ถูกคือ **DCF ไม่เห็นด้วยกับ DDM (43.05) อย่างรุนแรง** ซึ่งเป็นข้อมูลว่าค่า DCF ของ PTT เปราะ; ใช้ดู “ความอ่อนไหว” ไม่ใช่ใช้ตัดสินใจซื้อ
+
+### 9.6 ข้อจำกัด
+
+- ไม่ใช่ CAPM: cost of equity เป็น slider ไม่ได้ beta
+- g2 = 3% และ g1 = 5% เป็นสมมติฐานผู้ใช้ ไม่ได้มาจากงบ
+- FCFF เป็น median 3 ปี; บริษัทที่ capex ผันผวนสูงจะไวมาก
+- ยังไม่ทดสอบกับ backtest
+
+---
+
+## 10. Graham growth — cross-check รอบที่ 5
+
+### 10.1 สูตร
+
+```
+V = EPS × (8.5 + 2g) × 4.4 ÷ AAA yield
+```
+
+- `EPS` = TTM EPS
+- `g` = อัตราเติบโตจาก slider (g1) แปลงเป็นเปอร์เซ็นต์ และ **cap ที่ 15%** (สูตรนี้ไม่ได้ออกแบบมาสำหรับหุ้นโตไม่จำกัด)
+- `AAA yield` = อัตราผลตอบแทนพันธบัตรเอกชน AAA
+
+### 10.2 แหล่งของ AAA yield
+
+| รายการ | ค่า |
+|---|---|
+| อัตรา | **2.06%** |
+| ชนิด | ThaiBMA AAA 5-year corporate bond yield |
+| ณ | **2026-Q3** |
+| ประกาศ | 2026-10-07 (press release ThaiBMA) |
+
+- เป็น **ค่าเริ่มต้นคงที่พร้อมวันที่** ไม่ใช่ live quote; ผู้ใช้ override ผ่าน slider ได้ (ช่วง 1%–6%)
+- ระบบแสดง source/as-of กลับไปใน payload (`aaaYieldSource`, `aaaYieldAsOf`) เพื่อไม่ให้ตัวเลขลอย
+- **ค่าไวต่อ yield มาก**: yield ต่ำลง → มูลค่าสูงขึ้นทันที ดังนั้นจึงเป็น cross-check ไม่ใช่ค่าฐาน
+
+### 10.3 ผลจริง (PTT)
+
+| รายการ | ค่า |
+|---|---:|
+| Graham growth / share | **171.57 THB** |
+| MOS | +75.8% |
+| EPS (TTM) | 4.342 |
+| g | 5.00% (ไม่ถูก cap) |
+| AAA yield | 2.06% |
+
+### 10.4 ข้อจำกัด
+
+- ใช้ EPS และ g เดียว ไม่ได้แยก stage; ไม่เหมาะกับวัฏจักรหรือกำไรผันผวน
+- ตัวคูณ 8.5/4.4 มาจากตลาดสหรัฐในยุคของ Graham; ใช้เทียบเชิงสัมพัทธ์เท่านั้น
+
+---
+
+## 11. Bank residual income — cross-check รอบที่ 5
+
+### 11.1 สูตร
+
+```
+V0 = B0 + Σ_{t=1..n} (ROE − r) × B_{t-1} / (1+r)^t
+B_t = B_{t-1} × (1 + g),  g = ROE × (1 − payout)  (clamp 0–15%)
+```
+
+- **ไม่มี terminal excess return** โดยตั้งใจ — การสมมติว่าธนาคารทำผลตอบแทนเกินต้นทุนทุนได้ตลอดไปคือสมมติฐานที่ทำให้ DDM ดูดีเกินจริง
+- `n = 10` ปี, `r` = cost of equity จาก slider (default 9%)
+- `B0` = BVPS, ROE = ค่าเฉลี่ย 3 ปี, payout จากงบ
+- ใช้เฉพาะ `isFinancial === true`; ตัวอื่นได้ `not-financial`
+- ถ้า BVPS ≤ 0 → `negative-book`; ถ้า `V ≤ 0` → ไม่แสดงค่า
+
+### 11.2 ผลจริง (SCB)
+
+| รายการ | ค่า |
+|---|---:|
+| Residual income / share | **147.19 THB** |
+| MOS | **−2.93%** |
+| BVPS | 143.849 |
+| ROE (3y) | 9.34% |
+| payout | 80.0% |
+| g (sustainable) | 1.87% |
+| เทียบ DDM | 211.11 (**+28.2%**) |
+| DCF | `not-applicable-financial` |
+
+**การตีความ:** สำหรับ SCB โมเดลธนาคารให้ค่าอนุรักษ์นิยมกว่ามาก (147 เทียบกับ DDM 211) และบอกว่าที่ราคา 151.50 แทบไม่มี margin of safety  
+นี่คือพฤติกรรมที่ต้องการ: แทนที่ DDM (ซึ่งอวย payout สูง) ด้วยมุมที่เข้มกว่าในธุรกิจที่คุณภาพสินทรัพย์และ credit cycle เป็นตัวตัดสิน
+
+### 11.3 ข้อจำกัด
+
+- ไม่ได้ใช้ capital adequacy / NPL / credit cost ของแต่ละธนาคาร
+- ROE คงที่ 10 ปี — ธนาคารที่ ROE สูงผิดปกติ (หรือต่ำ) จะได้ค่าที่เอนตาม
+- ยังไม่ทดสอบกับ backtest
+
+---
+
+## 12. หน่วยทดสอบและขอบเขต
+
+เพิ่มใน `scripts/verify-units.mjs` (กลุ่ม `valuation cross-checks`) 20 การตรวจ:
+
+| ตรวจ | ค่าคาดหวัง | ผล |
+|---|---|---|
+| WACC ผสม equity + after-tax debt | 7.3333% | PASS |
+| WACC วัดต้นทุนหนี้จากดอกเบี้ยจริง | 5.00% | PASS |
+| WACC ปฏิเสธหนี้ที่ไม่มีดอกเบี้ย | `interest-unknown` | PASS |
+| WACC ไม่มีหนี้ = cost of equity | 9.00% | PASS |
+| DCF คิดลด FCFF + terminal | 16.7154163726 | PASS |
+| DCF หัก net debt ออกจาก EV | equity = EV − 200 | PASS |
+| DCF ปฏิเสธ FCFF ≤ 0 | `negative-fcff` | PASS |
+| DCF ปฏิเสธ wacc ≤ g2 | `wacc-not-above-g2` | PASS |
+| DCF ปฏิเสธหนี้กลืนมูลค่า | `debt-exceeds-value` | PASS |
+| Graham growth ใช้สูตรถูก | 39.5145631068 | PASS |
+| Graham growth cap g ที่ 15% | gPct = 15 | PASS |
+| Graham growth ต้องมี EPS > 0 | ok=false | PASS |
+| AAA default มีวันที่กำกับ | 2.06% | PASS |
+| Residual income บวก excess return | 155.0458715596 | PASS |
+| Residual income โต book ตาม sustainable | 9.00% | PASS |
+| Residual income เมื่อ ROE = r = BVPS | 100 | PASS |
+| Residual income ปฏิเสธ book ติดลบ | `negative-book` | PASS |
+
+รวมทั้งชุด **108 unit tests ผ่านทั้งหมด**; `npm run check` ผ่าน (49 ไฟล์ parse, encoding ครบ) และ i18n parity **854/854** ไม่มีคีย์ซ้ำ
+
+**ขอบเขตที่ย้ำ:** โมเดลทั้งสาม**ไม่ถูกอ่าน**โดย `applyPreset`, `applyFilters`, `scoreQuality`, preset `value` หรือ `runBacktest` — เป็นข้อมูลของ stock detail เท่านั้น
+
+---
+
+> เอกสารนี้รายงานตามความเป็นจริง: สูตรผ่านการทดสอบตัวเลขแล้ว แต่ **ยังไม่ผ่าน money-real backtest** จึงยังไม่ให้มีผลต่อการคัดเลือกหุ้นหรือ preset ใด ๆ
