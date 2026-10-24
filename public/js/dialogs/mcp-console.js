@@ -195,16 +195,24 @@ function statusCards(h) {
 
   const lastSuccessAt = toMillis(fundamentals.lastSuccessAt);
   const lastErrorAt = toMillis(fundamentals.lastErrorAt);
+  const fetchedAt = toMillis(fundamentals.lastFetchAt);
   const freshError = Boolean(
     fundamentals.lastError
     && (!lastSuccessAt || (lastErrorAt != null && lastErrorAt > lastSuccessAt)),
   );
+  // The sidecar starts on the first request, not at boot. A fresh process with
+  // no request yet is idle, not "starting" and not stale; only a sidecar that
+  // has been asked (or has an error) is amber.
   const fundamentalsState = !fundamentals.available
     ? 'off'
-    : (fundamentals.ready ? (freshError ? 'warn' : 'on') : 'warn');
+    : (fundamentals.ready
+      ? (freshError ? 'warn' : 'on')
+      : (fetchedAt != null || freshError ? 'warn' : 'idle'));
   const fundamentalsValue = fundamentals.ready
     ? (lastSuccessAt ? statusAgo(lastSuccessAt, now) : t('mcp.status.ready'))
-    : (fundamentals.available ? t('mcp.status.starting') : t('mcp.status.unavailable'));
+    : !fundamentals.available
+      ? t('mcp.status.unavailable')
+      : (fetchedAt != null ? t('mcp.status.starting') : t('mcp.status.noFetch'));
   cards.push(statusCard({
     label: t('mcp.status.fundamentals'),
     state: fundamentalsState,
