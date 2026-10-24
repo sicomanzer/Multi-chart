@@ -465,6 +465,18 @@ export function cachedRuleEdges() {
   return edgeCache.rules;
 }
 
+/** What the health endpoint reports about the saved rule-edge measurement. */
+export function edgeStatus() {
+  return {
+    at: edgeCache.at ? new Date(edgeCache.at).toISOString() : null,
+    rules: edgeCache.rules.size,
+    presets: Object.keys(edgeCache.presets ?? {}),
+    running: Boolean(edgeCache.running),
+    fresh: edgesFresh(),
+    maxAgeMs: EDGE_MAX_AGE_MS,
+  };
+}
+
 /**
  * How each theme has done, and the order they stand in.
  *

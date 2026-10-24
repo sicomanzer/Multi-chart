@@ -1,6 +1,6 @@
 # Financial Data Audit — Multi-chart
 
-วันที่ตรวจ: 2026-10-23  
+วันที่ตรวจ: 2026-10-23 (อัปเดต 2026-10-24)<br>
 ขอบเขต: ข้อมูลงบการเงิน, ราคา, ปันผล, สูตร, screener, valuation และ backtest ของเว็บ Multi-chart  
 สภาพแวดล้อม: โค้ด local ที่พอร์ต 8788 (โค้ดใหม่) เทียบกับข้อมูลต้นทางจริง; deploy `https://multi-chart-desk.onrender.com` เดิมได้รับ commit `6d14539` (ตรวจ `/api/health` เมื่อ 2026-10-23 16:07: status ok, ready, annualHistory 109 symbols; uptime 25s) — งาน low-yield guard/Graham number/unfunded-payout scenario ถูก push ขึ้น `origin/main` เป็น `ec6a587` แล้ว และ `/api/health` หลัง push ยัง `status=ok`, `ready=true` (uptime 527s แสดงว่า instance เพิ่งเริ่ม) แต่ route/static บน deploy ต้องยืนยันตัวตน จึงยังตรวจ UI จากภายนอกไม่ได้; ตรวจ UI บน local 8788 แล้วว่า BDMS แสดง base guard + scenario 18.72 + Flat 5% 26.25  
 เกณฑ์: ความถูกต้องระดับเงินจริง — ไม่มีข้อมูลดีกว่าข้อมูลผิด, ห้ามแทนข้อมูลหายด้วย 0, ห้ามใช้ข้อมูลอนาคตในอดีต, ห้ามใช้สูตรเดียวกับทุกบริษัทโดยไม่ตรวจความเหมาะสม
@@ -220,7 +220,7 @@
 | SET100 | (แล้วแต่การรันเดิม) | PRM, PTTEP, MEGA (3) | KAMART/TTW ไม่อยู่ใน SET100 |
 | MC | อยู่ในข่ายคะแนนสูง | หลุด | payout 100% เกิน ceiling (ไม่ใช่ unknown) |
 
-**จุดตัดสินใจสำหรับผู้ใช้**: TVO อยู่ที่ 80.08% ซึ่งเกิน ceiling 80% เพียง 0.08 pp หากต้องการให้ TVO อยู่ในพอร์ต "นอนหลับสบาย" ต้องแก้เกณฑ์เป็น ≥80.1% หรือเปลี่ยนนโยบาย — รายงานนี้ **ไม่แก้เกณฑ์ให้เอง** เพราะเป็นการเปลี่ยนคำนิยามความเสี่ยง
+**จุดตัดสินใจสำหรับผู้ใช้**: TVO อยู่ที่ 80.08% ซึ่งเกิน ceiling 80% เพียง 0.08 pp ผู้ใช้ตัดสินใจเมื่อ 2026-10-24 ให้ **คง ceiling 80%** ตามนโยบายความเสี่ยงเดิม; TVO จึงยังหลุด income preset และไม่มีการแก้เกณฑ์ในรอบนี้
 
 ### 4.4 Screen 8 หลักทรัพย์ (หลังแก้)
 
@@ -266,7 +266,7 @@
 | Unfunded-payout scenario (BDMS) | P2 | **PASS (labelled; not preset)** |
 | Graham number cross-check | P2 | **PASS (stock detail)** |
 | DCF / Graham growth formula / sector model | RISK | **OPEN** |
-| TVO payout 80.08% vs 80% ceiling | DECISION | **OPEN (ceiling unchanged)** |
+| TVO payout 80.08% vs 80% ceiling | DECISION | **KEEP 80% — TVO excluded from income preset** |
 | ROE attributable | P2 | PASS (fixed) |
 | Negative equity | P2 | PASS (fixed) |
 | EPS/NI conflicts | P2 | PASS live/backtest; DELTA file open |
@@ -275,3 +275,16 @@
 | Corporate actions | P2 | BANPU PASS; GULF/BPP open |
 | Source differences | P2 | PASS (explained) |
 | UI labels | P3 | PASS (fixed) |
+
+---
+
+## 7. แผงสถานะความสดของข้อมูล (2026-10-24)
+
+เพิ่มแผง **Data status** ในหน้า MCP เพื่อให้ตรวจได้ว่าข้อมูลแต่ละแหล่งเพิ่งรีเฟรชเมื่อไร ไม่ใช่ดูแค่ไฟเขียว:
+
+- ครอบคลุม 9 แหล่ง: server, MCP (ping/queue/tools), quotes, candles, fundamentals, annual history, daily history, screener และ rule edges
+- ทุกการ์ดแสดงจุดสถานะ + เวลาสัมพัทธ์ + เวลาจริง และรายละเอียด cache/TTL/จำนวนแถวที่เกี่ยวข้อง
+- **เขียว = เพิ่งรีเฟรช** ไม่ได้หมายความว่าข้อมูลต้นทางเป็นเรียลไทม์; ราคาที่ดีเลย์ยังต้องอ่านเวลากำกับ
+- `/api/health?deep=1` เพิ่ม `server` (`now`/`today`/`commit`), `candles`, `backtest`, `screener`; `fundamentals` มี `lastFetchAt`/`lastSuccessAt`/`lastErrorAt`/`ttlMs`; annual history มี `generatedAt`/`source`/`years`; history มี `lastWriteAt`
+- รีเฟรชทุก 20 วินาทีขณะเปิด dialog และหยุดเมื่อปิด
+- ทดสอบด้วย `scripts/verify-status.mjs` ผ่าน `npm test`

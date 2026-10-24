@@ -33,12 +33,12 @@ import { WorkspaceStore, DEFAULT_SETTINGS } from './workspace-store.js';
 import { WatchlistStore, MAX_SYMBOLS_PER_LIST } from './watchlist-store.js';
 import { TrackedStore } from './tracked-store.js';
 import { runScreen, loadDetail, UNIVERSES, SET100 } from './screener-run.js';
-import { runBacktest, initRuleEdges } from './backtest.js';
+import { runBacktest, initRuleEdges, edgeStatus } from './backtest.js';
 import { constituents, refresh as refreshConstituents } from './setindex.js';
 import { INDICATORS, INDICATOR_GROUPS, defaultParams, sanitizeParams } from './indicator-catalog.js';
 import {
   TIMEFRAMES, DEFAULT_TIMEFRAME, getCandles, getCandlesBatch,
-  getQuotes, searchSymbols, availableCountries, clearCaches,
+  getQuotes, searchSymbols, availableCountries, clearCaches, candleStatus,
 } from './market.js';
 import {
   DEFAULT_EXCHANGES, normalizeSymbol, toYahooSymbol, bareSymbol, uniqueSymbols,
@@ -46,6 +46,18 @@ import {
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
+
+// What the status panel needs to answer "which build is this, and when did it
+// start?" Render supplies the commit; a laptop usually does not, so it is
+// allowed to be null rather than guessed.
+const STARTED_AT = new Date();
+const BUILD_COMMIT = process.env.RENDER_GIT_COMMIT ?? process.env.GIT_COMMIT ?? null;
+
+/** Local calendar day in the server's timezone; the history file uses the same. */
+const localDay = (d = new Date()) => {
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
 
 const PORT = Number(process.env.PORT ?? 8787);
 // PaaS platforms (Render, Railway, Fly) hand us PORT and expect the socket on
@@ -223,12 +235,23 @@ app.get('/api/health', asyncRoute(async (req, res) => {
     // "ready" means the socket is up and the app can serve the board. The MCP
     // may still be starting; candles load without it, quotes do not.
     ready: true,
+    server: {
+      now: new Date().toISOString(),
+      today: localDay(),
+      startedAt: STARTED_AT.toISOString(),
+      uptimeSeconds: Math.round(process.uptime()),
+      commit: BUILD_COMMIT,
+      node: process.version,
+    },
     mcp: deep ? { ...mcp.status(), ping: await mcp.ping() } : mcp.status(),
     fundamentals: fundamentals.status(),
     annualHistory: finnomenaStatus(),
     history: history.summary(),
     watchlists: watchlists.summary(),
     realtime: hub.status(),
+    candles: candleStatus(),
+    backtest: edgeStatus(),
+    screener: lastScreen,
     caches: { cleared: false },
   });
 }));
@@ -478,6 +501,11 @@ app.post('/api/fundamentals/cache/clear', (_req, res) => {
 /** Upper bound on one run: every symbol costs three upstream requests. */
 const MAX_SCREEN_SYMBOLS = 120;
 
+// The last completed screen. It is process-local and deliberately not a cache:
+// it only tells the MCP status panel when the visible table was produced and
+// what it covered. A deploy or restart clears it.
+let lastScreen = null;
+
 /** Resolve a named universe to symbols, or null when the id is unknown. */
 function universeSymbols(id) {
   if (!id) return null;
@@ -580,12 +608,25 @@ app.post('/api/screener/run', asyncRoute(async (req, res) => {
       .map((f) => ({ field: f.field, op: String(f.op ?? '>='), value: Number(f.value) }))
     : null;
 
+  const startedAt = Date.now();
   const result = await runScreen(symbols, {
     preset,
     overrides,
     sectors: await sectorFor(symbols),
     filters,
   });
+  lastScreen = {
+    at: new Date().toISOString(),
+    day: localDay(),
+    preset,
+    universe: body.universe ? String(body.universe) : null,
+    symbols: symbols.length,
+    screened: result.meta?.screened ?? null,
+    matched: result.matched ?? null,
+    errors: result.errors?.length ?? 0,
+    tookMs: result.meta?.tookMs ?? Date.now() - startedAt,
+    asOf: result.meta?.asOf ?? null,
+  };
   res.json(result);
 }));
 

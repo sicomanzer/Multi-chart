@@ -787,6 +787,104 @@ select {
 .mcp-actions { display: flex; align-items: center; gap: 10px; }
 .mcp-output { flex: 1; min-height: 220px; }
 
+/* Data-status panel: nine small cards above the tool runner. The dot is the
+   quick read; the timestamp underneath is the honest one. */
+.mcp-status {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-tile);
+}
+
+.mcp-status__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.mcp-status__head .section__hint { margin: 0; }
+.mcp-status__actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.mcp-status__updated { font: 10px var(--mono); color: var(--text-faint); }
+
+.mcp-status__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mcp-status__card {
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+
+.mcp-status__card.is-on { border-color: rgba(38, 166, 154, 0.28); }
+.mcp-status__card.is-warn { border-color: rgba(247, 166, 0, 0.38); }
+.mcp-status__card.is-off { border-color: rgba(239, 83, 80, 0.38); }
+
+.mcp-status__card-head { display: flex; align-items: center; gap: 6px; min-width: 0; }
+
+.mcp-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--text-faint);
+}
+
+.mcp-status__dot.is-on { background: var(--up); box-shadow: 0 0 6px rgba(38, 166, 154, 0.8); }
+.mcp-status__dot.is-warn { background: var(--warn); box-shadow: 0 0 6px rgba(247, 166, 0, 0.5); }
+.mcp-status__dot.is-off { background: var(--down); }
+.mcp-status__dot.is-idle { background: var(--text-faint); }
+
+.mcp-status__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+.mcp-status__state {
+  margin-left: auto;
+  font: 9px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-faint);
+}
+
+.mcp-status__card.is-on .mcp-status__state { color: var(--up); }
+.mcp-status__card.is-warn .mcp-status__state { color: var(--warn); }
+.mcp-status__card.is-off .mcp-status__state { color: var(--down); }
+
+.mcp-status__value {
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 13px var(--mono);
+  color: var(--text);
+}
+
+.mcp-status__detail {
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--text-faint);
+  overflow-wrap: anywhere;
+}
+
+.mcp-status__note { margin: 8px 0 0; font-size: 10px; color: var(--text-faint); }
+.mcp-status.is-loading .mcp-status__grid { opacity: 0.55; transition: opacity 0.15s; }
+
 /* ── Toasts ────────────────────────────────────────────────────────────────── */
 
 .toast-root {
@@ -827,12 +925,16 @@ select {
   .board, .board.is-fit { --columns: 2; }
   .mcp-layout { grid-template-columns: 1fr; }
   .mcp-tools { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+  .mcp-status__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 680px) {
   .board, .board.is-fit { --columns: 1; }
   .topbar { gap: 8px; }
   .topbar__group--right { margin-left: 0; }
+  .mcp-status__grid { grid-template-columns: 1fr; }
+  .mcp-status__head { flex-direction: column; }
+  .mcp-status__actions { justify-content: flex-start; }
 }
 
 ::-webkit-scrollbar { width: 9px; height: 9px; }

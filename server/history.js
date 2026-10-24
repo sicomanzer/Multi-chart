@@ -44,6 +44,7 @@ export class FundamentalsHistory {
     this.symbols = new Set();
     this.loaded = false;
     this.lastError = null;
+    this.lastWriteAt = null;
     this.appended = 0;
     this.skipped = 0;
   }
@@ -162,6 +163,7 @@ export class FundamentalsHistory {
       await mkdir(dirname(this.filePath), { recursive: true });
       await this._guardSize();
       await appendFile(this.filePath, `${lines.join('\n')}\n`, 'utf8');
+      this.lastWriteAt = Date.now();
     } catch (err) {
       // Recording is a background nicety; a failed write must not take the
       // board down, and the in-memory copy would lie about what is on disk.
@@ -236,6 +238,7 @@ export class FundamentalsHistory {
       since: sorted[0] ?? null,
       lastDate: sorted.at(-1) ?? null,
       perSymbol,
+      lastWriteAt: this.lastWriteAt,
       lastError: this.lastError,
     };
   }

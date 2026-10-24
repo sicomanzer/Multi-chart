@@ -42,6 +42,7 @@ class TtlCache {
     this.maxEntries = maxEntries;
     this.map = new Map();
     this.inflight = new Map();
+    this.lastSetAt = null;
   }
 
   get(key) {
@@ -60,7 +61,17 @@ class TtlCache {
       this.map.delete(oldest);
     }
     this.map.set(key, { value, expires: Date.now() + ttlMs });
+    this.lastSetAt = Date.now();
     return value;
+  }
+
+  stats() {
+    return {
+      entries: this.map.size,
+      ttlMs: this.ttlMs,
+      inFlight: this.inflight.size,
+      lastSetAt: this.lastSetAt,
+    };
   }
 
   /** Coalesce concurrent misses for the same key into one upstream request. */
@@ -82,6 +93,7 @@ class TtlCache {
   clear() {
     this.map.clear();
     this.inflight.clear();
+    this.lastSetAt = null;
   }
 }
 
@@ -89,6 +101,16 @@ class TtlCache {
 // within a session. Two caches, so a 20-chart daily grid stays cache-friendly.
 const intradayCache = new TtlCache(20_000);
 const dailyCache = new TtlCache(60_000);
+
+// Last successful Yahoo candle fetch. The caches answer most board loads, so
+// the cache size alone cannot tell a reader whether the series was fetched a
+// minute ago or before the last deploy. This is what the MCP status panel shows.
+const candleActivity = {
+  lastFetchAt: null,
+  lastSymbol: null,
+  lastTimeframe: null,
+  fetchCount: 0,
+};
 
 /** Seconds-per-bar for each timeframe (used to align 4h from 60m bars). */
 const TIMEFRAME_SECONDS = Object.fromEntries(
@@ -246,7 +268,7 @@ export async function getCandles(rawSymbol, tfInput = DEFAULT_TIMEFRAME, { range
     if (want4h) bars = aggregate(bars, TIMEFRAME_SECONDS['4h'], result.meta?.exchangeTimezoneName);
 
     const meta = result.meta ?? {};
-    return {
+    const payload = {
       symbol,
       yahooSymbol,
       exchange: String(symbol.split(':')[0]),
@@ -269,6 +291,11 @@ export async function getCandles(rawSymbol, tfInput = DEFAULT_TIMEFRAME, { range
       },
       fetchedAt: Date.now(),
     };
+    candleActivity.lastFetchAt = payload.fetchedAt;
+    candleActivity.lastSymbol = symbol;
+    candleActivity.lastTimeframe = tf;
+    candleActivity.fetchCount += 1;
+    return payload;
   });
 
   // Defensive copy: callers (and the WebSocket fan-out) mutate nothing, but the
@@ -460,4 +487,15 @@ export function availableCountries() {
 export function clearCaches() {
   intradayCache.clear();
   dailyCache.clear();
+}
+
+/** Cache and last-fetch facts for the MCP data-status panel. */
+export function candleStatus() {
+  return {
+    ...candleActivity,
+    caches: {
+      intraday: intradayCache.stats(),
+      daily: dailyCache.stats(),
+    },
+  };
 }

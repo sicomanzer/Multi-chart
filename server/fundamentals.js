@@ -86,6 +86,9 @@ export class FundamentalsClient extends EventEmitter {
     this.cache = new Map(); // symbol -> { value, expires }
     this.stopping = false;
     this.lastError = null;
+    this.lastFetchAt = null;
+    this.lastSuccessAt = null;
+    this.lastErrorAt = null;
     this.restartTimer = null;
     this.stderr = [];
   }
@@ -100,8 +103,12 @@ export class FundamentalsClient extends EventEmitter {
       ready: this.ready,
       pid: this.child?.pid ?? null,
       cached: this.cache.size,
+      ttlMs: this.config.ttlMs,
       queued: this.queue.length,
       inFlight: this.inFlight,
+      lastFetchAt: this.lastFetchAt,
+      lastSuccessAt: this.lastSuccessAt,
+      lastErrorAt: this.lastErrorAt,
       lastError: this.lastError,
       stderr: this.stderr.slice(-3),
     };
@@ -298,9 +305,12 @@ export class FundamentalsClient extends EventEmitter {
     }
     if (stale.length === 0) return result;
 
+    this.lastFetchAt = Date.now();
     try {
       await this.ensureStarted();
       const raw = await this._enqueue(() => this._send({ symbols: stale, metrics: requested }));
+      this.lastSuccessAt = Date.now();
+      this.lastError = null;
 
       for (const [symbol, value] of Object.entries(raw ?? {})) {
         this.cache.set(symbol, { value, expires: Date.now() + this.config.ttlMs });
@@ -313,6 +323,7 @@ export class FundamentalsClient extends EventEmitter {
       result.missing = wanted.filter((s) => !result.data[s]);
     } catch (err) {
       this.lastError = err.message;
+      this.lastErrorAt = Date.now();
       // A sidecar failure must never take the board down: report it and let the
       // tiles render without fundamentals.
       result.error = err.message;

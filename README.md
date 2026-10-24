@@ -203,6 +203,16 @@ results to each browser over SSE. The interval is per client and configurable
 (5 s … 2 min); a hidden tab backs off automatically. The last price updates the
 forming candle in place, so intraday boards move without a refetch.
 
+**Data status panel.** The `MCP` dialog opens with a status grid covering the
+server, MCP connection and ping, quote stream, candle cache, fundamentals
+sidecar, ten-year annual history, daily history, last screener run and the
+saved rule-edge measurement. Each card shows a dot, a relative time and the
+absolute clock (plus cache TTLs or row counts where they matter), so "green"
+means *the source was refreshed recently*, not that a delayed upstream price is
+real-time. The panel refreshes every 20 seconds while the dialog is open and
+stops when it closes. It reads `GET /api/health?deep=1`; the same response can
+be inspected from the command line.
+
 **Zoom the whole board at once.** The `−` `+` `⤢` cluster in the toolbar, or the
 `+` / `-` / `0` keys, zooms every chart simultaneously. Each click multiplies
 every chart's candle width by 1.25, so "in" means fewer, wider bars — the same
@@ -705,7 +715,7 @@ non-payer and a broken one.
 | Route | Purpose |
 | --- | --- |
 | `GET /api/meta` | timeframes, exchanges, default settings |
-| `GET /api/health` | uptime, MCP status, live round-trip ping |
+| `GET /api/health` | uptime, MCP status, cache/freshness facts; `?deep=1` adds the live MCP round-trip ping |
 | `GET /api/indicators` | indicator catalog (drives every editor form) |
 | `GET /api/symbols?q=&country=` | screener-backed symbol search |
 | `GET /api/symbol/resolve?symbol=` | normalise `CPF` / `SET:CPF` / `CPF.BK` |
@@ -810,6 +820,7 @@ public/
   js/dialogs/           indicator, chart, board and MCP dialogs
 scripts/
   verify-indicators.mjs numeric check of all 23 indicators (npm run verify)
+  verify-status.mjs     contract check for the MCP data-status panel
 data/workspaces.json    saved boards (created on first run)
 ```
 

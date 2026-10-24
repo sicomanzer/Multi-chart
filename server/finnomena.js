@@ -104,6 +104,7 @@ async function getJson(url) {
 
 let dataset = null;
 let datasetPath = null;
+let datasetMeta = null;
 let datasetInFlight = null;
 
 /**
@@ -181,12 +182,19 @@ async function loadDataset() {
         }
         dataset = map;
         datasetPath = path;
+        datasetMeta = {
+          generatedAt: typeof raw?.generatedAt === 'string' ? raw.generatedAt : null,
+          source: typeof raw?.source === 'string' ? raw.source : null,
+          years: Number.isFinite(raw?.years) ? raw.years : null,
+          version: raw?.version ?? null,
+        };
         return dataset;
       } catch {
         // Try the next candidate.
       }
     }
     dataset = new Map();
+    datasetMeta = null;
     return dataset;
   })().finally(() => { datasetInFlight = null; });
   return datasetInFlight;
@@ -409,6 +417,10 @@ export function finnomenaStatus() {
       symbols: dataset?.size ?? 0,
       loaded: dataset != null,
       searched: datasetPaths(),
+      generatedAt: datasetMeta?.generatedAt ?? null,
+      source: datasetMeta?.source ?? null,
+      years: datasetMeta?.years ?? null,
+      version: datasetMeta?.version ?? null,
     },
     live: {
       ok: live.ok,
@@ -438,6 +450,7 @@ export function clearFinnomenaCache() {
   summaryInFlight.clear();
   dataset = null;
   datasetPath = null;
+  datasetMeta = null;
   live.ok = null;
   live.error = null;
   live.blockedUntil = 0;
