@@ -116,6 +116,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; }
 
 .topbar__brand h1 { font-size: 13px; letter-spacing: 0.2px; }
 .topbar__brand p { margin: 1px 0 0; font-size: 11px; color: var(--text-dim); }
+.mobile-menu-toggle { display: none; }
 
 .topbar__group { display: flex; align-items: center; gap: 4px; }
 .topbar__group--right { margin-left: auto; gap: 6px; }
@@ -1577,3 +1578,31 @@ select {
 .scr-band__levels { width: 100%; border-collapse: collapse; font-size: 10px; font-family: var(--mono); }
 .scr-band__levels td { padding: 1px 0; color: var(--text-dim); }
 .scr-band__levels td:last-child { text-align: right; color: var(--text); }
+
+/* Phone navigation: brand, primary actions, picker, then a scrollable timeframe strip. */
+@media (max-width: 680px) {
+  body { height: 100dvh; }
+  .topbar { gap: 0; max-height: 55dvh; overflow-y: auto; }
+  .topbar__row:first-child { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 10px; }
+  .topbar__brand { min-width: 0; margin: 0; }
+  .topbar__brand h1 { font-size: 14px; }
+  .topbar__brand p { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mobile-menu-toggle { display: block; min-height: 38px; }
+  .topbar__group--actions { grid-column: 1 / -1; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0; }
+  .topbar__group--actions .btn + .btn { margin-left: 0; }
+  .topbar__group--actions > .btn { min-height: 38px; padding: 7px 4px; font-size: 12px; }
+  .topbar:not(.is-tools-open) .topbar__group--actions > :not(#addChartBtn):not(#watchlistBtn):not(#screenerBtn):not(#workspaceSelect):not(#statusPill):not(#oversoldBtn) { display: none; }
+  #workspaceSelect { grid-column: 1 / 3; width: 100%; min-width: 0; max-width: none; height: 38px; order: -2; }
+  #statusPill { grid-column: 3; order: -1; justify-content: center; min-width: 0; padding: 6px; font-size: 10px; white-space: nowrap; }
+  #oversoldBtn { grid-column: 1 / -1; }
+  #oversoldBtn[hidden], #filterChip[hidden] { display: none; }
+  .topbar.is-tools-open .ws-actions { grid-column: 1 / -1; flex-wrap: wrap; }
+  .topbar__row--tools { display: block; padding: 6px 10px; overflow: hidden; }
+  #timeframeBar { overflow-x: auto; gap: 3px; width: 100%; padding-bottom: 2px; }
+  #timeframeBar .tf-btn { flex: 1 0 34px; min-height: 34px; padding: 6px 4px; }
+  .topbar__hint { display: none; }
+  .statusbar { gap: 8px; padding: 6px 10px; min-width: 0; font-size: 10px; white-space: nowrap; }
+  #statIndicators, #statLayout, #statSource { display: none; }
+  .board { min-height: 0; padding: 6px; gap: 8px; }
+  .modal { max-width: calc(100vw - 16px); max-height: 90dvh; }
+}

@@ -167,6 +167,8 @@ async function boot() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => board.applyLayout(), 150);
   });
+  // Header height changes when phone tools expand or an RSI alert appears.
+  new ResizeObserver(() => board.applyLayout()).observe(document.querySelector('.topbar'));
 
   // Persist on close so an in-flight edit is never lost to a refresh. `keepalive`
 // lets the request finish while the page goes away.
@@ -182,6 +184,13 @@ async function boot() {
 }
 
 function wireTopbar(board) {
+  const mobileMenu = document.getElementById('mobileMenuBtn');
+  mobileMenu.addEventListener('click', () => {
+    const open = mobileMenu.getAttribute('aria-expanded') !== 'true';
+    mobileMenu.setAttribute('aria-expanded', String(open));
+    document.querySelector('.topbar').classList.toggle('is-tools-open', open);
+    board.applyLayout();
+  });
   // Timeframe buttons, driven by /api/meta.
   for (const tf of board.meta.timeframes) {
     const btn = document.createElement('button');
