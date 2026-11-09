@@ -15,6 +15,7 @@ import { EventEmitter } from 'node:events';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { existsSync } from 'node:fs';
+import { getSetFundamentals } from './set-fundamentals.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SIDECAR = join(HERE, 'fundamentals.py');
@@ -289,9 +290,29 @@ export class FundamentalsClient extends EventEmitter {
   get(symbols, options = {}) {
     const key = JSON.stringify([[...new Set(symbols)].sort(), [...(options.metrics ?? DEFAULT_METRICS)].sort(), Boolean(options.refresh)]);
     if (this.requests.has(key)) return this.requests.get(key);
-    const task = this._get(symbols, options).finally(() => this.requests.delete(key));
+    const task = this._getSources(symbols, options).finally(() => this.requests.delete(key));
     this.requests.set(key, task);
     return task;
+  }
+
+  async _getSources(symbols, options) {
+    const wanted = [...new Set(symbols.map(symbol => String(symbol).toUpperCase()))];
+    // Empty metrics is the existing sector-only lookup, not a ratio request.
+    const set = options.metrics?.length === 0 ? [] : wanted.filter(symbol => symbol.startsWith('SET:') && !symbol.includes('^'));
+    if (!set.length) return this._get(wanted, options);
+    const other = wanted.filter(symbol => !set.includes(symbol));
+    this.lastFetchAt = Date.now();
+    const official = await getSetFundamentals(set, options);
+    this.lastError = official.error ?? null;
+    this.retryAfter = official.retryAfter ?? 0;
+    if (official.error) this.lastErrorAt = Date.now();
+    else this.lastSuccessAt = Date.now();
+    if (!other.length) return official;
+    const rest = await this._get(other, options);
+    return { ...official, data: { ...official.data, ...rest.data },
+      cached: [...official.cached, ...rest.cached], fetched: [...official.fetched, ...rest.fetched],
+      missing: [...official.missing, ...rest.missing], source: 'set.or.th + tradingview-screener',
+      error: official.error ?? rest.error, retryAfter: official.retryAfter ?? rest.retryAfter };
   }
 
   seedHistory(points) {

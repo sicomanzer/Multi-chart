@@ -23,6 +23,7 @@ const PORT = Number(process.env.TEST_PORT ?? 8799);
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const SUITES = [
+  { name: 'SET ratios', file: 'verify-set-ratios.mjs', needsServer: false },
   { name: 'units', file: 'verify-units.mjs', needsServer: false },
   { name: 'screener', file: 'verify-screener.mjs', needsServer: true },
   { name: 'status', file: 'verify-status.mjs', needsServer: true },

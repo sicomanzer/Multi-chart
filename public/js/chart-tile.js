@@ -406,7 +406,8 @@ export class ChartTile {
     const parts = metrics.map((key) => {
       const entry = data[key];
       const label = this.metricLabels?.[key]?.label ?? key.toUpperCase();
-      const title = [label, this.metricLabels?.[key]?.hint, data.stale ? t('tile.cachedRatios', { date: data.asOf ?? '—' }) : null, entry?.value == null ? t('tile.notReported') : null]
+      const date = ['de', 'roe', 'roa', 'currentRatio', 'quickRatio'].includes(key) ? data.financialAsOf : data.asOf;
+      const title = [label, data.source === 'set.or.th' ? `SET · ${date ?? '—'}${key === 'de' ? ' · total liabilities / equity' : ''}` : this.metricLabels?.[key]?.hint, data.stale ? t('tile.cachedRatios', { date: date ?? '—' }) : null, entry?.value == null ? t('tile.notReported') : null]
         .filter(Boolean).join(' · ');
       const tone = entry?.value == null ? '' : entry.kind === 'percent' ? 'is-up' : '';
       return { key, html: `<span class="tile__metric" title="${escapeHtml(title)}">`

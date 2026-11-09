@@ -9,6 +9,24 @@
  * deciding what to buy.
  */
 import { loadFinancials } from './fin.js';
+import { getSetFundamentals } from './set-fundamentals.js';
+
+async function applyOfficialRatios(row) {
+  if (!row.symbol?.startsWith('SET:')) return row;
+  const result = await getSetFundamentals([row.symbol]);
+  const official = result.data[row.symbol];
+  // Headline ratios use SET's published basis. Valuation models and historical
+  // quality checks continue to use their explicitly modelled statement series.
+  row.pe = official?.pe?.value ?? null;
+  row.pbv = official?.pbv?.value ?? null;
+  row.de = official?.de?.value ?? null;
+  row.dividendYield = official?.dividendYield?.value == null ? null : official.dividendYield.value / 100;
+  row.ratioSource = 'set.or.th';
+  row.ratioAsOf = official?.asOf ?? null;
+  row.ratioFinancialAsOf = official?.financialAsOf ?? null;
+  row.ratiosStale = Boolean(official?.stale);
+  return row;
+}
 import {
   AAA_YIELD,
   AAA_YIELD_ASOF,
@@ -546,7 +564,7 @@ export async function loadDetail(tvSymbol, options = {}) {
   const fin = await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null });
   // The same history the charts draw also judges the growth rules, so the
   // scorecard in the deep dive and the score in the table agree.
-  const row = buildRow(fin, { ...options, history });
+  const row = await applyOfficialRatios(buildRow(fin, { ...options, history }));
   // Where the name sits against its peers, from the last screen — a percentile
   // needs the other names, and screening the universe again for one company
   // would cost a minute.
@@ -650,7 +668,7 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
         loadFinancials(symbol, { quote: quotes.get(toYahooSymbol(symbol)) ?? null }),
         annualHistory(symbol, { live: false }),
       ]);
-      return { ok: true, row: buildRow(fin, { overrides, asOf, history }) };
+      return { ok: true, row: await applyOfficialRatios(buildRow(fin, { overrides, asOf, history })) };
     } catch (err) {
       return {
         ok: false,

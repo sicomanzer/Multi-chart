@@ -1,0 +1,1810 @@
+{
+  "source": "set.or.th",
+  "checkedAt": "2026-11-09T09:01:49.262Z",
+  "rows": [
+    {
+      "symbol": "SET:KCE",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 58.25,
+      "sector": "ETRON",
+      "fetchedAt": "2026-11-09T09:06:37.195Z",
+      "pe": {
+        "value": 61.58,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 5.4,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.06,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.4547607553501732,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 8.673517790915021,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 7.267586792679103,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 2.0500340962306742,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 1.0527708211055775,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:PTT",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 38.25,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 8.77,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.91,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.01,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.9786252577842371,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 10.621455828356169,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 8.527719609912033,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.5283730820197017,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.9341714722872809,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TRUE",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 12.9,
+      "sector": "ICT",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 18.72,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 5.49,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.4,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 6.9253313243992,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 29.862678357699167,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 6.317308195353969,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.41431871240538176,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.32054771332912196,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:CPALL",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 45.5,
+      "sector": "COMM",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 13.3,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.87,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 3.63,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.8756582685023042,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 22.729908891423893,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 5.925179829140247,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.554509519574554,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.16590138738644225,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:KTB",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 42,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 11.76,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.3,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.36,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 7.148536655157972,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 11.127613810639915,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.742958225700064,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 338,
+      "sector": "ICT",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 18.28,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 25.75,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 10.15,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 9.95477234992673,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 83.16598675272846,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 17.583687116431502,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.3194880324955848,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.2499673009279519,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 142.5,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 7.94,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.99,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.14,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.8096504308266455,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 13.139137979301982,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 14.695831874502687,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.214961402479205,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.9789398798282815,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:HANA",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 37.5,
+      "sector": "ETRON",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 56.53,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.25,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.67,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.21877100781144748,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 2.1975124709181535,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.0047065263084023,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 4.959946146645209,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.9008475592439494,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:BDMS",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 19.9,
+      "sector": "HELTH",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 20.65,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 3.06,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.03,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.46912547446500164,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 14.959514082188084,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 12.770005361173757,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.848834382005505,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.6419064625331535,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:AOT",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 59.75,
+      "sector": "TRANS",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 45.71,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 6.36,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 1.36,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.517940311723735,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 14.303940169538947,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 12.635168015053276,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.905598494915106,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 1.853930770259406,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:SCB",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 149,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 11.53,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.04,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 7.57,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 6.555653437124198,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 9.042667766840006,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.533515476905247,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TTB",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 2.66,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 10.97,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.37,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 6.246112741264587,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 9.00029088451693,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.3068143072955225,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:MINT",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 21.3,
+      "sector": "TOURISM",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 12.66,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.45,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 3.3,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 3.09028744477578,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 11.138680294580338,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 6.355878140742634,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.7112149411249502,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.487336392297398,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 6.2,
+      "sector": "COMM",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 13.49,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 3.2,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.16,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.6298098417179803,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 23.929300704742058,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 12.103044248174047,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.7904152844974245,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.13989528387450811,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TISCO",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 123.5,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 14.39,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.33,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.28,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 5.828464574530875,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 16.33665901658724,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 4.4349269286186015,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 4.78,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 21.8,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.76,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.43,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.2093600568433398,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 13.286080432570184,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 8.797670894942936,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.2033709736272404,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.6228758770027126,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:WHA",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 4.88,
+      "sector": "PROP",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 17.17,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.95,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.32,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.5845431854481697,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 11.714471360542166,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 6.29402353722779,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.3887219045110688,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.23318555704620794,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:CPF",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 20.1,
+      "sector": "FOOD",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 10.77,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.66,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.27,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 2.3312875642624826,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 6.164662838172318,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 5.176919144580331,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.7469712254588314,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.2533244893832894,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:BEM",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 6.15,
+      "sector": "TRANS",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 24.22,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.48,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.44,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 3.6947127977211656,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 10.580428902683138,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 4.293113671438393,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.6805016978057972,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.06042612154870265,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:AMATA",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 26.25,
+      "sector": "PROP",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 5.87,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.17,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.19,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.2659995275067142,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 21.46208515958683,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 10.405620397056628,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.3016582524979388,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.1638418721181966,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TU",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 13,
+      "sector": "FOOD",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 10.58,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.09,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.38,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.9934296491051733,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 10.449422045582523,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 5.216533036916536,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.4449734268409855,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.5753767019246742,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TLI",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 11.4,
+      "sector": "INSUR",
+      "fetchedAt": "2026-11-09T09:06:37.196Z",
+      "pe": {
+        "value": 10.76,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.95,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.26,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 3.4222969940095473,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 8.551420342213643,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.37907973463979,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:ICHI",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 14.4,
+      "sector": "FOOD",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 14.73,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 3.39,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 7.64,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.2458021141739437,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 22.638190722955965,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 19.016226573241962,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 3.105862543011234,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 2.357820926846331,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:MEGA",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 35.25,
+      "sector": "COMM",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 14.03,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.97,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.54,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.5493520939510659,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 21.59032741661062,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 18.892152974340846,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 2.19883011944771,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 1.4259012728809881,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:MC",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 11,
+      "sector": "COMM",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 12.43,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.36,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 8,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.4922955194863607,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 18.914685426221617,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 16.466467939530183,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 3.9141457891506426,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.6732671638890467,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:INETREIT",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 12.5,
+      "sector": "PF&REIT",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.11,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.91,
+        "kind": "percent"
+      },
+      "de": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": null,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": null,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:CPNREIT",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 13.2,
+      "sector": "PF&REIT",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.14,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.25,
+        "kind": "percent"
+      },
+      "de": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": null,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": null,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TTW",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 10,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 12.74,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.38,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.38055454028577895,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 19.127920970815364,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 18.12294034918478,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.5237880447928969,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 1.4943553550847337,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:KAMART",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 6.5,
+      "sector": "COMM",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 12.62,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.36,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.81,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.4191850043407659,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 18.809973614145132,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 16.426217747687655,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.8383002344264976,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.596360194083333,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TACC",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 6.4,
+      "sector": "FOOD",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 11.07,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 4.52,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.49,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.607151345406418,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 43.27782015085363,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 33.624910904066155,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 2.5080811558201646,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 1.4743052321068157,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:HTC",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 15.3,
+      "sector": "FOOD",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 11.31,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.42,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.47,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.7520672258183245,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 12.736279808744506,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 9.55322534690965,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 0.9947282758199102,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.5001153834398019,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:BKIH",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 398,
+      "sector": "INSUR",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 10.55,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.26,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.4,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.9975275302003942,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 13.285056525009214,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 7.811226452667958,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TOP",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 55.75,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 3.85,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.61,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 3.23,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.8597823325538942,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 17.426741573058507,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 10.4391411189468,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.5772886438874885,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.8527500503289288,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:KBANK",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 241,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 11.07,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.98,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.82,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 5.8595755279692465,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 8.907335496172513,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.386797441891218,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:BBL",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 180.5,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 8.2,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.59,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.54,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 7.053300241152402,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 7.29503378464771,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 2.454236172006087,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:BCP",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-09-30",
+      "price": 43.25,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 2.08,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.73,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.44,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 2.53449881666209,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 42.265080754295255,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 16.712928922746872,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.1970611621187572,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.5705256212400968,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 16.9,
+      "sector": "FIN",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 8.69,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.38,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 2.03,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 2.2524444295797172,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 16.461076730325253,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 8.263351199235087,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:KKP",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 112.5,
+      "sector": "BANK",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 12.87,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 1.4,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.9,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 6.601117223917125,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 11.354213418469527,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 3.3188055044208578,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:EGCO",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 132.5,
+      "sector": "ENERG",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 131.37,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.69,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 4.91,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.2133382596838311,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 0.5155136964001612,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 3.32718099850563,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.2884462564152221,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.8712019449813444,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:KTC",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 35,
+      "sector": "FIN",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 10.71,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 2.05,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 5.06,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.430186279900077,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 20.019536199000783,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 11.902431653985515,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:LH",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 3.5,
+      "sector": "PROP",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 15.35,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.81,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 7.14,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.7046652313666846,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 5.274993819996892,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 3.3656599595531644,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.9270135862340732,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.17367713125712295,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-08-31",
+      "price": 88.75,
+      "sector": "FIN",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 7.33,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.78,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 6.27,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.9579657294623962,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 10.876739657944317,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 6.2653465551934255,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": null,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": null,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:SPALI",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 15.6,
+      "sector": "PROP",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 6.51,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.53,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 7.96,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 0.8151275070373799,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 8.376960003189964,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 6.216523851952224,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 2.7567653335680875,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.23326483799397865,
+        "kind": "ratio"
+      }
+    },
+    {
+      "symbol": "SET:SIRI",
+      "source": "set.or.th",
+      "asOf": "2026-11-06",
+      "financialAsOf": "2026-06-30",
+      "price": 1.41,
+      "sector": "PROP",
+      "fetchedAt": "2026-11-09T09:06:37.197Z",
+      "pe": {
+        "value": 5.69,
+        "kind": "ratio"
+      },
+      "pbv": {
+        "value": 0.49,
+        "kind": "ratio"
+      },
+      "dividendYield": {
+        "value": 9.16,
+        "kind": "percent"
+      },
+      "de": {
+        "value": 1.9163206753897524,
+        "kind": "ratio"
+      },
+      "roe": {
+        "value": 8.638545743078833,
+        "kind": "percent"
+      },
+      "roa": {
+        "value": 3.8768461700980428,
+        "kind": "percent"
+      },
+      "currentRatio": {
+        "value": 1.692054300411225,
+        "kind": "ratio"
+      },
+      "quickRatio": {
+        "value": 0.09620106039329245,
+        "kind": "ratio"
+      }
+    }
+  ]
+}

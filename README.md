@@ -2,6 +2,14 @@
 
 ## Latest desktop workflow
 
+- Thai stock headline P/E, P/BV, D/E and dividend yield now use SET's published
+  values directly, on both chart footers and screener rows. D/E uses SET's
+  liabilities/equity definition. Price ratios and statement ratios retain
+  their separate reference dates; they are not rebased to the live quote.
+  Official snapshots for 44 stocks provide a labelled fallback when SET is
+  unavailable. Unsupported metrics remain blank. Historical scoring and
+  valuation models retain their existing statement-based calculations.
+
 - Each visit starts with a single full-size SET index chart.
 - New views use the light theme and RSI length 5, overbought 80, oversold 20.
 - Choosing a watchlist in the board picker loads its complete symbol list into
