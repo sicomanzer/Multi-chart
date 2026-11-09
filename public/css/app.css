@@ -1250,6 +1250,7 @@ select {
 /* `hidden` is what the tile actually toggles; without this a bare `display`
    would win and the dot would never go away. */
 .tile__dot[hidden] { display: none; }
+.ws-actions[hidden] { display: none; }
 
 /* Highlight the entire header using the same RSI state as the marker. */
 .tile--oversold .tile__bar {

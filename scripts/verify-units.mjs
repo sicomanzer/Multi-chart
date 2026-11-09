@@ -63,7 +63,7 @@ check('unknown keys are dropped', !('bogus' in sanitizeParams('rsi', { bogus: 1 
 check('missing value falls back to the default',
   sanitizeParams('rsi', {}).length === defaultParams('rsi').length);
 check('float keeps its fraction', sanitizeParams('bb', { mult: 2.35 }).mult === 2.35);
-check('non-numeric falls back', sanitizeParams('rsi', { length: 'abc' }).length === 14);
+check('non-numeric falls back', sanitizeParams('rsi', { length: 'abc' }).length === 5);
 check('select rejects an unknown option', sanitizeParams('sma', { source: 'bogus' }).source === 'close');
 check('bool accepts "true"', sanitizeParams('rsi', { fillBands: 'true' }).fillBands === true);
 check('injected colour is rejected',

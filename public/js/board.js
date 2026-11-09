@@ -209,6 +209,19 @@ export class Board extends EventTarget {
     // Nothing pending: staying silent here matters. Saving unconditionally on
     // unload is what used to clobber edits made from another tab or the CLI.
     if (!this.dirty && !force) return;
+    // Navigation views live in this browser, never in the saved-board store.
+    // Only the explicit Save button promotes one into a user-owned board.
+    if (this.workspace?.viewKey && !force) {
+      const ws = this.snapshot();
+      try {
+        localStorage.setItem(`mctd:view:${ws.viewKey}`, JSON.stringify(ws));
+        this.dirty = false;
+        this.dispatchEvent(new CustomEvent('saved', { detail: ws }));
+      } catch (err) {
+        toast(t('err.saveLayout', { msg: err.message }), { type: 'error' });
+      }
+      return;
+    }
 
     /**
      * Save exactly once at a time.
@@ -228,8 +241,15 @@ export class Board extends EventTarget {
     const run = async () => {
       const ws = this.snapshot();
       if (!ws) return;
+      if (ws.viewKey) {
+        localStorage.setItem(`mctd:view:${ws.viewKey}`, JSON.stringify(ws));
+        delete ws.id;
+        delete ws.viewKey;
+        delete ws.baseRevision;
+      }
       try {
         const saved = await api.saveWorkspace(ws, { keepalive: this.unloading });
+        delete this.workspace.viewKey;
         // The server mints a new id when the board we were editing no longer
         // exists there; adopt it so the next save updates the same board.
         if (saved?.id && saved.id !== this.workspace.id) {

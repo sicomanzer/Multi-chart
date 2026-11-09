@@ -3,8 +3,11 @@
 ## Latest desktop workflow
 
 - Each visit starts with a single full-size SET index chart.
+- New views use the light theme and RSI length 5, overbought 80, oversold 20.
 - Choosing a watchlist in the board picker loads its complete symbol list into
   a separate view, preserving saved boards and per-view chart settings.
+  Navigation views store their preferences in the browser and do not create
+  saved boards. Clicking Save explicitly creates a saved board.
 - SET index candles come from TradingView (up to 1,000 bars per timeframe),
   because Yahoo's SET endpoint currently returns only a current snapshot.
   Other instruments continue to use Yahoo history. TradingView index data may

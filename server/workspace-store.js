@@ -19,7 +19,7 @@ const MAX_WORKSPACES = 40;
 const SAVE_DEBOUNCE_MS = 400;
 
 export const DEFAULT_SETTINGS = {
-  theme: 'dark',
+  theme: 'light',
   columns: 4,
   // 'auto'  — pick columns and row height so every chart fits the viewport
   // 'fixed' — honour `columns` and let the board scroll
@@ -224,7 +224,7 @@ export function starterWorkspace(exchange = 'SET') {
     charts: picks.map((symbol) => ({
       symbol: `${exchange}:${symbol}`,
       timeframe: '1w',
-      indicators: [{ type: 'rsi', params: { length: 14 } }],
+      indicators: [{ type: 'rsi', params: { length: 5, overbought: 80, oversold: 20 } }],
     })),
   });
 }

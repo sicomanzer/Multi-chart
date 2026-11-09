@@ -44,19 +44,28 @@ const LIST_VIEW_PREFIX = 'ws_watchlist_';
 async function symbolView(board, id, name, symbols) {
   await board.flushSave();
   const storageKey = `mctd:view:${id}`;
-  const actualId = localStorage.getItem(storageKey);
-  const saved = actualId ? await api.workspace(actualId).catch(() => null) : null;
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(storageKey)); } catch { /* old id or unavailable storage */ }
+  if (!saved || typeof saved !== 'object') saved = null;
   const settings = { ...board.meta.defaultSettings, ...(saved?.settings ?? board.workspace?.settings), layoutFit: 'auto' };
+  const migrateDefaults = saved?.defaultsVersion !== 1;
+  if (migrateDefaults) settings.theme = 'light';
   const previous = new Map((saved?.charts ?? []).map((chart) => [chart.symbol, chart]));
   const charts = symbols.map((symbol, index) => previous.get(symbol) ?? {
     id: `${id}_${index}`, symbol, timeframe: settings.defaultTimeframe,
     chartType: settings.candleStyle, indicators: board.defaultIndicatorInstances(),
   });
-  const ws = await api.saveWorkspace({ ...saved, id, name, settings, charts,
-    baseRevision: saved?.revision });
-  localStorage.setItem(storageKey, ws.id);
+  if (migrateDefaults) {
+    for (const chart of charts) {
+      for (const indicator of chart.indicators ?? []) {
+        if (indicator.type === 'rsi') Object.assign(indicator.params, { length: 5, overbought: 80, oversold: 20 });
+      }
+    }
+  }
+  const ws = { id, name, settings, charts, viewKey: id, defaultsVersion: 1 };
+  localStorage.setItem(storageKey, JSON.stringify(ws));
   if (board.filterSymbols) board.clearFilter();
-  await board.loadWorkspace(ws);
+  await board.loadWorkspace(ws, { persist: false });
   markTimeframe(ws.settings.defaultTimeframe);
 }
 
@@ -304,6 +313,11 @@ function wireTopbar(board) {
 
     el.workspaceSelect.disabled = true;
     try {
+      if (raw === HOME_ID) {
+        await symbolView(board, HOME_ID, 'SET', ['SET:^SET']);
+        await refreshWorkspaceList(board);
+        return;
+      }
       if (kind === 'watchlist') {
         const wl = await api.watchlist(id);
         const symbols = new Set(wl.symbols ?? []);
@@ -514,11 +528,15 @@ async function refreshWorkspaceList(board) {
     const watchlists = listData.watchlists ?? [];
 
     el.workspaceSelect.innerHTML = '';
+    const home = document.createElement('option');
+    home.value = HOME_ID;
+    home.textContent = 'SET';
+    home.selected = board.workspace?.viewKey === HOME_ID;
+    el.workspaceSelect.appendChild(home);
 
     const boardGroup = document.createElement('optgroup');
     boardGroup.label = t('ws.boards');
     for (const ws of workspaces) {
-      if (watchlists.some((wl) => localStorage.getItem(`mctd:view:${LIST_VIEW_PREFIX}${wl.id}`) === ws.id)) continue;
       const opt = document.createElement('option');
       opt.value = ws.id;
       opt.textContent = `${ws.name} (${ws.chartCount})`;
@@ -535,7 +553,7 @@ async function refreshWorkspaceList(board) {
         opt.value = `${WATCHLIST_PREFIX}${wl.id}`;
         opt.textContent = `${wl.name} (${wl.count})`;
         opt.selected = wl.id === board.filterListId
-          || board.workspace?.id === localStorage.getItem(`mctd:view:${LIST_VIEW_PREFIX}${wl.id}`);
+          || board.workspace?.viewKey === `${LIST_VIEW_PREFIX}${wl.id}`;
         listGroup.appendChild(opt);
       }
       el.workspaceSelect.appendChild(listGroup);
@@ -545,9 +563,11 @@ async function refreshWorkspaceList(board) {
     // focused on navigation.
     if (el.workspaceSelect.options.length > 1 || workspaces.length) {
       let actions = el.workspaceSelect.parentElement.querySelector('.ws-actions');
+      if (actions) actions.hidden = Boolean(board.workspace?.viewKey);
       if (!actions) {
         actions = document.createElement('div');
         actions.className = 'ws-actions';
+        actions.hidden = Boolean(board.workspace?.viewKey);
         actions.innerHTML = `
           <button class="btn btn--ghost" data-act="rename" title="${escape(t('ws.renameHint'))}">${escape(t('ws.rename'))}</button>
           <button class="btn btn--ghost" data-act="duplicate" title="${escape(t('ws.copyHint'))}">${escape(t('ws.copy'))}</button>
@@ -565,7 +585,7 @@ async function refreshWorkspaceList(board) {
         actions.addEventListener('click', async (e) => {
           const act = e.target.dataset?.act;
           const id = board.workspace?.id;
-          if (!act || !id) return;
+          if (!act || !id || board.workspace?.viewKey) return;
           const del = actions.querySelector('[data-act="delete"]');
           try {
             if (act === 'rename') {
