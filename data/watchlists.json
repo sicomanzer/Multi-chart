@@ -5,7 +5,7 @@
       "id": "wl_mvem5t5cme3zo",
       "name": "SET favourites",
       "createdAt": 1792375611600,
-      "updatedAt": 1792376388226,
+      "updatedAt": 1794206974265,
       "symbols": [
         "SET:TU",
         "SET:TISCO",
@@ -29,7 +29,7 @@
       "id": "wl_mvemuura2jndx",
       "name": "เล่นรอบ",
       "createdAt": 1792376780086,
-      "updatedAt": 1792377117998,
+      "updatedAt": 1794206974266,
       "symbols": [
         "SET:CPF",
         "SET:MINT",
@@ -51,6 +51,35 @@
         "SET:BDMS",
         "SET:SCB",
         "SET:KAMART"
+      ],
+      "truncated": false
+    },
+    {
+      "id": "wl_mw8xfzw8fxrps",
+      "name": "NVDR",
+      "createdAt": 1794208547960,
+      "updatedAt": 1794208547960,
+      "symbols": [
+        "SET:KBANK",
+        "SET:PTTEP",
+        "SET:TTB",
+        "SET:PTT",
+        "SET:SCB",
+        "SET:BBL",
+        "SET:KKP",
+        "SET:TISCO",
+        "SET:AEONTS",
+        "SET:KTB",
+        "SET:AMATA",
+        "SET:EGCO",
+        "SET:SPALI",
+        "SET:BCP",
+        "SET:TOP",
+        "SET:SIRI",
+        "SET:HMPRO",
+        "SET:LH",
+        "SET:TIDLOR",
+        "SET:KTC"
       ],
       "truncated": false
     }

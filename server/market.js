@@ -15,6 +15,7 @@
  *             hammering upstream.
  */
 import { normalizeSymbol, toYahooSymbol } from './symbols.js';
+import { getSetHistory } from './index-history.js';
 
 const YAHOO_CHART = 'https://query1.finance.yahoo.com/v8/finance/chart';
 const USER_AGENT = 'Mozilla/5.0 (compatible; multi-chart-trading-desk/1.0)';
@@ -241,6 +242,20 @@ export async function getCandles(rawSymbol, tfInput = DEFAULT_TIMEFRAME, { range
   const key = `${yahooSymbol}|${interval}|${rangeParam}`;
 
   const payload = await cacheFor(tf).fetch(key, async () => {
+    if (symbol === 'SET:^SET' || symbol === 'SET:SET') {
+      const bars = await getSetHistory(tf);
+      const last = bars.at(-1);
+      const previous = bars.at(-2);
+      const result = { symbol, yahooSymbol, exchange: 'SET', timeframe: tf, bars,
+        meta: { name: 'SET Index', currency: 'THB', exchangeName: 'SET', timezone: 'Asia/Bangkok',
+          instrumentType: 'INDEX', regularMarketPrice: last.close, previousClose: previous?.close ?? null,
+          bars: bars.length, interval, range: '1000 bars', source: 'TradingView' }, fetchedAt: Date.now() };
+      candleActivity.lastFetchAt = result.fetchedAt;
+      candleActivity.lastSymbol = symbol;
+      candleActivity.lastTimeframe = tf;
+      candleActivity.fetchCount += 1;
+      return result;
+    }
     const url = `${YAHOO_CHART}/${encodeURIComponent(yahooSymbol)}` +
       `?interval=${interval}&range=${rangeParam}&includePrePost=false`;
     const json = await fetchYahooJson(url);

@@ -672,6 +672,7 @@ export class ChartTile {
     const enabled = this.config.settings?.oversoldAlert !== false;
     const hit = enabled && rsi && rsi.value != null && rsi.value < rsi.threshold;
     dot.hidden = !hit;
+    this.root.classList.toggle('tile--oversold', Boolean(hit));
     if (hit) {
       dot.title = t('tile.oversoldTitle', { value: rsi.value.toFixed(1), line: rsi.threshold });
     }

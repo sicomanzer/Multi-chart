@@ -1,5 +1,19 @@
 # Multi-chart trading desk
 
+## Latest desktop workflow
+
+- Each visit starts with a single full-size SET index chart.
+- Choosing a watchlist in the board picker loads its complete symbol list into
+  a separate view, preserving saved boards and per-view chart settings.
+- SET index candles come from TradingView (up to 1,000 bars per timeframe),
+  because Yahoo's SET endpoint currently returns only a current snapshot.
+  Other instruments continue to use Yahoo history. TradingView index data may
+  be delayed; the history connection uses public, unauthenticated access.
+- An RSI oversold signal colours the whole chart header green.
+- The saved watchlists include NVDR with 20 SET symbols.
+
+The backend needs outbound HTTPS/WebSocket access to TradingView for SET history.
+
 A browser dashboard for watching many instruments at once — the Pi-Securities
 style grid of small candlestick charts, each with its own indicator panes,
 editable indicator settings, and live prices.

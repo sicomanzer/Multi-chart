@@ -6,8 +6,8 @@
  *   /api/indicators the catalog every editor is generated from
  *   /api/workspaces saved boards (falls back to the server's starter board)
  *
- * The last-visited board id is kept in localStorage so a reload lands you back
- * where you were; the server copy remains the source of truth for the content.
+ * Every visit starts with the SET index. Saved boards and watchlist views
+ * remain available from the picker.
  */
 import { api } from './api.js';
 import { Board } from './board.js';
@@ -37,6 +37,28 @@ const ZOOM_OUT = 1 / ZOOM_IN;
  * layout and a saved symbol list without reaching for a second control.
  */
 const WATCHLIST_PREFIX = 'wl:';
+const HOME_ID = 'ws_set_overview';
+const LIST_VIEW_PREFIX = 'ws_watchlist_';
+
+// Dedicated views keep the user's saved boards intact when switching lists.
+async function symbolView(board, id, name, symbols) {
+  await board.flushSave();
+  const storageKey = `mctd:view:${id}`;
+  const actualId = localStorage.getItem(storageKey);
+  const saved = actualId ? await api.workspace(actualId).catch(() => null) : null;
+  const settings = { ...board.meta.defaultSettings, ...(saved?.settings ?? board.workspace?.settings), layoutFit: 'auto' };
+  const previous = new Map((saved?.charts ?? []).map((chart) => [chart.symbol, chart]));
+  const charts = symbols.map((symbol, index) => previous.get(symbol) ?? {
+    id: `${id}_${index}`, symbol, timeframe: settings.defaultTimeframe,
+    chartType: settings.candleStyle, indicators: board.defaultIndicatorInstances(),
+  });
+  const ws = await api.saveWorkspace({ ...saved, id, name, settings, charts,
+    baseRevision: saved?.revision });
+  localStorage.setItem(storageKey, ws.id);
+  if (board.filterSymbols) board.clearFilter();
+  await board.loadWorkspace(ws);
+  markTimeframe(ws.settings.defaultTimeframe);
+}
 
 const el = {
   grid: document.getElementById('grid'),
@@ -72,10 +94,9 @@ const el = {
 };
 
 async function boot() {
-  const [meta, catalogRes, workspacesRes, metricsRes] = await Promise.all([
+  const [meta, catalogRes, metricsRes] = await Promise.all([
     api.meta(),
     api.indicators(),
-    api.workspaces().catch(() => ({ workspaces: [] })),
     // Fundamentals are optional: if the sidecar is missing the board still works.
     api.fundamentalsMeta().catch(() => ({ metrics: [], defaults: [] })),
   ]);
@@ -109,18 +130,7 @@ async function boot() {
 
   wireBoardEvents(board);
 
-  // Pick the board to open: last used if it still exists, else the newest.
-  const lastId = localStorage.getItem(LOCAL_KEY);
-  let target = workspacesRes.workspaces.find((w) => w.id === lastId)
-    ?? workspacesRes.workspaces[0]
-    ?? null;
-
-  if (!target) {
-    // No saved board yet: POST the server-side starter and use the result.
-    const seeded = await api.saveWorkspace({ name: 'My board', charts: [], settings: meta.defaultSettings });
-    target = { id: seeded.id };
-  }
-  await board.loadWorkspace(await api.workspace(target.id));
+  await symbolView(board, HOME_ID, 'SET', ['SET:^SET']);
 
   // The top bar reads the loaded workspace (current timeframe, theme), so it is
   // wired only once a board is on screen.
@@ -288,12 +298,11 @@ function wireTopbar(board) {
     const raw = el.workspaceSelect.value;
     if (!raw) return;
 
-    // One dropdown holds two kinds of thing: a board is a layout, a watchlist
-    // is a set of symbols applied to whatever layout is on screen. The value
-    // prefix says which was picked.
+    // Watchlists open their own complete view rather than filtering a board.
     const kind = raw.startsWith(WATCHLIST_PREFIX) ? 'watchlist' : 'board';
     const id = raw.slice(raw.indexOf(':') + 1);
 
+    el.workspaceSelect.disabled = true;
     try {
       if (kind === 'watchlist') {
         const wl = await api.watchlist(id);
@@ -301,7 +310,8 @@ function wireTopbar(board) {
         if (!symbols.size) {
           toast(t('toast.wl.empty', { name: wl.name }), { type: 'info' });
         } else {
-          board.setFilter(symbols, wl.name, wl.id);
+          await symbolView(board, `${LIST_VIEW_PREFIX}${wl.id}`, wl.name, [...symbols]);
+          await refreshWorkspaceList(board);
           const onBoard = board.visibleCount();
           toast(onBoard
             ? tp('toast.wl.showing', onBoard, { name: wl.name })
@@ -333,6 +343,8 @@ function wireTopbar(board) {
     } catch (err) {
       toast(t('err.openKind', { kind: t(`err.kind.${kind}`), msg: err.message }), { type: 'error' });
       await refreshWorkspaceList(board);
+    } finally {
+      el.workspaceSelect.disabled = false;
     }
   });
 }
@@ -506,6 +518,7 @@ async function refreshWorkspaceList(board) {
     const boardGroup = document.createElement('optgroup');
     boardGroup.label = t('ws.boards');
     for (const ws of workspaces) {
+      if (watchlists.some((wl) => localStorage.getItem(`mctd:view:${LIST_VIEW_PREFIX}${wl.id}`) === ws.id)) continue;
       const opt = document.createElement('option');
       opt.value = ws.id;
       opt.textContent = `${ws.name} (${ws.chartCount})`;
@@ -521,7 +534,8 @@ async function refreshWorkspaceList(board) {
         const opt = document.createElement('option');
         opt.value = `${WATCHLIST_PREFIX}${wl.id}`;
         opt.textContent = `${wl.name} (${wl.count})`;
-        opt.selected = wl.id === board.filterListId;
+        opt.selected = wl.id === board.filterListId
+          || board.workspace?.id === localStorage.getItem(`mctd:view:${LIST_VIEW_PREFIX}${wl.id}`);
         listGroup.appendChild(opt);
       }
       el.workspaceSelect.appendChild(listGroup);

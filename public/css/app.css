@@ -1251,6 +1251,21 @@ select {
    would win and the dot would never go away. */
 .tile__dot[hidden] { display: none; }
 
+/* Highlight the entire header using the same RSI state as the marker. */
+.tile--oversold .tile__bar {
+  background: #26a69a;
+  color: #082f2b;
+}
+.tile--oversold .tile__bar .tile__title,
+.tile--oversold .tile__bar .tile__name,
+.tile--oversold .tile__bar .tile__last,
+.tile--oversold .tile__bar .tile__change,
+.tile--oversold .tile__bar .tile__tf,
+.tile--oversold .tile__bar .icon-btn {
+  color: #082f2b;
+}
+.tile--oversold .tile__dot { display: none; }
+
 /* The dot is the last thing to go on a narrow tile: the company name drops
    first at 470px, so by the time this matters the marker is all that is left
    saying the chart is interesting. */

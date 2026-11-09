@@ -5,8 +5,8 @@
       "id": "ws_muwbkjs4v9x4w",
       "name": "SET board",
       "createdAt": 1791269432356,
-      "updatedAt": 1792630819524,
-      "revision": 54,
+      "updatedAt": 1794210018259,
+      "revision": 56,
       "settings": {
         "theme": "light",
         "columns": 3,
@@ -890,6 +890,3038 @@
                 "width": 2,
                 "overbought": 80,
                 "oversold": 20,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2jwdzs",
+          "symbol": "SET:KBANK",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_9jo56f",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2jza6w",
+          "symbol": "SET:BBL",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_ejya7p",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k067r",
+          "symbol": "SET:KKP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_d1rgb8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k1vy8",
+          "symbol": "SET:AEONTS",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_1w6f1d",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k3tdm",
+          "symbol": "SET:EGCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_x6yhip",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k468q",
+          "symbol": "SET:SPALI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_wuagom",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k5yxo",
+          "symbol": "SET:BCP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_cf4ggf",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k6cyh",
+          "symbol": "SET:TOP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_5hxwrv",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k7rpp",
+          "symbol": "SET:SIRI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_gtmrk8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2k8hlw",
+          "symbol": "SET:LH",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_k8ctsq",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2kaktv",
+          "symbol": "SET:TIDLOR",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_yi82go",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ch_mw8xj2kbkw9",
+          "symbol": "SET:KTC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_gt02vo",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8xsopk75sbm",
+      "name": "SET",
+      "createdAt": 1794209139992,
+      "updatedAt": 1794209557077,
+      "revision": 3,
+      "settings": {
+        "theme": "light",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1d",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_set_overview_0",
+          "symbol": "SET:^SET",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xsop8nsr",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8xssha9vtre",
+      "name": "NVDR",
+      "createdAt": 1794209144878,
+      "updatedAt": 1794209557077,
+      "revision": 0,
+      "settings": {
+        "theme": "dark",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1d",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_0",
+          "symbol": "SET:KBANK",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8z2i",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_1",
+          "symbol": "SET:PTTEP",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8nwt",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_2",
+          "symbol": "SET:TTB",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8sp9",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_3",
+          "symbol": "SET:PTT",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh87e2",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_4",
+          "symbol": "SET:SCB",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8bcc",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_5",
+          "symbol": "SET:BBL",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8c9m",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_6",
+          "symbol": "SET:KKP",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8h87",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_7",
+          "symbol": "SET:TISCO",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8yi8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_8",
+          "symbol": "SET:AEONTS",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8mwm",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_9",
+          "symbol": "SET:KTB",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8tx2",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_10",
+          "symbol": "SET:AMATA",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8v2n",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_11",
+          "symbol": "SET:EGCO",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8zuw",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_12",
+          "symbol": "SET:SPALI",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8h90",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_13",
+          "symbol": "SET:BCP",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh81x4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_14",
+          "symbol": "SET:TOP",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8pbb",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_15",
+          "symbol": "SET:SIRI",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh81ux",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_16",
+          "symbol": "SET:HMPRO",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8a8a",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_17",
+          "symbol": "SET:LH",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8w10",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_18",
+          "symbol": "SET:TIDLOR",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8rh4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_19",
+          "symbol": "SET:KTC",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh86d8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8y2mg0qdzvi",
+      "name": "SET",
+      "createdAt": 1794209603616,
+      "updatedAt": 1794209603616,
+      "revision": 0,
+      "settings": {
+        "theme": "light",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1d",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_set_overview_0",
+          "symbol": "SET:^SET",
+          "timeframe": "1d",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xsop8nsr",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8ybk3kdrlsw",
+      "name": "NVDR",
+      "createdAt": 1794210020481,
+      "updatedAt": 1794210041092,
+      "revision": 2,
+      "settings": {
+        "theme": "light",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1w",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_0",
+          "symbol": "SET:KBANK",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8z2i",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_1",
+          "symbol": "SET:PTTEP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8nwt",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_2",
+          "symbol": "SET:TTB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8sp9",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_3",
+          "symbol": "SET:PTT",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh87e2",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_4",
+          "symbol": "SET:SCB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8bcc",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_5",
+          "symbol": "SET:BBL",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8c9m",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_6",
+          "symbol": "SET:KKP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8h87",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_7",
+          "symbol": "SET:TISCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8yi8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_8",
+          "symbol": "SET:AEONTS",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8mwm",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_9",
+          "symbol": "SET:KTB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8tx2",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_10",
+          "symbol": "SET:AMATA",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8v2n",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_11",
+          "symbol": "SET:EGCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8zuw",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_12",
+          "symbol": "SET:SPALI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8h90",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_13",
+          "symbol": "SET:BCP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh81x4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_14",
+          "symbol": "SET:TOP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8pbb",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_15",
+          "symbol": "SET:SIRI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh81ux",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_16",
+          "symbol": "SET:HMPRO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8a8a",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_17",
+          "symbol": "SET:LH",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8w10",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_18",
+          "symbol": "SET:TIDLOR",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8rh4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_19",
+          "symbol": "SET:KTC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh86d8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8ydiu51sb0y",
+      "name": "SET favourites",
+      "createdAt": 1794210112157,
+      "updatedAt": 1794210112157,
+      "revision": 0,
+      "settings": {
+        "theme": "light",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1w",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_0",
+          "symbol": "SET:TU",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4c8m",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_1",
+          "symbol": "SET:TISCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu41x0",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_2",
+          "symbol": "SET:SCB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu40gt",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_3",
+          "symbol": "SET:MC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4m7r",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_4",
+          "symbol": "SET:MEGA",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4l2e",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_5",
+          "symbol": "SET:ICHI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4ut4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_6",
+          "symbol": "SET:BKIH",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4xau",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_7",
+          "symbol": "SET:TLI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu46vv",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_8",
+          "symbol": "SET:TACC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu48jr",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_9",
+          "symbol": "SET:HTC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4cf4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_10",
+          "symbol": "SET:TTW",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu443c",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_11",
+          "symbol": "SET:CPNREIT",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu46w0",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_12",
+          "symbol": "SET:INETREIT",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu494d",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_13",
+          "symbol": "SET:PTTEP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4q7x",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_14",
+          "symbol": "SET:KAMART",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4f0c",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8ydm02kvxwi",
+      "name": "NVDR",
+      "createdAt": 1794210116258,
+      "updatedAt": 1794210116258,
+      "revision": 0,
+      "settings": {
+        "theme": "light",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1w",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_0",
+          "symbol": "SET:KBANK",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8z2i",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_1",
+          "symbol": "SET:PTTEP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8nwt",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_2",
+          "symbol": "SET:TTB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8sp9",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_3",
+          "symbol": "SET:PTT",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh87e2",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_4",
+          "symbol": "SET:SCB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8bcc",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_5",
+          "symbol": "SET:BBL",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8c9m",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_6",
+          "symbol": "SET:KKP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8h87",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_7",
+          "symbol": "SET:TISCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8yi8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_8",
+          "symbol": "SET:AEONTS",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8mwm",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_9",
+          "symbol": "SET:KTB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8tx2",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_10",
+          "symbol": "SET:AMATA",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8v2n",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_11",
+          "symbol": "SET:EGCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8zuw",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_12",
+          "symbol": "SET:SPALI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8h90",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_13",
+          "symbol": "SET:BCP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh81x4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_14",
+          "symbol": "SET:TOP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8pbb",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_15",
+          "symbol": "SET:SIRI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh81ux",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_16",
+          "symbol": "SET:HMPRO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8a8a",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_17",
+          "symbol": "SET:LH",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8w10",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_18",
+          "symbol": "SET:TIDLOR",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh8rh4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mw8xfzw8fxrps_19",
+          "symbol": "SET:KTC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8xssh86d8",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        }
+      ]
+    },
+    {
+      "id": "ws_mw8yemljt8cml",
+      "name": "SET favourites",
+      "createdAt": 1794210163687,
+      "updatedAt": 1794210163687,
+      "revision": 0,
+      "settings": {
+        "theme": "light",
+        "columns": 4,
+        "layoutFit": "auto",
+        "footerMode": "both",
+        "footerMetrics": [
+          "pe",
+          "pbv",
+          "de",
+          "dividendYield"
+        ],
+        "defaultTimeframe": "1w",
+        "pollSeconds": 10,
+        "liveQuotes": true,
+        "syncCrosshair": true,
+        "syncTimeScale": false,
+        "showGrid": true,
+        "showWatermark": false,
+        "oversoldAlert": true,
+        "priceFormat": "auto",
+        "candleStyle": "candles",
+        "confirmClose": true
+      },
+      "charts": [
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_0",
+          "symbol": "SET:TU",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4c8m",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_1",
+          "symbol": "SET:TISCO",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu41x0",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_2",
+          "symbol": "SET:SCB",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu40gt",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_3",
+          "symbol": "SET:MC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4m7r",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_4",
+          "symbol": "SET:MEGA",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4l2e",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_5",
+          "symbol": "SET:ICHI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4ut4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_6",
+          "symbol": "SET:BKIH",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4xau",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_7",
+          "symbol": "SET:TLI",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu46vv",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_8",
+          "symbol": "SET:TACC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu48jr",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_9",
+          "symbol": "SET:HTC",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4cf4",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_10",
+          "symbol": "SET:TTW",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu443c",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_11",
+          "symbol": "SET:CPNREIT",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu46w0",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_12",
+          "symbol": "SET:INETREIT",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu494d",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_13",
+          "symbol": "SET:PTTEP",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4q7x",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
+                "fillBands": true
+              },
+              "paneHeight": 100
+            }
+          ],
+          "priceLines": []
+        },
+        {
+          "id": "ws_watchlist_wl_mvem5t5cme3zo_14",
+          "symbol": "SET:KAMART",
+          "timeframe": "1w",
+          "chartType": "candles",
+          "logScale": false,
+          "autoscale": true,
+          "indicators": [
+            {
+              "id": "ind_mw8ydiu4f0c",
+              "type": "rsi",
+              "enabled": true,
+              "placement": "pane",
+              "params": {
+                "length": 14,
+                "source": "close",
+                "color": "#7e57c2",
+                "width": 2,
+                "overbought": 70,
+                "oversold": 30,
                 "fillBands": true
               },
               "paneHeight": 100
