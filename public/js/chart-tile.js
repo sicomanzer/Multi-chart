@@ -406,7 +406,7 @@ export class ChartTile {
     const parts = metrics.map((key) => {
       const entry = data[key];
       const label = this.metricLabels?.[key]?.label ?? key.toUpperCase();
-      const title = [label, this.metricLabels?.[key]?.hint, entry?.value == null ? t('tile.notReported') : null]
+      const title = [label, this.metricLabels?.[key]?.hint, data.stale ? t('tile.cachedRatios', { date: data.asOf ?? '—' }) : null, entry?.value == null ? t('tile.notReported') : null]
         .filter(Boolean).join(' · ');
       const tone = entry?.value == null ? '' : entry.kind === 'percent' ? 'is-up' : '';
       return { key, html: `<span class="tile__metric" title="${escapeHtml(title)}">`
@@ -425,6 +425,9 @@ export class ChartTile {
       shown = shown.slice(0, -1);
       node.innerHTML = shown.map((p) => p.html).join('');
     }
+    if (data.stale) {
+      node.insertAdjacentHTML('afterbegin', `<span title="${escapeHtml(t('tile.cachedRatios', { date: data.asOf ?? '—' }))}">↺ </span>`);
+    }
     if (shown.length < parts.length) {
       const hiddenKeys = parts.slice(shown.length).map((p) => p.key);
       node.title = t('tile.notShown', { keys: hiddenKeys.join(', ') });
@@ -434,7 +437,7 @@ export class ChartTile {
   }
 
   setFundamentals(data, { pending = false } = {}) {
-    this.fundamentals = data ?? null;
+    if (data || !this.fundamentals || this.fundamentals.symbol !== this.config.symbol) this.fundamentals = data ?? null;
     this._fundamentalsPending = pending;
     this.renderFooter();
   }

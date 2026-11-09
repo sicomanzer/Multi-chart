@@ -148,6 +148,7 @@ export class Board extends EventTarget {
   // ── Workspace lifecycle ────────────────────────────────────────────────────
 
   async loadWorkspace(ws, { persist = true } = {}) {
+    clearTimeout(this.fundamentalsRetryTimer);
     // Persist pending edits of the board we are leaving, but only if there are
     // any — and never overwrite a revision the server has moved past.
     await this.flushSave();
@@ -501,6 +502,10 @@ export class Board extends EventTarget {
     // writes the snapshot as a side effect of this same request.
     api.fundamentalsHistorySummary().then((s) => { this.historyStatus = s; }).catch(() => {});
     this.dispatchEvent(new CustomEvent('fundamentals', { detail: result }));
+    clearTimeout(this.fundamentalsRetryTimer);
+    if (result.retryAfter) {
+      this.fundamentalsRetryTimer = setTimeout(() => this.refreshFundamentals(), Math.max(5000, result.retryAfter - Date.now() + 1000));
+    }
     return result;
   }
 

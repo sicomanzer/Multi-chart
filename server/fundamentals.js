@@ -84,6 +84,8 @@ export class FundamentalsClient extends EventEmitter {
     this.queue = [];
     this.inFlight = 0;
     this.cache = new Map(); // symbol -> { value, expires }
+    this.requests = new Map();
+    this.retryAfter = 0;
     this.stopping = false;
     this.lastError = null;
     this.lastFetchAt = null;
@@ -103,6 +105,7 @@ export class FundamentalsClient extends EventEmitter {
       ready: this.ready,
       pid: this.child?.pid ?? null,
       cached: this.cache.size,
+      retryAfter: this.retryAfter || null,
       ttlMs: this.config.ttlMs,
       queued: this.queue.length,
       inFlight: this.inFlight,
@@ -283,7 +286,27 @@ export class FundamentalsClient extends EventEmitter {
    * @param {object} opts { metrics?: string[], refresh?: boolean }
    * @returns {Promise<{data: object, cached: string[], fetched: string[], missing: string[]}>}
    */
-  async get(symbols, { metrics = DEFAULT_METRICS, refresh = false } = {}) {
+  get(symbols, options = {}) {
+    const key = JSON.stringify([[...new Set(symbols)].sort(), [...(options.metrics ?? DEFAULT_METRICS)].sort(), Boolean(options.refresh)]);
+    if (this.requests.has(key)) return this.requests.get(key);
+    const task = this._get(symbols, options).finally(() => this.requests.delete(key));
+    this.requests.set(key, task);
+    return task;
+  }
+
+  seedHistory(points) {
+    const percentages = new Set(['dividendYield', 'roe', 'roic', 'roa', 'epsGrowth', 'revenueGrowth']);
+    for (const [symbol, point] of Object.entries(points)) {
+      if (this.cache.has(symbol)) continue;
+      const value = { symbol, asOf: point.date, stale: true };
+      for (const metric of TRACKED_METRICS) {
+        if (metric in point) value[metric] = { value: point[metric], kind: percentages.has(metric) ? 'percent' : 'ratio' };
+      }
+      this.cache.set(symbol, { value, expires: 0 });
+    }
+  }
+
+  async _get(symbols, { metrics = DEFAULT_METRICS, refresh = false } = {}) {
     const wanted = [...new Set(symbols.map((s) => String(s).toUpperCase()))];
     const requested = [...new Set(metrics)].filter((m) => METRICS_KEYS.has(m));
     const result = { data: {}, cached: [], fetched: [], missing: [], source: 'tradingview-screener' };
@@ -308,12 +331,17 @@ export class FundamentalsClient extends EventEmitter {
     this.lastFetchAt = Date.now();
     try {
       await this.ensureStarted();
-      const raw = await this._enqueue(() => this._send({ symbols: stale, metrics: requested }));
+      const raw = await this._enqueue(() => {
+        if (Date.now() < this.retryAfter) throw new Error(this.lastError ?? 'Fundamentals rate limited; waiting before retry');
+        // The footer and history recorder share one full ratio snapshot.
+        return this._send({ symbols: stale, metrics: TRACKED_METRICS });
+      });
       this.lastSuccessAt = Date.now();
       this.lastError = null;
+      this.retryAfter = 0;
 
       for (const [symbol, value] of Object.entries(raw ?? {})) {
-        this.cache.set(symbol, { value, expires: Date.now() + this.config.ttlMs });
+        this.cache.set(symbol, { value: { ...this.cache.get(symbol)?.value, ...value, stale: false, asOf: new Date().toISOString() }, expires: Date.now() + this.config.ttlMs });
         if (wanted.includes(symbol)) result.data[symbol] = value;
         // Also index the base ticker so a board row keyed `SET:PTT.R` resolves.
         const base = symbol.split('.')[0];
@@ -324,10 +352,20 @@ export class FundamentalsClient extends EventEmitter {
     } catch (err) {
       this.lastError = err.message;
       this.lastErrorAt = Date.now();
+      if (/429|too many requests/i.test(err.message) && Date.now() >= this.retryAfter) this.retryAfter = Date.now() + 120_000;
       // A sidecar failure must never take the board down: report it and let the
       // tiles render without fundamentals.
       result.error = err.message;
-      result.missing = wanted;
+      result.stale = [];
+      for (const symbol of stale) {
+        const hit = this.cache.get(symbol);
+        if (hit && requested.some((metric) => hit.value[metric]?.value != null)) {
+          result.data[symbol] = { ...hit.value, stale: true };
+          result.stale.push(symbol);
+        }
+      }
+      result.retryAfter = this.retryAfter || null;
+      result.missing = wanted.filter((symbol) => !result.data[symbol]);
     }
     return result;
   }

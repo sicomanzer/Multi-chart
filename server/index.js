@@ -143,6 +143,7 @@ const fundamentals = new FundamentalsClient({ command: detectPython() });
 // this ships; it cannot be back-filled later.
 const history = new FundamentalsHistory(join(DATA_DIR, 'fundamentals-history.jsonl'));
 await history.load();
+fundamentals.seedHistory(history.latest());
 
 // The ten-year annual history the deep-dive charts draw. It is a local file,
 // so reading it at startup costs nothing and the health endpoint can report
