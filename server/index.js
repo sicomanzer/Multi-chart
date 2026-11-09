@@ -459,6 +459,7 @@ app.post('/api/fundamentals/history/snapshot', asyncRoute(async (req, res) => {
   if (symbols.length === 0) {
     symbols = [
       ...store.list().flatMap((w) => store.get(w.id)?.charts?.map((c) => c.symbol) ?? []),
+      ...watchlists.all().flatMap((list) => list.symbols ?? []),
       ...tracked.list().map((e) => e.symbol),
     ];
   }
@@ -467,7 +468,7 @@ app.post('/api/fundamentals/history/snapshot', asyncRoute(async (req, res) => {
   }
   // force + refresh: the user asked for it now, so take today's numbers even if
   // today's row exists — a company may have reported since the board loaded.
-  const result = await snapshot(symbols.slice(0, 200), { refresh: true, force: true });
+  const result = await snapshot([...new Set(symbols)].slice(0, 200), { refresh: true, force: true });
   // `tracked` lives on the module, not on the store, so add it here or the UI
   // renders "× 0 ratios".
   res.json({ ...result, summary: { ...history.summary(), tracked: TRACKED_METRICS } });
