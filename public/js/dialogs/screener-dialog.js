@@ -1559,14 +1559,15 @@ function buildTable(rows, state, rerender) {
     const specialTitle = row.hasSpecialDividend && row.annualDps != null && row.price > 0
       ? t('scr.specialHint', {
         all: percent(row.annualDps / row.price, 2),
-        recurring: percent(row.dividendYield, 2),
+        recurring: percent(row.recurringDividendYield ?? row.dividendYield, 2),
       })
       : '';
     // A score is a fraction of the rules that could be judged, so a name with
     // a short history is scored on a smaller base than the rest. The number
     // says so rather than letting the reader compare two different rulers.
-    const coverageTitle = row.coverage != null && row.coverage < 1
-      ? t('scr.coverageHint', { n: Math.round(row.coverage * 100) })
+    const coverage = row.dataCoverage ?? row.coverage;
+    const coverageTitle = coverage != null && coverage < 1
+      ? t('scr.coverageHint', { n: Math.round(coverage * 100) })
       : '';
     // The medal of the ranking: first, second, third, and nothing after that.
     const medal = row.pass && rank < 3 ? MEDALS[rank] : '';
@@ -1577,7 +1578,7 @@ function buildTable(rows, state, rerender) {
       <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score == null ? '—' : row.score}</span></td>
       <td class="num">${percent(row.roe3)}${peerBadge(row, 'roe')}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}${peerBadge(row, 'de')}</td>
-      <td class="num"${specialTitle ? ` title="${escape(specialTitle)}"` : ''}>${percent(row.dividendYield)}${row.hasSpecialDividend ? `<i class="scr-flag" title="${escape(t('scr.special'))}">*</i>` : ''}${peerBadge(row, 'yield')}</td>
+      <td class="num" title="${escape(row.ratioSource === 'set.or.th' ? `SET · ${row.ratioAsOf ?? '—'}` : specialTitle)}">${percent(row.dividendYield)}${peerBadge(row, 'yield')}${row.recurringDividendYield != null ? `<br><small>${escape(t('scr.recurringYield'))}: ${percent(row.recurringDividendYield)}</small>` : ''}</td>
       <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}${peerBadge(row, 'pe')}</td>
       <td class="num">${row.ddm.intrinsic == null ? '—' : row.ddm.intrinsic.toFixed(2)}</td>
       <td class="num ${row.ddm.mos > 0 ? 'is-up' : 'is-down'}">${row.ddm.mos == null ? '—' : `${row.ddm.mos.toFixed(0)}%`}</td>`;
@@ -1692,6 +1693,12 @@ function scorecard(detail) {
     years: detail.yearCount,
   })));
 
+  if (detail.qualityRatioSource === 'set.or.th') {
+    const basis = document.createElement('p');
+    basis.className = 'muted';
+    basis.textContent = t('scr.qualityBasis');
+    box.appendChild(basis);
+  }
   const list = document.createElement('div');
   list.className = 'scr-checks';
   const byId = new Map(detail.checks.map((c) => [c.id, c]));

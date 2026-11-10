@@ -11,6 +11,17 @@
 import { loadFinancials } from './fin.js';
 import { getSetFundamentals } from './set-fundamentals.js';
 
+async function attachOfficialHistory(fin) {
+  if (!fin.symbol?.startsWith('SET:')) return fin;
+  const result = await getSetFundamentals([fin.symbol]);
+  const official = result.data[fin.symbol];
+  return { ...fin, officialAnnual: official?.annualYears ?? [],
+    officialMultiples: { pe: official?.pe?.value ?? null, pbv: official?.pbv?.value ?? null },
+    officialAnnualStale: Boolean(official?.stale),
+    isFinancial: fin.isFinancial || official?.accountFormId === '1',
+    ...(official?.accountFormId === '5' ? { dataIssue: 'reit-framework-not-supported' } : {}) };
+}
+
 async function applyOfficialRatios(row) {
   if (!row.symbol?.startsWith('SET:')) return row;
   const result = await getSetFundamentals([row.symbol]);
@@ -97,6 +108,7 @@ function clampInput(value, fallback, { min, max }) {
  * exist, and saying so is the whole point.
  */
 export function currentMultiples(fin) {
+  if (fin.officialMultiples) return { peCurrent: fin.officialMultiples.pe, pbvCurrent: fin.officialMultiples.pbv };
   const last = fin.years.at(-1);
   const ttmEps = fin.ttm?.eps ?? null;
   const ttmBvps = fin.ttm?.bvps ?? null;
@@ -131,9 +143,9 @@ export function currentMultiples(fin) {
  * debt-free at 0.00 when the exchange publishes 0.17, and a rule that counts
  * debt below 1.0 has to count the same debt the reader sees.
  */
-export function reconcileYears(years, history) {
+export function reconcileYears(years, history, officialAnnual = null) {
   const byYear = new Map((history ?? []).map((h) => [h.fiscalYear, h]));
-  return years
+  const reconciled = years
     .map((year) => {
       const other = byYear.get(year.fiscalYear);
       if (!other) return year;
@@ -155,6 +167,14 @@ export function reconcileYears(years, history) {
       const ratio = Math.abs(a / b);
       return ratio >= 0.4 && ratio <= 2.5;
     });
+  if (officialAnnual === null) return reconciled;
+  const officialByYear = new Map(officialAnnual.map(row => [row.fiscalYear, row]));
+  return reconciled.map(year => {
+    const official = officialByYear.get(year.fiscalYear);
+    return { ...year, roe: official?.roe ?? null, roa: official?.roa ?? null,
+      npm: official?.npm ?? null, de: official?.de ?? null,
+      ratioSource: official ? 'set.or.th' : null, ratioAsOf: official?.asOf ?? null };
+  });
 }
 
 /**
@@ -247,7 +267,7 @@ function unknownRow(fin, reason) {
 export function buildRow(fin, { overrides = {}, asOf = new Date(), history = null } = {}) {
   if (fin.dataIssue) return unknownRow(fin, fin.dataIssue);
   const ttmEps = fin.ttm?.eps ?? null;
-  const trusted = reconcileYears(fin.years, history?.years ?? []);
+  const trusted = reconcileYears(fin.years, history?.years ?? [], fin.officialAnnual ?? null);
   // Growth needs a longer run than the four annual statement rows Yahoo keeps.
   // The tracked history supplies the older revenue and profit, but its EPS is
   // not trustworthy for every name: several rows mix core earnings with the
@@ -480,6 +500,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     ttmBvps: fin.ttm?.bvps ?? null,
     score: quality.score,
     coverage: quality.coverage,
+    dataCoverage: quality.dataCoverage,
     passed: quality.passed,
     failed: quality.failed,
     checks: quality.checks,
@@ -492,6 +513,9 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     de: quality.de,
     icr: quality.icr,
     dividendYield: quality.dividendYield,
+    recurringDividendYield: quality.dividendYield,
+    qualityRatioSource: fin.officialAnnual ? 'set.or.th' : 'statement-model',
+    qualityRatiosStale: Boolean(fin.officialAnnualStale),
     payout: quality.payout,
     streak: quality.streak,
     ttmDps: dividend.ttm,
@@ -561,7 +585,7 @@ export async function loadDetail(tvSymbol, options = {}) {
     quoteBatch([yahoo]),
     annualHistory(symbol),
   ]);
-  const fin = await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null });
+  const fin = await attachOfficialHistory(await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null }));
   // The same history the charts draw also judges the growth rules, so the
   // scorecard in the deep dive and the score in the table agree.
   const row = await applyOfficialRatios(buildRow(fin, { ...options, history }));
@@ -571,7 +595,7 @@ export async function loadDetail(tvSymbol, options = {}) {
   const peers = peerCache.get(fin.symbol);
   if (peers) row.peers = peers;
   const { peCurrent, pbvCurrent } = currentMultiples(fin);
-  const trusted = reconcileYears(fin.years, history?.years ?? []);
+  const trusted = reconcileYears(fin.years, history?.years ?? [], fin.officialAnnual ?? null);
   const bands = computeBands(fin.closes, trusted, { peCurrent, pbvCurrent });
 
   // DPS split by the quarter the cash actually landed in, from the ex-date
@@ -668,7 +692,7 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
         loadFinancials(symbol, { quote: quotes.get(toYahooSymbol(symbol)) ?? null }),
         annualHistory(symbol, { live: false }),
       ]);
-      return { ok: true, row: await applyOfficialRatios(buildRow(fin, { overrides, asOf, history })) };
+      return { ok: true, row: await applyOfficialRatios(buildRow(await attachOfficialHistory(fin), { overrides, asOf, history })) };
     } catch (err) {
       return {
         ok: false,

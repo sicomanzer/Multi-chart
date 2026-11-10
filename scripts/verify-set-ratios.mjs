@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parseSetFundamentals } from '../server/set-fundamentals.js';
+import { scoreQuality } from '../server/screener.js';
+import { reconcileYears, buildRow, currentMultiples } from '../server/screener-run.js';
 
 const symbol = 'SET:TEST';
 const trading = [{date:'2026-11-06',close:100,pe:10,pbv:2,dividendYield:4}];
@@ -20,3 +22,22 @@ const seed=JSON.parse(await readFile(new URL('../data/set-fundamentals.json',imp
 assert.equal(new Set(seed.rows.map(r=>r.symbol)).size,44);
 assert.ok(seed.rows.every(r=>r.source==='set.or.th'&&r.asOf&&r.financialAsOf));
 console.log('SET ratio source, dates, nulls and snapshot checks passed');
+const short = scoreQuality({ years: [{fiscalYear:2025,roe:.2,roa:.1,npm:.2,netIncome:100,freeCashFlow:100}], dividends: [], price:10 });
+for (const id of ['roeLevel','roeConsistency','roaLevel','npmLevel','npmTrend','fcfPositive']) {
+  assert.equal(short.checks.find(c=>c.id===id).pass,null,id+' needs a sufficient history');
+}
+const official = [{fiscalYear:2025,asOf:'2025-12-31',roe:.1,roa:.0643,npm:.0435,de:.9786}];
+const fixed = reconcileYears([{fiscalYear:2025,netIncome:100,roe:.2,roa:.0269,npm:.03,de:99}],[],official)[0];
+assert.equal(fixed.roa,.0643);
+assert.equal(fixed.de,.9786);
+assert.equal(fixed.ratioSource,'set.or.th');
+assert.deepEqual(currentMultiples({officialMultiples:{pe:12.72,pbv:1.46}}),{peCurrent:12.72,pbvCurrent:1.46});
+assert.equal(reconcileYears([{fiscalYear:2024,roa:.2}],[],official)[0].roa,null);
+const mint=seed.rows.find(r=>r.symbol==='SET:MINT').annualYears.find(y=>y.fiscalYear===2025);
+assert.ok(Math.abs(mint.de-2.6843557803655758)<1e-10);
+const reit=seed.rows.find(r=>r.symbol==='SET:CPNREIT');
+assert.equal(reit.accountFormId,'5');
+const unknown=buildRow({symbol:'SET:CPNREIT',years:[],dataIssue:'reit-framework-not-supported'});
+assert.equal(unknown.score,null);
+assert.equal(unknown.ddm.reason,'reit-framework-not-supported');
+console.log('Screener history minimums, SET annual overrides and REIT exclusion checks passed');

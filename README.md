@@ -7,8 +7,12 @@
   liabilities/equity definition. Price ratios and statement ratios retain
   their separate reference dates; they are not rebased to the live quote.
   Official snapshots for 44 stocks provide a labelled fallback when SET is
-  unavailable. Unsupported metrics remain blank. Historical scoring and
-  valuation models retain their existing statement-based calculations.
+  unavailable. Unsupported metrics remain blank. Thai-stock annual ROE, ROA,
+  NPM and D/E scoring now uses SET data matched by fiscal year, with minimum
+  history requirements. SET yield and recurring DDM yield are shown separately.
+  REITs are excluded from ordinary-stock scores pending a dedicated framework.
+  Cash-flow and valuation models remain statement-based; historical backtests
+  have not been revalidated for these revised score rules.
 
 - Each visit starts with a single full-size SET index chart.
 - New views use the light theme and RSI length 5, overbought 80, oversold 20.

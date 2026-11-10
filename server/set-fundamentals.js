@@ -21,7 +21,13 @@ export function parseSetFundamentals(symbol, tradingRows, financialRows) {
   if (!trading || !financial) throw new Error(`Incomplete SET response for ${symbol}`);
   const row = { symbol, source: 'set.or.th', asOf: trading.date.slice(0,10),
     financialAsOf: financial.asOfDate.slice(0,10), price: number(trading.close),
-    sector: trading.sector ?? null, fetchedAt: new Date().toISOString() };
+    sector: trading.sector ?? null, accountFormId: String(financial.accountFormId ?? ''), fetchedAt: new Date().toISOString(),
+    annualYears: financialRows.filter(r => r.quarter === 'Q9' && Number.isFinite(r.year))
+      .map(r => ({ fiscalYear: r.year, asOf: r.asOfDate.slice(0,10), source: 'set.or.th',
+        roe: number(r.roe) == null ? null : r.roe / 100,
+        roa: number(r.roa) == null ? null : r.roa / 100,
+        npm: number(r.netProfitMargin) == null ? null : r.netProfitMargin / 100,
+        de: number(r.deRatio) })).sort((a,b) => a.fiscalYear - b.fiscalYear) };
   const fields = { pe: [trading.pe, 'ratio'], pbv: [trading.pbv, 'ratio'],
     dividendYield: [trading.dividendYield, 'percent'], de: [financial.deRatio, 'ratio'],
     roe: [financial.roe, 'percent'], roa: [financial.roa, 'percent'],

@@ -857,23 +857,25 @@ export function scoreQuality({
     checks.push({ id, pass, value, threshold, ...extra });
   };
 
-  const roe3 = average(last3.map((y) => y.roe));
+  const mean3 = key => last3.length === 3 && last3.every(y => Number.isFinite(y[key]))
+    ? average(last3.map(y => y[key])) : null;
+  const roe3 = mean3('roe');
   add('roeLevel', roe3 != null ? roe3 >= 0.15 : null, roe3, 0.15);
 
   const roeKnown = last4.map((y) => y.roe);
   const roeYearsAbove = roeKnown.filter((v) => typeof v === 'number' && v >= 0.15).length;
-  const roeComplete = roeKnown.length > 0 && roeKnown.every((v) => typeof v === 'number');
-  add('roeConsistency', roeComplete ? roeYearsAbove >= Math.min(3, last4.length) : null,
-    roeYearsAbove, Math.min(3, last4.length), { of: last4.length });
+  const roeComplete = roeKnown.filter(Number.isFinite).length >= 3;
+  add('roeConsistency', roeComplete ? roeYearsAbove >= 3 : null,
+    roeYearsAbove, 3, { of: roeKnown.filter(Number.isFinite).length, minYears: 3 });
 
-  const roa3 = average(last3.map((y) => y.roa));
+  const roa3 = mean3('roa');
   add('roaLevel', roa3 != null ? roa3 >= 0.07 : null, roa3, 0.07);
 
-  const npm3 = average(last3.map((y) => y.npm));
+  const npm3 = mean3('npm');
   add('npmLevel', npm3 != null ? npm3 >= 0.10 : null, npm3, 0.10);
 
   const npmSeries = last4.map((y) => y.npm).filter((v) => typeof v === 'number');
-  const npmTrend = npmSeries.length >= 2 ? npmSeries[npmSeries.length - 1] - npmSeries[0] : null;
+  const npmTrend = npmSeries.length === 4 ? npmSeries[3] - npmSeries[0] : null;
   add('npmTrend', npmTrend != null ? npmTrend >= 0 : null, npmTrend, 0);
 
   // Every one of the last three years profitable — "consistently", not "on
@@ -969,12 +971,12 @@ export function scoreQuality({
   { of: last3.length, oneOff, ...(isFinancial ? { na: true } : {}) });
 
   const fcfKnown = last4.map((y) => y.freeCashFlow);
-  const fcfComplete = fcfKnown.length > 0 && fcfKnown.every((v) => typeof v === 'number');
+  const fcfComplete = fcfKnown.length === 4 && fcfKnown.every(Number.isFinite);
   const fcfPositive = fcfKnown.filter((v) => typeof v === 'number' && v > 0).length;
   add('fcfPositive', isFinancial || !fcfComplete ? null
-    : fcfPositive >= Math.max(1, last4.length - 1),
-  fcfPositive, Math.max(1, last4.length - 1),
-  { of: last4.length, ...(isFinancial ? { na: true } : {}) });
+    : fcfPositive >= 3,
+  fcfPositive, 3,
+  { of: last4.length, minYears: 4, ...(isFinancial ? { na: true } : {}) });
 
   const dividend = sustainableDividend({ years, dividends, asOf, ttmEps });
   const dividendYield = price > 0 && dividend.d0 > 0 ? dividend.d0 / price : null;
@@ -1048,12 +1050,15 @@ export function scoreQuality({
   // How much of the framework actually applied, so a score built on four of
   // fourteen rules can be recognised as thin rather than taken at face value.
   const coverage = totalWeight > 0 ? possible / totalWeight : 0;
+  const applicableWeight = totalWeight - checks.filter(check => check.na === true)
+    .reduce((sum, check) => sum + (WEIGHTS[check.id] ?? 0), 0);
 
   const failed = checks.filter((c) => c.pass === false && !c.warn);
   return {
     checks,
     score,
     coverage,
+    dataCoverage: applicableWeight > 0 ? possible / applicableWeight : 0,
     passed: checks.filter((c) => c.pass === true).length,
     failed: failed.length,
     evaluated: checks.filter((c) => c.pass !== null).length,
