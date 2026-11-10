@@ -762,7 +762,19 @@ export class ChartTile {
       const from = Number(zone.from);
       const to = Number(zone.to);
       if (!Number.isFinite(from) || !Number.isFinite(to) || from === to) continue;
-      this._fillBetween(paneIndex, flat(to), flat(from), zone.color ?? '#2962ff');
+      // A baseline bounds this fill to the zone. Two area series both fill
+      // down to the pane bottom, tinting the middle and mixing red with green.
+      const color = zone.color ?? '#2962ff';
+      const fill = this.chart.addSeries(BaselineSeries, {
+        baseValue: { type: 'price', price: Math.min(from, to) },
+        topFillColor1: color, topFillColor2: color,
+        bottomFillColor1: 'transparent', bottomFillColor2: 'transparent',
+        topLineColor: 'transparent', bottomLineColor: 'transparent',
+        priceLineVisible: false, lastValueVisible: false,
+        crosshairMarkerVisible: false, baseLineVisible: false,
+      }, paneIndex);
+      fill.setData(flat(Math.max(from, to)));
+      this.seriesRefs.push({ series: fill, pane: paneIndex, kind: 'bandfill' });
     }
   }
 

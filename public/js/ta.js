@@ -645,8 +645,8 @@ const REGISTRY = {
       fixed: { min: 0, max: 100 },
       zones: p.fillBands
         ? [
-          { from: p.overbought, to: 100, color: 'rgba(239,83,80,0.08)' },
-          { from: 0, to: p.oversold, color: 'rgba(38,166,154,0.08)' },
+          { from: p.overbought, to: 100, color: 'rgba(239,68,68,0.20)' },
+          { from: 0, to: p.oversold, color: 'rgba(22,163,74,0.20)' },
         ]
         : [],
     };
