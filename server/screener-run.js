@@ -36,6 +36,7 @@ async function applyOfficialRatios(row) {
   row.ratioAsOf = official?.asOf ?? null;
   row.ratioFinancialAsOf = official?.financialAsOf ?? null;
   row.ratiosStale = Boolean(official?.stale);
+  if (official?.reitProfile) row.reitProfile = official.reitProfile;
   return row;
 }
 import {
@@ -47,6 +48,7 @@ import {
   computeBands,
   dcf,
   ddm,
+  ddmSensitivity,
   DEFAULTS,
   grahamGrowth,
   grahamNumber,
@@ -535,6 +537,8 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
       r,
       years,
       d0,
+      terminalShare: valuation.ok ? valuation.terminalValue / valuation.intrinsic : null,
+      sensitivity: ddmSensitivity({ d0, g1, g2, r, years, payout: quality.payout, yieldRate: quality.dividendYield }),
     },
     ddmScenario: unfundedScenario,
     ddmScenarioFlat: flatScenario,

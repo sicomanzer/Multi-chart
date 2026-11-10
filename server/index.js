@@ -659,7 +659,8 @@ app.post('/api/screener/backtest', asyncRoute(async (req, res) => {
       waitDrop: Math.min(0.9, Math.max(0, Number(sim.waitDrop) || 0.1)),
     }
     : null;
-  res.json(await runBacktest({ symbols, preset, holdYears, simulation }));
+  res.json(await runBacktest({ symbols, preset, holdYears, simulation,
+    publicationMode: body.publicationMode === 'estimated' ? 'estimated' : 'verified' }));
 }));
 
 /** One company in full, with the series behind its valuation bands. */

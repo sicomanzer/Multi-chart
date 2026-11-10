@@ -658,6 +658,7 @@ function paintToolbar(body, state, rerender, setAuto) {
         state.backtest = await api.screenerBacktest({
           preset: state.preset,
           holdYears: state.holdYears,
+          publicationMode: state.publicationMode ?? 'verified',
           simulation: state.simulation,
         });
       } catch (err) {
@@ -706,6 +707,27 @@ function paintBacktest(body, state, rerender) {
 
   // The controls: how long the money is held, and how much of it there is.
   box.appendChild(paintBacktestControls(state, rerender));
+  const mode = document.createElement('select');
+  mode.className = 'input';
+  mode.setAttribute('aria-label', t('scr.backtest.publicationMode'));
+  for (const value of ['verified', 'estimated']) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = t(`scr.backtest.${value}`);
+    option.selected = value === (state.publicationMode ?? 'verified');
+    mode.appendChild(option);
+  }
+  mode.addEventListener('change', async () => {
+    state.publicationMode = mode.value;
+    state.backtestLoading = true;
+    rerender();
+    try {
+      state.backtest = await api.screenerBacktest({ preset: state.preset, holdYears: state.holdYears,
+        publicationMode: state.publicationMode, simulation: state.simulation });
+    } catch (error) { state.error = error; }
+    finally { state.backtestLoading = false; rerender(); }
+  });
+  box.appendChild(mode);
 
   if (state.backtestLoading || !state.backtest) {
     const p = document.createElement('p');
@@ -717,6 +739,14 @@ function paintBacktest(body, state, rerender) {
   }
 
   const result = state.backtest;
+  const reliability = document.createElement('p');
+  reliability.className = 'section__hint';
+  reliability.textContent = t(result.publicationMode === 'verified'
+    ? 'scr.backtest.verifiedNote' : 'scr.backtest.estimatedNote');
+  if (result.reliability?.skippedUnknownPublicationYears) {
+    reliability.textContent += ` (${result.reliability.skippedUnknownPublicationYears})`;
+  }
+  box.appendChild(reliability);
   const totals = result.totals ?? {};
   const summary = document.createElement('p');
   summary.className = 'section__hint';
@@ -922,6 +952,7 @@ async function runBacktest(state, rerender) {
   rerender();
   try {
     state.backtest = await api.screenerBacktest({
+      publicationMode: state.publicationMode ?? 'verified',
       preset: state.preset,
       holdYears: state.holdYears,
       simulation: state.simulation,
@@ -1627,6 +1658,16 @@ function paintDetail(body, state, board, rerender) {
   // calculator and the valuation bands would all present a number built on
   // data the server has already rejected.
   if (detail.dataIssue) {
+    if (detail.reitProfile) {
+      const profile = document.createElement('div');
+      profile.className = 'scr-calc__out';
+      const reit = detail.reitProfile;
+      profile.innerHTML = `<h3>${escape(t('scr.reitProfile'))}</h3><p>SET · ${escape(reit.asOf)}</p>`
+        + `<p>NAV: ${reit.navPerUnit == null ? '—' : reit.navPerUnit.toFixed(4)}</p>`
+        + `<p>${escape(t('scr.reitLiabilities'))}: ${percent(reit.liabilitiesToAssets)}</p>`
+        + `<p>${escape(t('scr.reitMissing'))}</p>`;
+      body.appendChild(profile);
+    }
     const warn = document.createElement('p');
     warn.className = 'section__hint is-error';
     warn.textContent = t('scr.dataIssue', {
@@ -1884,6 +1925,16 @@ function calculator(detail, state, rerender) {
 
   // The three cross-checks. Each names its assumptions and refuses to print a
   // number when they do not hold: a blank with a reason is the honest output.
+  if (detail.ddm?.sensitivity?.length) {
+    const sensitivity = document.createElement('div');
+    sensitivity.className = 'scr-calc__out';
+    sensitivity.innerHTML = `<p>${escape(t('scr.sensitivityHint'))}</p>`
+      + `<p>${escape(t('scr.terminalShare'))}: ${percent(detail.ddm.terminalShare)}</p>`
+      + `<table class="scr-table"><thead><tr><th>r</th><th>g2</th><th>${escape(t('scr.intrinsicSensitivity'))}</th></tr></thead><tbody>`
+      + detail.ddm.sensitivity.map(row => `<tr><td>${percent(row.r)}</td><td>${percent(row.g2)}</td><td>${row.intrinsic == null ? '—' : row.intrinsic.toFixed(2)}</td></tr>`).join('')
+      + '</tbody></table>';
+    box.appendChild(sensitivity);
+  }
   const crossChecks = [detail.dcf, detail.grahamGrowth, detail.isFinancial ? detail.residualIncome : null]
     .some((model) => Boolean(model));
   if (crossChecks) box.appendChild(section(t('scr.crossChecks'), ''));

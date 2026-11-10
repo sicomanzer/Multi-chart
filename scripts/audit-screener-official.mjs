@@ -1,5 +1,6 @@
 import {readFile,writeFile} from 'node:fs/promises';
-const audit=JSON.parse(await readFile('value-screener-audit.json','utf8'));
+const auditFile=process.argv[2] ?? 'value-screener-audit.json';
+const audit=JSON.parse(await readFile(auditFile,'utf8'));
 const page='https://www.set.or.th/th/market/product/stock/quote/PTT/price';
 const response=await fetch(page);
 const headers={Cookie:response.headers.getSetCookie().map(c=>c.split(';')[0]).join('; '),Referer:page,'User-Agent':'Mozilla/5.0',Accept:'application/json'};
@@ -16,4 +17,4 @@ for(const row of audit.rows){
   console.log(JSON.stringify({symbol:row.symbol,...row.comparison}));
  }catch(error){row.officialError=error.message;console.log(row.symbol,error.message);}
 }
-await writeFile('value-screener-audit.json',JSON.stringify(audit,null,2));
+await writeFile(auditFile,JSON.stringify(audit,null,2));

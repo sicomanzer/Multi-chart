@@ -11,8 +11,15 @@
   NPM and D/E scoring now uses SET data matched by fiscal year, with minimum
   history requirements. SET yield and recurring DDM yield are shown separately.
   REITs are excluded from ordinary-stock scores pending a dedicated framework.
-  Cash-flow and valuation models remain statement-based; historical backtests
-  have not been revalidated for these revised score rules.
+  Cash-flow and valuation models remain statement-based. Backtests now separate
+  verified publication dates from estimated dates, reject incomplete holding
+  windows and report mean window returns rather than compounding overlapping
+  periods. The verified-date registry is currently empty, so that mode reports
+  insufficient history. Estimated results are not validated historical performance.
+- DDM includes nine sensitivity scenarios and the terminal-value share. REIT
+  profiles show SET NAV and liabilities/assets, while scores and fair values
+  remain unavailable without verified adjusted distribution data. See
+  [the reliability update](RELIABILITY-UPDATES-2026-11-10.md) for remaining limitations.
 
 - Each visit starts with a single full-size SET index chart.
 - New views use the light theme and RSI length 5, overbought 80, oversold 20.

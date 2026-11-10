@@ -1214,8 +1214,8 @@ const overlapping = [
   [{ date: '2020-03-31', symbol: 'A', name: 'A', score: 100, forwardTotal: 0.1, checks: [], yield: 0.05, mos: 10, price: 10, intrinsic: 12 }],
 ];
 const overlappingTotals = summariseBacktest(overlapping, 'quality').totals;
-check('overlapping windows are compounded and also reported as a mean',
-  near(overlappingTotals.portfolio, 0.21, 1e-9)
+check('overlapping windows report their mean rather than a fictitious compounded return',
+  near(overlappingTotals.portfolio, 0.1, 1e-9)
   && near(overlappingTotals.portfolioMean, 0.1, 1e-9),
   JSON.stringify(overlappingTotals));
 

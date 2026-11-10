@@ -1,8 +1,10 @@
-import {writeFile} from 'node:fs/promises';
+import {writeFile,readFile} from 'node:fs/promises';
 import {loadDetail} from '../server/screener-run.js';
 import {initAnnualHistory} from '../server/finnomena.js';
 await initAnnualHistory();
-const symbols=['KBANK','PTT','BCP','MINT','ADVANC','KCE','CPNREIT','HMPRO'];
+const symbols=process.argv.includes('--all')
+ ? JSON.parse(await readFile('data/set-fundamentals.json','utf8')).rows.map(row=>row.symbol.slice(4))
+ : ['KBANK','PTT','BCP','MINT','ADVANC','KCE','CPNREIT','HMPRO'];
 const rows=[];
 for(const symbol of symbols){
  try{

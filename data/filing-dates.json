@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Verified historical statement publication dates only. Never infer publication from fiscal-period end. Entries require symbol, fiscalYear, publishedAt (YYYY-MM-DD), and publicationSource (official document URL).",
+  "entries": []
+}

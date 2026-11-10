@@ -10,7 +10,7 @@
       "price": 56.25,
       "sector": "ETRON",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.752Z",
+      "fetchedAt": "2026-11-10T09:44:58.368Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -90,7 +90,7 @@
       "price": 38.5,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.752Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -170,7 +170,7 @@
       "price": 12.9,
       "sector": "ICT",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.752Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -250,7 +250,7 @@
       "price": 45.5,
       "sector": "COMM",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -330,7 +330,7 @@
       "price": 42,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -410,7 +410,7 @@
       "price": 339,
       "sector": "ICT",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -490,7 +490,7 @@
       "price": 142.5,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -570,7 +570,7 @@
       "price": 37.5,
       "sector": "ETRON",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -650,7 +650,7 @@
       "price": 19.9,
       "sector": "HELTH",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -730,7 +730,7 @@
       "price": 59.75,
       "sector": "TRANS",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -810,7 +810,7 @@
       "price": 149,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -890,7 +890,7 @@
       "price": 2.66,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -970,7 +970,7 @@
       "price": 21.4,
       "sector": "TOURISM",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1050,7 +1050,7 @@
       "price": 6.25,
       "sector": "COMM",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1130,7 +1130,7 @@
       "price": 123.5,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1210,7 +1210,7 @@
       "price": 4.78,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1290,7 +1290,7 @@
       "price": 4.88,
       "sector": "PROP",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1370,7 +1370,7 @@
       "price": 20.1,
       "sector": "FOOD",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1450,7 +1450,7 @@
       "price": 6.15,
       "sector": "TRANS",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1530,7 +1530,7 @@
       "price": 26.25,
       "sector": "PROP",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1610,7 +1610,7 @@
       "price": 13,
       "sector": "FOOD",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1690,7 +1690,7 @@
       "price": 11.4,
       "sector": "INSUR",
       "accountFormId": "4",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1770,7 +1770,7 @@
       "price": 14.4,
       "sector": "FOOD",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1850,7 +1850,7 @@
       "price": 35.25,
       "sector": "COMM",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -1930,7 +1930,7 @@
       "price": 11,
       "sector": "COMM",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2019,7 +2019,7 @@
       "price": 12.5,
       "sector": "PF&REIT",
       "accountFormId": "5",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2089,6 +2089,15 @@
       "quickRatio": {
         "value": null,
         "kind": "ratio"
+      },
+      "reitProfile": {
+        "source": "set.or.th",
+        "asOf": "2026-06-30",
+        "navPerUnit": 11.2107,
+        "netInvestmentIncome": 406766000,
+        "liabilitiesToAssets": 0.17391528989359595,
+        "adjustedDistributableProfit": null,
+        "reason": "adjusted-distributable-profit-not-published-in-this-feed"
       }
     },
     {
@@ -2099,7 +2108,7 @@
       "price": 12.8,
       "sector": "PF&REIT",
       "accountFormId": "5",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2169,6 +2178,15 @@
       "quickRatio": {
         "value": null,
         "kind": "ratio"
+      },
+      "reitProfile": {
+        "source": "set.or.th",
+        "asOf": "2026-06-30",
+        "navPerUnit": 11.5798,
+        "netInvestmentIncome": 1888536000,
+        "liabilitiesToAssets": 0.5571845359617035,
+        "adjustedDistributableProfit": null,
+        "reason": "adjusted-distributable-profit-not-published-in-this-feed"
       }
     },
     {
@@ -2179,7 +2197,7 @@
       "price": 10,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2259,7 +2277,7 @@
       "price": 6.5,
       "sector": "COMM",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.369Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2339,7 +2357,7 @@
       "price": 6.4,
       "sector": "FOOD",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2419,7 +2437,7 @@
       "price": 15.3,
       "sector": "FOOD",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2499,7 +2517,7 @@
       "price": 398,
       "sector": "INSUR",
       "accountFormId": "4",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2024,
@@ -2561,7 +2579,7 @@
       "price": 55.75,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2641,7 +2659,7 @@
       "price": 241,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2721,7 +2739,7 @@
       "price": 180.5,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2801,7 +2819,7 @@
       "price": 44,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -2881,7 +2899,7 @@
       "price": 16.9,
       "sector": "FIN",
       "accountFormId": "2",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2024,
@@ -2943,7 +2961,7 @@
       "price": 112.5,
       "sector": "BANK",
       "accountFormId": "1",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -3023,7 +3041,7 @@
       "price": 132.5,
       "sector": "ENERG",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -3103,7 +3121,7 @@
       "price": 35,
       "sector": "FIN",
       "accountFormId": "2",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -3183,7 +3201,7 @@
       "price": 3.5,
       "sector": "PROP",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -3263,7 +3281,7 @@
       "price": 88.75,
       "sector": "FIN",
       "accountFormId": "2",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2023,
@@ -3343,7 +3361,7 @@
       "price": 15.6,
       "sector": "PROP",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,
@@ -3423,7 +3441,7 @@
       "price": 1.41,
       "sector": "PROP",
       "accountFormId": "6",
-      "fetchedAt": "2026-11-10T06:46:17.753Z",
+      "fetchedAt": "2026-11-10T09:44:58.370Z",
       "annualYears": [
         {
           "fiscalYear": 2022,

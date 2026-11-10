@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parseSetFundamentals } from '../server/set-fundamentals.js';
 import { scoreQuality } from '../server/screener.js';
+import { ddmSensitivity, ddm } from '../server/screener.js';
+import { publishedOn, backtestCompany } from '../server/backtest.js';
 import { reconcileYears, buildRow, currentMultiples } from '../server/screener-run.js';
 
 const symbol = 'SET:TEST';
@@ -41,3 +43,19 @@ const unknown=buildRow({symbol:'SET:CPNREIT',years:[],dataIssue:'reit-framework-
 assert.equal(unknown.score,null);
 assert.equal(unknown.ddm.reason,'reit-framework-not-supported');
 console.log('Screener history minimums, SET annual overrides and REIT exclusion checks passed');
+assert.equal(publishedOn({fiscalYear:2020},{verifiedOnly:true}),null);
+const announced={fiscalYear:2020,asOf:'2020-12-31',publishedAt:'2021-02-25',publicationSource:'https://www.set.or.th/official-test-fixture'};
+assert.equal(publishedOn(announced,{verifiedOnly:true}),'2021-02-25');
+assert.equal(publishedOn({...announced,publishedAt:'2020-12-01'},{verifiedOnly:true}),null);
+const years=[2016,2017,2018].map(y=>({fiscalYear:y,asOf:`${y}-12-31`,publishedAt:`${y+1}-02-25`,publicationSource:announced.publicationSource,netIncome:100,revenue:1000,assets:1000,equity:500,roa:.1,roe:.2,de:.5,eps:1}));
+const prices=[{date:'2019-03-31',close:10},{date:'2021-03-31',close:12}];
+assert.equal(backtestCompany({history:years,closes:prices,rebalances:['2019-03-31'],holdYears:3,publicationMode:'verified'}).length,0);
+assert.equal(backtestCompany({history:years,closes:[...prices,{date:'2022-03-31',close:13}],rebalances:['2019-03-31'],holdYears:3,publicationMode:'verified'}).length,1);
+const inputs={d0:2,g1:.05,g2:.03,r:.09,years:5};
+const sensitivity=ddmSensitivity(inputs);
+assert.equal(sensitivity.length,9);
+assert.equal(sensitivity[4].intrinsic,ddm(inputs).intrinsic);
+assert.ok(sensitivity.find(row=>Math.abs(row.r-.1)<1e-9&&Math.abs(row.g2-.03)<1e-9).intrinsic<ddm(inputs).intrinsic);
+assert.equal(reit.reitProfile.adjustedDistributableProfit,null);
+assert.ok(reit.reitProfile.navPerUnit>0);
+console.log('Verified publication dates, complete holding windows, DDM sensitivity and REIT data boundaries passed');

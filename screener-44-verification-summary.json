@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-11-10T09:48:32.236Z",
+  "metric": {
+    "pe": {
+      "compared": 42,
+      "mismatches": []
+    },
+    "pbv": {
+      "compared": 44,
+      "mismatches": []
+    },
+    "yield": {
+      "compared": 44,
+      "mismatches": []
+    },
+    "roe": {
+      "compared": 42,
+      "mismatches": []
+    },
+    "roa": {
+      "compared": 42,
+      "mismatches": []
+    },
+    "npm": {
+      "compared": 42,
+      "mismatches": []
+    },
+    "de": {
+      "compared": 42,
+      "mismatches": []
+    }
+  }
+}

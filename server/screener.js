@@ -428,7 +428,20 @@ const clampNum = (value, min, max) => Math.min(max, Math.max(min, value));
  */
 export const AAA_YIELD = 0.0206;
 export const AAA_YIELD_ASOF = '2026-Q3';
-export const AAA_YIELD_SOURCE = 'ThaiBMA AAA 5-year corporate bond yield, Q3/2026 (press release 2026-10-07)';
+export const AAA_YIELD_SOURCE = 'Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed';
+
+export function ddmSensitivity(inputs) {
+  const rows = [];
+  for (const dr of [-0.01, 0, 0.01]) {
+    for (const dg of [-0.01, 0, 0.01]) {
+      const r = inputs.r + dr;
+      const g2 = Math.max(0, inputs.g2 + dg);
+      const value = ddm({ ...inputs, r, g2 });
+      rows.push({ r, g2, intrinsic: value.ok ? value.intrinsic : null, reason: value.reason ?? null });
+    }
+  }
+  return rows;
+}
 
 /**
  * A simple, fully visible cost of capital.

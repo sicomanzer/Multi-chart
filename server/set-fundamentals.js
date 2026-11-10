@@ -33,6 +33,14 @@ export function parseSetFundamentals(symbol, tradingRows, financialRows) {
     roe: [financial.roe, 'percent'], roa: [financial.roa, 'percent'],
     currentRatio: [financial.currentRatio, 'ratio'], quickRatio: [financial.quickRatio, 'ratio'] };
   for (const [key, [value, kind]] of Object.entries(fields)) row[key] = { value: number(value), kind };
+  if (String(financial.accountFormId) === '5') {
+    row.reitProfile = { source: 'set.or.th', asOf: financial.asOfDate.slice(0,10),
+      navPerUnit: number(financial.netAssetsPerUnit),
+      netInvestmentIncome: number(financial.netInvestmentIncome) == null ? null : financial.netInvestmentIncome * 1000,
+      liabilitiesToAssets: number(financial.debtToAssetRatio),
+      adjustedDistributableProfit: null,
+      reason: 'adjusted-distributable-profit-not-published-in-this-feed' };
+  }
   return row;
 }
 

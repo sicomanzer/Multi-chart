@@ -32,6 +32,14 @@ import { simulatePeriod } from './portfolio.js';
 
 const DAY = 86_400_000;
 const FILING_LAG_DAYS = 90;
+export const BACKTEST_VERSION = '2026-11-10-set-ratios-v2';
+let filingDatesTask;
+async function filingDates() {
+  filingDatesTask ??= readFile(new URL('../data/filing-dates.json', import.meta.url), 'utf8')
+    .then(JSON.parse).then(data => new Map((data.entries ?? []).map(row => [`${row.symbol}|${row.fiscalYear}`, row])))
+    .catch(() => new Map());
+  return filingDatesTask;
+}
 
 const addDays = (iso, days) =>
   new Date(Date.parse(`${iso}T00:00:00Z`) + days * DAY).toISOString().slice(0, 10);
@@ -45,16 +53,21 @@ const addYears = (iso, years) => {
 /** The last close at or before a date. */
 function closeAt(closes, date) {
   let best = null;
+  let observedAt = null;
   for (const c of closes ?? []) {
-    if (c.date <= date) best = c.close;
+    if (c.date <= date) { best = c.close; observedAt = c.date; }
     else break;
   }
+  if (!observedAt || Date.parse(date) - Date.parse(observedAt) > 7 * DAY) return null;
   return best;
 }
 
 /** The day a fiscal year's statements could first have been read. */
-export function publishedOn(year) {
+export function publishedOn(year, { verifiedOnly = false } = {}) {
   const end = year.asOf ?? `${year.fiscalYear}-12-31`;
+  if (typeof year.publishedAt === 'string' && year.publicationSource
+    && /^\d{4}-\d{2}-\d{2}$/.test(year.publishedAt) && year.publishedAt > end) return year.publishedAt;
+  if (verifiedOnly) return null;
   return addDays(end, FILING_LAG_DAYS);
 }
 
@@ -106,7 +119,7 @@ function engineYear(row, prev, dps) {
     dpsPaid: dps,
     dps,
     roe: equityPositive ? ratio(row.netIncome, average(prev?.equity, row.equity)) : null,
-    roa: ratio(row.netIncome, average(prev?.assets, row.assets)),
+    roa: typeof row.roa === 'number' ? row.roa : ratio(row.ebit, average(prev?.assets, row.assets)),
     npm: row.npm ?? ratio(row.netIncome, row.revenue),
     // Negative equity makes leverage and ROE meaningless; THAI's insolvency
     // years produced a negative D/E that a `de <= 1.0` rule would have passed.
@@ -143,6 +156,7 @@ export function rebalanceDates(fiscalYears, holdYears) {
  */
 export function backtestCompany({
   history, dividends = [], closes = [], rebalances, holdYears, symbol = null, name = null,
+  publicationMode = 'estimated', isFinancial = false,
 }) {
   const dpsByYear = new Map();
   for (const d of dividends) {
@@ -154,10 +168,16 @@ export function backtestCompany({
   const out = [];
   for (const date of rebalances) {
     // Nothing is known before it was published.
-    const known = history.filter((y) => publishedOn(y) <= date);
+    const known = history.filter((y) => {
+      const publication = publishedOn(y, { verifiedOnly: publicationMode === 'verified' });
+      return publication && publication <= date;
+    }).sort((a,b) => a.fiscalYear - b.fiscalYear);
     if (known.length < 3) continue;
     const price = closeAt(closes, date);
-    const exit = closeAt(closes, addYears(date, holdYears));
+    const exitDate = addYears(date, holdYears);
+    // Do not turn an unfinished holding window into a complete return.
+    if (!closes.some(close => close.date >= exitDate)) continue;
+    const exit = closeAt(closes, exitDate);
     if (!(price > 0) || !(exit > 0)) continue;
 
     const rows = known.map((y, i) => engineYear(y, known[i - 1] ?? null, dpsByYear.get(y.fiscalYear) ?? null));
@@ -172,6 +192,7 @@ export function backtestCompany({
       // using a later figure would be looking forward.
       ttmEps: rows.at(-1).eps,
       history: { years: rows },
+      isFinancial,
     });
 
     // What the screen would have shown that day.
@@ -200,7 +221,6 @@ export function backtestCompany({
     // wrong thing: the cash that arrives twice a year is the reason the name
     // was on the list. The cash is counted here, and the benchmark counts it
     // the same way, so the two answers can be read against each other.
-    const exitDate = addYears(date, holdYears);
     const dividendCash = dividends
       .filter((d) => d.date > date && d.date <= exitDate)
       .reduce((sum, d) => sum + d.amount, 0);
@@ -210,6 +230,7 @@ export function backtestCompany({
       symbol,
       name,
       fiscalYear: rows.at(-1).fiscalYear,
+      publicationMode,
       score: quality.score,
       coverage: quality.coverage,
       checks: quality.checks,
@@ -364,8 +385,13 @@ export function summariseBacktest(observations, presetId = 'quality') {
     totals: {
       periods: perPeriod.length,
       names: flat.length,
-      portfolio: compound(perPeriod.map((p) => p.portfolio)),
-      universe: compound(perPeriod.map((p) => p.universe)),
+      // Overlapping holding windows cannot be compounded as a tradable path.
+      portfolio: portfolioMean,
+      universe: universeMean,
+      overlappingCompoundDiagnostic: {
+        portfolio: compound(perPeriod.map((p) => p.portfolio)),
+        universe: compound(perPeriod.map((p) => p.universe)),
+      },
       portfolioMean,
       universeMean,
     },
@@ -394,7 +420,7 @@ export async function initRuleEdges(filePath) {
   try {
     const raw = JSON.parse(await readFile(edgePath, 'utf8'));
     const rules = new Map((raw.rules ?? []).map((r) => [r.id, r]));
-    if (rules.size) {
+    if (rules.size && raw.version === BACKTEST_VERSION && raw.publicationMode === 'verified') {
       edgeCache = {
         at: Number(raw.at) || Date.now(),
         rules,
@@ -415,6 +441,8 @@ async function saveRuleEdges(rules, presets = {}) {
     await mkdir(dirname(edgePath), { recursive: true });
     await writeFile(edgePath, `${JSON.stringify({
       at: Date.now(),
+      version: BACKTEST_VERSION,
+      publicationMode: 'verified',
       rules: [...rules.values()].map((r) => ({
         id: r.id, passed: r.passed, failed: r.failed,
         passReturn: r.passReturn, failReturn: r.failReturn, edge: r.edge,
@@ -449,6 +477,7 @@ export async function ruleEdges(symbols, { maxAgeMs = EDGE_MAX_AGE_MS } = {}) {
     preset: 'quality',
     holdYears: 3,
     presets: EDGE_PRESETS,
+    publicationMode: 'verified',
   });
   edgeCache = {
     at: Date.now(),
@@ -500,7 +529,7 @@ export function ensureRuleEdges(symbols) {
   // The same freshness rule as the run itself: aged evidence is refreshed
   // on the next screen instead of being kept for the life of the process.
   const have = edgesFresh();
-  if (have || edgeCache.running) return;
+  if (have || edgeCache.running || (edgeCache.at && Date.now() - edgeCache.at < 60 * 60 * 1000)) return;
   edgeCache.running = true;
   ruleEdges(symbols)
     .catch((err) => console.warn(`[backtest] edge run failed: ${err.message}`))
@@ -519,7 +548,9 @@ export function ensureRuleEdges(symbols) {
  */
 export async function runBacktest({
   symbols, preset = 'quality', holdYears = 3, concurrency = 5, simulation = null, presets = null,
+  publicationMode = 'verified',
 }) {
+  const dates = await filingDates();
   let next = 0;
   const loaded = [];
   const runners = Array.from({ length: Math.min(concurrency, symbols.length) }, async () => {
@@ -531,7 +562,9 @@ export async function runBacktest({
           loadFinancials(symbol),
           annualHistory(symbol, { live: false }),
         ]);
-        loaded.push({ symbol, fin, history: history?.years ?? [] });
+        loaded.push({ symbol, fin, history: (history?.years ?? []).map(year => ({
+          ...year, ...(dates.get(`${symbol}|${year.fiscalYear}`) ?? {}),
+        })) });
       } catch {
         // A name the sources cannot answer is simply not in the test.
       }
@@ -549,6 +582,8 @@ export async function runBacktest({
     holdYears,
     symbol,
     name: fin.name,
+    isFinancial: fin.isFinancial === true,
+    publicationMode,
   }));
 
   const summary = summariseBacktest(observations, preset);
@@ -568,6 +603,18 @@ export async function runBacktest({
   return {
     ...summary,
     holdYears,
+    version: BACKTEST_VERSION,
+    publicationMode,
+    reliability: {
+      verifiedPublicationDates: publicationMode === 'verified',
+      statementVersionsVerified: false,
+      historicalUniverseVerified: false,
+      skippedUnknownPublicationYears: publicationMode === 'verified'
+        ? loaded.reduce((sum,item)=>sum+item.history.filter(y=>!publishedOn(y,{verifiedOnly:true})).length,0) : 0,
+      caveats: ['historical-statement-revisions', 'survivorship-bias', 'partial-rule-coverage',
+        'historical-ratio-basis-not-equivalent-to-live-set-scoring', 'corporate-actions-not-fully-verified',
+        ...(publicationMode === 'verified' ? [] : ['estimated-publication-dates'])],
+    },
     rebalances,
     byPreset,
     simulation: simulation
