@@ -1,0 +1,109 @@
+{
+  "symbol": "SIRI",
+  "issuerId": "0000001322",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "3a9b4feefa879242c8f0f695760263074152a4ff927464690a34efef8b27e4b1",
+  "records": [
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0577FIN270220260701460860E.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0577FIN280220252216030484E.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0577FIN270220242259290438E.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23025211.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202203/22027058.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202103/21024126.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202003/20024607.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19020888.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18019975.zip"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "companyName": "SANSIRI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17016876.zip"
+    }
+  ]
+}

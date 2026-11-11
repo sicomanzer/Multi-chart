@@ -1,0 +1,54 @@
+{
+  "symbol": "TRUE",
+  "issuerId": "0000033672",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033672&searchSymbol=TRUE&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "57fb1a6badf4acee15c133d18fa8e50b388666b8b02fe3aebde9c077ae691dd5",
+  "records": [
+    {
+      "symbol": "SET:TRUE",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1756ONE270320262011160517E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033672&searchSymbol=TRUE&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-05",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1756ONE050320251908370700E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033672&searchSymbol=TRUE&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-11",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1756ONE110320240759190790E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033672&searchSymbol=TRUE&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F1756E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033672&searchSymbol=TRUE&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:08 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 4 record(s) found) Name Year Receive Date Details TRUE CORPORATION PUBLIC COMPANY LIMITED 2025 27/03/2026 TRUE CORPORATION PUBLIC COMPANY LIMITED 2024 05/03/2025 TRUE CORPORATION PUBLIC COMPANY LIMITED 2023 11/03/2024 TRUE CORPORATION PUBLIC COMPANY LIMITED 2022 27/03/2023 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

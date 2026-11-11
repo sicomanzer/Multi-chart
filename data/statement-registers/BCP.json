@@ -1,0 +1,109 @@
+{
+  "symbol": "BCP",
+  "issuerId": "0000001385",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "0ff96580d93d8c99b5562491f9b6290dc7aa709ecfa98e0a4d580bef00f6b6ab",
+  "records": [
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0420FIN120220261716049750E.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0420FIN200220251131190325E.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0420FIN230220241207170375E.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23017794.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22016786.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21016402.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20016555.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19015289.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18020818.zip"
+    },
+    {
+      "symbol": "SET:BCP",
+      "companyName": "BANGCHAK CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17010965.zip"
+    }
+  ]
+}

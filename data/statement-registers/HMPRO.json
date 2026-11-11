@@ -1,0 +1,109 @@
+{
+  "symbol": "HMPRO",
+  "issuerId": "0000003191",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "2280458a69da089e483be6f95d0440884241284366aa79a56a1ba9bf32380e15",
+  "records": [
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0661FIN240220261717050290E.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0661FIN250220251721260374E.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0661FIN270220241741190637E.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23018893.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22019607.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21020842.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202003/20026400.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19019330.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18018860.zip"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "companyName": "HOME PRODUCT CENTER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17016604.zip"
+    }
+  ]
+}

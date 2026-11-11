@@ -1,0 +1,109 @@
+{
+  "symbol": "KTB",
+  "issuerId": "0000000013",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000013&searchSymbol=KTB&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "51ca99681bf1e44946c71706b67b0847179b0119b57c6dc9d7fad9dec8c2f8da",
+  "records": [
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150FIN250220261934260774E.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0150FIN210220251720200678E.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0150FIN290220241206250365E.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23019648.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22023314.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202103/21024583.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20023502.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19021785.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18020760.zip"
+    },
+    {
+      "symbol": "SET:KTB",
+      "companyName": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17018424.zip"
+    }
+  ]
+}

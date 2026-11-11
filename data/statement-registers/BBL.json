@@ -1,0 +1,109 @@
+{
+  "symbol": "BBL",
+  "issuerId": "0000000003",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000003&searchSymbol=BBL&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "a294879944f89044d97ad4e7937051683f170aa60e1921cb4337c03611cb2203",
+  "records": [
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001FIN250220261153470194E.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0001FIN200220250859050521E.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0001FIN210220241846520586E.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23020940.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22021940.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21019282.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20022448.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19015971.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014617.zip"
+    },
+    {
+      "symbol": "SET:BBL",
+      "companyName": "BANGKOK BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17014171.zip"
+    }
+  ]
+}

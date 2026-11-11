@@ -1,0 +1,149 @@
+{
+  "symbol": "KBANK",
+  "issuerId": "0000000022",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000022&searchSymbol=KBANK&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "49a5ef80de35169a78f2729ed87f676c93c3fbde1ac19f7322da5e799dedb47e",
+  "records": [
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016FIN260220262031024750E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202508/0016FIN280820252002415720E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/03/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202505/0016FIN140520252138110930E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/09/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202511/0016FIN131120251724030052E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0016FIN270220251512570805E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited (Restatement)",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016FIN260220262031024750E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0016FIN290220241913400748E.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23021193.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22021589.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21022353.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20022102.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19021667.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014589.zip"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "companyName": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17013545.zip"
+    }
+  ]
+}

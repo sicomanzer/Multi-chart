@@ -1,0 +1,133 @@
+{
+  "records": [
+    {
+      "symbol": "KBANK",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-26",
+      "heading": "Management Discussion and Analysis Yearly Ending 31 December 2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016NWS260220262106107970E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000022&searchSymbol=KBANK&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/KBANK-2025-sec-mda.pdf",
+      "sha256": "c129022e1279f9ddd67346d7a5d88e9613812152ec9b523c449d2617f1d2b034",
+      "observedAt": "2026-11-11T02:59:15.512Z",
+      "otherDatedVersions": []
+    },
+    {
+      "symbol": "BBL",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-26",
+      "heading": "Management Discussion and Analysis for the quarter and the year ended December 31, 2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001NWS260220261714037810E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000003&searchSymbol=BBL&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/BBL-2025-sec-mda.pdf",
+      "sha256": "449ef6bc08ddd4c338bab7b76a7259f5b72608ca4b1c2da25e351ab938f60dfd",
+      "observedAt": "2026-11-11T02:59:16.564Z",
+      "otherDatedVersions": []
+    },
+    {
+      "symbol": "KTB",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-25",
+      "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150NWS250220261953089120E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000013&searchSymbol=KTB&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/KTB-2025-sec-mda.pdf",
+      "sha256": "49f18834670ad8eaa2b2b8ee1617b905bb3c071a46665b805ec12815c273bd27",
+      "observedAt": "2026-11-11T02:59:17.371Z",
+      "otherDatedVersions": [
+        {
+          "symbol": "KTB",
+          "fiscalYear": 2025,
+          "publishedAt": "2026-01-21",
+          "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025",
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202601/0150NWS210120261827161640E.pdf",
+          "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000013&searchSymbol=KTB&dateFrom=20250101&dateTo=20261111"
+        }
+      ]
+    },
+    {
+      "symbol": "TTB",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-17",
+      "heading": "Management Discussion and Analysis Quarter 4 and 12-month period ending 31 Dec 2025 (Audited)",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068NWS170220261747581720E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000001104&searchSymbol=TTB&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/TTB-2025-sec-mda.pdf",
+      "sha256": "57b7b36bf5fc8b64a0b381728bc5e2c48186118351a40f4de703abb71eb279ab",
+      "observedAt": "2026-11-11T02:59:18.298Z",
+      "otherDatedVersions": [
+        {
+          "symbol": "TTB",
+          "fiscalYear": 2025,
+          "publishedAt": "2026-01-20",
+          "heading": "Management Discussion and Analysis Quarter 4 and 12-month period ending 31 Dec 2025 (Unaudited)",
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202601/0068NWS200120261232200480E.pdf",
+          "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000001104&searchSymbol=TTB&dateFrom=20250101&dateTo=20261111"
+        }
+      ]
+    },
+    {
+      "symbol": "KKP",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-24",
+      "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121NWS240220261247230190E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000034&searchSymbol=KKP&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/KKP-2025-sec-mda.pdf",
+      "sha256": "6ab081ec05078c9dc99a6bcb910b22a75dcc7a89dd475aef0f78511be7b8a9a9",
+      "observedAt": "2026-11-11T02:59:19.237Z",
+      "otherDatedVersions": [
+        {
+          "symbol": "KKP",
+          "fiscalYear": 2025,
+          "publishedAt": "2026-01-19",
+          "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025",
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202601/0121NWS190120261838167880E.pdf",
+          "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000034&searchSymbol=KKP&dateFrom=20250101&dateTo=20261111"
+        }
+      ]
+    },
+    {
+      "symbol": "TISCO",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-27",
+      "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025 (Audited)",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0999NWS270220261232398740E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000006887&searchSymbol=TISCO&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/TISCO-2025-sec-mda.pdf",
+      "sha256": "433dfc521744c248c37f2deaf7983d584a44f29ca717340ed7146c7a7024da9c",
+      "observedAt": "2026-11-11T02:59:20.048Z",
+      "otherDatedVersions": [
+        {
+          "symbol": "TISCO",
+          "fiscalYear": 2025,
+          "publishedAt": "2026-01-14",
+          "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025 (Unaudited)",
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202601/0999NWS140120260833409150E.pdf",
+          "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000006887&searchSymbol=TISCO&dateFrom=20250101&dateTo=20261111"
+        }
+      ]
+    },
+    {
+      "symbol": "SCB",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-19",
+      "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706NWS190220261240326960E.pdf",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20250101&dateTo=20261111",
+      "path": "data/bank-risk-evidence/SCB-2025-sec-mda.pdf",
+      "sha256": "2cb905cf44f39292bd479bf0c9ec0866934a916219fb380cd21e45b0d84d34c8",
+      "observedAt": "2026-11-11T02:59:20.795Z",
+      "otherDatedVersions": [
+        {
+          "symbol": "SCB",
+          "fiscalYear": 2025,
+          "publishedAt": "2026-01-21",
+          "heading": "Management Discussion and Analysis Yearly Ending 31 Dec 2025",
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202601/1706NWS210120261249404810E.pdf",
+          "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20250101&dateTo=20261111"
+        }
+      ]
+    }
+  ]
+}

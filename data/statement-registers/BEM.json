@@ -1,0 +1,109 @@
+{
+  "symbol": "BEM",
+  "issuerId": "0000024408",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000024408&searchSymbol=BEM&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "2fdd80f77f9cf8074ca6817430e093d1100e992b7f78a04e7276b10bde58f708",
+  "records": [
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1303FIN250220261622220396E.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1303FIN260220252007000327E.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1303FIN280220241706430651E.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23019554.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22020716.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21021247.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20021023.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19020453.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18019211.zip"
+    },
+    {
+      "symbol": "SET:BEM",
+      "companyName": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17012701.zip"
+    }
+  ]
+}

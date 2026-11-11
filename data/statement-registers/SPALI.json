@@ -1,0 +1,109 @@
+{
+  "symbol": "SPALI",
+  "issuerId": "0000001370",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000001370&searchSymbol=SPALI&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "f121666d78e281602b31219f9bfc26a0a74a051da6f1dfa571304911155a2dca",
+  "records": [
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0371FIN240220261845490692E.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0371FIN250220251815280321E.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0371FIN200220241823090936E.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23018514.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22019325.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21018970.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20019434.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19018792.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18012985.zip"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "companyName": "SUPALAI PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17012086.zip"
+    }
+  ]
+}

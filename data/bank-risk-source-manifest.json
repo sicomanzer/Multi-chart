@@ -1,0 +1,58 @@
+{
+  "records": [
+    {
+      "name": "BBL-2025-mda",
+      "source": "https://www.bangkokbank.com/-/media/files/investor-relations/financial-results/2025/mda4q_en2025.pdf?hash=1A5689409235D927672EA73BF3E1CCAE&sc_lang=en",
+      "error": "HTTP 404"
+    },
+    {
+      "name": "KBANK-2025-ar",
+      "source": "https://www.kasikornbank.com/en/IR/FinanInfoReports/financialReports/y2025-onereport-en.pdf",
+      "path": "data/bank-risk-evidence/KBANK-2025-ar.pdf",
+      "sha256": "04bfb668214c9ef26b6f10bf493b403b31427edd07fb42bd5685bc367b17e15a",
+      "observedAt": "2026-11-11T02:56:57.586Z"
+    },
+    {
+      "name": "TTB-2025-mda",
+      "source": "https://media.ttbbank.com/5005/ir_set_news/7855-en.pdf",
+      "path": "data/bank-risk-evidence/TTB-2025-mda.pdf",
+      "sha256": "8720edb8cd10e68e5aa85da01e00425a949b16884d4cf46ce19ab0cb9ab456bf",
+      "observedAt": "2026-11-11T02:56:57.588Z"
+    },
+    {
+      "name": "TISCO-2025-ar",
+      "source": "https://www.tisco.co.th/wp-content/uploads/2025-group-annual-report-en.pdf",
+      "path": "data/bank-risk-evidence/TISCO-2025-ar.pdf",
+      "sha256": "6758d58bd4322037dd56867f14c77a054a6e0ec8a4402cc9b67095f5f91e17fc",
+      "observedAt": "2026-11-11T02:56:57.598Z"
+    },
+    {
+      "name": "TISCO-2025-mda",
+      "source": "https://www.tisco.co.th/wp-content/uploads/MDA-2025E.pdf",
+      "path": "data/bank-risk-evidence/TISCO-2025-mda.pdf",
+      "sha256": "a3d151aa4dace14c4d371ad889c8516008c8851f235d395c8e4b4e52b959c1ff",
+      "observedAt": "2026-11-11T02:56:57.599Z"
+    },
+    {
+      "name": "SCB-2025-mda",
+      "source": "https://investor.scbx.com/storage/document/shareholder-meetings/agm2026/financial-summary-management-discussion-and-analysis-of-2025-en.pdf",
+      "path": "data/bank-risk-evidence/SCB-2025-mda.pdf",
+      "sha256": "2278738d48bb03662087a09c0307efbe214709331dd42353dbc8725cd3ae6a05",
+      "observedAt": "2026-11-11T02:56:57.605Z"
+    },
+    {
+      "name": "SCB-2025-news",
+      "source": "https://www.scbx.com/en/news/scbx-reports-2025-net-profit/",
+      "path": "data/bank-risk-evidence/SCB-2025-news.html",
+      "sha256": "754933cf38bebb34ef4715cddf093fc5caa2cc838888047abda6fa57a7c4bf86",
+      "observedAt": "2026-11-11T02:56:57.606Z"
+    },
+    {
+      "name": "KKP-highlights",
+      "source": "https://ir.kkpfg.com/en/financial-information/financial-highlights",
+      "path": "data/bank-risk-evidence/KKP-highlights.html",
+      "sha256": "f551270af5e32382eddb82a9e9086ac0b84dc40878477dd9e0339237a10dc697",
+      "observedAt": "2026-11-11T02:56:57.607Z"
+    }
+  ]
+}

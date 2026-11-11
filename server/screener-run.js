@@ -10,15 +10,23 @@
  */
 import { loadFinancials } from './fin.js';
 import { getSetFundamentals } from './set-fundamentals.js';
+import {isBankSymbol} from './business-models.js';
+import {loadStatementVersions,bankScoringYears} from './statement-versions.js';
+import {loadBankRisk,selectBankRisk} from './bank-risk.js';
 
 async function attachOfficialHistory(fin) {
   if (!fin.symbol?.startsWith('SET:')) return fin;
   const result = await getSetFundamentals([fin.symbol]);
   const official = result.data[fin.symbol];
+  const bankYears=isBankSymbol(fin.symbol)
+    ? bankScoringYears(await loadStatementVersions({symbols:[fin.symbol]}),fin.symbol,new Date().toISOString().slice(0,10)):null;
+  const bankRisk=bankYears?selectBankRisk(await loadBankRisk({symbols:[fin.symbol]}),fin.symbol,bankYears.at(-1)?.fiscalYear,new Date()):null;
   return { ...fin, officialAnnual: official?.annualYears ?? [],
+    ...(bankYears?{bankScoreYears:bankYears}:{}),
+    bankRisk,
     officialMultiples: { pe: official?.pe?.value ?? null, pbv: official?.pbv?.value ?? null },
     officialAnnualStale: Boolean(official?.stale),
-    isFinancial: fin.isFinancial || official?.accountFormId === '1',
+    isFinancial: fin.isFinancial || isBankSymbol(fin.symbol) || official?.accountFormId === '1',
     ...(official?.accountFormId === '5' ? { dataIssue: 'reit-framework-not-supported' } : {}) };
 }
 
@@ -277,14 +285,17 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   // long history is used for revenue and profit, and only the four reconciled
   // Yahoo years are allowed to supply the per-share series.
   const growthYears = buildGrowthHistory(trusted, history);
+  const scoringYears=isBankSymbol(fin.symbol)?(fin.bankScoreYears??[]):trusted;
   const quality = scoreQuality({
-    years: trusted,
+    years: scoringYears,
     dividends: fin.dividends,
     price: fin.price,
     asOf,
     ttmEps,
     isFinancial: fin.isFinancial === true,
-    history: growthYears ? { years: growthYears } : null,
+    isBank:isBankSymbol(fin.symbol),
+    bankRisk:fin.bankRisk??null,
+    history: isBankSymbol(fin.symbol)?{years:scoringYears}:growthYears ? { years: growthYears } : null,
   });
 
   // What each rule has actually done, attached to the rule it belongs to.
@@ -294,7 +305,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   // and kept for a day, so the run happens in the background and the answer
   // arrives on the next refresh.
   const edges = cachedRuleEdges();
-  for (const check of quality.checks) {
+  for (const check of quality.qualityModel==='bank'?[]:quality.checks) {
     const edge = edges.get(check.id);
     if (edge && Number.isFinite(edge.edge)) check.edge = edge.edge;
   }
@@ -501,6 +512,11 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     ttmEpsBasis: fin.ttm?.epsBasis ?? null,
     ttmBvps: fin.ttm?.bvps ?? null,
     score: quality.score,
+    scoringYearCount:scoringYears.length,
+    qualityModel:quality.qualityModel,
+    bankRiskComplete:quality.bankRiskComplete,
+    bankPolicy:quality.bankPolicy,
+    bankRisk:fin.bankRisk??null,
     coverage: quality.coverage,
     dataCoverage: quality.dataCoverage,
     passed: quality.passed,
@@ -516,7 +532,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     icr: quality.icr,
     dividendYield: quality.dividendYield,
     recurringDividendYield: quality.dividendYield,
-    qualityRatioSource: fin.officialAnnual ? 'set.or.th' : 'statement-model',
+    qualityRatioSource:isBankSymbol(fin.symbol)?'sec-reviewed-bank':fin.officialAnnual ? 'set.or.th' : 'statement-model',
     qualityRatiosStale: Boolean(fin.officialAnnualStale),
     payout: quality.payout,
     streak: quality.streak,

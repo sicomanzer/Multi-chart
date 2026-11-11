@@ -1,0 +1,131 @@
+{
+  "symbol": "SIRI",
+  "issuerId": "0000001322",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "56aae87f38c8ca8c0d2cac83ed892304375142fd14339d2f07c34fbb55d36464",
+  "records": [
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-31",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0577E1N310320261035210094E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0577ONE270320251540430844E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-29",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0577ONE290320241420310675E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-04-04",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0577E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-03-30",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0577E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-04-07",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0577E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-06-25",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0577E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-05-24",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0577E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-04-10",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0577E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-04-03",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0577E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-12-16",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0577E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001322&searchSymbol=SIRI&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:11 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 11 record(s) found) Name Year Receive Date Details SANSIRI PUBLIC COMPANY LIMITED 2025 31/03/2026 SANSIRI PUBLIC COMPANY LIMITED 2024 27/03/2025 SANSIRI PUBLIC COMPANY LIMITED 2023 29/03/2024 SANSIRI PUBLIC COMPANY LIMITED 2022 04/04/2023 SANSIRI PUBLIC COMPANY LIMITED 2021 30/03/2022 SANSIRI PUBLIC COMPANY LIMITED 2020 07/04/2021 SANSIRI PUBLIC COMPANY LIMITED 2019 25/06/2020 SANSIRI PUBLIC COMPANY LIMITED 2018 24/05/2019 SANSIRI PUBLIC COMPANY LIMITED 2017 10/04/2018 SANSIRI PUBLIC COMPANY LIMITED 2016 03/04/2017 SANSIRI PUBLIC COMPANY LIMITED 2015 16/12/2016 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

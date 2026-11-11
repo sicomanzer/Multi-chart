@@ -1,0 +1,109 @@
+{
+  "symbol": "GUNKUL",
+  "issuerId": "0000007101",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "29fa08c49e3e312e98c108af99fc7af92cff6cee3e3da502ead2ea715230e874",
+  "records": [
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202603/1041FIN270220261846260260E.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1041FIN270220252207310406E.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1041FIN280220241731510388E.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23024253.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22020267.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21020622.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20019608.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19015459.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014446.zip"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "companyName": "GUNKUL ENGINEERING PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17016998.zip"
+    }
+  ]
+}

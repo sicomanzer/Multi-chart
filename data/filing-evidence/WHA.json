@@ -1,0 +1,131 @@
+{
+  "symbol": "WHA",
+  "issuerId": "0000007932",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "f4f67b0be711872b3b39e5ee7e2a38a965b0a7511cddce1d4411ed35be92d18f",
+  "records": [
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1107ONE270320261733290551E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-25",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1107ONE250320251234100707E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-26",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1107ONE260320241010150469E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F1107E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-03-31",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F1107E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-06-15",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1107E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-06-16",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1107E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-04-01",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1107E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-03-29",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1107E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-04-11",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1107E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-04-29",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1107E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007932&searchSymbol=WHA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:09 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 12 record(s) found) Name Year Receive Date Details WHA CORPORATION PUBLIC COMPANY LIMITED 2025 27/03/2026 WHA CORPORATION PUBLIC COMPANY LIMITED 2024 25/03/2025 WHA CORPORATION PUBLIC COMPANY LIMITED 2023 26/03/2024 WHA CORPORATION PUBLIC COMPANY LIMITED 2022 27/03/2023 WHA CORPORATION PUBLIC COMPANY LIMITED 2021 31/03/2022 WHA CORPORATION PUBLIC COMPANY LIMITED 2020 15/06/2021 WHA CORPORATION PUBLIC COMPANY LIMITED 2019 16/06/2020 WHA CORPORATION PUBLIC COMPANY LIMITED 2018 01/04/2019 WHA CORPORATION PUBLIC COMPANY LIMITED 2017 29/03/2018 WHA CORPORATION PUBLIC COMPANY LIMITED 2016 11/04/2017 WHA CORPORATION PUBLIC COMPANY LIMITED 2015 29/04/2016 WHA CORPORATION PUBLIC COMPANY LIMITED 2014 29/04/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

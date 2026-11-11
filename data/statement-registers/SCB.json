@@ -1,0 +1,59 @@
+{
+  "symbol": "SCB",
+  "issuerId": "0000033250",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "c7aaa25cec427eea02696ddb78a1aa17123b23bb2a7a1f223251ff14a20f41d5",
+  "records": [
+    {
+      "symbol": "SET:SCB",
+      "companyName": "SCB X PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706FIN190220261234280721E.zip"
+    },
+    {
+      "symbol": "SET:SCB",
+      "companyName": "SCB X PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1706FIN190220251132070518E.zip"
+    },
+    {
+      "symbol": "SET:SCB",
+      "companyName": "SCB X PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1706FIN200220241653550858E.zip"
+    },
+    {
+      "symbol": "SET:SCB",
+      "companyName": "SCB X PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23016976.zip"
+    },
+    {
+      "symbol": "SET:SCB",
+      "companyName": "SCB X PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Company & Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=402955&sq=0&v=10"
+    }
+  ]
+}

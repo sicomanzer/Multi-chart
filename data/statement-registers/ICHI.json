@@ -1,0 +1,99 @@
+{
+  "symbol": "ICHI",
+  "issuerId": "0000008246",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000008246&searchSymbol=ICHI&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "72e042f457076fe7281d673be06f0af3024afbca599b1179cddd8462b81f74b3",
+  "records": [
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1178FIN190220261649090653E.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1178FIN240220251715410606E.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1178FIN210220241720340417E.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23023715.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22020479.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21022975.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20020266.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19017421.zip"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "companyName": "ICHITAN GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014727.zip"
+    }
+  ]
+}

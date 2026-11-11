@@ -3,3 +3,11 @@
 * text=auto
 *.cmd text eol=crlf
 *.bat text eol=crlf
+
+# Evidence hashes cover original bytes, including line endings in HTML/JSON.
+data/bank-risk-evidence/** binary
+data/filing-evidence/** binary
+data/statement-evidence/** binary
+*.pdf binary
+*.xls binary
+*.xlsx binary

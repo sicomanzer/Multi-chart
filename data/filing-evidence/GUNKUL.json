@@ -1,0 +1,131 @@
+{
+  "symbol": "GUNKUL",
+  "issuerId": "0000007101",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "04646dae5af9a9b982ba53b7a049cf638fa20459db41e996254894fa15916a94",
+  "records": [
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-25",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1041E1N250320262148260107E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-24",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1041ONE240320250722380845E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1041ONE270320242048340132E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F1041E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-04-01",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F1041E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-04-05",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1041E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-03-24",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1041E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-04-10",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1041E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-04-02",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1041E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-05-03",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1041E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-03-31",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A1041E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000007101&searchSymbol=GUNKUL&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:09 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 12 record(s) found) Name Year Receive Date Details GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2025 25/03/2026 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2024 24/03/2025 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2023 27/03/2024 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2022 27/03/2023 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2021 01/04/2022 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2020 05/04/2021 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2019 24/03/2020 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2018 10/04/2019 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2017 02/04/2018 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2016 03/05/2017 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2015 31/03/2016 GUNKUL ENGINEERING PUBLIC COMPANY LIMITED 2014 07/04/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

@@ -37,3 +37,6 @@ data/*.jsonl
 # The measured rule edges are a cache: the app rebuilds them in the background
 # and they change every time the test is run.
 data/rule-edges.json
+
+# Local audit reader dependencies
+.tools/

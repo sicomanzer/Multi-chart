@@ -1,0 +1,109 @@
+{
+  "symbol": "KAMART",
+  "issuerId": "0000001349",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000001349&searchSymbol=KAMART&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "ceeb1e5b7936de9e4ebcb651a96b0d61d1419ee25878d8127b89bdcf28ae2168",
+  "records": [
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0467FIN260220261827480287E.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0467FIN240220251726460650E.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0467FIN280220241703450949E.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23022391.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22021436.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21021968.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20023574.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19020086.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18018702.zip"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "companyName": "KARMARTS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17016448.zip"
+    }
+  ]
+}

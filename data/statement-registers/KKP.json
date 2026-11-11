@@ -1,0 +1,169 @@
+{
+  "symbol": "KKP",
+  "issuerId": "0000000034",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000034&searchSymbol=KKP&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "00994900fd188dd2c17fc34718bf76cdd7bf6a7084b1cccc43333ef134d259e7",
+  "records": [
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=747112&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121FIN240220261206130465E.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Company & Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=681025&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0121FIN200220251116110998E.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=596228&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0121FIN220220241150170699E.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Company & Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=511265&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23020203.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Company & Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=406637&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22021224.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Company & Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=327562&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21021741.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20023548.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19014871.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014461.zip"
+    },
+    {
+      "symbol": "SET:KKP",
+      "companyName": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17013409.zip"
+    }
+  ]
+}

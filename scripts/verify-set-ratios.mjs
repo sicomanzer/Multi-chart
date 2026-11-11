@@ -46,6 +46,16 @@ console.log('Screener history minimums, SET annual overrides and REIT exclusion 
 assert.equal(publishedOn({fiscalYear:2020},{verifiedOnly:true}),null);
 const announced={fiscalYear:2020,asOf:'2020-12-31',publishedAt:'2021-02-25',publicationSource:'https://www.set.or.th/official-test-fixture'};
 assert.equal(publishedOn(announced,{verifiedOnly:true}),'2021-02-25');
+assert.equal(publishedOn({...announced,availableFrom:'2021-02-26'},{verifiedOnly:true}),'2021-02-26');
+assert.equal(publishedOn({...announced,availableFrom:'2021-02-25'},{verifiedOnly:true}),null);
+const ledger=JSON.parse(await readFile(new URL('../data/filing-dates.json',import.meta.url),'utf8'));
+assert.ok(ledger.entries.length>=400);
+assert.equal(new Set(ledger.entries.map(r=>`${r.symbol}|${r.fiscalYear}`)).size,ledger.entries.length);
+for(const record of ledger.entries){
+  assert.equal(new URL(record.publicationSource).hostname,'market.sec.or.th');
+  assert.equal(record.firstPublicationVerified,false);
+  assert.equal(Date.parse(record.availableFrom)-Date.parse(record.publishedAt),86400000);
+}
 assert.equal(publishedOn({...announced,publishedAt:'2020-12-01'},{verifiedOnly:true}),null);
 const years=[2016,2017,2018].map(y=>({fiscalYear:y,asOf:`${y}-12-31`,publishedAt:`${y+1}-02-25`,publicationSource:announced.publicationSource,netIncome:100,revenue:1000,assets:1000,equity:500,roa:.1,roe:.2,de:.5,eps:1}));
 const prices=[{date:'2019-03-31',close:10},{date:'2021-03-31',close:12}];

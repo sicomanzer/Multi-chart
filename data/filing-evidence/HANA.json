@@ -1,0 +1,131 @@
+{
+  "symbol": "HANA",
+  "issuerId": "0000000828",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "5f9c4470af2a6f20f7ddf40362a1d20fdf90af9c3a463b4e5a70aaefb6fda85c",
+  "records": [
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-31",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0324E1N310320262134520691E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-04-25",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0324E1N250420251839460201E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-04-17",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0324ONE170420240857520913E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-04-07",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0324E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-04-07",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0324E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-04-07",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0324E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-04-01",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0324E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-04-01",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0324E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-03-30",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0324E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-04-10",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0324E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-04-18",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0324E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000828&searchSymbol=HANA&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:08 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 12 record(s) found) Name Year Receive Date Details HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2025 31/03/2026 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2024 25/04/2025 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2023 17/04/2024 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2022 07/04/2023 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2021 07/04/2022 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2020 07/04/2021 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2019 01/04/2020 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2018 01/04/2019 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2017 30/03/2018 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2016 10/04/2017 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2015 18/04/2016 HANA MICROELECTRONICS PUBLIC COMPANY LIMITED 2014 17/04/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

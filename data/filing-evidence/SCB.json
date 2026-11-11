@@ -1,0 +1,54 @@
+{
+  "symbol": "SCB",
+  "issuerId": "0000033250",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "aafd5e584e7108145b1a333008e5bf0d327867c2aa5ff631506781e425cd3096",
+  "records": [
+    {
+      "symbol": "SET:SCB",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-09",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1706ONE090320262211530010E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SCB",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-06",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1706ONE060320251325580707E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SCB",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-12",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/1706ONE120320240805350800E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:SCB",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-15",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F1706E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:08 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 4 record(s) found) Name Year Receive Date Details SCB X PUBLIC COMPANY LIMITED 2025 09/03/2026 SCB X PUBLIC COMPANY LIMITED 2024 06/03/2025 SCB X PUBLIC COMPANY LIMITED 2023 12/03/2024 SCB X PUBLIC COMPANY LIMITED 2022 15/03/2023 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

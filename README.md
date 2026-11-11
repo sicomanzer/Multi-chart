@@ -2,6 +2,28 @@
 
 ## Latest desktop workflow
 
+- FY2025 bank risk metrics retain official PDF evidence, reporting scopes and
+  usable dates for seven groups. KKP uses an explicitly disclosed banking-portfolio
+  assessment profile, with its POCI definitions shown separately; its reported
+  NPL and coverage fail the screening thresholds rather than appearing unknown.
+  TISCO capital uses 18.97% from financial notes with observation-based
+  availability, not the projected MD&A figure. Earlier risk years remain unknown
+  pending numerical review. See [the bank risk source review](BANK-RISK-SOURCES-2026-11-11.md).
+
+- Banks use a separate profitability model and reviewed SEC statements: 64
+  original issuer-years for KBANK, BBL, KTB, TTB, KKP, TISCO and SCB X, plus
+  15 later comparative snapshots. Missing capital/NPL/coverage evidence blocks
+  preset qualification rather than awarding a pass. Net-profit bank ROA is
+  separated from SET headline ROA. See [bank coverage and model limits](BANK-MODEL-AUDIT-2026-11-11.md).
+
+- Backtests default to reviewed official statement snapshots, with no provider
+  fallback. Numerical coverage is 70 issuer-years (2016–2025) for PTT, PTTEP,
+  ADVANC, HMPRO, KCE, BCP and MINT, plus 16 later comparative snapshots. The
+  413 SEC receipt dates do not certify all other statement values. EPS with
+  unreconciled share units is excluded. Source documents and usable dates can
+  be inspected in the backtest. Provider-history modes are labelled approximate.
+  See [coverage, differences and revision handling](STATEMENT-EXPANSION-2026-11-11.md).
+
 - Thai stock headline P/E, P/BV, D/E and dividend yield now use SET's published
   values directly, on both chart footers and screener rows. D/E uses SET's
   liabilities/equity definition. Price ratios and statement ratios retain
@@ -14,8 +36,11 @@
   Cash-flow and valuation models remain statement-based. Backtests now separate
   verified publication dates from estimated dates, reject incomplete holding
   windows and report mean window returns rather than compounding overlapping
-  periods. The verified-date registry is currently empty, so that mode reports
-  insufficient history. Estimated results are not validated historical performance.
+  periods. The availability registry contains 413 SEC annual-report receipt
+  records for 41 symbols, usable from the next day. These are conservative
+  availability dates, not verified earliest announcements. See
+  [coverage and evidence](SEC-AVAILABILITY-2026-11-11.md). Historical statement
+  versions remain unverified; results are not validated historical performance.
 - DDM includes nine sensitivity scenarios and the terminal-value share. REIT
   profiles show SET NAV and liabilities/assets, while scores and fair values
   remain unavailable without verified adjusted distribution data. See

@@ -1,0 +1,119 @@
+{
+  "symbol": "ADVANC",
+  "issuerId": "0000000807",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000807&searchSymbol=ADVANC&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "b2cbd01dc70ced69f2da2f3abae776d9ebea0b83adaca342889ef6991b792850",
+  "records": [
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0268FIN030220261856210594E.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0268FIN070220251652580720E.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0268FIN060220241830510618E.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23013236.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22012324.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21012753.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "http://capital.sec.or.th/webapp/corp_fin/cgi-bin/get_zip_all_public_page.php?report_type=FS&lang=E&comp_id=0268&year=2019&period=12&as_of=2019-12-31&set_id=0268&fs_type=02"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20011242.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19010144.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18008588.zip"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "companyName": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17007574.zip"
+    }
+  ]
+}

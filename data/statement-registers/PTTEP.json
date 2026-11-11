@@ -1,0 +1,149 @@
+{
+  "symbol": "PTTEP",
+  "issuerId": "0000001153",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000001153&searchSymbol=PTTEP&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "a625c2f518f349e99a1b5fabe5d182b9b90d04b8d651db2288fd871e7a7da6b4",
+  "records": [
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=744273&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0355FIN090220261913540536E.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=681693&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0355FIN130220251726400316E.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=594166&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0355FIN120220241825320598E.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/ipos/Common/IPOSGetFile.aspx?id=512429&sq=0&v=10"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23013600.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22014604.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21015148.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20015475.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19014572.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18012236.zip"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "companyName": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17010794.zip"
+    }
+  ]
+}

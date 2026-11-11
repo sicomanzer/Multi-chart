@@ -104,6 +104,7 @@ const CHECK_ORDER = [
   'roeLevel', 'roeConsistency', 'roaLevel', 'npmLevel', 'npmTrend', 'npmPositive',
   'epsGrowth', 'revenueGrowth', 'earningsStability',
   'debtLevel', 'interestCoverage', 'cfoPositive', 'cfoBeatsEarnings', 'fcfPositive',
+  'bankCapitalAdequacy','bankNpl','bankNplCoverage',
   'dividendYield', 'payoutBand', 'payoutCeiling', 'dividendStreak',
 ];
 
@@ -111,6 +112,7 @@ const CHECK_ORDER = [
 const RATIO_CHECKS = new Set([
   'roeLevel', 'roaLevel', 'npmLevel', 'dividendYield', 'payoutBand', 'payoutCeiling', 'npmTrend',
   'epsGrowth', 'revenueGrowth',
+  'bankCapitalAdequacy','bankNpl','bankNplCoverage',
 ]);
 /** Ratios quoted as a plain number, like the D/E the framework specifies. */
 const DECIMAL_CHECKS = new Set(['debtLevel']);
@@ -128,7 +130,7 @@ function formatCheckValue(check) {
   if (YEAR_CHECKS.has(check.id)) return tp('scr.years', v);
   if (MULTIPLE_CHECKS.has(check.id)) return `${v.toFixed(1)}×`;
   if (DECIMAL_CHECKS.has(check.id)) return v.toFixed(2);
-  if (RATIO_CHECKS.has(check.id)) return `${(v * 100).toFixed(1)}%`;
+  if (RATIO_CHECKS.has(check.id)) return `${(v * 100).toFixed(check.id.startsWith('bank')?(check.reportedDecimals??2):1)}%`;
   return String(v);
 }
 
@@ -658,7 +660,7 @@ function paintToolbar(body, state, rerender, setAuto) {
         state.backtest = await api.screenerBacktest({
           preset: state.preset,
           holdYears: state.holdYears,
-          publicationMode: state.publicationMode ?? 'verified',
+          publicationMode: state.publicationMode ?? 'original',
           simulation: state.simulation,
         });
       } catch (err) {
@@ -710,11 +712,11 @@ function paintBacktest(body, state, rerender) {
   const mode = document.createElement('select');
   mode.className = 'input';
   mode.setAttribute('aria-label', t('scr.backtest.publicationMode'));
-  for (const value of ['verified', 'estimated']) {
+  for (const value of ['original', 'verified', 'estimated']) {
     const option = document.createElement('option');
     option.value = value;
     option.textContent = t(`scr.backtest.${value}`);
-    option.selected = value === (state.publicationMode ?? 'verified');
+    option.selected = value === (state.publicationMode ?? 'original');
     mode.appendChild(option);
   }
   mode.addEventListener('change', async () => {
@@ -741,12 +743,60 @@ function paintBacktest(body, state, rerender) {
   const result = state.backtest;
   const reliability = document.createElement('p');
   reliability.className = 'section__hint';
-  reliability.textContent = t(result.publicationMode === 'verified'
-    ? 'scr.backtest.verifiedNote' : 'scr.backtest.estimatedNote');
+  reliability.textContent = t(`scr.backtest.${result.publicationMode ?? 'original'}Note`);
   if (result.reliability?.skippedUnknownPublicationYears) {
     reliability.textContent += ` (${result.reliability.skippedUnknownPublicationYears})`;
   }
+  if (result.publicationMode === 'original') {
+    reliability.textContent += ' ' + t('scr.backtest.reviewedCoverage', {
+      symbols: result.reliability?.reviewedSymbols ?? 0,
+      years: result.reliability?.reviewedIssuerYears ?? 0,
+      excluded: result.reliability?.excludedUnreviewedIssuerYears ?? 0,
+    });
+  }
   box.appendChild(reliability);
+  if(result.reliability?.bankRiskIncompleteObservations){
+    const note=document.createElement('p');note.className='section__hint';
+    note.textContent=t('scr.bankRiskMissing');box.appendChild(note);
+  }
+  if(result.statementEvidence?.length){
+    const details=document.createElement('details');
+    details.className='scr-statement-evidence';
+    const heading=document.createElement('summary');
+    heading.textContent=t('scr.backtest.evidence',{count:result.statementEvidence.length});
+    details.appendChild(heading);
+    const hint=document.createElement('p');
+    hint.className='section__hint';
+    hint.textContent=t('scr.backtest.evidenceNote');
+    details.appendChild(hint);
+    const wrap=document.createElement('div');
+    wrap.className='scr-table-wrap';
+    const table=document.createElement('table');
+    table.className='scr-table';
+    const head=document.createElement('tr');
+    for(const key of ['evidenceSymbol','evidenceYear','evidenceFrom','evidenceType','evidenceSource']){
+      const th=document.createElement('th');th.textContent=t(`scr.backtest.${key}`);head.appendChild(th);
+    }
+    const thead=document.createElement('thead');thead.appendChild(head);table.appendChild(thead);
+    const tbody=document.createElement('tbody');
+    for(const doc of result.statementEvidence){
+      const tr=document.createElement('tr');
+      for(const value of [doc.symbol,doc.fiscalYear,doc.availableFrom,
+        t(doc.scope==='audited-consolidated-comparative'?'scr.backtest.evidenceComparative':'scr.backtest.evidenceCurrent')]){
+        const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);
+      }
+      const td=document.createElement('td');
+      try{
+        const url=new URL(doc.source);
+        if(url.protocol==='https:'&&url.hostname==='market.sec.or.th'){
+          const link=document.createElement('a');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';
+          link.textContent=t('scr.backtest.evidenceOpen');td.appendChild(link);
+        }
+      }catch{ /* A malformed source is not an actionable link. */ }
+      tr.appendChild(td);tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);wrap.appendChild(table);details.appendChild(wrap);box.appendChild(details);
+  }
   const totals = result.totals ?? {};
   const summary = document.createElement('p');
   summary.className = 'section__hint';
@@ -814,7 +864,7 @@ function paintBacktest(body, state, rerender) {
     const tr = document.createElement('tr');
     const edge = r.edge ?? 0;
     tr.innerHTML = `
-      <td>${escape(t(`scr.check.${r.id}`, null, r.id))}</td>
+      <td>${escape(t(r.model==='bank'&&['roeLevel','roeConsistency','roaLevel'].includes(r.id)?`scr.bank.${r.id}`:`scr.check.${r.id}`, null, r.id))}${r.model==='bank'?` (${escape(t('scr.bankModelLabel'))})`:''}</td>
       <td class="num">${r.passed} (${percent(r.passReturn)})</td>
       <td class="num">${r.failed} (${percent(r.failReturn)})</td>
       <td class="num ${edge >= 0 ? 'is-up' : 'is-down'}">${percent(edge)}</td>`;
@@ -952,7 +1002,7 @@ async function runBacktest(state, rerender) {
   rerender();
   try {
     state.backtest = await api.screenerBacktest({
-      publicationMode: state.publicationMode ?? 'verified',
+      publicationMode: state.publicationMode ?? 'original',
       preset: state.preset,
       holdYears: state.holdYears,
       simulation: state.simulation,
@@ -1731,8 +1781,19 @@ function scorecard(detail) {
   box.appendChild(section(t('scr.scorecard'), t('scr.scorecardHint', {
     passed: detail.passed,
     total: detail.checks.length,
-    years: detail.yearCount,
+    years: detail.scoringYearCount??detail.yearCount,
   })));
+  if(detail.qualityModel==='bank'){
+    const note=document.createElement('p');note.className='section__hint';
+    note.textContent=t('scr.bankBasis');box.appendChild(note);
+    if(detail.bankRisk?.basis==='group-capital-and-reported-banking-portfolio'){
+      const scope=document.createElement('p');scope.className='section__hint';scope.textContent=t('scr.bankKKPProfile');box.appendChild(scope);
+    }
+    if(!detail.bankRiskComplete){
+      const missing=document.createElement('p');missing.className='section__hint';
+      missing.textContent=t('scr.bankRiskMissing');box.appendChild(missing);
+    }
+  }
 
   if (detail.qualityRatioSource === 'set.or.th') {
     const basis = document.createElement('p');
@@ -1764,13 +1825,52 @@ function scorecard(detail) {
     row.className = `scr-check is-${verdict}`;
     row.innerHTML = `
       <span class="scr-check__mark">${verdict === 'pass' ? '✓' : verdict === 'na' ? '–' : verdict === 'warn' ? '!' : '✕'}</span>
-      <span class="scr-check__label">${escape(t(`scr.check.${id}`))}${warn}</span>
+      <span class="scr-check__label">${escape(t(detail.qualityModel==='bank'&&['roeLevel','roeConsistency','roaLevel'].includes(id)?`scr.bank.${id}`:`scr.check.${id}`))}${warn}</span>
       <span class="scr-check__value">${escape(formatCheckValue(check))}</span>
       <span class="scr-check__verdict">${escape(t(`scr.verdict.${verdict}`))}${edge}</span>`;
-    row.title = t(`scr.check.${id}.hint`, { threshold: formatThreshold(check) });
+    row.title = t(detail.qualityModel==='bank'&&id==='roaLevel'?'scr.bank.roaHint'
+      :detail.qualityModel==='bank'&&id==='roeConsistency'?'scr.bank.roeConsistencyHint':`scr.check.${id}.hint`, { threshold: formatThreshold(check) });
     list.appendChild(row);
   }
   box.appendChild(list);
+  if(detail.qualityModel==='bank'&&detail.bankRisk?.metrics){
+    const risk=detail.bankRisk;
+    const heading=document.createElement('h4');heading.textContent=t('scr.bankEvidence');box.appendChild(heading);
+    const hint=document.createElement('p');hint.className='section__hint';
+    hint.textContent=t('scr.bankEvidenceHint',{year:risk.fiscalYear});box.appendChild(hint);
+    const wrap=document.createElement('div');wrap.className='scr-table-wrap';
+    const table=document.createElement('table');table.className='scr-table';
+    const head=document.createElement('tr');
+    for(const key of ['bankMetric','bankReportedValue','bankScope','bankEvidenceStatus','bankUsableFrom','bankEvidenceSource']){
+      const th=document.createElement('th');th.textContent=t(`scr.${key}`);head.appendChild(th);
+    }
+    const thead=document.createElement('thead');thead.appendChild(head);table.appendChild(thead);
+    const tbody=document.createElement('tbody');
+    for(const [key,id] of [['capitalAdequacy','bankCapitalAdequacy'],['npl','bankNpl'],['nplCoverage','bankNplCoverage']]){
+      const metric=risk.metrics[key];if(!metric)continue;
+      const tr=document.createElement('tr');tr.title=metric.definition??'';
+      const status=metric.eligible?(metric.status==='reported-preliminary'?'preliminary':'accepted'):(metric.reason??'unknown');
+      for(const value of [t(`scr.check.${id}`),metric.reportedPercent==null?'—':`${metric.reportedPercent.toFixed(metric.reportedDecimals??2)}%`,
+        t(`scr.bankScope.${metric.scope}`,null,metric.scope??'—'),t(`scr.bankStatus.${status}`,null,status),metric.availableFrom??'—']){
+        const td=document.createElement('td');td.textContent=value;tr.appendChild(td);
+      }
+      const source=document.createElement('td');
+      if(metric.integrityVerified){
+        const url=new URL(metric.source);
+        if(url.protocol==='https:'){
+          url.hash=`page=${metric.pdfPage}`;
+          const link=document.createElement('a');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';
+          link.textContent=t('scr.bankPdfPage',{page:metric.pdfPage});source.appendChild(link);
+        }
+      }
+      tr.appendChild(source);tbody.appendChild(tr);
+      if(metric.availabilityBasis==='first-observed-official-document'){
+        const note=document.createElement('p');note.className='section__hint';
+        note.textContent=t('scr.bankObservedDate',{date:metric.availableFrom,historical:metric.historicalAvailableFrom});box.appendChild(note);
+      }
+    }
+    table.appendChild(tbody);wrap.appendChild(table);box.appendChild(wrap);
+  }
   return box;
 }
 

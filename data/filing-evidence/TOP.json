@@ -1,0 +1,131 @@
+{
+  "symbol": "TOP",
+  "issuerId": "0000001350",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "1370090b47575c31561202a3df64c71c71b1dea498615951e46e32adb6b98000",
+  "records": [
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-02-25",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0796ONE250220261308080770E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-02-28",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0796ONE280220251452250808E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-01",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0796ONE010320241611120248E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-02",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0796E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-06-30",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0796E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-03-24",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0796E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-02-28",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0796E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-02-27",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0796E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-03-06",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0796E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-03-03",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0796E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-03-15",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0796E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001350&searchSymbol=TOP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:10 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 11 record(s) found) Name Year Receive Date Details THAI OIL PUBLIC COMPANY LIMITED 2025 25/02/2026 THAI OIL PUBLIC COMPANY LIMITED 2024 28/02/2025 THAI OIL PUBLIC COMPANY LIMITED 2023 01/03/2024 THAI OIL PUBLIC COMPANY LIMITED 2022 02/03/2023 THAI OIL PUBLIC COMPANY LIMITED 2021 30/06/2022 THAI OIL PUBLIC COMPANY LIMITED 2020 24/03/2021 THAI OIL PUBLIC COMPANY LIMITED 2019 28/02/2020 THAI OIL PUBLIC COMPANY LIMITED 2018 27/02/2019 THAI OIL PUBLIC COMPANY LIMITED 2017 06/03/2018 THAI OIL PUBLIC COMPANY LIMITED 2016 03/03/2017 THAI OIL PUBLIC COMPANY LIMITED 2015 15/03/2016 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

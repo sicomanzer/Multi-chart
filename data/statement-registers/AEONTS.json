@@ -1,0 +1,119 @@
+{
+  "symbol": "AEONTS",
+  "issuerId": "0000003162",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000003162&searchSymbol=AEONTS&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "39ac88f3edab4b2adc968cd344b03b6359f54274e852a72f588c700fd26d54c5",
+  "records": [
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202504/0664FIN090420251809570687E.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "29/02/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202404/0664FIN090420241811370872E.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202304/23042318.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202204/22051318.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202104/21046794.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "29/02/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202004/20048066.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201904/19041314.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201804/18037013.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "28/02/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201704/17033735.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "29/02/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201604/16033793.zip"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "companyName": "AEON THANA SINSAP (THAILAND) PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "20/02/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201604/16033783.zip"
+    }
+  ]
+}

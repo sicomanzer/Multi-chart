@@ -9,8 +9,8 @@
  * Two rules of the game:
  *
  *   1. Nothing is known before it was published. A fiscal year is usable from
- *      its end plus the filing lag, the same ninety days the bands use, so a
- *      company is judged on statements a reader could actually have read.
+ *      verified availability date. The optional estimated mode instead uses
+ *      fiscal end plus ninety days and is explicitly approximate.
  *   2. The benchmark is the universe itself, equally weighted, because there
  *      is no index of what the screen would have picked.
  *
@@ -29,10 +29,13 @@ import {
 import { loadFinancials } from './fin.js';
 import { annualHistory } from './finnomena.js';
 import { simulatePeriod } from './portfolio.js';
+import { loadStatementVersions, selectStatementVersions } from './statement-versions.js';
+import {isBankSymbol} from './business-models.js';
+import {loadBankRisk,selectBankRisk} from './bank-risk.js';
 
 const DAY = 86_400_000;
 const FILING_LAG_DAYS = 90;
-export const BACKTEST_VERSION = '2026-11-10-set-ratios-v2';
+export const BACKTEST_VERSION = '2026-11-11-bank-risk-v7';
 let filingDatesTask;
 async function filingDates() {
   filingDatesTask ??= readFile(new URL('../data/filing-dates.json', import.meta.url), 'utf8')
@@ -62,11 +65,17 @@ function closeAt(closes, date) {
   return best;
 }
 
-/** The day a fiscal year's statements could first have been read. */
+/** Conservative usable date; does not establish the earliest announcement. */
 export function publishedOn(year, { verifiedOnly = false } = {}) {
   const end = year.asOf ?? `${year.fiscalYear}-12-31`;
   if (typeof year.publishedAt === 'string' && year.publicationSource
-    && /^\d{4}-\d{2}-\d{2}$/.test(year.publishedAt) && year.publishedAt > end) return year.publishedAt;
+    && /^\d{4}-\d{2}-\d{2}$/.test(year.publishedAt) && year.publishedAt > end) {
+    if (year.availableFrom) {
+      return /^\d{4}-\d{2}-\d{2}$/.test(year.availableFrom) && year.availableFrom > year.publishedAt
+        ? year.availableFrom : null;
+    }
+    return year.publishedAt;
+  }
   if (verifiedOnly) return null;
   return addDays(end, FILING_LAG_DAYS);
 }
@@ -118,8 +127,10 @@ function engineYear(row, prev, dps) {
     dividendsPaid: null,
     dpsPaid: dps,
     dps,
-    roe: equityPositive ? ratio(row.netIncome, average(prev?.equity, row.equity)) : null,
-    roa: typeof row.roa === 'number' ? row.roa : ratio(row.ebit, average(prev?.assets, row.assets)),
+    roe: equityPositive && !(row.statementSnapshot && row.openingEquity==null)
+      ? ratio(row.netIncome, average(row.openingEquity ?? prev?.equity, row.equity)) : null,
+    roa: row.statementSnapshot ? row.roa
+      : typeof row.roa === 'number' ? row.roa : ratio(row.ebit, average(prev?.assets, row.assets)),
     npm: row.npm ?? ratio(row.netIncome, row.revenue),
     // Negative equity makes leverage and ROE meaningless; THAI's insolvency
     // years produced a negative D/E that a `de <= 1.0` rule would have passed.
@@ -156,7 +167,7 @@ export function rebalanceDates(fiscalYears, holdYears) {
  */
 export function backtestCompany({
   history, dividends = [], closes = [], rebalances, holdYears, symbol = null, name = null,
-  publicationMode = 'estimated', isFinancial = false,
+  publicationMode = 'estimated', isFinancial = false, statementVersions = [], bankRiskRecords = [],
 }) {
   const dpsByYear = new Map();
   for (const d of dividends) {
@@ -167,32 +178,50 @@ export function backtestCompany({
 
   const out = [];
   for (const date of rebalances) {
+    const entry = closes.find(close => close.date >= date && close.close > 0);
+    if (!entry || Date.parse(entry.date) - Date.parse(date) > 7 * DAY) continue;
+    const entryDate = entry.date;
     // Nothing is known before it was published.
-    const known = history.filter((y) => {
+    const known = publicationMode === 'original'
+      ? selectStatementVersions(statementVersions, symbol, entryDate)
+      : history.filter((y) => {
       const publication = publishedOn(y, { verifiedOnly: publicationMode === 'verified' });
-      return publication && publication <= date;
+      return publication && publication <= entryDate;
     }).sort((a,b) => a.fiscalYear - b.fiscalYear);
     if (known.length < 3) continue;
-    const price = closeAt(closes, date);
-    const exitDate = addYears(date, holdYears);
+    if (publicationMode === 'original'
+      && known.slice(-3).some((row,i,last)=>i>0 && row.fiscalYear!==last[i-1].fiscalYear+1)) continue;
+    if (publicationMode === 'original' && history.some(row=>{
+      const available=publishedOn(row,{verifiedOnly:true});
+      return row.fiscalYear>known.at(-1).fiscalYear && available && available<=entryDate;
+    })) continue;
+    // Do not keep replaying a small reviewed sample once recent reports are missing.
+    if (publicationMode === 'original'
+      && Date.parse(entryDate) - Date.parse(known.at(-1).asOf) > 550 * DAY) continue;
+    const price = entry.close;
+    const exitDate = addYears(entryDate, holdYears);
     // Do not turn an unfinished holding window into a complete return.
     if (!closes.some(close => close.date >= exitDate)) continue;
-    const exit = closeAt(closes, exitDate);
+    const exitObservation = closes.find(close => close.date >= exitDate && close.close > 0);
+    if (!exitObservation || Date.parse(exitObservation.date) - Date.parse(exitDate) > 7 * DAY) continue;
+    const exit = exitObservation.close;
     if (!(price > 0) || !(exit > 0)) continue;
 
     const rows = known.map((y, i) => engineYear(y, known[i - 1] ?? null, dpsByYear.get(y.fiscalYear) ?? null));
-    const knownDividends = dividends.filter((d) => d.date <= date);
+    const knownDividends = dividends.filter((d) => d.date <= entryDate);
     const quality = scoreQuality({
       years: rows,
       dividends: knownDividends,
       price,
-      asOf: new Date(`${date}T00:00:00Z`),
+      asOf: new Date(`${entryDate}T00:00:00Z`),
       // The most recent published earnings stand in for the trailing twelve
       // months: the quarterly series of that year is not in the history, and
       // using a later figure would be looking forward.
       ttmEps: rows.at(-1).eps,
       history: { years: rows },
       isFinancial,
+      isBank:isBankSymbol(symbol),
+      bankRisk:selectBankRisk(bankRiskRecords,symbol,rows.at(-1).fiscalYear,entryDate,{historical:true}),
     });
 
     // What the screen would have shown that day.
@@ -204,7 +233,7 @@ export function backtestCompany({
     const dividend = sustainableDividend({
       years: rows,
       dividends: knownDividends,
-      asOf: new Date(`${date}T00:00:00Z`),
+      asOf: new Date(`${entryDate}T00:00:00Z`),
       ttmEps: rows.at(-1).eps,
     });
     const valuation = ddm({
@@ -222,16 +251,21 @@ export function backtestCompany({
     // was on the list. The cash is counted here, and the benchmark counts it
     // the same way, so the two answers can be read against each other.
     const dividendCash = dividends
-      .filter((d) => d.date > date && d.date <= exitDate)
+      .filter((d) => d.date > entryDate && d.date <= exitObservation.date)
       .reduce((sum, d) => sum + d.amount, 0);
 
     out.push({
       date,
+      entryPriceDate: entryDate,
+      exitPriceDate: exitObservation.date,
       symbol,
       name,
       fiscalYear: rows.at(-1).fiscalYear,
       publicationMode,
+      statementSnapshots: publicationMode === 'original' ? known.map(y=>y.statementSnapshot) : [],
       score: quality.score,
+      qualityModel:quality.qualityModel,
+      bankRiskComplete:quality.bankRiskComplete,
       coverage: quality.coverage,
       checks: quality.checks,
       forward: exit / price - 1,
@@ -286,7 +320,9 @@ export function summariseBacktest(observations, presetId = 'quality') {
   for (const o of flat) {
     for (const c of o.checks) {
       if (c.pass === null) continue;
-      const entry = rules.get(c.id) ?? { id: c.id, passed: 0, failed: 0, passSum: 0, failSum: 0 };
+      const model=o.qualityModel??'general';
+      const key=`${model}:${c.id}`;
+      const entry = rules.get(key) ?? { id: c.id, model, passed: 0, failed: 0, passSum: 0, failSum: 0 };
       if (c.pass === true) {
         entry.passed += 1;
         entry.passSum += o.forwardTotal;
@@ -294,7 +330,7 @@ export function summariseBacktest(observations, presetId = 'quality') {
         entry.failed += 1;
         entry.failSum += o.forwardTotal;
       }
-      rules.set(c.id, entry);
+      rules.set(key, entry);
     }
   }
 
@@ -303,6 +339,7 @@ export function summariseBacktest(observations, presetId = 'quality') {
     const failReturn = r.failed ? r.failSum / r.failed : null;
     return {
       id: r.id,
+      model:r.model,
       passed: r.passed,
       failed: r.failed,
       passReturn,
@@ -315,6 +352,8 @@ export function summariseBacktest(observations, presetId = 'quality') {
   const perPeriod = periods.map((date) => {
     const at = flat.filter((o) => o.date === date);
     const picked = at.filter((o) => {
+      if(o.qualityModel==='bank' && (o.bankRiskComplete!==true
+        || ['bankCapitalAdequacy','bankNpl','bankNplCoverage'].some(id=>o.checks.find(c=>c.id===id)?.pass!==true)))return false;
       // The preset's mandatory rules, minus the ones the history cannot judge.
       const required = preset.requires.filter((id) => {
         const check = o.checks.find((c) => c.id === id);
@@ -420,7 +459,7 @@ export async function initRuleEdges(filePath) {
   try {
     const raw = JSON.parse(await readFile(edgePath, 'utf8'));
     const rules = new Map((raw.rules ?? []).map((r) => [r.id, r]));
-    if (rules.size && raw.version === BACKTEST_VERSION && raw.publicationMode === 'verified') {
+    if (rules.size && raw.version === BACKTEST_VERSION && raw.publicationMode === 'original') {
       edgeCache = {
         at: Number(raw.at) || Date.now(),
         rules,
@@ -442,7 +481,7 @@ async function saveRuleEdges(rules, presets = {}) {
     await writeFile(edgePath, `${JSON.stringify({
       at: Date.now(),
       version: BACKTEST_VERSION,
-      publicationMode: 'verified',
+      publicationMode: 'original',
       rules: [...rules.values()].map((r) => ({
         id: r.id, passed: r.passed, failed: r.failed,
         passReturn: r.passReturn, failReturn: r.failReturn, edge: r.edge,
@@ -473,16 +512,17 @@ const edgesFresh = (maxAgeMs = EDGE_MAX_AGE_MS) => edgeCache.rules.size > 0
 export async function ruleEdges(symbols, { maxAgeMs = EDGE_MAX_AGE_MS } = {}) {
   if (edgesFresh(maxAgeMs)) return edgeCache.rules;
   const result = await runBacktest({
-    symbols,
+    symbols:symbols.filter(symbol=>!isBankSymbol(symbol)),
     preset: 'quality',
     holdYears: 3,
     presets: EDGE_PRESETS,
-    publicationMode: 'verified',
+    publicationMode: 'original',
   });
   edgeCache = {
     at: Date.now(),
-    rules: new Map(result.rules.map((r) => [r.id, r])),
-    presets: result.byPreset ?? {},
+    // A single reviewed issuer cannot support universe-wide rule rankings.
+    rules: new Map(result.reliability.reviewedSymbols < 10 ? [] : result.rules.map((r) => [r.id, r])),
+    presets: result.reliability.reviewedSymbols < 10 ? {} : (result.byPreset ?? {}),
     running: false,
   };
   await saveRuleEdges(edgeCache.rules, edgeCache.presets);
@@ -548,9 +588,12 @@ export function ensureRuleEdges(symbols) {
  */
 export async function runBacktest({
   symbols, preset = 'quality', holdYears = 3, concurrency = 5, simulation = null, presets = null,
-  publicationMode = 'verified',
+  publicationMode = 'original',
 }) {
+  if (!['original','verified','estimated'].includes(publicationMode)) throw new Error('Invalid publication mode');
   const dates = await filingDates();
+  const statementVersions = await loadStatementVersions();
+  const bankRiskRecords=await loadBankRisk();
   let next = 0;
   const loaded = [];
   const runners = Array.from({ length: Math.min(concurrency, symbols.length) }, async () => {
@@ -582,8 +625,10 @@ export async function runBacktest({
     holdYears,
     symbol,
     name: fin.name,
-    isFinancial: fin.isFinancial === true,
+    isFinancial: fin.isFinancial === true || isBankSymbol(symbol),
     publicationMode,
+    statementVersions,
+    bankRiskRecords,
   }));
 
   const summary = summariseBacktest(observations, preset);
@@ -606,16 +651,35 @@ export async function runBacktest({
     version: BACKTEST_VERSION,
     publicationMode,
     reliability: {
-      verifiedPublicationDates: publicationMode === 'verified',
+      verifiedPublicationDates: false,
+      verifiedPublicAvailabilityDates: publicationMode !== 'estimated',
+      availabilityBasis: publicationMode !== 'estimated' ? 'sec-annual-report-receipt-next-day' : 'estimated-fiscal-end-plus-90-days',
       statementVersionsVerified: false,
+      reviewedStatementSnapshots: publicationMode === 'original',
+      reviewedSymbols: new Set(statementVersions.filter(r=>symbols.includes(r.symbol)).map(r=>r.symbol)).size,
+      reviewedIssuerYears: new Set(statementVersions.filter(r=>symbols.includes(r.symbol)).map(r=>`${r.symbol}|${r.fiscalYear}`)).size,
+      reviewedComparativeSnapshots: statementVersions.filter(r=>symbols.includes(r.symbol)&&r.scope==='audited-consolidated-comparative').length,
+      earliestRevisionDatesVerified: false,
+      statementEvidenceIntegrityChecked: true,
+      reviewedBankIssuerYears: new Set(statementVersions.filter(r=>symbols.includes(r.symbol)&&r.statementModel==='bank').map(r=>`${r.symbol}|${r.fiscalYear}`)).size,
+      reviewedBankRiskIssuerYears:bankRiskRecords.filter(r=>symbols.includes(r.symbol)).length,
+      bankRiskFiscalYears:[...new Set(bankRiskRecords.filter(r=>symbols.includes(r.symbol)).map(r=>r.fiscalYear))].sort(),
+      bankRiskIncompleteObservations: observations.filter(r=>r.qualityModel==='bank'&&r.bankRiskComplete!==true).length,
+      excludedUnreviewedIssuerYears: publicationMode === 'original'
+        ? loaded.reduce((n,item)=>n+item.history.filter(y=>!statementVersions.some(r=>r.symbol===item.symbol&&r.fiscalYear===y.fiscalYear)).length,0) : 0,
       historicalUniverseVerified: false,
       skippedUnknownPublicationYears: publicationMode === 'verified'
         ? loaded.reduce((sum,item)=>sum+item.history.filter(y=>!publishedOn(y,{verifiedOnly:true})).length,0) : 0,
-      caveats: ['historical-statement-revisions', 'survivorship-bias', 'partial-rule-coverage',
+      caveats: ['earliest-filing-version-not-certified', 'survivorship-bias', 'partial-rule-coverage',
         'historical-ratio-basis-not-equivalent-to-live-set-scoring', 'corporate-actions-not-fully-verified',
-        ...(publicationMode === 'verified' ? [] : ['estimated-publication-dates'])],
+        ...(publicationMode === 'original' ? ['limited-reviewed-statement-coverage','unreconciled-per-share-data-excluded'] : ['historical-statement-revisions']),
+        ...(publicationMode === 'estimated' ? ['estimated-publication-dates'] : [])],
     },
     rebalances,
+    statementEvidence: publicationMode==='original' ? statementVersions.filter(r=>symbols.includes(r.symbol)).map(r=>({
+      symbol:r.symbol,fiscalYear:r.fiscalYear,availableFrom:r.availableFrom,scope:r.scope,source:r.source,
+      evidenceSha256:r.sha256,earliestVersionVerified:r.earliestVersionVerified,
+    })) : [],
     byPreset,
     simulation: simulation
       ? simulatePortfolioRun({ summary, loaded, holdYears, ...simulation })

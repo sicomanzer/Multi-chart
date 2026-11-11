@@ -1,0 +1,131 @@
+{
+  "symbol": "TU",
+  "issuerId": "0000001119",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "0cd3dcc9748d20c6548577ac9e19883531af2238eeb5c04070f6f03feabafbd3",
+  "records": [
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-06",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0450E1N060320262122520842E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-06",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0450ONE060320251938300256E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-07",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0450ONE070320241839400528E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-10",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0450E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-03-24",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0450E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-03-16",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0450E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-03-11",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0450E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-03-14",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0450E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-03-23",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0450E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-03-21",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0450E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-05-26",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0450E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001119&searchSymbol=TU&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:09 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 12 record(s) found) Name Year Receive Date Details THAI UNION GROUP PUBLIC COMPANY LIMITED 2025 06/03/2026 THAI UNION GROUP PUBLIC COMPANY LIMITED 2024 06/03/2025 THAI UNION GROUP PUBLIC COMPANY LIMITED 2023 07/03/2024 THAI UNION GROUP PUBLIC COMPANY LIMITED 2022 10/03/2023 THAI UNION GROUP PUBLIC COMPANY LIMITED 2021 24/03/2022 THAI UNION GROUP PUBLIC COMPANY LIMITED 2020 16/03/2021 THAI UNION GROUP PUBLIC COMPANY LIMITED 2019 11/03/2020 THAI UNION GROUP PUBLIC COMPANY LIMITED 2018 14/03/2019 THAI UNION GROUP PUBLIC COMPANY LIMITED 2017 23/03/2018 THAI UNION GROUP PUBLIC COMPANY LIMITED 2016 21/03/2017 THAI UNION GROUP PUBLIC COMPANY LIMITED 2015 26/05/2016 THAI UNION GROUP PUBLIC COMPANY LIMITED 2014 20/03/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

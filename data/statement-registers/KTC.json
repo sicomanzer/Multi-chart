@@ -1,0 +1,79 @@
+{
+  "symbol": "KTC",
+  "issuerId": "0000003752",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000003752&searchSymbol=KTC&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "34c7576a195230befa3cdaecf037ba4fe420f5728ede5140a17a0fc9d70e219b",
+  "records": [
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0689FIN130220261632430995E.zip"
+    },
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0689FIN100220251646070040E.zip"
+    },
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0689FIN090220241609240648E.zip"
+    },
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23013809.zip"
+    },
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22014430.zip"
+    },
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21012968.zip"
+    },
+    {
+      "symbol": "SET:KTC",
+      "companyName": "KRUNGTHAI CARD PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20011554.zip"
+    }
+  ]
+}

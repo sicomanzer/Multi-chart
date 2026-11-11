@@ -1,0 +1,131 @@
+{
+  "symbol": "HMPRO",
+  "issuerId": "0000003191",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "c3a3fcaa3789dd5214c8a427cd0bd87cb9a53a8e00d69f655cd0e76ffd20d468",
+  "records": [
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-17",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0661ONE170320261829300715E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-03-19",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0661ONE190320252035410567E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-20",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0661ONE200320241821460527E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-16",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0661E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-03-21",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0661E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-03-17",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0661E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-03-19",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0661E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-03-25",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0661E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-04-02",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0661E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-03-21",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0661E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-03-30",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0661E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000003191&searchSymbol=HMPRO&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:09 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 12 record(s) found) Name Year Receive Date Details HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2025 17/03/2026 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2024 19/03/2025 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2023 20/03/2024 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2022 16/03/2023 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2021 21/03/2022 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2020 17/03/2021 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2019 19/03/2020 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2018 25/03/2019 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2017 02/04/2018 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2016 21/03/2017 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2015 30/03/2016 HOME PRODUCT CENTER PUBLIC COMPANY LIMITED 2014 30/03/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

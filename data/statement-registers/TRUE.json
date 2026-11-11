@@ -1,0 +1,49 @@
+{
+  "symbol": "TRUE",
+  "issuerId": "0000033672",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000033672&searchSymbol=TRUE&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "8bbaa2e036ba9df04c43c2c50b1b1d872376c44b0011d8e66a0e2c21f60954d5",
+  "records": [
+    {
+      "symbol": "SET:TRUE",
+      "companyName": "TRUE CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1756FIN190220261650250980E.zip"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "companyName": "TRUE CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1756FIN200220251534410057E.zip"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "companyName": "TRUE CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1756FIN220220241721520639E.zip"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "companyName": "TRUE CORPORATION PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Pro forma",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202303/23027755.zip"
+    }
+  ]
+}

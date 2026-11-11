@@ -1,0 +1,291 @@
+{
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "issuers": [
+    {
+      "symbol": "ADVANC",
+      "records": 11,
+      "distinctYears": 10,
+      "multipleSources": [
+        2019
+      ]
+    },
+    {
+      "symbol": "AEONTS",
+      "records": 11,
+      "distinctYears": 10,
+      "multipleSources": [
+        2016
+      ]
+    },
+    {
+      "symbol": "AMATA",
+      "records": 11,
+      "distinctYears": 10,
+      "multipleSources": [
+        2024
+      ]
+    },
+    {
+      "symbol": "AOT",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "BBL",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "BCP",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "BDMS",
+      "records": 13,
+      "distinctYears": 10,
+      "multipleSources": [
+        2023
+      ]
+    },
+    {
+      "symbol": "BEM",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "CPALL",
+      "records": 13,
+      "distinctYears": 10,
+      "multipleSources": [
+        2024,
+        2022,
+        2020
+      ]
+    },
+    {
+      "symbol": "CPF",
+      "records": 11,
+      "distinctYears": 10,
+      "multipleSources": [
+        2022
+      ]
+    },
+    {
+      "symbol": "EGCO",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "GUNKUL",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "HANA",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "HMPRO",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "HTC",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "ICHI",
+      "records": 9,
+      "distinctYears": 9,
+      "multipleSources": []
+    },
+    {
+      "symbol": "KAMART",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "KBANK",
+      "records": 14,
+      "distinctYears": 10,
+      "multipleSources": [
+        2024
+      ]
+    },
+    {
+      "symbol": "KCE",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "KKP",
+      "records": 16,
+      "distinctYears": 10,
+      "multipleSources": [
+        2025,
+        2024,
+        2023,
+        2022,
+        2021,
+        2020
+      ]
+    },
+    {
+      "symbol": "KTB",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "KTC",
+      "records": 7,
+      "distinctYears": 7,
+      "multipleSources": []
+    },
+    {
+      "symbol": "LH",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "MC",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "MEGA",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "MINT",
+      "records": 11,
+      "distinctYears": 10,
+      "multipleSources": [
+        2025
+      ]
+    },
+    {
+      "symbol": "PTT",
+      "records": 12,
+      "distinctYears": 10,
+      "multipleSources": [
+        2025,
+        2024
+      ]
+    },
+    {
+      "symbol": "PTTEP",
+      "records": 14,
+      "distinctYears": 10,
+      "multipleSources": [
+        2025,
+        2024,
+        2023,
+        2022
+      ]
+    },
+    {
+      "symbol": "SCB",
+      "records": 5,
+      "distinctYears": 5,
+      "multipleSources": []
+    },
+    {
+      "symbol": "SIRI",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "SPALI",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TACC",
+      "records": 3,
+      "distinctYears": 3,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TIDLOR",
+      "records": 0,
+      "distinctYears": 0,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TISCO",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TLI",
+      "records": 0,
+      "distinctYears": 0,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TOP",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TRUE",
+      "records": 4,
+      "distinctYears": 4,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TTB",
+      "records": 11,
+      "distinctYears": 10,
+      "multipleSources": [
+        2023
+      ]
+    },
+    {
+      "symbol": "TTW",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "TU",
+      "records": 10,
+      "distinctYears": 10,
+      "multipleSources": []
+    },
+    {
+      "symbol": "WHA",
+      "records": 14,
+      "distinctYears": 10,
+      "multipleSources": [
+        2023,
+        2022,
+        2021,
+        2020
+      ]
+    }
+  ]
+}

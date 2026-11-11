@@ -1,0 +1,109 @@
+{
+  "symbol": "KCE",
+  "issuerId": "0000000065",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000065&searchSymbol=KCE&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "6f75802c4936ae2c21f53f58e360c8e81d50db175199bccc293928052eceb8ed",
+  "records": [
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0122FIN100220261631120059E.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0122FIN240220251510260538E.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0122FIN130220241502500220E.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23012099.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22012701.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21015303.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20012078.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19011463.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18010655.zip"
+    },
+    {
+      "symbol": "SET:KCE",
+      "companyName": "KCE ELECTRONICS PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17009905.zip"
+    }
+  ]
+}

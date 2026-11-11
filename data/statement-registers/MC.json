@@ -1,0 +1,109 @@
+{
+  "symbol": "MC",
+  "issuerId": "0000008180",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000008180&searchSymbol=MC&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "fe07699f07235a81a3c4de3ebff77e4096eb5c13c1e48ea4271b61a5c281cb01",
+  "records": [
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202508/1140FIN280820251834390747E.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202408/1140FIN260820241613370208E.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202308/1140FIN240820231709340336E.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202208/22103246.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202108/21095385.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202008/20098859.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201908/19086569.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "30/06/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201808/18079696.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18015195.zip"
+    },
+    {
+      "symbol": "SET:MC",
+      "companyName": "MC GROUP PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17014174.zip"
+    }
+  ]
+}

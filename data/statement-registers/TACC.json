@@ -1,0 +1,39 @@
+{
+  "symbol": "TACC",
+  "issuerId": "0000012195",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000012195&searchSymbol=TACC&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "b3c11025559ae8096564fcbfb26d70fbde490654ce6d82c3dbf24b2cccaaedf1",
+  "records": [
+    {
+      "symbol": "SET:TACC",
+      "companyName": "T.A.C. CONSUMER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1296FIN270220261619470883E.zip"
+    },
+    {
+      "symbol": "SET:TACC",
+      "companyName": "T.A.C. CONSUMER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1296FIN280220251609380745E.zip"
+    },
+    {
+      "symbol": "SET:TACC",
+      "companyName": "T.A.C. CONSUMER PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1296FIN290220241514330883E.zip"
+    }
+  ]
+}

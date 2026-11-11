@@ -1,0 +1,87 @@
+{
+  "symbol": "HTC",
+  "issuerId": "0000000697",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "4d8b682e81149266eb7afa8d80ff644f1085f0c979121a41c739b64a056a04a5",
+  "records": [
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-31",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0140E1N310320261807280076E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-08-14",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0140E1N140820251504070616E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-04-23",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0140E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-07-14",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0140E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-04-10",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0140E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-05-02",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0140E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-04-26",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0140B15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000000697&searchSymbol=HTC&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:10 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 8 record(s) found) Name Year Receive Date Details HAAD THIP PUBLIC COMPANY LIMITED 2025 31/03/2026 HAAD THIP PUBLIC COMPANY LIMITED 2024 14/08/2025 HAAD THIP PUBLIC COMPANY LIMITED 2020 23/04/2021 HAAD THIP PUBLIC COMPANY LIMITED 2019 14/07/2020 HAAD THIP PUBLIC COMPANY LIMITED 2018 10/04/2019 HAAD THIP PUBLIC COMPANY LIMITED 2016 02/05/2017 HAAD THIP PUBLIC COMPANY LIMITED 2015 26/04/2016 HAAD THIP PUBLIC COMPANY LIMITED 2014 16/04/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

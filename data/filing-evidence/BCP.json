@@ -1,0 +1,131 @@
+{
+  "symbol": "BCP",
+  "issuerId": "0000001385",
+  "source": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T01:08:03.343Z",
+  "sha256": "fb96bac568cc6c3cf4a68b924cd2baad8536d30242022bece9d479f4d57f6c4c",
+  "records": [
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2025,
+      "publishedAt": "2026-03-19",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0420E1N190320262206130288E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2024,
+      "publishedAt": "2025-04-01",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0420E1N010420251423380706E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2023,
+      "publishedAt": "2024-03-29",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/0420ONE290320241458230207E.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2022,
+      "publishedAt": "2023-03-17",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0420E22.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2021,
+      "publishedAt": "2022-06-10",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0420E21.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2020,
+      "publishedAt": "2021-03-09",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/f56/F0420E20.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2019,
+      "publishedAt": "2020-05-29",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0420E19.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2018,
+      "publishedAt": "2019-03-12",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0420E18.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2017,
+      "publishedAt": "2018-04-02",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0420E17.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2016,
+      "publishedAt": "2017-03-28",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0420E16.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "fiscalYear": 2015,
+      "publishedAt": "2016-03-31",
+      "publicationSource": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/annual/A0420E15.zip",
+      "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-r562?uniqueIDReference=0000001385&searchSymbol=BCP&dateFrom=20150101&dateTo=20261111",
+      "dateBasis": "annual-report-received",
+      "firstPublicationVerified": false,
+      "evidenceType": "SEC annual report/Form 56-2 receipt register",
+      "checkedAt": "2026-11-11T01:08:03.343Z"
+    }
+  ],
+  "evidenceText": "Form 56-2 : Annual Reports GetNavigation($('#divHeader')); สำนักงานคณะกรรมการกำกับหลักทรัพย์และตลาดหลักทรัพย์ Printed on 11 November 2026 08:10 // Form 56-2 : Annual Reports Form 56-2 : Annual Reports ( 12 record(s) found) Name Year Receive Date Details BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2025 19/03/2026 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2024 01/04/2025 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2023 29/03/2024 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2022 17/03/2023 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2021 10/06/2022 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2020 09/03/2021 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2019 29/05/2020 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2018 12/03/2019 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2017 02/04/2018 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2016 28/03/2017 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2015 31/03/2016 BANGCHAK CORPORATION PUBLIC COMPANY LIMITED 2014 31/03/2015 Last updated on 10 November 2026 GetFooter($('#divFooter')); (function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-40265049-1', 'sec.or.th'); ga('send', 'pageview'); --> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3NH0QL72D6');"
+}

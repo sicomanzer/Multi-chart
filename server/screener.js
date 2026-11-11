@@ -25,6 +25,8 @@
  * dividend on a business that fails the first three is the trap the framework
  * is built to avoid, so yield alone can never carry a name into the result set.
  */
+import {BANK_POLICY,bankCalendarDate} from './business-models.js';
+
 const WEIGHTS = {
   roeLevel: 12,
   roeConsistency: 8,
@@ -861,9 +863,14 @@ export function scoreQuality({
   asOf = new Date(),
   ttmEps = null,
   isFinancial = false,
+  isBank = false,
+  bankRisk = null,
   history = null,
 }) {
   const last3 = recent(years, 3);
+  isFinancial = isFinancial || isBank;
+  const roeThreshold=isBank?BANK_POLICY.roe:.15;
+  const roaThreshold=isBank?BANK_POLICY.roa:.07;
   const last4 = recent(years, 4);
   const checks = [];
   const add = (id, pass, value, threshold, extra = {}) => {
@@ -873,23 +880,23 @@ export function scoreQuality({
   const mean3 = key => last3.length === 3 && last3.every(y => Number.isFinite(y[key]))
     ? average(last3.map(y => y[key])) : null;
   const roe3 = mean3('roe');
-  add('roeLevel', roe3 != null ? roe3 >= 0.15 : null, roe3, 0.15);
+  add('roeLevel', roe3 != null ? roe3 >= roeThreshold : null, roe3, roeThreshold);
 
   const roeKnown = last4.map((y) => y.roe);
-  const roeYearsAbove = roeKnown.filter((v) => typeof v === 'number' && v >= 0.15).length;
+  const roeYearsAbove = roeKnown.filter((v) => typeof v === 'number' && v >= roeThreshold).length;
   const roeComplete = roeKnown.filter(Number.isFinite).length >= 3;
   add('roeConsistency', roeComplete ? roeYearsAbove >= 3 : null,
     roeYearsAbove, 3, { of: roeKnown.filter(Number.isFinite).length, minYears: 3 });
 
   const roa3 = mean3('roa');
-  add('roaLevel', roa3 != null ? roa3 >= 0.07 : null, roa3, 0.07);
+  add('roaLevel', roa3 != null ? roa3 >= roaThreshold : null, roa3, roaThreshold);
 
   const npm3 = mean3('npm');
-  add('npmLevel', npm3 != null ? npm3 >= 0.10 : null, npm3, 0.10);
+  add('npmLevel', isBank?null:npm3 != null ? npm3 >= 0.10 : null, isBank?null:npm3, 0.10, isBank?{na:true}:{});
 
   const npmSeries = last4.map((y) => y.npm).filter((v) => typeof v === 'number');
   const npmTrend = npmSeries.length === 4 ? npmSeries[3] - npmSeries[0] : null;
-  add('npmTrend', npmTrend != null ? npmTrend >= 0 : null, npmTrend, 0);
+  add('npmTrend', isBank?null:npmTrend != null ? npmTrend >= 0 : null, isBank?null:npmTrend, 0, isBank?{na:true}:{});
 
   // Every one of the last three years profitable — "consistently", not "on
   // average". A year the source has no net income for is unknown, not a loss:
@@ -928,10 +935,10 @@ export function scoreQuality({
     const sharesFell = last.shares && first.shares && last.shares < first.shares * 0.98;
     return Boolean(sharesFell) && epsGrowth > 0.05 && profitGrowth < epsGrowth - 0.05;
   })();
-  add('epsGrowth', growthVerdict(growth?.eps3, 0.10),
-    growth?.eps3?.value ?? null, 0.10, { years: 3, buyback });
-  add('revenueGrowth', growthVerdict(growth?.revenue5, 0.05),
-    growth?.revenue5?.value ?? null, 0.05, { years: 5 });
+  add('epsGrowth', isBank?null:growthVerdict(growth?.eps3, 0.10),
+    isBank?null:growth?.eps3?.value ?? null, 0.10, { years: 3, buyback,...(isBank?{na:true}:{}) });
+  add('revenueGrowth', isBank?null:growthVerdict(growth?.revenue5, 0.05),
+    isBank?null:growth?.revenue5?.value ?? null, 0.05, { years: 5,...(isBank?{na:true}:{}) });
   // Eight profitable years out of ten is "earnings that do not stop". Fewer
   // than eight years of history cannot answer the question, so the rule is
   // left unmeasured rather than passed on a short record.
@@ -1043,9 +1050,31 @@ export function scoreQuality({
 
   let earned = 0;
   let possible = 0;
-  const totalWeight = Object.values(WEIGHTS).reduce((sum, w) => sum + w, 0);
+  const weights=isBank?{...WEIGHTS,bankCapitalAdequacy:12,bankNpl:10,bankNplCoverage:6}:WEIGHTS;
+  const latestFiscalYear=recent(years,1)[0]?.fiscalYear;
+  const riskDate=bankRisk?.availableFrom;
+  const riskDateValid=typeof riskDate==='string' && /^\d{4}-\d{2}-\d{2}$/.test(riskDate)
+    && Number.isFinite(Date.parse(riskDate)) && new Date(riskDate).toISOString().slice(0,10)===riskDate
+    && riskDate>`${latestFiscalYear}-12-31`;
+  const riskVerified=isBank && bankRisk?.verified===true && bankRisk.fiscalYear===latestFiscalYear
+    && (bankRisk.basis==='consolidated'||(bankRisk.symbol==='SET:KKP'&&bankRisk.basis==='group-capital-and-reported-banking-portfolio'))
+    && typeof bankRisk.source==='string' && bankRisk.source.startsWith('https://')
+    && riskDateValid
+    && bankRisk.availableFrom<=bankCalendarDate(asOf);
+  if(isBank){
+    for(const [id,key,threshold,above] of [
+      ['bankCapitalAdequacy','capitalAdequacy',BANK_POLICY.capitalAdequacy,true],
+      ['bankNpl','npl',BANK_POLICY.npl,false],['bankNplCoverage','nplCoverage',BANK_POLICY.nplCoverage,true],
+    ]){
+      const value=riskVerified&&Number.isFinite(bankRisk[key])&&bankRisk[key]>=0?bankRisk[key]:null;
+      add(id,value==null?null:above?value>=threshold:value<=threshold,value,threshold,
+        {reportedDecimals:bankRisk?.metrics?.[key]?.reportedDecimals??null});
+    }
+  }
+  const bankRiskComplete=isBank?checks.filter(c=>c.id.startsWith('bank')).every(c=>c.pass!==null):null;
+  const totalWeight = Object.values(weights).reduce((sum, w) => sum + w, 0);
   for (const check of checks) {
-    const weight = WEIGHTS[check.id] ?? 0;
+    const weight = weights[check.id] ?? 0;
     // A rule that cannot be judged is left out of both sides of the fraction.
     // Counting it as half credit — the obvious compromise — docks a bank five
     // points forever for an interest-cover test that has no meaning on a
@@ -1064,11 +1093,14 @@ export function scoreQuality({
   // fourteen rules can be recognised as thin rather than taken at face value.
   const coverage = totalWeight > 0 ? possible / totalWeight : 0;
   const applicableWeight = totalWeight - checks.filter(check => check.na === true)
-    .reduce((sum, check) => sum + (WEIGHTS[check.id] ?? 0), 0);
+    .reduce((sum, check) => sum + (weights[check.id] ?? 0), 0);
 
   const failed = checks.filter((c) => c.pass === false && !c.warn);
   return {
     checks,
+    qualityModel:isBank?'bank':'general',
+    bankRiskComplete,
+    bankPolicy:isBank?BANK_POLICY:null,
     score,
     coverage,
     dataCoverage: applicableWeight > 0 ? possible / applicableWeight : 0,
@@ -1182,6 +1214,14 @@ export function applyPreset(row, preset) {
   // is unknown, and the UI must say so rather than printing a zero.
   if (row?.dataIssue || row?.score == null) {
     return { pass: false, reason: 'unknown:data' };
+  }
+  if(row.qualityModel==='bank' && row.bankRiskComplete!==true){
+    return {pass:false,reason:'unknown:bankRisk'};
+  }
+  if(row.qualityModel==='bank'){
+    for(const id of ['bankCapitalAdequacy','bankNpl','bankNplCoverage']){
+      if(row.checks.find(c=>c.id===id)?.pass!==true)return {pass:false,reason:`requires:${id}`};
+    }
   }
   for (const id of preset.requires) {
     const check = row.checks.find((c) => c.id === id);

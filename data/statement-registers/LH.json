@@ -1,0 +1,109 @@
+{
+  "symbol": "LH",
+  "issuerId": "0000000564",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000000564&searchSymbol=LH&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "1cf0a5070e1a699b117b5134c03f34164017f8e680e25a7d0e951ca78869e80a",
+  "records": [
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0143FIN270220261841000509E.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0143FIN260220252008260945E.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0143FIN280220241905300760E.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23024119.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22022195.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21020905.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20022266.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19020380.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18020703.zip"
+    },
+    {
+      "symbol": "SET:LH",
+      "companyName": "LAND AND HOUSES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17017858.zip"
+    }
+  ]
+}

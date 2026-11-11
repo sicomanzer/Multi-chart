@@ -1,0 +1,109 @@
+{
+  "symbol": "MEGA",
+  "issuerId": "0000008243",
+  "url": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-norm?uniqueIDReference=0000008243&searchSymbol=MEGA&dateFrom=20150101&dateTo=20261111",
+  "checkedAt": "2026-11-11T02:07:34.152Z",
+  "sha256": "40fd51292837c350394c1952f04bb2d379bae6cf174f01054c4366cdcbe7a3f7",
+  "records": [
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2025,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2025",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1159FIN240220261613360833E.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2024,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2024",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/1159FIN240220251717490198E.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2023,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2023",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/1159FIN220220241625450724E.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2022,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2022",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23020709.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2021,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2021",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22020314.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2020,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2020",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21018043.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2019,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2019",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20018149.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2018,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2018",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19016643.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2017,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2017",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014821.zip"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "companyName": "MEGA LIFESCIENCES PUBLIC COMPANY LIMITED",
+      "fiscalYear": 2016,
+      "status": "Audited",
+      "type": "Consolidated",
+      "period": "Year",
+      "asOf": "31/12/2016",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17013721.zip"
+    }
+  ]
+}
