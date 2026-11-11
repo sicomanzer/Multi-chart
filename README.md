@@ -2,13 +2,17 @@
 
 ## Latest desktop workflow
 
+- Missing annual statements now produce an unscored row, not a zero score.
+  Residual Income rejects missing ROE/payout inputs instead of converting them
+  to zero. All 110 active screening symbols were rechecked; see
+  [validation and remaining source gaps](SCREENER-MISSING-INPUT-FIXES-2026-11-11.md).
+
 - FY2025 bank risk metrics retain official PDF evidence, reporting scopes and
   usable dates for seven groups. KKP uses an explicitly disclosed banking-portfolio
   assessment profile, with its POCI definitions shown separately; its reported
   NPL and coverage fail the screening thresholds rather than appearing unknown.
   TISCO capital uses 18.97% from financial notes with observation-based
-  availability, not the projected MD&A figure. Earlier risk years remain unknown
-  pending numerical review. See [the bank risk source review](BANK-RISK-SOURCES-2026-11-11.md).
+  availability, not the projected MD&A figure. Historical disclosures now cover 64 issuer-years, with 49 complete eligible input sets; 15 retain explicit exclusions or missing metrics. See [historical risk coverage](BANK-RISK-HISTORY-2026-11-11.md) and [the FY2025 source review](BANK-RISK-SOURCES-2026-11-11.md).
 
 - Banks use a separate profitability model and reviewed SEC statements: 64
   original issuer-years for KBANK, BBL, KTB, TTB, KKP, TISCO and SCB X, plus

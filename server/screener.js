@@ -614,7 +614,10 @@ export function grahamGrowth({ eps, g, aaaYield = AAA_YIELD } = {}) {
  * assumption that made the DDM flattering, and the point of this model is a
  * conservative second opinion for the sector the DDM explains worst.
  */
-export function residualIncome({ bvps, roe, payout = 0, r = 0.09, years = 10 } = {}) {
+export function residualIncome({ bvps, roe, payout = null, r = 0.09, years = 10 } = {}) {
+  // Missing is not a measured zero. Validate before numeric conversion.
+  const missingInputs=Object.entries({bvps,roe,payout,r}).filter(([,value])=>!Number.isFinite(value)).map(([key])=>key);
+  if(missingInputs.length)return {ok:false,reason:'missing-input',value:null,missingInputs};
   const book0 = Number(bvps);
   const ret = Number(roe);
   const rate = Number(r);
@@ -1088,7 +1091,7 @@ export function scoreQuality({
   // numbers could not be read must not be handed a score built from its
   // dividend alone.
   const judged = years.length > 0;
-  const score = judged && possible > 0 ? Math.round((earned / possible) * 100) : 0;
+  const score = judged && possible > 0 ? Math.round((earned / possible) * 100) : null;
   // How much of the framework actually applied, so a score built on four of
   // fourteen rules can be recognised as thin rather than taken at face value.
   const coverage = totalWeight > 0 ? possible / totalWeight : 0;

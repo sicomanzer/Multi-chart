@@ -1,0 +1,5024 @@
+{
+  "checkedAt": "2026-11-11T07:14:28.390Z",
+  "requested": 110,
+  "reviewed": 110,
+  "errors": [],
+  "flags": [
+    {
+      "symbol": "SET:KTB",
+      "kind": "high-score-incomplete",
+      "score": 90,
+      "coverage": 0.9285714285714286,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ]
+    },
+    {
+      "symbol": "SET:TISCO",
+      "kind": "high-score-incomplete",
+      "score": 100,
+      "coverage": 0.8571428571428571,
+      "missing": [
+        "roaLevel",
+        "payoutBand",
+        "payoutCeiling"
+      ]
+    },
+    {
+      "symbol": "SET:MC",
+      "kind": "high-score-incomplete",
+      "score": 91,
+      "coverage": 0.9333333333333333,
+      "missing": [
+        "epsGrowth"
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "symbol": "SET:BH",
+      "model": "general",
+      "score": 94,
+      "coverage": 1,
+      "roe3": 0.2942436857698874,
+      "roa3": 0.29928020886641254,
+      "missing": [],
+      "failed": [
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BDMS",
+      "model": "general",
+      "score": 88,
+      "coverage": 1,
+      "roe3": 0.15747858274857643,
+      "roa3": 0.13571984753691577,
+      "missing": [],
+      "failed": [
+        "epsGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "model": "general",
+      "score": 87,
+      "coverage": 1,
+      "roe3": 0.39070713907797155,
+      "roa3": 0.1261028809498925,
+      "missing": [],
+      "failed": [
+        "debtLevel",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CPN",
+      "model": "general",
+      "score": 86,
+      "coverage": 1,
+      "roe3": 0.17530282550600332,
+      "roa3": 0.08346239838504445,
+      "missing": [],
+      "failed": [
+        "debtLevel",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:DELTA",
+      "model": "general",
+      "score": 86,
+      "coverage": 1,
+      "roe3": 0.2797371613560242,
+      "roa3": 0.19267112702722686,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CBG",
+      "model": "general",
+      "score": 84,
+      "coverage": 1,
+      "roe3": 0.19119844277210932,
+      "roa3": 0.1592787906881662,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CPALL",
+      "model": "general",
+      "score": 76,
+      "coverage": 1,
+      "roe3": 0.20019500852192804,
+      "roa3": 0.05242693573750969,
+      "missing": [],
+      "failed": [
+        "roaLevel",
+        "npmLevel",
+        "debtLevel",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roaLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:COM7",
+      "model": "general",
+      "score": 73,
+      "coverage": 1,
+      "roe3": 0.39474318483618664,
+      "roa3": 0.1767204057074465,
+      "missing": [],
+      "failed": [
+        "npmLevel",
+        "npmTrend",
+        "debtLevel",
+        "cfoBeatsEarnings",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BA",
+      "model": "general",
+      "score": 72,
+      "coverage": 1,
+      "roe3": 0.2192080167141679,
+      "roa3": 0.0998914339261362,
+      "missing": [],
+      "failed": [
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AMATA",
+      "model": "general",
+      "score": 70,
+      "coverage": 1,
+      "roe3": 0.11675903601964858,
+      "roa3": 0.07629046210747592,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmTrend",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BCH",
+      "model": "general",
+      "score": 68,
+      "coverage": 1,
+      "roe3": 0.10447630668722924,
+      "roa3": 0.10536916919514776,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmTrend",
+        "epsGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CHG",
+      "model": "general",
+      "score": 68,
+      "coverage": 1,
+      "roe3": 0.128422678164103,
+      "roa3": 0.12615346640454392,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmTrend",
+        "epsGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BBL",
+      "model": "bank",
+      "score": 67,
+      "coverage": 0.9285714285714286,
+      "roe3": 0.08180819350221834,
+      "roa3": 0.009867417943196635,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:GFPT",
+      "model": "general",
+      "score": 66,
+      "coverage": 1,
+      "roe3": 0.10231259558764412,
+      "roa3": 0.08813951603884407,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "epsGrowth",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AOT",
+      "model": "general",
+      "score": 65,
+      "coverage": 1,
+      "roe3": 0.12952180431021015,
+      "roa3": 0.1116777367223916,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "epsGrowth",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AURA",
+      "model": "general",
+      "score": 60,
+      "coverage": 0.9,
+      "roe3": 0.1869317849609379,
+      "roa3": 0.11676402417840963,
+      "missing": [
+        "revenueGrowth",
+        "earningsStability"
+      ],
+      "failed": [
+        "npmLevel",
+        "debtLevel",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:fcfPositive"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:cfoPositive"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CCET",
+      "model": "general",
+      "score": 57,
+      "coverage": 1,
+      "roe3": 0.07701406918519756,
+      "roa3": 0.04314730002273504,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "debtLevel",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CPF",
+      "model": "general",
+      "score": 57,
+      "coverage": 1,
+      "roe3": 0.054936895767508126,
+      "roa3": 0.05205571362048111,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmPositive",
+        "revenueGrowth",
+        "debtLevel"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:GLOBAL",
+      "model": "general",
+      "score": 57,
+      "coverage": 1,
+      "roe3": 0.09871452488544306,
+      "roa3": 0.07972369811735765,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "model": "general",
+      "score": 53,
+      "coverage": 1,
+      "roe3": 0.08153104087850248,
+      "roa3": 0.05597374243217932,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "debtLevel",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AWC",
+      "model": "general",
+      "score": 50,
+      "coverage": 1,
+      "roe3": 0.06418628731098873,
+      "roa3": 0.04978556489423295,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "earningsStability",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AAV",
+      "model": "general",
+      "score": 49,
+      "coverage": 0.8916666666666667,
+      "roe3": 0.1985845520246822,
+      "roa3": 0.07068673946292013,
+      "missing": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeConsistency",
+        "npmLevel",
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "interestCoverage",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AP",
+      "model": "general",
+      "score": 47,
+      "coverage": 1,
+      "roe3": 0.123783550418611,
+      "roa3": 0.08355562828441088,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BTG",
+      "model": "general",
+      "score": 47,
+      "coverage": 0.95,
+      "roe3": 0.08920135338625644,
+      "roa3": 0.06279457459275677,
+      "missing": [
+        "earningsStability"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BCPG",
+      "model": "general",
+      "score": 46,
+      "coverage": 1,
+      "roe3": 0.04233171278520078,
+      "roa3": 0.04703977411575815,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "interestCoverage",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "model": "general",
+      "score": 45,
+      "coverage": 1,
+      "roe3": 0.12188317364061725,
+      "roa3": 0.06669243634341165,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CRC",
+      "model": "general",
+      "score": 45,
+      "coverage": 1,
+      "roe3": 0.11799331799178019,
+      "roa3": 0.052042635504527875,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:EGCO",
+      "model": "general",
+      "score": 45,
+      "coverage": 1,
+      "roe3": 0.007877845152317271,
+      "roa3": 0.02766551375322869,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmPositive",
+        "revenueGrowth",
+        "interestCoverage",
+        "cfoBeatsEarnings"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BLA",
+      "model": "general",
+      "score": 44,
+      "coverage": 1,
+      "roe3": 0.09742915568174522,
+      "roa3": 0.017306972803614103,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "revenueGrowth",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BEM",
+      "model": "general",
+      "score": 43,
+      "coverage": 1,
+      "roe3": 0.09906237319101559,
+      "roa3": 0.0540325301746469,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "revenueGrowth",
+        "debtLevel",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BCP",
+      "model": "general",
+      "score": 41,
+      "coverage": 1,
+      "roe3": 0.09163632580590882,
+      "roa3": 0.06943622384694909,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BAM",
+      "model": "general",
+      "score": 38,
+      "coverage": 1,
+      "roe3": 0.037420989873560656,
+      "roa3": 0.037224008461836856,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:ERW",
+      "model": "general",
+      "score": 38,
+      "coverage": 1,
+      "roe3": 0.12953204299815466,
+      "roa3": 0.0665084919911665,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "interestCoverage",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BJC",
+      "model": "general",
+      "score": 36,
+      "coverage": 1,
+      "roe3": 0.0356902262628842,
+      "roa3": 0.03560923637074714,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "model": "general",
+      "score": 34,
+      "coverage": 1,
+      "roe3": 0.0485677431779106,
+      "roa3": 0.050275428987320396,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CK",
+      "model": "general",
+      "score": 34,
+      "coverage": 1,
+      "roe3": 0.08001375698218065,
+      "roa3": 0.040646572869476684,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "debtLevel",
+        "interestCoverage",
+        "cfoPositive",
+        "fcfPositive",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "model": "general",
+      "score": 31,
+      "coverage": 1,
+      "roe3": 0.04965915603994452,
+      "roa3": 0.037951605071209295,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "fcfPositive",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BTS",
+      "model": "general",
+      "score": 6,
+      "coverage": 0.8916666666666667,
+      "roe3": -0.02715513997666526,
+      "roa3": 0.019693414447244564,
+      "missing": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:EA",
+      "model": "general",
+      "score": 6,
+      "coverage": 0.8916666666666667,
+      "roe3": -0.029433856454036567,
+      "roa3": -0.000101549729729133,
+      "missing": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BANPU",
+      "score": null,
+      "coverage": 0,
+      "roe3": null,
+      "roa3": null,
+      "missing": [],
+      "failed": [],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "value": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "all": {
+          "pass": false,
+          "reason": "unknown:data"
+        }
+      },
+      "dataIssue": "no-annual-statements"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "model": "general",
+      "score": 95,
+      "coverage": 1,
+      "roe3": 0.21434192036287478,
+      "roa3": 0.21490103037152627,
+      "missing": [],
+      "failed": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:KTB",
+      "model": "bank",
+      "score": 90,
+      "coverage": 0.9285714285714286,
+      "roe3": 0.10336798769971349,
+      "roa3": 0.01272482552518972,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeConsistency"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PRM",
+      "model": "general",
+      "score": 90,
+      "coverage": 1,
+      "roe3": 0.18911029768908402,
+      "roa3": 0.12715141798196586,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:OSP",
+      "model": "general",
+      "score": 88,
+      "coverage": 1,
+      "roe3": 0.155881528314758,
+      "roa3": 0.12991576869008178,
+      "missing": [],
+      "failed": [
+        "roeConsistency",
+        "revenueGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:MOSHI",
+      "model": "general",
+      "score": 87,
+      "coverage": 0.9,
+      "roe3": 0.24361538910322075,
+      "roa3": 0.1841801315994972,
+      "missing": [
+        "revenueGrowth",
+        "earningsStability"
+      ],
+      "failed": [
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:MEGA",
+      "model": "general",
+      "score": 83,
+      "coverage": 1,
+      "roe3": 0.2068766981315362,
+      "roa3": 0.16412227683496441,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "model": "general",
+      "score": 80,
+      "coverage": 1,
+      "roe3": 0.1417802120145381,
+      "roa3": 0.15054651309388242,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "npmTrend",
+        "epsGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:KTC",
+      "model": "general",
+      "score": 78,
+      "coverage": 1,
+      "roe3": 0.20001787340206803,
+      "roa3": 0.10298089923827193,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PR9",
+      "model": "general",
+      "score": 78,
+      "coverage": 1,
+      "roe3": 0.13153960394004183,
+      "roa3": 0.13713043797439448,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:GULF",
+      "model": "general",
+      "score": 76,
+      "coverage": 0.7,
+      "roe3": null,
+      "roa3": null,
+      "missing": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend"
+      ],
+      "failed": [
+        "fcfPositive",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PLANB",
+      "model": "general",
+      "score": 73,
+      "coverage": 1,
+      "roe3": 0.10906785788150564,
+      "roa3": 0.09927575734734513,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:MTC",
+      "model": "general",
+      "score": 69,
+      "coverage": 1,
+      "roe3": 0.1665292713030991,
+      "roa3": 0.07657113335921306,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PTT",
+      "model": "general",
+      "score": 69,
+      "coverage": 1,
+      "roe3": 0.0871972344361324,
+      "roa3": 0.07076477352592016,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmLevel",
+        "epsGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SAWAD",
+      "model": "general",
+      "score": 69,
+      "coverage": 1,
+      "roe3": 0.164272738940583,
+      "roa3": 0.09191709667052027,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "model": "general",
+      "score": 67,
+      "coverage": 1,
+      "roe3": 0.24478628676295786,
+      "roa3": 0.12302789966465814,
+      "missing": [],
+      "failed": [
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:OR",
+      "model": "general",
+      "score": 65,
+      "coverage": 0.95,
+      "roe3": 0.09190359465306791,
+      "roa3": 0.0632027823548786,
+      "missing": [
+        "earningsStability"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "epsGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:RCL",
+      "model": "general",
+      "score": 65,
+      "coverage": 1,
+      "roe3": 0.12804403332244382,
+      "roa3": 0.1050665335596926,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "npmTrend",
+        "epsGrowth",
+        "earningsStability",
+        "fcfPositive",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "model": "general",
+      "score": 62,
+      "coverage": 0.43333333333333335,
+      "roe3": null,
+      "roa3": null,
+      "missing": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "revenueGrowth",
+        "earningsStability",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "failed": [
+        "dividendYield",
+        "payoutBand",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "model": "general",
+      "score": 58,
+      "coverage": 1,
+      "roe3": 0.11716715248579201,
+      "roa3": 0.07979134228499392,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:M",
+      "model": "general",
+      "score": 58,
+      "coverage": 1,
+      "roe3": 0.09754037820305393,
+      "roa3": 0.08209238529760238,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:QH",
+      "model": "general",
+      "score": 58,
+      "coverage": 1,
+      "roe3": 0.07388184675446753,
+      "roa3": 0.058050147097532166,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "cfoBeatsEarnings"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SCGP",
+      "model": "general",
+      "score": 57,
+      "coverage": 1,
+      "roe3": 0.05401811402840184,
+      "roa3": 0.04174218038831434,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:RATCH",
+      "model": "general",
+      "score": 54,
+      "coverage": 1,
+      "roe3": 0.0602096746698795,
+      "roa3": 0.05177137577986246,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "epsGrowth",
+        "revenueGrowth",
+        "interestCoverage"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:KCE",
+      "model": "general",
+      "score": 53,
+      "coverage": 1,
+      "roe3": 0.10302235943674148,
+      "roa3": 0.08404907524790169,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SIRI",
+      "model": "general",
+      "score": 53,
+      "coverage": 1,
+      "roe3": 0.11373273599448756,
+      "roa3": 0.04782668564331847,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "fcfPositive"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:JMT",
+      "model": "general",
+      "score": 52,
+      "coverage": 1,
+      "roe3": 0.06011930900151866,
+      "roa3": 0.05960912290616097,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "epsGrowth",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:GPSC",
+      "model": "general",
+      "score": 50,
+      "coverage": 1,
+      "roe3": 0.04447234604746336,
+      "roa3": 0.040787050005613834,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "revenueGrowth",
+        "interestCoverage",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PTG",
+      "model": "general",
+      "score": 47,
+      "coverage": 1,
+      "roe3": 0.11109088248105436,
+      "roa3": 0.050045563872980335,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "debtLevel",
+        "interestCoverage"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:MINT",
+      "model": "general",
+      "score": 45,
+      "coverage": 1,
+      "roe3": 0.08973455708365818,
+      "roa3": 0.06275217547641807,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "debtLevel",
+        "interestCoverage",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:HANA",
+      "model": "general",
+      "score": 44,
+      "coverage": 1,
+      "roe3": 0.02299815985975894,
+      "roa3": 0.022400441228985424,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "revenueGrowth",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SCC",
+      "model": "general",
+      "score": 40,
+      "coverage": 1,
+      "roe3": 0.04288836799435025,
+      "roa3": 0.0349770678778597,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "interestCoverage",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:GST",
+      "model": "general",
+      "score": 32,
+      "coverage": 0.725,
+      "roe3": 0.01192054159789388,
+      "roa3": 0.02323656982940323,
+      "missing": [
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmPositive",
+        "interestCoverage",
+        "fcfPositive",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:PTTGC",
+      "model": "general",
+      "score": 28,
+      "coverage": 0.95,
+      "roe3": -0.05259851067437222,
+      "roa3": -0.006135519475867775,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoBeatsEarnings",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:IRPC",
+      "model": "general",
+      "score": 27,
+      "coverage": 0.95,
+      "roe3": -0.05380253745412753,
+      "roa3": -0.013570040918989229,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "interestCoverage",
+        "cfoBeatsEarnings",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:LH",
+      "model": "general",
+      "score": 25,
+      "coverage": 1,
+      "roe3": 0.10789107172993277,
+      "roa3": 0.05963340761192288,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:IVL",
+      "model": "general",
+      "score": 24,
+      "coverage": 0.95,
+      "roe3": -0.08490046551980028,
+      "roa3": 0.002214205299222226,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "interestCoverage",
+        "cfoBeatsEarnings",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:JMART",
+      "model": "general",
+      "score": 20,
+      "coverage": 0.95,
+      "roe3": 0.009224949030941334,
+      "roa3": 0.03842099402135904,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:KKP",
+      "model": "bank",
+      "score": 69,
+      "coverage": 0.6190476190476191,
+      "roe3": null,
+      "roa3": null,
+      "missing": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "bankNpl",
+        "bankNplCoverage"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "value": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "all": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:KBANK",
+      "model": "bank",
+      "score": 62,
+      "coverage": 0.9285714285714286,
+      "roe3": 0.08605267895477843,
+      "roa3": 0.01185631161627077,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "bankNpl"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "value": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "all": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SCB",
+      "model": "bank",
+      "score": 58,
+      "coverage": 0.8571428571428571,
+      "roe3": 0.09336776600425171,
+      "roa3": 0.013028525416497431,
+      "missing": [
+        "earningsStability",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "bankNpl"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "value": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        },
+        "all": {
+          "pass": false,
+          "reason": "requires:bankNpl"
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TISCO",
+      "model": "bank",
+      "score": 100,
+      "coverage": 0.8571428571428571,
+      "roe3": 0.1622979117950218,
+      "roa3": null,
+      "missing": [
+        "roaLevel",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roaLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:roaLevel"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TOA",
+      "model": "general",
+      "score": 93,
+      "coverage": 1,
+      "roe3": 0.1789628320069602,
+      "roa3": 0.15589841314104114,
+      "missing": [],
+      "failed": [
+        "roeConsistency"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:KAMART",
+      "model": "general",
+      "score": 93,
+      "coverage": 1,
+      "roe3": 0.23299414404045163,
+      "roa3": 0.2083476805255049,
+      "missing": [],
+      "failed": [
+        "cfoBeatsEarnings"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:MC",
+      "model": "general",
+      "score": 91,
+      "coverage": 0.9333333333333333,
+      "roe3": 0.1947703397751687,
+      "roa3": 0.16868451944047994,
+      "missing": [
+        "epsGrowth"
+      ],
+      "failed": [
+        "npmTrend",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TFG",
+      "model": "general",
+      "score": 88,
+      "coverage": 1,
+      "roe3": 0.1868223027362269,
+      "roa3": 0.10133888130592482,
+      "missing": [],
+      "failed": [
+        "npmLevel",
+        "npmPositive"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TTW",
+      "model": "general",
+      "score": 86,
+      "coverage": 1,
+      "roe3": 0.19282036879182482,
+      "roa3": 0.1791695153026964,
+      "missing": [],
+      "failed": [
+        "epsGrowth",
+        "revenueGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": true,
+          "reason": null
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TVO",
+      "model": "general",
+      "score": 85,
+      "coverage": 1,
+      "roe3": 0.15564435845927105,
+      "roa3": 0.14534133127746343,
+      "missing": [],
+      "failed": [
+        "npmLevel",
+        "revenueGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TACC",
+      "model": "general",
+      "score": 80,
+      "coverage": 1,
+      "roe3": 0.34028509250445693,
+      "roa3": 0.2668350109922195,
+      "missing": [],
+      "failed": [
+        "npmTrend",
+        "epsGrowth",
+        "cfoBeatsEarnings",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": true,
+          "reason": null
+        },
+        "quality": {
+          "pass": true,
+          "reason": null
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:payoutCeiling"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TTB",
+      "model": "bank",
+      "score": 74,
+      "coverage": 0.9285714285714286,
+      "roe3": 0.08656451707740646,
+      "roa3": 0.011317373816477289,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:HTC",
+      "model": "general",
+      "score": 69,
+      "coverage": 1,
+      "roe3": 0.14706263951458917,
+      "roa3": 0.11068332459174042,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmLevel",
+        "epsGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:WHA",
+      "model": "general",
+      "score": 68,
+      "coverage": 1,
+      "roe3": 0.13527717172777673,
+      "roa3": 0.07549704710943823,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "epsGrowth",
+        "cfoBeatsEarnings"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:BKIH",
+      "model": "general",
+      "score": 66,
+      "coverage": 0.36666666666666664,
+      "roe3": null,
+      "roa3": null,
+      "missing": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "failed": [
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TCAP",
+      "model": "general",
+      "score": 60,
+      "coverage": 1,
+      "roe3": 0.09621461595854842,
+      "roa3": 0.06282509963657497,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "revenueGrowth"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": true,
+          "reason": null
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TASCO",
+      "model": "general",
+      "score": 58,
+      "coverage": 1,
+      "roe3": 0.10213110140799597,
+      "roa3": 0.09187802594086071,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "model": "general",
+      "score": 58,
+      "coverage": 1,
+      "roe3": 0.09406588199464354,
+      "roa3": 0.060456977804126226,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "fcfPositive",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:THAI",
+      "model": "general",
+      "score": 53,
+      "coverage": 0.8333333333333334,
+      "roe3": null,
+      "roa3": 0.10147408392145889,
+      "missing": [
+        "roeLevel",
+        "roeConsistency"
+      ],
+      "failed": [
+        "npmLevel",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "payoutBand",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SPALI",
+      "model": "general",
+      "score": 52,
+      "coverage": 1,
+      "roe3": 0.1060173920160306,
+      "roa3": 0.08420729361484386,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": true,
+          "reason": null
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TOP",
+      "model": "general",
+      "score": 48,
+      "coverage": 1,
+      "roe3": 0.08947228748756808,
+      "roa3": 0.051131763049168256,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "dividendYield",
+        "payoutBand"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:SPRC",
+      "model": "general",
+      "score": 47,
+      "coverage": 1,
+      "roe3": 0.031050960472535503,
+      "roa3": 0.027491083894390228,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TU",
+      "model": "general",
+      "score": 42,
+      "coverage": 1,
+      "roe3": -0.0027914649693129012,
+      "roa3": 0.051307027389616254,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "revenueGrowth",
+        "debtLevel",
+        "cfoBeatsEarnings"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TLI",
+      "model": "general",
+      "score": 41,
+      "coverage": 1,
+      "roe3": 0.09746492985352534,
+      "roa3": 0.02321616696871723,
+      "missing": [],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "epsGrowth",
+        "revenueGrowth",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendStreak"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:JAS",
+      "model": "general",
+      "score": 41,
+      "coverage": 0.8916666666666667,
+      "roe3": 0.7444866400797,
+      "roa3": 0.14773660591592566,
+      "missing": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeConsistency",
+        "npmPositive",
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:STGT",
+      "model": "general",
+      "score": 35,
+      "coverage": 0.9,
+      "roe3": 0.009231917999944167,
+      "roa3": 0.012916496343268427,
+      "missing": [
+        "earningsStability",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "revenueGrowth",
+        "interestCoverage",
+        "fcfPositive"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:payoutBand"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:roeConsistency"
+        },
+        "value": {
+          "pass": false,
+          "reason": "score-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:STECON",
+      "model": "general",
+      "score": 28,
+      "coverage": 0.48333333333333334,
+      "roe3": null,
+      "roa3": null,
+      "missing": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "fcfPositive"
+      ],
+      "failed": [
+        "npmPositive",
+        "debtLevel",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:STA",
+      "model": "general",
+      "score": 20,
+      "coverage": 0.95,
+      "roe3": -0.0003651555385672268,
+      "roa3": 0.012667423303262608,
+      "missing": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendYield"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "model": "general",
+      "score": 17,
+      "coverage": 0.3,
+      "roe3": null,
+      "roa3": null,
+      "missing": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "failed": [
+        "debtLevel",
+        "dividendYield",
+        "payoutBand",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:TRUE",
+      "model": "general",
+      "score": 15,
+      "coverage": 0.9666666666666667,
+      "roe3": -0.024554539598550616,
+      "roa3": 0.027086296080090767,
+      "missing": [
+        "npmTrend"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "debtLevel",
+        "interestCoverage",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendYield",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "requires:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "mos-too-low"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:VGI",
+      "model": "general",
+      "score": 15,
+      "coverage": 0.8916666666666667,
+      "roe3": -0.04962833258588142,
+      "roa3": -0.048234487084386324,
+      "missing": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "failed": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive",
+        "dividendStreak"
+      ],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "requires:roeLevel"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:dividendYield"
+        },
+        "value": {
+          "pass": false,
+          "reason": "no-mos"
+        },
+        "all": {
+          "pass": true,
+          "reason": null
+        }
+      },
+      "dataIssue": null
+    },
+    {
+      "symbol": "SET:CPNREIT",
+      "score": null,
+      "coverage": 0,
+      "roe3": null,
+      "roa3": null,
+      "missing": [],
+      "failed": [],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "value": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "all": {
+          "pass": false,
+          "reason": "unknown:data"
+        }
+      },
+      "dataIssue": "reit-framework-not-supported"
+    },
+    {
+      "symbol": "SET:INETREIT",
+      "score": null,
+      "coverage": 0,
+      "roe3": null,
+      "roa3": null,
+      "missing": [],
+      "failed": [],
+      "verdicts": {
+        "moat": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "quality": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "dividend": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "income": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "value": {
+          "pass": false,
+          "reason": "unknown:data"
+        },
+        "all": {
+          "pass": false,
+          "reason": "unknown:data"
+        }
+      },
+      "dataIssue": "reit-framework-not-supported"
+    }
+  ]
+}

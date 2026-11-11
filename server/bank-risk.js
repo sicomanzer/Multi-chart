@@ -37,6 +37,7 @@ export async function loadBankRisk({symbols=null,file=new URL('../data/bank-risk
   const metrics={};
   for(const key of KEYS){
    const metric=row.metrics?.[key];let integrityVerified=false;
+   if(!metric)continue;
    if(validRiskMetric(metric,key,row.fiscalYear)){
     try{
      if(!hashes.has(metric.evidenceFile)){
@@ -80,7 +81,7 @@ export function selectBankRisk(rows,symbol,fiscalYear,at,{historical=false}={}){
   const eligible=known&&!conflict&&scope&&['reported','reported-preliminary'].includes(m.status);
   result[key]=eligible?m.value:null;
   result.metrics[key]={...m,value:known?m.value:null,reportedPercent:known?m.reportedPercent:null,
-   eligible,reason:!m?.integrityVerified?'evidence-invalid':!known?'not-yet-public':conflict?'conflicting-evidence':!scope?'scope-unresolved':
+   eligible,reason:!m?'not-reported':!m.integrityVerified?'evidence-invalid':!known?'not-yet-public':conflict?'conflicting-evidence':!scope?'scope-unresolved':
     !['reported','reported-preliminary'].includes(m.status)?'status-not-eligible':null};
   if(known){
    result.source??=m.source;

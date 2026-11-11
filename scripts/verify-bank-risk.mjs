@@ -5,15 +5,17 @@ import {join} from 'node:path';
 import {loadBankRisk,selectBankRisk,validRiskMetric} from '../server/bank-risk.js';
 import {scoreQuality} from '../server/screener.js';
 import {bankCalendarDate} from '../server/business-models.js';
+import {loadStatementVersions} from '../server/statement-versions.js';
+import {backtestCompany} from '../server/backtest.js';
 assert.equal(bankCalendarDate('2026-11-11T18:00:00Z'),'2026-11-12');
-const rows=await loadBankRisk();assert.equal(rows.length,7);
+const rows=await loadBankRisk();assert.equal(rows.length,64);
 assert.ok(rows.every(r=>Object.values(r.metrics).every(m=>m.integrityVerified)));
 const at='2026-12-01';
 let complete=0;
-for(const row of rows){
+for(const row of rows.filter(r=>r.fiscalYear===2025)){
  const selected=selectBankRisk(rows,row.symbol,2025,at);
  if(['capitalAdequacy','npl','nplCoverage'].every(k=>selected[k]!=null))complete++;
- assert.equal(selectBankRisk(rows,row.symbol,2024,at),null);
+ assert.ok(selectBankRisk(rows,row.symbol,2024,at));
  const before=selectBankRisk(rows,row.symbol,2025,'2025-12-31',{historical:true});
  assert.equal(before.npl,null);assert.equal(before.metrics.npl.reportedPercent,null);
 }
@@ -30,7 +32,7 @@ assert.equal(selectBankRisk([unlabelledKKP],'SET:KKP',2025,at).npl,null);
 const wrongIssuer=structuredClone(rows.find(r=>r.symbol==='SET:KKP'));
 wrongIssuer.symbol='SET:BBL';
 assert.equal(selectBankRisk([wrongIssuer],'SET:BBL',2025,at).npl,null);
-const tisco=rows.find(r=>r.symbol==='SET:TISCO');const date=tisco.metrics.capitalAdequacy.availableFrom;
+const tisco=rows.find(r=>r.symbol==='SET:TISCO'&&r.fiscalYear===2025);const date=tisco.metrics.capitalAdequacy.availableFrom;
 assert.equal(selectBankRisk(rows,'SET:TISCO',2025,date,{historical:true}).capitalAdequacy,null);
 assert.equal(selectBankRisk(rows,'SET:TISCO',2025,date).capitalAdequacy,.1897);
 assert.equal(selectBankRisk(rows,'SET:TISCO',2025,tisco.metrics.capitalAdequacy.historicalAvailableFrom,{historical:true}).capitalAdequacy,.1897);
@@ -50,6 +52,35 @@ const kkpQuality=scoreQuality({years,dividends:[],price:10,isBank:true,bankRisk:
 assert.equal(kkpQuality.bankRiskComplete,true);
 assert.equal(kkpQuality.checks.find(c=>c.id==='bankNpl').pass,false);
 assert.equal(kkpQuality.checks.find(c=>c.id==='bankNplCoverage').pass,false);
+let historyComplete=0;
+for(const r of rows){
+ const selected=selectBankRisk(rows,r.symbol,r.fiscalYear,at,{historical:true});
+ if(['capitalAdequacy','npl','nplCoverage'].every(k=>selected[k]!=null))historyComplete++;
+ for(const [key,m] of Object.entries(r.metrics)){
+  const before=selectBankRisk(rows,r.symbol,r.fiscalYear,m.publishedAt??m.availableFrom,{historical:true});
+  assert.equal(before[key],null,`${r.symbol} ${r.fiscalYear} ${key}: announcement day cannot be used`);
+ }
+}
+assert.equal(historyComplete,49);
+assert.equal(selectBankRisk(rows,'SET:SCB',2021,at),null);
+assert.equal(selectBankRisk(rows,'SET:TTB',2019,at).metrics.capitalAdequacy.reason,'scope-unresolved');
+assert.equal(selectBankRisk(rows,'SET:TTB',2020,at).metrics.nplCoverage.reason,'not-reported');
+assert.equal(selectBankRisk(rows,'SET:TISCO',2024,at).metrics.capitalAdequacy.reason,'status-not-eligible');
+const tisco2020=selectBankRisk(rows,'SET:TISCO',2020,'2021-03-31',{historical:true});
+assert.ok(Math.abs(tisco2020.capitalAdequacy-.219)<1e-12);
+assert.equal(tisco2020.npl,.025);
+assert.ok(Math.abs(tisco2020.nplCoverage-2.105)<1e-12);
+// Actual reviewed statement/risk integration; prices are test fixtures, not a return claim.
+const replay={symbol:'SET:TISCO',history:[],statementVersions:await loadStatementVersions(),
+ publicationMode:'original',rebalances:['2021-05-01'],holdYears:3,
+ closes:[{date:'2021-05-01',close:10},{date:'2024-05-01',close:12}]};
+const observed=backtestCompany({...replay,bankRiskRecords:rows});
+assert.equal(observed.length,1);assert.equal(observed[0].fiscalYear,2020);
+assert.equal(observed[0].bankRiskComplete,true);
+assert.ok(observed[0].checks.filter(c=>c.id.startsWith('bank')).every(c=>c.pass===true));
+const removed=backtestCompany({...replay,bankRiskRecords:rows.filter(r=>r.fiscalYear!==2020)});
+assert.equal(removed[0].bankRiskComplete,false);
+assert.ok(removed[0].checks.filter(c=>c.id.startsWith('bank')).every(c=>c.pass===null));
 const dir=await mkdtemp(join(tmpdir(),'bank-risk-'));
 try{
  const data=JSON.parse(await readFile('data/bank-risk.json','utf8'));

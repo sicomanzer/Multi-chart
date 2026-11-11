@@ -1,0 +1,182 @@
+{
+  "checkedAt": "2026-11-11T07:14:28.463Z",
+  "reviewed": 110,
+  "changes": [
+    {
+      "symbol": "SET:BBL",
+      "oldScore": 67,
+      "score": 67,
+      "pass": true,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 308.388,
+        "roe": 0.08180819350221834,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    },
+    {
+      "symbol": "SET:BANPU",
+      "oldScore": 0,
+      "score": null,
+      "pass": false,
+      "dataIssue": "no-annual-statements",
+      "oldRI": false,
+      "ri": {
+        "ok": false,
+        "reason": "no-annual-statements",
+        "value": null,
+        "mos": null
+      }
+    },
+    {
+      "symbol": "SET:KTB",
+      "oldScore": 90,
+      "score": 90,
+      "pass": true,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 32.819,
+        "roe": 0.10336798769971349,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    },
+    {
+      "symbol": "SET:KKP",
+      "oldScore": 69,
+      "score": 69,
+      "pass": false,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "roe",
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 80.046,
+        "roe": null,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    },
+    {
+      "symbol": "SET:KBANK",
+      "oldScore": 62,
+      "score": 62,
+      "pass": false,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 247.762,
+        "roe": 0.08605267895477843,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    },
+    {
+      "symbol": "SET:SCB",
+      "oldScore": 58,
+      "score": 58,
+      "pass": false,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 143.849,
+        "roe": 0.09336776600425171,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    },
+    {
+      "symbol": "SET:TISCO",
+      "oldScore": 100,
+      "score": 100,
+      "pass": true,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 53.045,
+        "roe": 0.1622979117950218,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    },
+    {
+      "symbol": "SET:TTB",
+      "oldScore": 74,
+      "score": 74,
+      "pass": true,
+      "dataIssue": null,
+      "oldRI": true,
+      "ri": {
+        "ok": false,
+        "missingInputs": [
+          "payout"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 2.533,
+        "roe": 0.08656451707740646,
+        "payout": null,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      }
+    }
+  ]
+}

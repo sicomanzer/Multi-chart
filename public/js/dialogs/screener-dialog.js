@@ -755,6 +755,15 @@ function paintBacktest(body, state, rerender) {
     });
   }
   box.appendChild(reliability);
+  if(result.reliability?.reviewedBankRiskIssuerYears){
+    const note=document.createElement('p');note.className='section__hint';
+    const years=result.reliability.bankRiskFiscalYears??[];
+    note.textContent=t('scr.backtest.bankRiskCoverage',{
+      years:result.reliability.reviewedBankRiskIssuerYears,
+      period:years.length?`${years[0]}–${years.at(-1)}`:'—',
+      excluded:result.reliability.bankRiskIncompleteObservations??0,
+    });box.appendChild(note);
+  }
   if(result.reliability?.bankRiskIncompleteObservations){
     const note=document.createElement('p');note.className='section__hint';
     note.textContent=t('scr.bankRiskMissing');box.appendChild(note);
@@ -1654,9 +1663,9 @@ function buildTable(rows, state, rerender) {
     const medal = row.pass && rank < 3 ? MEDALS[rank] : '';
     if (row.pass) rank += 1;
     tr.innerHTML = `
-      <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span></td>
+      <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span>${!row.pass&&row.failReason?`<span class="scr-reject">${escape(t('scr.rejected',{reason:rejectReason(row)}))}</span>`:''}</td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
-      <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score == null ? '—' : row.score}</span></td>
+      <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score == null ? '—' : row.score}</span>${coverage!=null?`<small class="scr-coverage">${escape(t('scr.coverageShort',{n:Math.round(coverage*100)}))}</small>`:''}${row.qualityModel==='bank'?`<small class="scr-coverage">${escape(t('scr.bankModelLabel'))}</small>`:''}</td>
       <td class="num">${percent(row.roe3)}${peerBadge(row, 'roe')}</td>
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}${peerBadge(row, 'de')}</td>
       <td class="num" title="${escape(row.ratioSource === 'set.or.th' ? `SET · ${row.ratioAsOf ?? '—'}` : specialTitle)}">${percent(row.dividendYield)}${peerBadge(row, 'yield')}${row.recurringDividendYield != null ? `<br><small>${escape(t('scr.recurringYield'))}: ${percent(row.recurringDividendYield)}</small>` : ''}</td>

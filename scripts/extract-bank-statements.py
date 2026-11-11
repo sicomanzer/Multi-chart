@@ -59,6 +59,17 @@ for rec in records:
     assert num(value),'Missing third-column opening value'
     comparative_opening[target]=value*headers['bs'][2]
     comparative_opening_cells[target]={'sheet':bs['name'],'cell':cell,'scale':headers['bs'][2]}
+  # Reviewed TISCO 2024 equity roll-forward explicitly supplies the revised
+  # comparative opening parent equity. No opening assets are inferred from it.
+  if bare=='TISCO' and year==2024:
+   sce=next(s for s in ss if s['name']=='conso')
+   row=next(r for r in sce['rows'] if norm(r.get('A15',''))=='balance as at 1 january 2023')
+   heading=norm(' '.join(str(r.get(f'W{n}','')) for n in range(11,15) for r in sce['rows'] if f'W{n}' in r))
+   assert heading=='total equity attributable to equity holders of the company'
+   assert 'thousand baht' in norm(' '.join(str(v) for r in sce['rows'][:5] for v in r.values()))
+   assert num(row['W15'])
+   comparative_opening['openingEquity']=row['W15']*1000
+   comparative_opening_cells['openingEquity']={'sheet':'conso','cell':'W15','scale':1000,'label':'Balance as at 1 January 2023; equity attributable to equity holders of the Company'}
   try:take('netIncome','pl',r'^profit for the year attributable to the company$')
   except AssertionError:take('netIncome','pl',r'^(?:equity holders|owners) of (?:the )?(?:bank|company|parent)')
   take('totalNetIncome','pl',r'^(?:net profit(?: \(loss\))?|(?:total )?profit(?: \(loss\))? for the (?:years?|period)|total profit)$')

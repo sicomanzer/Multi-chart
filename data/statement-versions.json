@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "checkedAt": "2026-11-11T02:44:00.144Z",
+  "checkedAt": "2026-11-11T07:02:54.149Z",
   "description": "Reviewed official archived statement cells and later comparative snapshots. Dates are conservative SEC annual-report receipt bounds, not certified earliest filing/amendment dates. Unavailable opening balances and EPS are excluded from model inputs.",
   "versions": [
     {
@@ -15149,7 +15149,7 @@
         "totalNetIncome": 7301602000,
         "ebit": null,
         "operatingCashFlow": null,
-        "openingEquity": null,
+        "openingEquity": 42787386000,
         "openingAssets": null
       },
       "cells": {
@@ -15194,6 +15194,12 @@
           "cell": "F24",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "openingEquity": {
+          "sheet": "conso",
+          "cell": "W15",
+          "scale": 1000,
+          "label": "Balance as at 1 January 2023; equity attributable to equity holders of the Company"
         }
       },
       "revisionEvent": {

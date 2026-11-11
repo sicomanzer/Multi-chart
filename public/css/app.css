@@ -1341,7 +1341,9 @@ select {
 .scr-table tbody tr { cursor: pointer; }
 .scr-table tbody tr:hover { background: var(--bg-input); }
 /* A name the preset rejected: still readable, visibly not recommended. */
-.scr-table tbody tr.is-out { opacity: 0.45; }
+.scr-table tbody tr.is-out { opacity: 0.75; }
+.scr-coverage { display: block; color: var(--text-muted); font-size: 10px; margin-top: 4px; }
+.scr-reject { display: block; color: var(--text); font-size: 11px; margin-top: 4px; max-width: 320px; white-space: normal; }
 /* The boundary between the names that passed and the ones that did not: the
    table is ordered pass-first, so without this a rejected 83 above a passing 71
    reads as a sorting bug. */

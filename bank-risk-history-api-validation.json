@@ -1,0 +1,458 @@
+{
+  "preset": "quality",
+  "periods": [
+    {
+      "date": "2019-03-31",
+      "names": 1,
+      "picked": 0,
+      "portfolio": null,
+      "universe": 0.37344632768361574,
+      "shortlist": []
+    },
+    {
+      "date": "2020-03-31",
+      "names": 2,
+      "picked": 0,
+      "portfolio": null,
+      "universe": 0.7434241413004924,
+      "shortlist": []
+    },
+    {
+      "date": "2021-03-31",
+      "names": 2,
+      "picked": 1,
+      "portfolio": 0.2616966580976865,
+      "universe": 0.45442557337205813,
+      "shortlist": [
+        {
+          "symbol": "SET:TISCO",
+          "name": "TISCO Financial Group Public Company Limited",
+          "score": 100,
+          "yield": 0.07969151670951156,
+          "mos": 32.95160071794282,
+          "price": 97.25,
+          "intrinsic": 145.04447688734766,
+          "forward": 0.2616966580976865
+        }
+      ]
+    },
+    {
+      "date": "2022-03-31",
+      "names": 2,
+      "picked": 1,
+      "portfolio": 0.2303482587064678,
+      "universe": 0.46403774643567164,
+      "shortlist": [
+        {
+          "symbol": "SET:TISCO",
+          "name": "TISCO Financial Group Public Company Limited",
+          "score": 100,
+          "yield": 0.0626865671641791,
+          "mos": 14.763419446178993,
+          "price": 100.5,
+          "intrinsic": 117.90712314713423,
+          "forward": 0.2303482587064678
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "dividendYield",
+      "model": "bank",
+      "passed": 5,
+      "failed": 2,
+      "passReturn": 0.4704679054177509,
+      "failReturn": 0.6724408614056526,
+      "edge": -0.20197295598790171
+    },
+    {
+      "id": "bankNplCoverage",
+      "model": "bank",
+      "passed": 4,
+      "failed": 1,
+      "passReturn": 0.40257352796782064,
+      "failReturn": 0.7420454152174722,
+      "edge": -0.3394718872496516
+    },
+    {
+      "id": "roeConsistency",
+      "model": "bank",
+      "passed": 1,
+      "failed": 3,
+      "passReturn": 0.2303482587064678,
+      "failReturn": 0.6956423793429258,
+      "edge": -0.46529412063645803
+    },
+    {
+      "id": "roeLevel",
+      "model": "bank",
+      "passed": 0,
+      "failed": 2,
+      "passReturn": null,
+      "failReturn": 0.694599951931951,
+      "edge": null
+    },
+    {
+      "id": "roaLevel",
+      "model": "bank",
+      "passed": 0,
+      "failed": 2,
+      "passReturn": null,
+      "failReturn": 0.694599951931951,
+      "edge": null
+    },
+    {
+      "id": "npmPositive",
+      "model": "bank",
+      "passed": 7,
+      "failed": 0,
+      "passReturn": 0.5281744642714372,
+      "failReturn": null,
+      "edge": null
+    },
+    {
+      "id": "dividendStreak",
+      "model": "bank",
+      "passed": 7,
+      "failed": 0,
+      "passReturn": 0.5281744642714372,
+      "failReturn": null,
+      "edge": null
+    },
+    {
+      "id": "bankNpl",
+      "model": "bank",
+      "passed": 7,
+      "failed": 0,
+      "passReturn": 0.5281744642714372,
+      "failReturn": null,
+      "edge": null
+    },
+    {
+      "id": "bankCapitalAdequacy",
+      "model": "bank",
+      "passed": 4,
+      "failed": 0,
+      "passReturn": 0.4592316599038649,
+      "failReturn": null,
+      "edge": null
+    }
+  ],
+  "totals": {
+    "periods": 4,
+    "names": 7,
+    "portfolio": 0.24602245840207715,
+    "universe": 0.5088334471979594,
+    "overlappingCompoundDiagnostic": {
+      "portfolio": 0.5523262863062581,
+      "universe": 4.09868901870386
+    },
+    "portfolioMean": 0.24602245840207715,
+    "universeMean": 0.5088334471979594
+  },
+  "holdYears": 3,
+  "version": "2026-11-11-bank-risk-history-v8",
+  "publicationMode": "original",
+  "reliability": {
+    "verifiedPublicationDates": false,
+    "verifiedPublicAvailabilityDates": true,
+    "availabilityBasis": "sec-annual-report-receipt-next-day",
+    "statementVersionsVerified": false,
+    "reviewedStatementSnapshots": true,
+    "reviewedSymbols": 2,
+    "reviewedIssuerYears": 20,
+    "reviewedComparativeSnapshots": 8,
+    "earliestRevisionDatesVerified": false,
+    "statementEvidenceIntegrityChecked": true,
+    "reviewedBankIssuerYears": 20,
+    "reviewedBankRiskIssuerYears": 20,
+    "bankRiskFiscalYears": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "bankRiskIncompleteObservations": 5,
+    "excludedUnreviewedIssuerYears": 0,
+    "historicalUniverseVerified": false,
+    "skippedUnknownPublicationYears": 0,
+    "caveats": [
+      "earliest-filing-version-not-certified",
+      "survivorship-bias",
+      "partial-rule-coverage",
+      "historical-ratio-basis-not-equivalent-to-live-set-scoring",
+      "corporate-actions-not-fully-verified",
+      "limited-reviewed-statement-coverage",
+      "unreconciled-per-share-data-excluded"
+    ]
+  },
+  "rebalances": [
+    "2019-03-31",
+    "2020-03-31",
+    "2021-03-31",
+    "2022-03-31"
+  ],
+  "statementEvidence": [
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2016,
+      "availableFrom": "2017-03-18",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17013382.zip",
+      "evidenceSha256": "34d4cfdc7f58dd8e0176d2ac6f66f40bdd9370ad1765f978c5fc3677d5081c56",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2017,
+      "availableFrom": "2018-03-17",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18014581.zip",
+      "evidenceSha256": "c0fb44b16c95f6a2251c91d7103c4cb2ae001a82332e65760af7eb14d5aa20d0",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2017,
+      "availableFrom": "2019-03-21",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19017387.zip",
+      "evidenceSha256": "aeb0278c914df4e7ec64638f33b8f9254e61be44b34126457d60db28872b1e62",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2018,
+      "availableFrom": "2019-03-21",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19017387.zip",
+      "evidenceSha256": "aeb0278c914df4e7ec64638f33b8f9254e61be44b34126457d60db28872b1e62",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2019,
+      "availableFrom": "2020-06-03",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20016406.zip",
+      "evidenceSha256": "1a3f928e06c89f2e77d8d89506f90676226b7488ec3fc9cf9a6d8bbcfddaa829",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2019,
+      "availableFrom": "2021-03-24",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21016903.zip",
+      "evidenceSha256": "54b25eccc245883313759358c1f65eea6853f5ebba0ca702dbc03fc12b4deb88",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2020,
+      "availableFrom": "2021-03-24",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21016903.zip",
+      "evidenceSha256": "54b25eccc245883313759358c1f65eea6853f5ebba0ca702dbc03fc12b4deb88",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2021,
+      "availableFrom": "2022-03-25",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22017896.zip",
+      "evidenceSha256": "cf0592cb8fcd7ef60706a20c389bd0cced2cdb50848ce83878ba9792ea5905a4",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2021,
+      "availableFrom": "2023-03-22",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23020173.zip",
+      "evidenceSha256": "8e5c3df895d07893c09d13d7767f106ff0164afccc6a1e9f664dee2b7ad4e7a1",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2022,
+      "availableFrom": "2023-03-22",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23020173.zip",
+      "evidenceSha256": "8e5c3df895d07893c09d13d7767f106ff0164afccc6a1e9f664dee2b7ad4e7a1",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2023,
+      "availableFrom": "2024-04-19",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0999FIN280220241345380849E.zip",
+      "evidenceSha256": "456ce2468aa384fe1dbdfe6602ed029af8cd39074d652204f56fbc5c0cbc5f0e",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2023,
+      "availableFrom": "2025-03-22",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0999FIN260220251121580811E.zip",
+      "evidenceSha256": "1a3da7550fc8d736620521e23235d4e23ff39b73bccb6fb6f3986f3a2186ef4e",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2024,
+      "availableFrom": "2025-03-22",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0999FIN260220251121580811E.zip",
+      "evidenceSha256": "1a3da7550fc8d736620521e23235d4e23ff39b73bccb6fb6f3986f3a2186ef4e",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2025,
+      "availableFrom": "2026-03-25",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0999FIN270220260954350617E.zip",
+      "evidenceSha256": "079db01508d1d9c6f94b7be140ce359493b279c5750943a8e8a98b9f947e0d7f",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2016,
+      "availableFrom": "2017-03-30",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201702/17010506.zip",
+      "evidenceSha256": "526f22f2c8fabd168a0558d1ac3921390c30e0102cc13348efddfb71d18a353a",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2016,
+      "availableFrom": "2018-03-31",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18012264.zip",
+      "evidenceSha256": "6f2c6584ea2145a16d67f55cbd150d1bc6abe960d722a623198258c5295a2d7f",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2017,
+      "availableFrom": "2018-03-31",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201802/18012264.zip",
+      "evidenceSha256": "6f2c6584ea2145a16d67f55cbd150d1bc6abe960d722a623198258c5295a2d7f",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2018,
+      "availableFrom": "2019-04-13",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/201902/19012649.zip",
+      "evidenceSha256": "02acc1494e7ccdbba0bdb64f1a17dccc72742cdc32209e870dbcc843204cefea",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2019,
+      "availableFrom": "2020-03-25",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202002/20016443.zip",
+      "evidenceSha256": "f9606813fffad6140779d57dd7765594492eada9949f045db353ac0d347a45fb",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2020,
+      "availableFrom": "2021-03-20",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202102/21020804.zip",
+      "evidenceSha256": "14aa2ec302748a6bcfce6ca1f83763aa9d2d069e22016a0af8bf95df1a3dd42f",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2020,
+      "availableFrom": "2022-03-12",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22020114.zip",
+      "evidenceSha256": "186d846a8014082e0e70d7f23cfcf106492c15aa09655a2d2e41098a5a3a7aa1",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2021,
+      "availableFrom": "2022-03-12",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202202/22020114.zip",
+      "evidenceSha256": "186d846a8014082e0e70d7f23cfcf106492c15aa09655a2d2e41098a5a3a7aa1",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2021,
+      "availableFrom": "2023-03-08",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23018428.zip",
+      "evidenceSha256": "62e796d7c9bb8caf9bd176c7e5120803c18755809f9ad9effc5fe69dacb6c257",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2022,
+      "availableFrom": "2023-03-08",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202302/23018428.zip",
+      "evidenceSha256": "62e796d7c9bb8caf9bd176c7e5120803c18755809f9ad9effc5fe69dacb6c257",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2023,
+      "availableFrom": "2024-03-12",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202402/0068FIN160220240921420509E.zip",
+      "evidenceSha256": "c1625b9564572d5a7f5eac0d311866df4a8ad5cf10785f35cfcf11e0e588f492",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2023,
+      "availableFrom": "2025-03-25",
+      "scope": "audited-consolidated-comparative",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0068FIN170220251417330638E.zip",
+      "evidenceSha256": "8ea98ee2828636d13348ed892aeabe36639417e0b01edb0c3176ec7ca3ec6a04",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2024,
+      "availableFrom": "2025-03-25",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202502/0068FIN170220251417330638E.zip",
+      "evidenceSha256": "8ea98ee2828636d13348ed892aeabe36639417e0b01edb0c3176ec7ca3ec6a04",
+      "earliestVersionVerified": false
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2025,
+      "availableFrom": "2026-03-24",
+      "scope": "audited-consolidated-current-year",
+      "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068FIN130220261641310338E.zip",
+      "evidenceSha256": "3e0c2b810e5f2e8036aa82302aa351b8d5c1fc090fc1e4cdb9048d6f5ff67526",
+      "earliestVersionVerified": false
+    }
+  ],
+  "byPreset": {},
+  "simulation": null
+}

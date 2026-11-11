@@ -241,6 +241,8 @@ function unknownRow(fin, reason) {
     ttmBvps: null,
     score: null,
     coverage: 0,
+    dataCoverage: 0,
+    scoringYearCount: 0,
     passed: 0,
     failed: 0,
     checks: [],
@@ -286,6 +288,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   // Yahoo years are allowed to supply the per-share series.
   const growthYears = buildGrowthHistory(trusted, history);
   const scoringYears=isBankSymbol(fin.symbol)?(fin.bankScoreYears??[]):trusted;
+  if(!scoringYears.length)return unknownRow(fin,'no-annual-statements');
   const quality = scoreQuality({
     years: scoringYears,
     dividends: fin.dividends,
@@ -487,6 +490,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     : { ok: false, reason: 'not-financial', value: null };
   const residualIncomeCheck = {
     ok: riResult.ok,
+    missingInputs: riResult.missingInputs ?? [],
     reason: riResult.reason ?? null,
     value: riResult.value ?? null,
     mos: riResult.ok ? marginOfSafety(riResult.value, fin.price) : null,

@@ -1,0 +1,730 @@
+[
+  {
+    "symbol": "SET:KBANK",
+    "year": 2016,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "assets",
+      "totalDebt"
+    ],
+    "file": "data/statement-evidence/KBANK-2017-81718550c38f.xls",
+    "openingRows": [
+      {
+        "sheet": "CHANGES IN EQUITY",
+        "row": {
+          "A14": "Balance at 1 January 2016",
+          "F14": 23932602.0,
+          "H14": 18103110.0,
+          "J14": 9663990.0,
+          "L14": 5233877.0,
+          "N14": -54712.0,
+          "P14": 14843155.0,
+          "R14": 3050000.0,
+          "T14": 225870851.0,
+          "V14": 285799718.0,
+          "X14": 26413231.0,
+          "Z14": 312212949.0
+        }
+      },
+      {
+        "sheet": "CHANGES IN EQUITY",
+        "row": {
+          "A51": "Balance at 1 January 2016",
+          "H51": 23932602.0,
+          "J51": 18103110.0,
+          "L51": 9080843.0,
+          "N51": 3874271.0,
+          "P51": -30564.0,
+          "R51": 12924550.0,
+          "T51": 3050000.0,
+          "V51": 205943799.0,
+          "X51": 263954061.0
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:KKP",
+    "year": 2023,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "netIncome",
+      "revenue",
+      "totalNetIncome"
+    ],
+    "file": "data/statement-evidence/KKP-2024-8a029d971e10.xlsx",
+    "openingRows": [
+      {
+        "sheet": "SHAREHOLDERS Conso 9",
+        "row": {
+          "A17": "Opening balance  as at 1 January 2023",
+          "D17": 8467511,
+          "F17": 9356233,
+          "H17": 0,
+          "J17": 3184565,
+          "L17": -171355,
+          "N17": -299407,
+          "P17": -545462,
+          "R17": -158337,
+          "T17": 852337,
+          "V17": 0,
+          "X17": 37137439,
+          "Z17": 0,
+          "AB17": 57823524,
+          "AD17": 287922,
+          "AF17": 58111446
+        }
+      },
+      {
+        "sheet": "SHAREHOLDERS The Bank 10",
+        "row": {
+          "A15": "Opening balance  as at 1 January 2023",
+          "D15": 8467511,
+          "F15": 9356233,
+          "H15": 0,
+          "J15": 354517,
+          "L15": -171355,
+          "N15": 213647,
+          "P15": -79362,
+          "R15": 852337,
+          "T15": 0,
+          "V15": 33947985,
+          "X15": 0,
+          "Z15": 52941513
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:KKP",
+    "year": 2024,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "netIncome",
+      "revenue",
+      "totalNetIncome"
+    ],
+    "file": "data/statement-evidence/KKP-2025-748a0f2f8c73.xlsx",
+    "openingRows": [
+      {
+        "sheet": "SHAREHOLDERS Conso 9",
+        "row": {
+          "A16": "Opening balance  as at 1 January 2024",
+          "D16": 8467511,
+          "F16": 9356233,
+          "H16": 20170,
+          "J16": 3165481,
+          "L16": -238830,
+          "N16": -278599,
+          "P16": 0,
+          "R16": 0,
+          "T16": -528712,
+          "V16": -158337,
+          "X16": 1047876,
+          "Z16": 0,
+          "AB16": 40114146,
+          "AD16": "-",
+          "AF16": 60966939,
+          "AH16": 285911,
+          "AJ16": 61252850
+        }
+      },
+      {
+        "sheet": "SHAREHOLDERS The Bank 10",
+        "row": {
+          "A15": "Opening balance  as at 1 January 2024",
+          "D15": 8467511,
+          "F15": 9356233,
+          "H15": 20170,
+          "J15": 350282,
+          "L15": -238830,
+          "N15": 231739,
+          "P15": 0,
+          "R15": 0,
+          "T15": -68638,
+          "V15": 1047876,
+          "X15": 0,
+          "Z15": 36377967,
+          "AB15": 0,
+          "AD15": 55544310
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:KTB",
+    "year": 2016,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "netIncome",
+      "revenue",
+      "equity",
+      "assets",
+      "totalEquity",
+      "totalNetIncome"
+    ],
+    "file": "data/statement-evidence/KTB-2017-e40bc2a964d5.xlsx",
+    "openingRows": [
+      {
+        "sheet": "BS",
+        "row": {
+          "F8": "DECEMBER 31, 2017",
+          "H8": "DECEMBER 31, 2016",
+          "J8": "JANUARY 1, 2016",
+          "L8": "DECEMBER 31, 2017",
+          "N8": "DECEMBER 31, 2016",
+          "P8": "JANUARY 1, 2016"
+        }
+      },
+      {
+        "sheet": "BS",
+        "row": {
+          "F55": "DECEMBER 31, 2017",
+          "H55": "DECEMBER 31, 2016",
+          "J55": "JANUARY 1, 2016",
+          "L55": "DECEMBER 31, 2017",
+          "N55": "DECEMBER 31, 2016",
+          "P55": "JANUARY 1, 2016"
+        }
+      },
+      {
+        "sheet": "Share(Conso)",
+        "row": {
+          "A13": "BALANCE BEFORE ADJUSTMENT AS AT JANUARY 1, 2016 ",
+          "D13": 72005040,
+          "E13": 0,
+          "F13": 20833734,
+          "G13": 0,
+          "H13": 6344916,
+          "I13": 0,
+          "J13": 250768,
+          "K13": 0,
+          "L13": 0,
+          "N13": -5198,
+          "O13": 0,
+          "P13": 4052955,
+          "Q13": "#REF!",
+          "R13": 142400537,
+          "S13": 0,
+          "T13": 245882752,
+          "U13": 0,
+          "V13": 4414574,
+          "W13": 0,
+          "X13": 250297326
+        }
+      },
+      {
+        "sheet": "Share(Conso)",
+        "row": {
+          "B15": "BALANCE AFTER ADJUSTMENT AS AT JANUARY 1, 2016",
+          "D15": 72005040,
+          "E15": 0,
+          "F15": 20833734,
+          "G15": 0,
+          "H15": 6344916,
+          "I15": 0,
+          "J15": 250768,
+          "K15": 0,
+          "L15": 0,
+          "N15": -5198,
+          "O15": 0,
+          "P15": 4052955,
+          "Q15": "#REF!",
+          "R15": 142637605,
+          "S15": 0,
+          "T15": 246119820,
+          "U15": 0,
+          "V15": 4414574,
+          "W15": 0,
+          "X15": 250534394
+        }
+      },
+      {
+        "sheet": "Share(Bank)",
+        "row": {
+          "A12": "BEGINNING BALANCE AS AT JANUARY 1, 2016",
+          "D12": 72005040,
+          "F12": 20833734,
+          "H12": 6344916,
+          "J12": 67695,
+          "L12": 0,
+          "N12": -5198,
+          "Q12": 135225345,
+          "S12": 234471532
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:KTB",
+    "year": 2017,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "revenue"
+    ],
+    "file": "data/statement-evidence/KTB-2018-9b08fc4970af.xlsx",
+    "openingRows": [
+      {
+        "sheet": "Share (Conso)",
+        "row": {
+          "A13": "BALANCE BEFORE ADJUSTMENT AS AT JANUARY 1, 2017",
+          "D13": 72005040,
+          "E13": 0,
+          "F13": 20833734,
+          "G13": 0,
+          "H13": 8367335,
+          "I13": 0,
+          "J13": 5630275,
+          "K13": 0,
+          "L13": 0,
+          "N13": -85107,
+          "O13": 0,
+          "P13": 3836315,
+          "R13": 163341742,
+          "S13": 0,
+          "T13": 273929334,
+          "U13": 0,
+          "V13": 5217609,
+          "W13": 0,
+          "X13": 279146943
+        }
+      },
+      {
+        "sheet": "Share (Conso)",
+        "row": {
+          "B15": "BALANCE AFTER ADJUSTMENT AS AT JANUARY 1, 2017",
+          "D15": 72005040,
+          "E15": 0,
+          "F15": 20833734,
+          "G15": 0,
+          "H15": 8367335,
+          "I15": 0,
+          "J15": 5630275,
+          "K15": 0,
+          "L15": 0,
+          "N15": -85107,
+          "O15": 0,
+          "P15": 3836315,
+          "R15": 163599439,
+          "S15": 0,
+          "T15": 274187031,
+          "U15": 0,
+          "V15": 5217609,
+          "W15": 0,
+          "X15": 279404640
+        }
+      },
+      {
+        "sheet": "Share (Bank)",
+        "row": {
+          "A12": "BEGINNING BALANCE AS AT JANUARY 1, 2017",
+          "D12": 72005040,
+          "F12": 20833734,
+          "H12": 8367335,
+          "J12": 5447202,
+          "L12": 0,
+          "N12": -85107,
+          "Q12": 153886537,
+          "S12": 260454741
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TISCO",
+    "year": 2017,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "revenue"
+    ],
+    "file": "data/statement-evidence/TISCO-2018-5bcdb9be59fb.xls",
+    "openingRows": [
+      {
+        "sheet": "conso",
+        "row": {
+          "A15": "Balance as at 1 January 2017",
+          "E15": 108.0,
+          "G15": 8006447.0,
+          "I15": 1018408.0,
+          "K15": -118382.0,
+          "M15": 889264.0,
+          "O15": -3012.0,
+          "Q15": 679266.0,
+          "S15": 1447136.0,
+          "U15": 801000.0,
+          "W15": 19951807.0,
+          "Y15": 31224906.0,
+          "AA15": 100637.0,
+          "AC15": 31325543.0,
+          "AD15": 0.0
+        }
+      },
+      {
+        "sheet": "Separate",
+        "row": {
+          "A11": "Balance as at 1 January 2017",
+          "E11": 108.0,
+          "F11": 0.0,
+          "G11": 8006447.0,
+          "H11": 0.0,
+          "I11": 95.0,
+          "J11": 0.0,
+          "K11": 7031428.0,
+          "L11": 0.0,
+          "M11": -121509.0,
+          "N11": 0.0,
+          "O11": 226487.0,
+          "Q11": 104978.0,
+          "S11": 801000.0,
+          "T11": 0.0,
+          "U11": 4292126.0,
+          "V11": 0.0,
+          "W11": 20236182.0
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TISCO",
+    "year": 2019,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "assets",
+      "totalDebt"
+    ],
+    "file": "data/statement-evidence/TISCO-2020-109db82c05e4.xls",
+    "openingRows": [
+      {
+        "sheet": "conso",
+        "row": {
+          "A15": "Balance as at 1 January 2019",
+          "C15": 99.0,
+          "E15": 8006456.0,
+          "G15": 1018408.0,
+          "I15": -91062.0,
+          "K15": 0.0,
+          "M15": 1164360.0,
+          "O15": 1260.0,
+          "Q15": 679266.0,
+          "S15": 1753824.0,
+          "U15": 801000.0,
+          "W15": 26116740.0,
+          "Y15": 37696527.0,
+          "AA15": 132929.0,
+          "AC15": 37829456.0,
+          "AD15": 0.0
+        }
+      },
+      {
+        "sheet": "Separate",
+        "row": {
+          "A12": "Balance as at 1 January 2019",
+          "E12": 99.0,
+          "F12": 0.0,
+          "G12": 8006456.0,
+          "H12": 0.0,
+          "I12": 87.0,
+          "J12": 0.0,
+          "K12": 7031436.0,
+          "L12": 0.0,
+          "M12": -49621.0,
+          "O12": 0.0,
+          "P12": 0.0,
+          "Q12": 306925.0,
+          "S12": 257304.0,
+          "U12": 801000.0,
+          "V12": 0.0,
+          "W12": 7482643.0,
+          "X12": 0.0,
+          "Y12": 23579025.0
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TISCO",
+    "year": 2021,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "revenue"
+    ],
+    "file": "data/statement-evidence/TISCO-2022-238faa91bd7c.xls",
+    "openingRows": [
+      {
+        "sheet": "conso",
+        "row": {
+          "A15": "Balance as at 1 January 2021",
+          "C15": 99.0,
+          "E15": 8006456.0,
+          "G15": 1018408.0,
+          "I15": 5871.0,
+          "K15": 1157138.0,
+          "M15": -4358.0,
+          "O15": 679266.0,
+          "Q15": 1837917.0,
+          "S15": 801000.0,
+          "U15": 27795056.0,
+          "W15": 39458936.0,
+          "Y15": 3143.0,
+          "AA15": 39462079.0,
+          "AB15": 0.0
+        }
+      },
+      {
+        "sheet": "Separate",
+        "row": {
+          "A12": "Balance as at 1 January 2021",
+          "E12": 99.0,
+          "F12": 0.0,
+          "G12": 8006456.0,
+          "H12": 0.0,
+          "I12": 87.0,
+          "J12": 0.0,
+          "K12": 7031436.0,
+          "L12": 0.0,
+          "M12": -1229.0,
+          "N12": 0.0,
+          "O12": 305659.0,
+          "Q12": 304430.0,
+          "S12": 801000.0,
+          "T12": 0.0,
+          "U12": 6972541.0,
+          "V12": 0.0,
+          "W12": 23116049.0
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TISCO",
+    "year": 2023,
+    "missing": [
+      "openingAssets"
+    ],
+    "changed": [
+      "revenue"
+    ],
+    "file": "data/statement-evidence/TISCO-2024-c1969ba0e602.xls",
+    "openingRows": [
+      {
+        "sheet": "conso",
+        "row": {
+          "A15": "Balance as at 1 January 2023",
+          "C15": 99.0,
+          "E15": 8006456.0,
+          "G15": 1018408.0,
+          "I15": 1071.0,
+          "K15": 1149837.0,
+          "M15": 833.0,
+          "O15": 679266.0,
+          "Q15": 1831007.0,
+          "S15": 801000.0,
+          "U15": 31130416.0,
+          "W15": 42787386.0,
+          "Y15": 3237.0,
+          "AA15": 42790623.0,
+          "AB15": 0.0
+        }
+      },
+      {
+        "sheet": "Separate",
+        "row": {
+          "A12": "Balance as at 1 January 2023",
+          "E12": 99.0,
+          "F12": 0.0,
+          "G12": 8006456.0,
+          "H12": 0.0,
+          "I12": 87.0,
+          "J12": 0.0,
+          "K12": 7031436.0,
+          "L12": 0.0,
+          "M12": 2457.0,
+          "N12": 0.0,
+          "O12": 304313.0,
+          "Q12": 306770.0,
+          "S12": 801000.0,
+          "T12": 0.0,
+          "U12": 6716419.0,
+          "V12": 0.0,
+          "W12": 22862267.0
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TTB",
+    "year": 2016,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "assets",
+      "totalDebt"
+    ],
+    "file": "data/statement-evidence/TTB-2017-e8a917e37caf.xls",
+    "openingRows": [
+      {
+        "sheet": "SE-Conso",
+        "row": {
+          "A16": "Balance at 1 January 2016",
+          "F16": 41562025.0,
+          "H16": 236181.0,
+          "J16": 212651.0,
+          "L16": 3596433.0,
+          "N16": 82615.0,
+          "P16": 67991.0,
+          "R16": 3959690.0,
+          "T16": 1710000.0,
+          "V16": 29023338.0,
+          "X16": 76491234.0,
+          "Z16": 107129.0,
+          "AB16": 76598363.0
+        }
+      },
+      {
+        "sheet": "SE-Bank",
+        "row": {
+          "A15": "Balance at 1 January 2016",
+          "F15": 41562025.0,
+          "H15": 236181.0,
+          "J15": 212651.0,
+          "L15": 3596433.0,
+          "N15": 50683.0,
+          "P15": 67991.0,
+          "R15": 3927758.0,
+          "T15": 1710000.0,
+          "V15": 28561265.0,
+          "X15": 75997229.0
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TTB",
+    "year": 2020,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "revenue"
+    ],
+    "file": "data/statement-evidence/TTB-2021-e9d7244564ac.xlsx",
+    "openingRows": [
+      {
+        "sheet": "SE-Conso",
+        "row": {
+          "A15": "Balance at 1 January 2020 - restated",
+          "F15": 91541387,
+          "H15": 43217044,
+          "J15": 0,
+          "L15": 5754014,
+          "N15": 492700,
+          "P15": -28567,
+          "R15": -13675,
+          "T15": 6204472,
+          "V15": 3360000,
+          "X15": 50714666,
+          "Z15": 195037569,
+          "AB15": 34521,
+          "AD15": 195072090
+        }
+      },
+      {
+        "sheet": "SE-Bank",
+        "row": {
+          "A15": "Balance at 1 January 2020 - restated",
+          "F15": 91541387,
+          "H15": 43217044,
+          "J15": 0,
+          "L15": 0,
+          "N15": 5767838,
+          "P15": 449806,
+          "R15": -79195,
+          "T15": -13675,
+          "V15": 6124774,
+          "X15": 3360000,
+          "Z15": 47074734,
+          "AB15": 191317939
+        }
+      }
+    ]
+  },
+  {
+    "symbol": "SET:TTB",
+    "year": 2021,
+    "missing": [
+      "openingEquity",
+      "openingAssets"
+    ],
+    "changed": [
+      "assets",
+      "totalDebt"
+    ],
+    "file": "data/statement-evidence/TTB-2022-bbe782de81ba.xlsx",
+    "openingRows": [
+      {
+        "sheet": "SE-Conso",
+        "row": {
+          "A14": "Balance as at 1 January 2021",
+          "F14": 91588946,
+          "H14": 43321601,
+          "J14": 69563,
+          "L14": 5369508,
+          "N14": 434305,
+          "P14": -45269,
+          "R14": -30316,
+          "T14": 5797791,
+          "V14": 10091000,
+          "X14": 53913289,
+          "Z14": 204712627,
+          "AB14": 37098,
+          "AD14": 204749725
+        }
+      },
+      {
+        "sheet": "SE-Bank",
+        "row": {
+          "A14": "Balance as at 1 January 2021",
+          "F14": 91588946,
+          "H14": 43321601,
+          "J14": 69563,
+          "L14": 0,
+          "N14": 5369508,
+          "P14": 486481,
+          "R14": -133932,
+          "T14": -30316,
+          "V14": 5761304,
+          "X14": 10091000,
+          "Z14": 52689658,
+          "AB14": 203452509
+        }
+      }
+    ]
+  }
+]

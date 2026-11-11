@@ -8,7 +8,7 @@ now=datetime.datetime.now(datetime.timezone.utc).isoformat()
 today=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7))).date().isoformat()
 previous={}
 if Path('data/bank-risk.json').exists():
- previous={r['symbol']:r for r in json.loads(Path('data/bank-risk.json').read_text(encoding='utf-8'))['rows']}
+ previous={r['symbol']:r for r in json.loads(Path('data/bank-risk.json').read_text(encoding='utf-8'))['rows'] if r['fiscalYear']==2025}
 tomorrow=(datetime.date.fromisoformat(today)+datetime.timedelta(days=1)).isoformat()
 precision={s:dict(zip(['capitalAdequacy','npl','nplCoverage'],p)) for s,p in {
  'KBANK':[2,2,2],'BBL':[2,1,1],'KTB':[2,2,1],'TTB':[1,2,0],
@@ -77,5 +77,7 @@ add('SCB',{
  'npl':metric('SCB','npl',3.29,20,'NPL ratio 3.29%',definition='SCBX consolidated NPL ratio; not SCB Bank-only 3.12% or a product-level ratio'),
  'nplCoverage':metric('SCB','nplCoverage',160.8,20,'(Coverage ratio) 160.8%',definition='SCBX consolidated allowance including interbank, commitments and guarantees / NPL'),
 })
-Path('data/bank-risk.json').write_text(json.dumps({'version':1,'checkedAt':now,'description':'Reviewed reported FY2025 bank risk metrics. Scope and status are per metric; unresolved scopes and projected values are not eligible for model scoring. TISCO final-note capital has observation-based availability only. No current data is copied into earlier backtests.','rows':rows},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+history=Path('data/bank-risk-history-reviewed.json')
+if history.exists():rows+=json.loads(history.read_text(encoding='utf-8'))['rows']
+Path('data/bank-risk.json').write_text(json.dumps({'version':1,'checkedAt':now,'description':'Reviewed annual bank risk metrics. Scope and status are per metric; unresolved scopes and projected values are not eligible for model scoring. TISCO FY2025 final-note capital has observation-based availability only. No current data is copied into earlier backtests.','rows':rows},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print('Wrote 7 issuer-years / 21 reported metrics; KKP uses explicit disclosed banking-portfolio profile')

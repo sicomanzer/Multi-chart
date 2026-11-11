@@ -1125,6 +1125,14 @@ const growthFin = {
   dataIssue: null,
 };
 const growthRow = buildRow(growthFin, { history: { years: growthFile } });
+const missingAnnual=buildRow({...growthFin,years:[]},{history:{years:[]}});
+check('missing annual statements produce no score, not a poor score',
+  missingAnnual.score===null&&missingAnnual.dataIssue==='no-annual-statements'
+  &&missingAnnual.scoringYearCount===0&&missingAnnual.dataCoverage===0);
+check('missing annual statements cannot pass even the all preset',
+  applyPreset(missingAnnual,presetById('all')).reason==='unknown:data');
+check('TTM EPS and dividends alone cannot produce a quality score',
+  scoreQuality({years:[],dividends:growthFin.dividends,price:30,ttmEps:2}).score===null);
 const growthCheck = (id) => growthRow.checks.find((c) => c.id === id);
 check('buildRow uses the long history for revenue growth',
   growthCheck('revenueGrowth')?.pass !== null
@@ -1302,7 +1310,7 @@ check('a zero in one source is missing information, not a contradiction',
   reconcileYears([{ fiscalYear: 2025, netIncome: 100, de: 0.5 }],
     [{ fiscalYear: 2025, netIncome: 0, de: 1.2 }]).length === 1);
 check('a company with no statements cannot be scored',
-  scoreQuality({ years: [], dividends: [{ date: '2025-06-01', amount: 1 }], price: 20, asOf }).score === 0);
+  scoreQuality({ years: [], dividends: [{ date: '2025-06-01', amount: 1 }], price: 20, asOf }).score === null);
 
 // ── Two things a rule cannot see on its own ─────────────────────────────────
 console.log('\n── Warnings ──');

@@ -35,7 +35,7 @@ import {loadBankRisk,selectBankRisk} from './bank-risk.js';
 
 const DAY = 86_400_000;
 const FILING_LAG_DAYS = 90;
-export const BACKTEST_VERSION = '2026-11-11-bank-risk-v7';
+export const BACKTEST_VERSION = '2026-11-11-bank-risk-history-v8';
 let filingDatesTask;
 async function filingDates() {
   filingDatesTask ??= readFile(new URL('../data/filing-dates.json', import.meta.url), 'utf8')
@@ -662,7 +662,7 @@ export async function runBacktest({
       earliestRevisionDatesVerified: false,
       statementEvidenceIntegrityChecked: true,
       reviewedBankIssuerYears: new Set(statementVersions.filter(r=>symbols.includes(r.symbol)&&r.statementModel==='bank').map(r=>`${r.symbol}|${r.fiscalYear}`)).size,
-      reviewedBankRiskIssuerYears:bankRiskRecords.filter(r=>symbols.includes(r.symbol)).length,
+      reviewedBankRiskIssuerYears:new Set(bankRiskRecords.filter(r=>symbols.includes(r.symbol)).map(r=>`${r.symbol}|${r.fiscalYear}`)).size,
       bankRiskFiscalYears:[...new Set(bankRiskRecords.filter(r=>symbols.includes(r.symbol)).map(r=>r.fiscalYear))].sort(),
       bankRiskIncompleteObservations: observations.filter(r=>r.qualityModel==='bank'&&r.bankRiskComplete!==true).length,
       excludedUnreviewedIssuerYears: publicationMode === 'original'

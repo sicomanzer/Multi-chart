@@ -1,5 +1,8 @@
 # Bank statement and screening model audit — 2026-11-11
 
+> Updated status: risk disclosures now cover 64 issuer-years, with 49 complete eligible input sets and 15 explicit incomplete sets. The original risk-unavailable section below describes the earlier audit stage; see [the completed historical risk review](BANK-RISK-HISTORY-2026-11-11.md) for current coverage and exclusions.
+
+
 This describes the initial model. See [the subsequent FY2025 risk source review](BANK-RISK-SOURCES-2026-11-11.md) for the current capital/NPL/coverage inputs.
 
 ## Delivered coverage

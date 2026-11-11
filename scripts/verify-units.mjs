@@ -294,6 +294,22 @@ check('residual income with no excess return is book value',
   approx(residualIncome({ bvps: 100, roe: 0.09, payout: 0.4, r: 0.09, years: 10 }).value, 100, 1e-9));
 check('residual income refuses a negative book',
   residualIncome({ bvps: -1, roe: 0.15, payout: 0, r: 0.09 }).reason === 'negative-book');
+for(const key of ['bvps','roe','payout','r']){
+  for(const missing of [null,undefined,'',false,NaN]){
+    const input={bvps:100,roe:.15,payout:.4,r:.09,[key]:missing};
+    // An omitted discount rate uses its documented default; null never does.
+    if(key==='r'&&missing===undefined)continue;
+    const result=residualIncome(input);
+    check(`residual income rejects missing ${key} (${String(missing)})`,
+      result.ok===false&&result.value===null&&result.missingInputs.includes(key));
+  }
+}
+check('residual income accepts an explicitly measured zero payout',
+  residualIncome({bvps:100,roe:.15,payout:0,r:.09}).ok===true);
+check('residual income accepts an explicitly measured zero ROE',
+  residualIncome({bvps:100,roe:0,payout:0,r:.09}).ok===true);
+check('residual income does not assume zero payout when omitted',
+  residualIncome({bvps:100,roe:.15}).reason==='missing-input');
 
 console.log(`\n${failures ? `${failures} of ${ran} FAILED` : `all ${ran} passed`}\n`);
 process.exit(failures ? 1 : 0);
