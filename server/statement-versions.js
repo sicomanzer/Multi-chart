@@ -13,7 +13,14 @@ export async function loadStatementVersions({symbols=null}={}) {
     if(!validStatementVersion(row))continue;
     try{
       const bytes=await readFile(new URL('../'+row.evidenceFile,import.meta.url));
-      if(createHash('sha256').update(bytes).digest('hex')===row.sha256)rows.push(row);
+      if(createHash('sha256').update(bytes).digest('hex')===row.sha256){
+        let dividendVerified=false;
+        const d=row.regularDividend;
+        if(d&&/^data\/bank-risk-evidence\/[A-Za-z0-9.-]+\.pdf$/.test(d.evidenceFile)){
+          try{dividendVerified=createHash('sha256').update(await readFile(new URL('../'+d.evidenceFile,import.meta.url))).digest('hex')===d.sha256;}catch{}
+        }
+        rows.push({...row,dividendVerified});
+      }
     }catch{ /* Missing or changed evidence is excluded, never replaced by provider data. */ }
   }
   return rows;
@@ -21,7 +28,7 @@ export async function loadStatementVersions({symbols=null}={}) {
 
 export function bankScoringYears(versions,symbol,at){
   if(!isBankSymbol(symbol))return [];
-  return selectStatementVersions(versions,symbol,at).map(row=>({...row,
+  return selectStatementVersions(versions,symbol,at,{live:true}).map(row=>({...row,
     roe:Number.isFinite(row.openingEquity)&&row.openingEquity+row.equity>0
       ? row.netIncome/((row.openingEquity+row.equity)/2):null,
     npm:null,ratioSource:'sec-reviewed-bank',
@@ -52,7 +59,7 @@ export function validStatementVersion(row) {
 }
 
 /** Pick an entire known snapshot, never blend it with a later provider row. */
-export function selectStatementVersions(versions, symbol, at) {
+export function selectStatementVersions(versions, symbol, at, {live=false}={}) {
   const selected = new Map();
   for (const row of versions) {
     if (!validStatementVersion(row) || row.symbol !== symbol || row.availableFrom > at) continue;
@@ -75,6 +82,8 @@ export function selectStatementVersions(versions, symbol, at) {
       // EPS units may have changed through splits. Leave the model input unknown
       // until share-basis reconciliation is separately evidenced.
       eps:row.perShareBasisVerified === true ? row.fields.reportedEps : null,
+      payoutEps:row.payoutEpsVerified===true&&Number.isFinite(row.fields.payoutEps)&&row.cells?.payoutEps?.scale===1?row.fields.payoutEps:null,
+      regularDividend:row.dividendVerified&&(live?row.regularDividend.liveAvailableFrom:row.regularDividend.availableFrom)<=at?row.regularDividend:null,
       roa:Number.isFinite(fields.openingAssets) && fields.openingAssets+fields.assets>0
         ? (row.statementModel==='bank'?row.fields.totalNetIncome:fields.ebit) / ((fields.openingAssets + fields.assets) / 2) : null,
       npm:fields.revenue>0 ? fields.netIncome / fields.revenue : null,

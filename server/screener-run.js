@@ -13,15 +13,19 @@ import { getSetFundamentals } from './set-fundamentals.js';
 import {isBankSymbol} from './business-models.js';
 import {loadStatementVersions,bankScoringYears} from './statement-versions.js';
 import {loadBankRisk,selectBankRisk} from './bank-risk.js';
+import {auditScreeningRow} from './screener-audit.js';
+import {loadDividendEvidence,compareDividendPeriod} from './dividend-evidence.js';
 
 async function attachOfficialHistory(fin) {
   if (!fin.symbol?.startsWith('SET:')) return fin;
   const result = await getSetFundamentals([fin.symbol]);
   const official = result.data[fin.symbol];
+  const dividendEvidence=await loadDividendEvidence(fin.symbol);
   const bankYears=isBankSymbol(fin.symbol)
     ? bankScoringYears(await loadStatementVersions({symbols:[fin.symbol]}),fin.symbol,new Date().toISOString().slice(0,10)):null;
   const bankRisk=bankYears?selectBankRisk(await loadBankRisk({symbols:[fin.symbol]}),fin.symbol,bankYears.at(-1)?.fiscalYear,new Date()):null;
   return { ...fin, officialAnnual: official?.annualYears ?? [],
+    dividendEvidence,
     ...(bankYears?{bankScoreYears:bankYears}:{}),
     bankRisk,
     officialMultiples: { pe: official?.pe?.value ?? null, pbv: official?.pbv?.value ?? null },
@@ -182,6 +186,7 @@ export function reconcileYears(years, history, officialAnnual = null) {
   return reconciled.map(year => {
     const official = officialByYear.get(year.fiscalYear);
     return { ...year, roe: official?.roe ?? null, roa: official?.roa ?? null,
+      payoutEps:official?.payoutEps??null,payoutEpsSource:official?.payoutEps!=null?'set.or.th':null,
       npm: official?.npm ?? null, de: official?.de ?? null,
       ratioSource: official ? 'set.or.th' : null, ratioAsOf: official?.asOf ?? null };
   });
@@ -279,7 +284,9 @@ function unknownRow(fin, reason) {
 export function buildRow(fin, { overrides = {}, asOf = new Date(), history = null } = {}) {
   if (fin.dataIssue) return unknownRow(fin, fin.dataIssue);
   const ttmEps = fin.ttm?.eps ?? null;
-  const trusted = reconcileYears(fin.years, history?.years ?? [], fin.officialAnnual ?? null);
+  const withDividendReviews=years=>years.map(y=>({...y,regularDividend:
+    fin.dividendEvidence?.reviews.find(r=>r.fiscalYear===y.fiscalYear&&r.liveAvailableFrom<=asOf.toISOString().slice(0,10))??y.regularDividend}));
+  const trusted = withDividendReviews(reconcileYears(fin.years, history?.years ?? [], fin.officialAnnual ?? null));
   // Growth needs a longer run than the four annual statement rows Yahoo keeps.
   // The tracked history supplies the older revenue and profit, but its EPS is
   // not trustworthy for every name: several rows mix core earnings with the
@@ -287,7 +294,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   // long history is used for revenue and profit, and only the four reconciled
   // Yahoo years are allowed to supply the per-share series.
   const growthYears = buildGrowthHistory(trusted, history);
-  const scoringYears=isBankSymbol(fin.symbol)?(fin.bankScoreYears??[]):trusted;
+  const scoringYears=isBankSymbol(fin.symbol)?withDividendReviews(fin.bankScoreYears??[]):trusted;
   if(!scoringYears.length)return unknownRow(fin,'no-annual-statements');
   const quality = scoreQuality({
     years: scoringYears,
@@ -313,7 +320,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     if (edge && Number.isFinite(edge.edge)) check.edge = edge.edge;
   }
 
-  const dividend = sustainableDividend({ years: trusted, dividends: fin.dividends, asOf, ttmEps });
+  const dividend = sustainableDividend({ years: isBankSymbol(fin.symbol)?scoringYears:trusted, dividends: fin.dividends, asOf, ttmEps });
   const d0 = dividend.d0;
   const g1 = clampInput(overrides.g1, DEFAULTS.g1, { min: 0, max: 0.30 });
   const r = clampInput(overrides.r, DEFAULTS.r, { min: 0.04, max: 0.25 });
@@ -539,6 +546,11 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     qualityRatioSource:isBankSymbol(fin.symbol)?'sec-reviewed-bank':fin.officialAnnual ? 'set.or.th' : 'statement-model',
     qualityRatiosStale: Boolean(fin.officialAnnualStale),
     payout: quality.payout,
+    payoutEvidence: quality.payoutEvidence,
+    dividendClassification:dividend.source?'issuer-verified':'unreviewed',
+    dividendEvidenceSources:dividend.sources??(dividend.source?[dividend.source]:[]),
+    dividendPeriodEvidence:compareDividendPeriod(fin.dividendEvidence?.actions,
+      scoringYears.find(y=>y.fiscalYear===dividend.fiscalYear)?.asOf?.slice(0,10),dividend.annual,asOf),
     streak: quality.streak,
     ttmDps: dividend.ttm,
     dps: d0,
@@ -613,6 +625,7 @@ export async function loadDetail(tvSymbol, options = {}) {
   // The same history the charts draw also judges the growth rules, so the
   // scorecard in the deep dive and the score in the table agree.
   const row = await applyOfficialRatios(buildRow(fin, { ...options, history }));
+  row.dataAudit=auditScreeningRow(row);
   // Where the name sits against its peers, from the last screen — a percentile
   // needs the other names, and screening the universe again for one company
   // would cost a minute.
@@ -782,11 +795,13 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
   const evaluated = rows.map((row) => {
     const verdict = applyPreset(row, presetDef);
     const mine = conditions.find((c) => c.row === row);
-    const pass = verdict.pass && mine?.pass !== false;
+    const dataAudit=auditScreeningRow(row);
+    const pass = verdict.pass && mine?.pass !== false && dataAudit.status!=='error';
     return {
       ...row,
+      dataAudit,
       pass,
-      failReason: verdict.pass
+      failReason: dataAudit.status==='error'?'unknown:dataIntegrity':verdict.pass
         ? (mine?.pass === false ? (mine.reason ?? 'filter') : null)
         : verdict.reason,
     };
@@ -823,6 +838,9 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
       requested: symbols.length,
       screened: rows.length,
       failed: errors.length,
+      dataAudit:{checked:evaluated.length,errors:evaluated.filter(r=>r.dataAudit.status==='error').length,
+        needsReview:evaluated.filter(r=>r.dataAudit.status==='needs-review').length,
+        dividendUnverified:evaluated.filter(r=>r.dataAudit.issues.some(i=>i.code==='regular-dividend-unverified')).length},
       tookMs: Date.now() - started,
       asOf: asOf.toISOString(),
       overrides: {

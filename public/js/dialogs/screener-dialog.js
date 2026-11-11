@@ -1244,6 +1244,10 @@ function paintResults(body, state, rerender) {
     summary.appendChild(stamp);
   }
   body.appendChild(summary);
+  if(meta.dataAudit){
+    const audit=document.createElement('p');audit.className='section__hint';
+    audit.textContent=t('scr.auditSummary',meta.dataAudit);body.appendChild(audit);
+  }
 
   if (rows.length === 0) {
     const empty = document.createElement('p');
@@ -1786,17 +1790,43 @@ function headline(detail, board) {
 }
 
 function scorecard(detail) {
+  // Evidence review is distinct from passing automated consistency checks.
   const box = document.createElement('div');
   box.appendChild(section(t('scr.scorecard'), t('scr.scorecardHint', {
     passed: detail.passed,
     total: detail.checks.length,
     years: detail.scoringYearCount??detail.yearCount,
   })));
+  if(detail.dataAudit?.issues?.length){
+    const audit=document.createElement('details');audit.className='section__hint';
+    const heading=document.createElement('summary');heading.textContent=t('scr.auditCompany');audit.appendChild(heading);
+    const list=document.createElement('ul');
+    for(const issue of detail.dataAudit.issues){const item=document.createElement('li');item.textContent=t(`scr.audit.${issue.code}`,null,issue.code);list.appendChild(item);}
+    audit.appendChild(list);box.appendChild(audit);
+  }
+  if(detail.dividendEvidenceSources?.length){
+    const proof=document.createElement('details');proof.className='section__hint';
+    const title=document.createElement('summary');title.textContent=t('scr.dividendEvidence');proof.appendChild(title);
+    for(const source of [...new Set(detail.dividendEvidenceSources)]){
+      const p=document.createElement('p'),a=document.createElement('a');a.href=source;a.target='_blank';a.rel='noopener noreferrer';a.textContent=t('scr.bankEvidenceSource');p.appendChild(a);proof.appendChild(p);
+    }box.appendChild(proof);
+  }
   if(detail.qualityModel==='bank'){
     const note=document.createElement('p');note.className='section__hint';
     note.textContent=t('scr.bankBasis');box.appendChild(note);
     if(detail.bankRisk?.basis==='group-capital-and-reported-banking-portfolio'){
       const scope=document.createElement('p');scope.className='section__hint';scope.textContent=t('scr.bankKKPProfile');box.appendChild(scope);
+    }
+    if(detail.payoutEvidence){
+      const basis=document.createElement('p');basis.className='section__hint';
+      basis.textContent=t('scr.bankPayoutBasis',{year:detail.payoutEvidence.fiscalYear,
+        dps:detail.payoutEvidence.dps,eps:detail.payoutEvidence.eps.toFixed(4)});
+      if(detail.payoutEvidence.statement?.source){
+        const link=document.createElement('a');link.href=detail.payoutEvidence.statement.source;
+        link.target='_blank';link.rel='noopener noreferrer';link.textContent=t('scr.bankEvidenceSource');
+        basis.append(' ',link);
+      }
+      box.appendChild(basis);
     }
     if(!detail.bankRiskComplete){
       const missing=document.createElement('p');missing.className='section__hint';

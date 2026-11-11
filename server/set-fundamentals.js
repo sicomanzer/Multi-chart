@@ -24,6 +24,7 @@ export function parseSetFundamentals(symbol, tradingRows, financialRows) {
     sector: trading.sector ?? null, accountFormId: String(financial.accountFormId ?? ''), fetchedAt: new Date().toISOString(),
     annualYears: financialRows.filter(r => r.quarter === 'Q9' && Number.isFinite(r.year))
       .map(r => ({ fiscalYear: r.year, asOf: r.asOfDate.slice(0,10), source: 'set.or.th',
+        payoutEps: r.fsType==='C'?number(r.eps):null,
         roe: number(r.roe) == null ? null : r.roe / 100,
         roa: number(r.roa) == null ? null : r.roa / 100,
         npm: number(r.netProfitMargin) == null ? null : r.netProfitMargin / 100,

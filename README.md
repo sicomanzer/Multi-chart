@@ -2,6 +2,26 @@
 
 ## Latest desktop workflow
 
+- Dividend source review now retains 1,354 SET notices across all 110 active
+  screening symbols. Cash components/specials are source-backed for 63 issuers;
+  38 positive-dividend models still need period or declaration evidence. KTB,
+  ADVANC and BDMS specials are separated, and three payment-window totals use
+  verified operating periods instead. See [coverage and remaining limits](ALL-DIVIDEND-REVIEW-2026-11-11.md).
+
+- Every screener run now checks all selected companies for missing valuation
+  inputs, payout period/math consistency and score/DDM dividend mismatches.
+  Invalid rows cannot qualify. Unreviewed dividend classifications remain
+  visible. The full 110-symbol check reconciled 315 same-date headline ratio
+  pairs and 93 same-year payout EPS pairs against SET; see
+  [full-company results and source limits](ALL-COMPANY-REVIEW-2026-11-11.md).
+
+- FY2025 bank payout calculations now use seven reviewed basic-EPS cells,
+  separately from unverified historical EPS growth. KBANK's verified special
+  dividend is excluded from its model DPS. Six bank RI models can now run;
+  KKP still lacks ROE. Computed payout is labelled separately from issuer cash
+  payout; KTB now uses verified regular DPS 2.07 after excluding 0.60 special. See
+  [bank payout evidence and limits](BANK-PAYOUT-REVIEW-2026-11-11.md).
+
 - Missing annual statements now produce an unscored row, not a zero score.
   Residual Income rejects missing ROE/payout inputs instead of converting them
   to zero. All 110 active screening symbols were rechecked; see

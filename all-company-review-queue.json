@@ -1,0 +1,1886 @@
+{
+  "scope": "all active screener universes; not every listed security",
+  "rows": [
+    {
+      "symbol": "SET:BH",
+      "checkedAt": "2026-11-11T08:29:04.913Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BDMS",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CPN",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:DELTA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CBG",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CPALL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:COM7",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AMATA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BBL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BCH",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CHG",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AOT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AURA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "revenueGrowth",
+        "earningsStability"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CCET",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CPF",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:GFPT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "npmPositive",
+        "cfoBeatsEarnings"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:GLOBAL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AAV",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BTG",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "earningsStability"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BCPG",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2026,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:AWC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CRC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:EGCO",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BLA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BCP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BAM",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "payout-eps-unverified",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "provider-unverified",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:ERW",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BEM",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "interestCoverage"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BJC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CK",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BTS",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:EA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BANPU",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "unscored-data",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PRM",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:OSP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:KTB",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:MOSHI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "payout-eps-unverified",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "revenueGrowth",
+        "earningsStability"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "provider-unverified",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:KTC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PR9",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "payout-eps-unverified",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "provider-unverified",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:GULF",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend"
+      ],
+      "payoutYear": 2024,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PLANB",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:MTC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PTT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:SAWAD",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:OR",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "earningsStability"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:RCL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "revenueGrowth",
+        "earningsStability",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:M",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:QH",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:SCGP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:RATCH",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:KCE",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:JMT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:GPSC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PTG",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:MINT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:HANA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:SCC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:GST",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:PTTGC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:IRPC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:LH",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:IVL",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:JMART",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:KKP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "consistent",
+      "issues": [],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "issuer-verified"
+    },
+    {
+      "symbol": "SET:SCB",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "earningsStability"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TOA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TISCO",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roaLevel"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:MC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "epsGrowth"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TFG",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TTW",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TVO",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TACC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TTB",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "sec-reviewed-bank",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:HTC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:WHA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:BKIH",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TCAP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TASCO",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:THAI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TOP",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:SPRC",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TU",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TLI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "payout-eps-unverified",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": 2025,
+      "payoutEpsSource": "provider-unverified",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:JAS",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:STGT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "earningsStability",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:STECON",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "epsGrowth",
+        "revenueGrowth",
+        "earningsStability",
+        "fcfPositive"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:STA",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "roeLevel",
+        "roeConsistency",
+        "roaLevel",
+        "npmLevel",
+        "npmTrend",
+        "npmPositive",
+        "epsGrowth",
+        "earningsStability",
+        "interestCoverage",
+        "cfoPositive",
+        "cfoBeatsEarnings",
+        "fcfPositive"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        },
+        {
+          "code": "regular-dividend-unverified",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "npmTrend"
+      ],
+      "payoutYear": 2025,
+      "payoutEpsSource": "set.or.th",
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:VGI",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "incomplete-checks",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [
+        "dividendYield",
+        "payoutBand",
+        "payoutCeiling"
+      ],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:CPNREIT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "unscored-data",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    },
+    {
+      "symbol": "SET:INETREIT",
+      "checkedAt": "2026-11-11T08:29:04.914Z",
+      "status": "needs-review",
+      "issues": [
+        {
+          "code": "unscored-data",
+          "severity": "review"
+        }
+      ],
+      "missingChecks": [],
+      "payoutYear": null,
+      "payoutEpsSource": null,
+      "dividendClassification": "unreviewed"
+    }
+  ]
+}

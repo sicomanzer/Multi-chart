@@ -23,6 +23,9 @@ for row in rows:
   return value*evidence.get('scale',1)
  keys=['assets','openingAssets','totalDebt','equity','openingEquity','totalEquity','revenue','netIncome','operatingCashFlow','ebit']
  if row.get('statementModel')=='bank':keys+=['totalNetIncome']
+ if row.get('payoutEpsVerified'):
+  keys+=['payoutEps']
+  assert row['cells']['payoutEps']['scale']==1
  for field in keys:
   value=row['fields'][field]
   if value is None:

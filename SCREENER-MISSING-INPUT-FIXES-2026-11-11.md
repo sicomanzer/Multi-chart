@@ -1,5 +1,7 @@
 # Missing-input fixes — 2026-11-11
 
+> Subsequent bank EPS review supplies same-year payout inputs for seven banks. Six RI models can run again with actual inputs; KKP still lacks ROE. See [the bank payout review](BANK-PAYOUT-REVIEW-2026-11-11.md). The before/after snapshot below records the earlier missing-input fix.
+
 Resolved the first two findings of the complete 110-symbol screening audit.
 
 - Residual Income validates finite numeric book value, ROE, payout and discount

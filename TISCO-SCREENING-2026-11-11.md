@@ -1,5 +1,7 @@
 # TISCO screening explanation — 2026-11-11
 
+> Subsequent payout review supplies FY2025 reported basic EPS 8.32. TISCO now has model payout 93.15% and fails the payout band rather than having unknown payout. See [the payout review](BANK-PAYOUT-REVIEW-2026-11-11.md). The observations below describe the preceding audit stage.
+
 TISCO's 100 score is the fraction of weighted checks that can be evaluated,
 not a declaration that every mandatory preset check passed.
 

@@ -23,6 +23,9 @@ const PORT = Number(process.env.TEST_PORT ?? 8799);
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const SUITES = [
+  { name: 'dividend declaration matching', file: 'verify-dividend-declarations.mjs', needsServer: false },
+  { name: 'official dividend evidence', file: 'verify-dividend-evidence.mjs', needsServer: false },
+  { name: 'all-company data consistency', file: 'verify-screener-audit.mjs', needsServer: false },
   { name: 'bank risk sources', file: 'verify-bank-risk.mjs', needsServer: false },
   { name: 'bank model', file: 'verify-bank-model.mjs', needsServer: false },
   { name: 'statement versions', file: 'verify-statement-versions.mjs', needsServer: false },

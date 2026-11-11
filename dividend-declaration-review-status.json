@@ -1,0 +1,800 @@
+{
+  "checkedAt": "2026-11-11T08:48:57.050Z",
+  "rows": [
+    {
+      "symbol": "SET:BH",
+      "status": "matched-structured-declarations",
+      "regularDps": 11,
+      "specialDps": 0,
+      "totalDps": 11,
+      "inferredWindowTotal": 11,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:BDMS",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.75,
+      "specialDps": 0.25,
+      "totalDps": 1,
+      "inferredWindowTotal": 1,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "status": "matched-structured-declarations",
+      "regularDps": 15.3,
+      "specialDps": 19,
+      "totalDps": 34.3,
+      "inferredWindowTotal": 34.3,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:CPN",
+      "status": "matched-structured-declarations",
+      "regularDps": 2.4,
+      "specialDps": 0,
+      "totalDps": 2.4,
+      "inferredWindowTotal": 2.4,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:DELTA",
+      "status": "missing-structured-declaration",
+      "declarations": 3
+    },
+    {
+      "symbol": "SET:CBG",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.2999999999999998,
+      "specialDps": 0,
+      "totalDps": 1.2999999999999998,
+      "inferredWindowTotal": 1.2999999999999998,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:CPALL",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.65,
+      "specialDps": 0,
+      "totalDps": 1.65,
+      "inferredWindowTotal": 1.65,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:COM7",
+      "status": "period-incomplete",
+      "declarations": 3
+    },
+    {
+      "symbol": "SET:BA",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.2,
+      "specialDps": 0,
+      "totalDps": 1.2,
+      "inferredWindowTotal": 1.2,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:AMATA",
+      "status": "period-incomplete",
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:BBL",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:BCH",
+      "status": "period-incomplete",
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:CHG",
+      "status": "period-incomplete",
+      "declarations": 5
+    },
+    {
+      "symbol": "SET:GFPT",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.2,
+      "specialDps": 0,
+      "totalDps": 0.2,
+      "inferredWindowTotal": 0.2,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:AOT",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.81,
+      "specialDps": 0,
+      "totalDps": 0.81,
+      "inferredWindowTotal": 0.81,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:AURA",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.56,
+      "specialDps": 0,
+      "totalDps": 0.56,
+      "inferredWindowTotal": 0.56,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:CCET",
+      "status": "period-incomplete",
+      "declarations": 6
+    },
+    {
+      "symbol": "SET:CPF",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.25,
+      "specialDps": 0,
+      "totalDps": 1.25,
+      "inferredWindowTotal": 1.25,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:GLOBAL",
+      "status": "missing-structured-declaration",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.67,
+      "specialDps": 0,
+      "totalDps": 0.67,
+      "inferredWindowTotal": 0.67,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:AAV",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:AP",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.52,
+      "specialDps": 0,
+      "totalDps": 0.52,
+      "inferredWindowTotal": 0.52,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:BTG",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.5,
+      "specialDps": 0,
+      "totalDps": 1.5,
+      "inferredWindowTotal": 1.5,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:BCPG",
+      "status": "period-incomplete",
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "status": "matched-structured-declarations",
+      "regularDps": 5.5,
+      "specialDps": 0,
+      "totalDps": 5.5,
+      "inferredWindowTotal": 5.5,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:AWC",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.08,
+      "specialDps": 0,
+      "totalDps": 0.08,
+      "inferredWindowTotal": 0.08,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:CRC",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:EGCO",
+      "status": "matched-structured-declarations",
+      "regularDps": 6.5,
+      "specialDps": 0,
+      "totalDps": 6.5,
+      "inferredWindowTotal": 6.5,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:BLA",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:BEM",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.15,
+      "specialDps": 0,
+      "totalDps": 0.15,
+      "inferredWindowTotal": 0.15,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:BCP",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:BAM",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.5,
+      "specialDps": 0,
+      "totalDps": 0.5,
+      "inferredWindowTotal": 0.5,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:ERW",
+      "status": "period-incomplete",
+      "declarations": 3
+    },
+    {
+      "symbol": "SET:BJC",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.51,
+      "specialDps": 0,
+      "totalDps": 0.51,
+      "inferredWindowTotal": 0.51,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "status": "period-incomplete",
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:CK",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.45,
+      "specialDps": 0,
+      "totalDps": 0.45,
+      "inferredWindowTotal": 0.45,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:BTS",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:EA",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:BANPU",
+      "status": "no-fiscal-period"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.1,
+      "specialDps": 0,
+      "totalDps": 1.1,
+      "inferredWindowTotal": 1.1,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:PRM",
+      "status": "period-incomplete",
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:OSP",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.8,
+      "specialDps": 0,
+      "totalDps": 0.8,
+      "inferredWindowTotal": 0.8,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:KTB",
+      "status": "matched-structured-declarations",
+      "regularDps": 2.07,
+      "specialDps": 0.6,
+      "totalDps": 2.67,
+      "inferredWindowTotal": 2.6700000000000004,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:MOSHI",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.22,
+      "specialDps": 0,
+      "totalDps": 1.22,
+      "inferredWindowTotal": 1.22,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:MEGA",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.6,
+      "specialDps": 0,
+      "totalDps": 1.6,
+      "inferredWindowTotal": 1.6,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:KTC",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.77,
+      "specialDps": 0,
+      "totalDps": 1.77,
+      "inferredWindowTotal": 1.77,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:PR9",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.5,
+      "specialDps": 0,
+      "totalDps": 0.5,
+      "inferredWindowTotal": 0.5,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:GULF",
+      "status": "period-incomplete",
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:PLANB",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:MTC",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.29,
+      "specialDps": 0,
+      "totalDps": 0.29,
+      "inferredWindowTotal": 0.29,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:PTT",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:SAWAD",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.38,
+      "specialDps": 0,
+      "totalDps": 0.38,
+      "inferredWindowTotal": 0.38,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:OR",
+      "status": "period-incomplete",
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:RCL",
+      "status": "matched-structured-declarations",
+      "regularDps": 2.5,
+      "specialDps": 0,
+      "totalDps": 2.5,
+      "inferredWindowTotal": 2.5,
+      "declarations": 3
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.11,
+      "specialDps": 0,
+      "totalDps": 0.11,
+      "inferredWindowTotal": 0.16999999999999998,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:M",
+      "status": "matched-structured-declarations",
+      "regularDps": 1,
+      "specialDps": 0,
+      "totalDps": 1,
+      "inferredWindowTotal": 1,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:QH",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.09000000000000001,
+      "specialDps": 0,
+      "totalDps": 0.09000000000000001,
+      "inferredWindowTotal": 0.09000000000000001,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:SCGP",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.6,
+      "specialDps": 0,
+      "totalDps": 0.6,
+      "inferredWindowTotal": 0.6,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "status": "period-incomplete",
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:RATCH",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:KCE",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.2,
+      "specialDps": 0,
+      "totalDps": 1.2,
+      "inferredWindowTotal": 1.2,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:SIRI",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.13,
+      "specialDps": 0,
+      "totalDps": 0.13,
+      "inferredWindowTotal": 0.13,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:JMT",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.6699999999999999,
+      "specialDps": 0,
+      "totalDps": 0.6699999999999999,
+      "inferredWindowTotal": 0.6699999999999999,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:GPSC",
+      "status": "period-incomplete",
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:PTG",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.35,
+      "specialDps": 0,
+      "totalDps": 0.35,
+      "inferredWindowTotal": 0.35,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:MINT",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "inferredWindowTotal": 0.7,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:HANA",
+      "status": "matched-structured-declarations",
+      "regularDps": 1,
+      "specialDps": 0,
+      "totalDps": 1,
+      "inferredWindowTotal": 1,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:SCC",
+      "status": "matched-structured-declarations",
+      "regularDps": 5,
+      "specialDps": 0,
+      "totalDps": 5,
+      "inferredWindowTotal": 5,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:GST",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:PTTGC",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:IRPC",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:LH",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.25,
+      "specialDps": 0,
+      "totalDps": 0.25,
+      "inferredWindowTotal": 0.25,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:IVL",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "inferredWindowTotal": 0.7,
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:JMART",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:KKP",
+      "status": "matched-structured-declarations",
+      "regularDps": 5.7,
+      "specialDps": 0,
+      "totalDps": 5.7,
+      "inferredWindowTotal": 5.7,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:KBANK",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:SCB",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TOA",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.75,
+      "specialDps": 0,
+      "totalDps": 0.75,
+      "inferredWindowTotal": 0.75,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:KAMART",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.44,
+      "specialDps": 0,
+      "totalDps": 0.44,
+      "inferredWindowTotal": 0.44,
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:TISCO",
+      "status": "matched-structured-declarations",
+      "regularDps": 7.75,
+      "specialDps": 0,
+      "totalDps": 7.75,
+      "inferredWindowTotal": 7.75,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:MC",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.96,
+      "specialDps": 0,
+      "totalDps": 0.96,
+      "inferredWindowTotal": 0.96,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TFG",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "inferredWindowTotal": 0.71,
+      "declarations": 4
+    },
+    {
+      "symbol": "SET:TTW",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.6,
+      "specialDps": 0,
+      "totalDps": 0.6,
+      "inferredWindowTotal": 0.6,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TVO",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.97,
+      "specialDps": 0,
+      "totalDps": 1.97,
+      "inferredWindowTotal": 1.97,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TACC",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.42,
+      "specialDps": 0,
+      "totalDps": 0.42,
+      "inferredWindowTotal": 0.42,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TTB",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.134,
+      "specialDps": 0,
+      "totalDps": 0.134,
+      "inferredWindowTotal": 0.134,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:HTC",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.99,
+      "specialDps": 0,
+      "totalDps": 0.99,
+      "inferredWindowTotal": 0.99,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:WHA",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.2107,
+      "specialDps": 0,
+      "totalDps": 0.2107,
+      "inferredWindowTotal": 0.2107,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:BKIH",
+      "status": "period-incomplete",
+      "declarations": 6
+    },
+    {
+      "symbol": "SET:TCAP",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:TASCO",
+      "status": "period-incomplete",
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.2525,
+      "specialDps": 0,
+      "totalDps": 0.2525,
+      "inferredWindowTotal": 0.2525,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:THAI",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.21,
+      "specialDps": 0,
+      "totalDps": 0.21,
+      "inferredWindowTotal": 0.21,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:SPALI",
+      "status": "matched-structured-declarations",
+      "regularDps": 1.25,
+      "specialDps": 0,
+      "totalDps": 1.25,
+      "inferredWindowTotal": 1.25,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TOP",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:SPRC",
+      "status": "period-incomplete",
+      "declarations": 5
+    },
+    {
+      "symbol": "SET:TU",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "inferredWindowTotal": 0.7,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TLI",
+      "status": "missing-structured-declaration",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:JAS",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:STGT",
+      "status": "period-incomplete",
+      "declarations": 0
+    },
+    {
+      "symbol": "SET:STECON",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.55,
+      "specialDps": 0,
+      "totalDps": 0.55,
+      "inferredWindowTotal": 0.55,
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:STA",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "status": "period-incomplete",
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:TRUE",
+      "status": "matched-structured-declarations",
+      "regularDps": 0.31,
+      "specialDps": 0,
+      "totalDps": 0.31,
+      "inferredWindowTotal": 0.45,
+      "declarations": 2
+    },
+    {
+      "symbol": "SET:VGI",
+      "status": "period-incomplete",
+      "declarations": 1
+    },
+    {
+      "symbol": "SET:CPNREIT",
+      "status": "no-fiscal-period"
+    },
+    {
+      "symbol": "SET:INETREIT",
+      "status": "no-fiscal-period"
+    }
+  ]
+}

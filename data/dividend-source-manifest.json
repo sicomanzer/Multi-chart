@@ -1,0 +1,774 @@
+{
+  "records": [
+    {
+      "symbol": "SET:AAV",
+      "source": "https://www.set.or.th/api/set/stock/AAV/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AAV-actions.json",
+      "sha256": "07d64c1d33cee618918a25dade4b42473f910bff22497de1b28775c23688f2cf",
+      "observedAt": "2026-11-11T08:33:31.096Z"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "source": "https://www.set.or.th/api/set/stock/ADVANC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/ADVANC-actions.json",
+      "sha256": "4e305aa78e91f3928391efd59be386b60f479099bf9f6a454a5209789e5636b7",
+      "observedAt": "2026-11-11T08:33:31.557Z"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "source": "https://www.set.or.th/api/set/stock/AEONTS/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AEONTS-actions.json",
+      "sha256": "90b1edd88bb01f1721a6606382ca48c15c1ce64c3c5cd133964d6c7a9ff377c5",
+      "observedAt": "2026-11-11T08:33:31.698Z"
+    },
+    {
+      "symbol": "SET:AMATA",
+      "source": "https://www.set.or.th/api/set/stock/AMATA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AMATA-actions.json",
+      "sha256": "44499d753181b2a50e81fe152ddb74fffdc24aa953a9d6653fe6b9e647b7d65c",
+      "observedAt": "2026-11-11T08:33:31.863Z"
+    },
+    {
+      "symbol": "SET:AOT",
+      "source": "https://www.set.or.th/api/set/stock/AOT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AOT-actions.json",
+      "sha256": "cd72b4151054a32a91c35e15c9a2663729d82ab9305b8d8022b6fbb41a29d196",
+      "observedAt": "2026-11-11T08:33:32.137Z"
+    },
+    {
+      "symbol": "SET:AP",
+      "source": "https://www.set.or.th/api/set/stock/AP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AP-actions.json",
+      "sha256": "1f36d5653e79e2fcc8aa37c4c104be95d751abffcd136fe6c69a2364d6ba1869",
+      "observedAt": "2026-11-11T08:33:32.294Z"
+    },
+    {
+      "symbol": "SET:AURA",
+      "source": "https://www.set.or.th/api/set/stock/AURA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AURA-actions.json",
+      "sha256": "ca0152c21d2a1c11cf96583a04d570e4210b6c7c44ba496c5ff0240488d56f38",
+      "observedAt": "2026-11-11T08:33:32.430Z"
+    },
+    {
+      "symbol": "SET:AWC",
+      "source": "https://www.set.or.th/api/set/stock/AWC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/AWC-actions.json",
+      "sha256": "3d21215367b0cf918a00d4d589211a95ee4dd404a495621aed6a6e1f97672533",
+      "observedAt": "2026-11-11T08:33:32.581Z"
+    },
+    {
+      "symbol": "SET:BA",
+      "source": "https://www.set.or.th/api/set/stock/BA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BA-actions.json",
+      "sha256": "3d12253b3e0e4b7d41b9ad91271ee5b8f6972ed3ed045506803bde7c1fdae900",
+      "observedAt": "2026-11-11T08:33:32.718Z"
+    },
+    {
+      "symbol": "SET:BAM",
+      "source": "https://www.set.or.th/api/set/stock/BAM/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BAM-actions.json",
+      "sha256": "44a2e8005882964fbd1f71dd50244a88465d200901c2f425fa9d406459ae3134",
+      "observedAt": "2026-11-11T08:33:33.050Z"
+    },
+    {
+      "symbol": "SET:BANPU",
+      "source": "https://www.set.or.th/api/set/stock/BANPU/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BANPU-actions.json",
+      "sha256": "007d2cd0573f43afbd08117cc3b955415cfd59cd90e4a9efb1da95fe629faa72",
+      "observedAt": "2026-11-11T08:33:33.182Z"
+    },
+    {
+      "symbol": "SET:BBL",
+      "source": "https://www.set.or.th/api/set/stock/BBL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BBL-actions.json",
+      "sha256": "5b59c3ea043f48c4535ade0b70167a153daba9f7e1b55b2ab6136fdc1a498cca",
+      "observedAt": "2026-11-11T08:33:33.313Z"
+    },
+    {
+      "symbol": "SET:BCH",
+      "source": "https://www.set.or.th/api/set/stock/BCH/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BCH-actions.json",
+      "sha256": "77ab8a079a44f1107c0ede8f6d0b11572a10c83bc784c278ea14799c6b1bf9b0",
+      "observedAt": "2026-11-11T08:33:33.448Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "source": "https://www.set.or.th/api/set/stock/BCP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BCP-actions.json",
+      "sha256": "110ee339c1ba700fd733ae7c0eb7c7f3393209eddb2f8d3266a7832d20e18a3d",
+      "observedAt": "2026-11-11T08:33:33.850Z"
+    },
+    {
+      "symbol": "SET:BCPG",
+      "source": "https://www.set.or.th/api/set/stock/BCPG/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BCPG-actions.json",
+      "sha256": "5df000f0c3ead59a2c575cc966bc55856adf2dd33c2d13ecb1db878967315907",
+      "observedAt": "2026-11-11T08:33:33.973Z"
+    },
+    {
+      "symbol": "SET:BDMS",
+      "source": "https://www.set.or.th/api/set/stock/BDMS/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BDMS-actions.json",
+      "sha256": "1cd94c539b69b0c49f6da3da705bf321155aac9921c770b4c25f2a2326ff7c82",
+      "observedAt": "2026-11-11T08:33:34.131Z"
+    },
+    {
+      "symbol": "SET:BEM",
+      "source": "https://www.set.or.th/api/set/stock/BEM/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BEM-actions.json",
+      "sha256": "d136ecd8f84b28025b30e88e041c019b90d4b301c98d02ce30a04f956563d489",
+      "observedAt": "2026-11-11T08:33:34.309Z"
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "source": "https://www.set.or.th/api/set/stock/BGRIM/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BGRIM-actions.json",
+      "sha256": "231236186b9fd645b0ab2eabd158bf03f8775d582a157229ed09f71c1c18ac76",
+      "observedAt": "2026-11-11T08:33:34.631Z"
+    },
+    {
+      "symbol": "SET:BH",
+      "source": "https://www.set.or.th/api/set/stock/BH/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BH-actions.json",
+      "sha256": "111ae71d4dd2321364901278014010362fbd7b565c71645ec049a2b33203bf0b",
+      "observedAt": "2026-11-11T08:33:34.800Z"
+    },
+    {
+      "symbol": "SET:BJC",
+      "source": "https://www.set.or.th/api/set/stock/BJC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BJC-actions.json",
+      "sha256": "b79da27da4cc675abbb2484ef5c929054d31cea63723ae12c8b4aa7ec4abcd16",
+      "observedAt": "2026-11-11T08:33:34.961Z"
+    },
+    {
+      "symbol": "SET:BLA",
+      "source": "https://www.set.or.th/api/set/stock/BLA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BLA-actions.json",
+      "sha256": "a9bbb7092a2d69298cdcd15f3c2b0b45e5673652f63d6b9b2f158eb94d681861",
+      "observedAt": "2026-11-11T08:33:35.098Z"
+    },
+    {
+      "symbol": "SET:BTG",
+      "source": "https://www.set.or.th/api/set/stock/BTG/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BTG-actions.json",
+      "sha256": "b751ed8f0c32ab7bf920c12c30efc044622c8a1e238d872d36af871887aea091",
+      "observedAt": "2026-11-11T08:33:35.462Z"
+    },
+    {
+      "symbol": "SET:BTS",
+      "source": "https://www.set.or.th/api/set/stock/BTS/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BTS-actions.json",
+      "sha256": "30c1eec2a3711f4f09709345d2a6cb7d7bee2154acdb11a8199b6e72fe033b51",
+      "observedAt": "2026-11-11T08:33:35.594Z"
+    },
+    {
+      "symbol": "SET:CBG",
+      "source": "https://www.set.or.th/api/set/stock/CBG/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CBG-actions.json",
+      "sha256": "64c7f4b903968b53b706c7807197e79bd9b973e53d3b5978344ca63c32521b15",
+      "observedAt": "2026-11-11T08:33:35.728Z"
+    },
+    {
+      "symbol": "SET:CCET",
+      "source": "https://www.set.or.th/api/set/stock/CCET/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CCET-actions.json",
+      "sha256": "1f242f714144107244efc56f80d1854c6bc6858f552c2ac02dd3ee8ad3e767a6",
+      "observedAt": "2026-11-11T08:33:35.922Z"
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "source": "https://www.set.or.th/api/set/stock/CENTEL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CENTEL-actions.json",
+      "sha256": "937252a0d92e8cd5a845c012eb79d41d758281beb19c2d4655e17a722f2827c8",
+      "observedAt": "2026-11-11T08:33:36.175Z"
+    },
+    {
+      "symbol": "SET:CHG",
+      "source": "https://www.set.or.th/api/set/stock/CHG/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CHG-actions.json",
+      "sha256": "4a70006b4daab296c7a05adc8f77047eadfaf6166b85836f5b3bb6c6696945ef",
+      "observedAt": "2026-11-11T08:33:36.748Z"
+    },
+    {
+      "symbol": "SET:CK",
+      "source": "https://www.set.or.th/api/set/stock/CK/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CK-actions.json",
+      "sha256": "675804f72e0a522047b51ec19041312f274bc93d21507afb6ccb8c87368a9387",
+      "observedAt": "2026-11-11T08:33:36.919Z"
+    },
+    {
+      "symbol": "SET:COM7",
+      "source": "https://www.set.or.th/api/set/stock/COM7/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/COM7-actions.json",
+      "sha256": "ab5c2cc9cd27f4e5a5ba9edaf53a6818342b150620e1e09eb72017f049adfc19",
+      "observedAt": "2026-11-11T08:33:37.056Z"
+    },
+    {
+      "symbol": "SET:CPALL",
+      "source": "https://www.set.or.th/api/set/stock/CPALL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CPALL-actions.json",
+      "sha256": "ffae4ba26ddc6b91a5c4087e969531cfe9aac3ab50dc1441472a66c73c2c51db",
+      "observedAt": "2026-11-11T08:33:37.724Z"
+    },
+    {
+      "symbol": "SET:CPF",
+      "source": "https://www.set.or.th/api/set/stock/CPF/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CPF-actions.json",
+      "sha256": "986cff86ab78e54e55f883eb4fac9bf4b10cd1e64ab8231474ae0c05295d4a75",
+      "observedAt": "2026-11-11T08:33:37.871Z"
+    },
+    {
+      "symbol": "SET:CPN",
+      "source": "https://www.set.or.th/api/set/stock/CPN/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CPN-actions.json",
+      "sha256": "19c4e6976c6825c82523114a5e14216aa72b109c58b8d54ff8ba58b78d0a2fbd",
+      "observedAt": "2026-11-11T08:33:38.024Z"
+    },
+    {
+      "symbol": "SET:CRC",
+      "source": "https://www.set.or.th/api/set/stock/CRC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CRC-actions.json",
+      "sha256": "5699dd8a54b2baa3dc7099f1cc7a28d9fa29aa9306638cecdcd122ca4760bfae",
+      "observedAt": "2026-11-11T08:33:38.475Z"
+    },
+    {
+      "symbol": "SET:DELTA",
+      "source": "https://www.set.or.th/api/set/stock/DELTA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/DELTA-actions.json",
+      "sha256": "26cb677bdaf47fed695b950761ebfca90538623d5e185ca9f13fe865bbf0f680",
+      "observedAt": "2026-11-11T08:33:38.627Z"
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "source": "https://www.set.or.th/api/set/stock/DOHOME/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/DOHOME-actions.json",
+      "sha256": "0293a42f8a868a83e730d86f33f6d011c34e63461403d5f8dbd51c4bb042f279",
+      "observedAt": "2026-11-11T08:33:38.804Z"
+    },
+    {
+      "symbol": "SET:EA",
+      "source": "https://www.set.or.th/api/set/stock/EA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/EA-actions.json",
+      "sha256": "1e241cb9208d6b12ed7b63426c58ec7fb08a83fe9b73375a15de5f8249c0438e",
+      "observedAt": "2026-11-11T08:33:39.155Z"
+    },
+    {
+      "symbol": "SET:EGCO",
+      "source": "https://www.set.or.th/api/set/stock/EGCO/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/EGCO-actions.json",
+      "sha256": "2eb14469ebba3f6f8c737b8667853703a241ff6ca50149d74e9c80a6db630c01",
+      "observedAt": "2026-11-11T08:33:39.279Z"
+    },
+    {
+      "symbol": "SET:ERW",
+      "source": "https://www.set.or.th/api/set/stock/ERW/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/ERW-actions.json",
+      "sha256": "ce58a7ac268838b2429c9c019ffb7697cadadb6ad14975387a163da2c8d0e93f",
+      "observedAt": "2026-11-11T08:33:39.430Z"
+    },
+    {
+      "symbol": "SET:GFPT",
+      "source": "https://www.set.or.th/api/set/stock/GFPT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/GFPT-actions.json",
+      "sha256": "15a02ea2ead10105c65e54b70ba379eb88d36fa8ae94ba2249506d9c6ddf748b",
+      "observedAt": "2026-11-11T08:33:39.582Z"
+    },
+    {
+      "symbol": "SET:GLOBAL",
+      "source": "https://www.set.or.th/api/set/stock/GLOBAL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/GLOBAL-actions.json",
+      "sha256": "e8fef7e2df3be05763817c805bdacea684d39ca48b42fcdbae6d1b461ad8c122",
+      "observedAt": "2026-11-11T08:33:39.775Z"
+    },
+    {
+      "symbol": "SET:GPSC",
+      "source": "https://www.set.or.th/api/set/stock/GPSC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/GPSC-actions.json",
+      "sha256": "1f926b7c80ece5c31292a6e7d220a1f02de891284b3abc5e8847d4741af49899",
+      "observedAt": "2026-11-11T08:33:40.204Z"
+    },
+    {
+      "symbol": "SET:GST",
+      "source": "https://www.set.or.th/api/set/stock/GST/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/GST-actions.json",
+      "sha256": "e63877ccb579f2411096034cab9c01c99bf6261f2a9a47efc57a6a3bbea2be75",
+      "observedAt": "2026-11-11T08:33:40.356Z"
+    },
+    {
+      "symbol": "SET:GULF",
+      "source": "https://www.set.or.th/api/set/stock/GULF/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/GULF-actions.json",
+      "sha256": "55fafbc5aef3cd0c66738cca7cd832f63afd84b0a17872405f2cbbc10fcd665d",
+      "observedAt": "2026-11-11T08:33:40.504Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "source": "https://www.set.or.th/api/set/stock/GUNKUL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/GUNKUL-actions.json",
+      "sha256": "8e08fbde138566820f0491ed8f785b2a82277c7bee7c93e52dc811a8927dabef",
+      "observedAt": "2026-11-11T08:33:40.945Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "source": "https://www.set.or.th/api/set/stock/HANA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/HANA-actions.json",
+      "sha256": "7b15e2170227dadd199ad842a012e8cc1de5646b44b28055ed403cb9d293d72f",
+      "observedAt": "2026-11-11T08:33:41.064Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "source": "https://www.set.or.th/api/set/stock/HMPRO/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/HMPRO-actions.json",
+      "sha256": "3de732b20c94d0468a3caff7d269a6f6e2faf19e9eb75292bef1b896d9c4145e",
+      "observedAt": "2026-11-11T08:33:41.205Z"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "source": "https://www.set.or.th/api/set/stock/ICHI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/ICHI-actions.json",
+      "sha256": "a59dfb81f6572137342671635a9b56bdbbf7eef7b99f992485402ef467cdc0ed",
+      "observedAt": "2026-11-11T08:33:41.343Z"
+    },
+    {
+      "symbol": "SET:IRPC",
+      "source": "https://www.set.or.th/api/set/stock/IRPC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/IRPC-actions.json",
+      "sha256": "58d6ff20ebd6c82b096b5bb5b5012a7cf10e2a6740784b91f95a7a58db91cb6a",
+      "observedAt": "2026-11-11T08:33:41.507Z"
+    },
+    {
+      "symbol": "SET:IVL",
+      "source": "https://www.set.or.th/api/set/stock/IVL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/IVL-actions.json",
+      "sha256": "92792a4c83aa5fb09e84c84a49ec25f557dc6780ccf650a3165cd72959bf09ec",
+      "observedAt": "2026-11-11T08:33:41.926Z"
+    },
+    {
+      "symbol": "SET:JMART",
+      "source": "https://www.set.or.th/api/set/stock/JMART/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/JMART-actions.json",
+      "sha256": "53458f25e7788b5f81895eb64daf71720317a3d57ce78c9b37593742a2ae77ff",
+      "observedAt": "2026-11-11T08:33:42.056Z"
+    },
+    {
+      "symbol": "SET:JMT",
+      "source": "https://www.set.or.th/api/set/stock/JMT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/JMT-actions.json",
+      "sha256": "2121bce002b030295501ccf0ac97238b1004f005e3c6874bcfc042e694e3dd6b",
+      "observedAt": "2026-11-11T08:33:42.253Z"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "source": "https://www.set.or.th/api/set/stock/KBANK/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/KBANK-actions.json",
+      "sha256": "a3962397684d3c490c160bd706b52ca6d750c004b7d1549e9baa0c4888978d49",
+      "observedAt": "2026-11-11T08:33:42.405Z"
+    },
+    {
+      "symbol": "SET:KCE",
+      "source": "https://www.set.or.th/api/set/stock/KCE/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/KCE-actions.json",
+      "sha256": "827daa991710bcdc5e92841471df346eb546ef764a7b88480d9146ea041822a8",
+      "observedAt": "2026-11-11T08:33:42.796Z"
+    },
+    {
+      "symbol": "SET:KKP",
+      "source": "https://www.set.or.th/api/set/stock/KKP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/KKP-actions.json",
+      "sha256": "64e4ac6a41411c173202a6c50f25ca19b0a7d5c5582a1940c741b2dd825c4e23",
+      "observedAt": "2026-11-11T08:33:42.919Z"
+    },
+    {
+      "symbol": "SET:KTB",
+      "source": "https://www.set.or.th/api/set/stock/KTB/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/KTB-actions.json",
+      "sha256": "5e235f173eb81ad5c4cb66f624ed8393c071bf1a9ca3b56b63c617f9419b2719",
+      "observedAt": "2026-11-11T08:33:43.050Z"
+    },
+    {
+      "symbol": "SET:KTC",
+      "source": "https://www.set.or.th/api/set/stock/KTC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/KTC-actions.json",
+      "sha256": "44dbd74f1c5d06a2090b46dc673af767f357bfef13323c0dab2206cb0062239f",
+      "observedAt": "2026-11-11T08:33:43.489Z"
+    },
+    {
+      "symbol": "SET:LH",
+      "source": "https://www.set.or.th/api/set/stock/LH/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/LH-actions.json",
+      "sha256": "957380d19e5bf82ee3bc5a1f3ea4bc84a04bb9175a5ea9609f2806db795647ac",
+      "observedAt": "2026-11-11T08:33:43.638Z"
+    },
+    {
+      "symbol": "SET:M",
+      "source": "https://www.set.or.th/api/set/stock/M/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/M-actions.json",
+      "sha256": "768a03cc4f3035f9c7678fa05529c2d95a6225d1901155b6e11b429b682eb396",
+      "observedAt": "2026-11-11T08:33:43.764Z"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "source": "https://www.set.or.th/api/set/stock/MEGA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/MEGA-actions.json",
+      "sha256": "35985218d71085d9a78ec98b7ffb297ca245548bd1608b55007bb1b73bad466b",
+      "observedAt": "2026-11-11T08:33:43.916Z"
+    },
+    {
+      "symbol": "SET:MINT",
+      "source": "https://www.set.or.th/api/set/stock/MINT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/MINT-actions.json",
+      "sha256": "756e10600390a21f60262ddbf9f21367670559fa575a797c768e5f0e8154b15c",
+      "observedAt": "2026-11-11T08:33:44.083Z"
+    },
+    {
+      "symbol": "SET:MOSHI",
+      "source": "https://www.set.or.th/api/set/stock/MOSHI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/MOSHI-actions.json",
+      "sha256": "6a84e1defb711fb0805c4ee83714544add07f982ebab3eebf65296d504a2b6d3",
+      "observedAt": "2026-11-11T08:33:44.277Z"
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "source": "https://www.set.or.th/api/set/stock/MRDIYT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/MRDIYT-actions.json",
+      "sha256": "5d6d01cdc2c83fdcae36d4c89f4ff8b5a3f338d81b684c3d54748410593705ca",
+      "observedAt": "2026-11-11T08:33:44.630Z"
+    },
+    {
+      "symbol": "SET:MTC",
+      "source": "https://www.set.or.th/api/set/stock/MTC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/MTC-actions.json",
+      "sha256": "e70079de3dcde9cb6f3cebfa5eca5d2eeb8017ae556ecaae2ffbc2244520e15c",
+      "observedAt": "2026-11-11T08:33:44.761Z"
+    },
+    {
+      "symbol": "SET:OR",
+      "source": "https://www.set.or.th/api/set/stock/OR/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/OR-actions.json",
+      "sha256": "4dbba29b14715342bc1ba822e3ce7359bdb780912b1c4258e5e402dd3d69d99c",
+      "observedAt": "2026-11-11T08:33:44.921Z"
+    },
+    {
+      "symbol": "SET:OSP",
+      "source": "https://www.set.or.th/api/set/stock/OSP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/OSP-actions.json",
+      "sha256": "3607ffd8ee2caf3840b921229890692aec00dd4a1660d04a7899daa710d7c91a",
+      "observedAt": "2026-11-11T08:33:45.064Z"
+    },
+    {
+      "symbol": "SET:PLANB",
+      "source": "https://www.set.or.th/api/set/stock/PLANB/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PLANB-actions.json",
+      "sha256": "41dd8a0c1d586c19af7ccdde6f56ce0b420901f01036640e54b140a6b4178141",
+      "observedAt": "2026-11-11T08:33:45.205Z"
+    },
+    {
+      "symbol": "SET:PR9",
+      "source": "https://www.set.or.th/api/set/stock/PR9/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PR9-actions.json",
+      "sha256": "8e55ceba7d1269b614b774217706ca5d47c04cc0738a549fbdbbd5789fe0d6eb",
+      "observedAt": "2026-11-11T08:33:45.393Z"
+    },
+    {
+      "symbol": "SET:PRM",
+      "source": "https://www.set.or.th/api/set/stock/PRM/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PRM-actions.json",
+      "sha256": "28c68bf62ac4134d5ed05c6492fe8b9b4005df0dc8904f61bb3ef6ebaad2fc18",
+      "observedAt": "2026-11-11T08:33:45.540Z"
+    },
+    {
+      "symbol": "SET:PTG",
+      "source": "https://www.set.or.th/api/set/stock/PTG/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PTG-actions.json",
+      "sha256": "c545b3fb81d323c6ea094723aa9f98049a70649b5db74a0eaa4d336d99930292",
+      "observedAt": "2026-11-11T08:33:45.928Z"
+    },
+    {
+      "symbol": "SET:PTT",
+      "source": "https://www.set.or.th/api/set/stock/PTT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PTT-actions.json",
+      "sha256": "4b5d14ff919c4bc1504be9b9d7398983be2c99907d581075937765ba8db3ddcd",
+      "observedAt": "2026-11-11T08:33:46.064Z"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "source": "https://www.set.or.th/api/set/stock/PTTEP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PTTEP-actions.json",
+      "sha256": "87266f3adc92eac73e29e7ebef7e68a019e2424fcfb21e89e3e4e7870153eb2c",
+      "observedAt": "2026-11-11T08:33:46.196Z"
+    },
+    {
+      "symbol": "SET:PTTGC",
+      "source": "https://www.set.or.th/api/set/stock/PTTGC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/PTTGC-actions.json",
+      "sha256": "7423166cbbcd3606dff7d0f7fe764a57912a1d1cbff0c7ab57983d01961d2b66",
+      "observedAt": "2026-11-11T08:33:46.325Z"
+    },
+    {
+      "symbol": "SET:QH",
+      "source": "https://www.set.or.th/api/set/stock/QH/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/QH-actions.json",
+      "sha256": "46a4299e2256da350a3ac0f50398f911fb024d44e15fb1295c5759c146ed6681",
+      "observedAt": "2026-11-11T08:33:46.484Z"
+    },
+    {
+      "symbol": "SET:RATCH",
+      "source": "https://www.set.or.th/api/set/stock/RATCH/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/RATCH-actions.json",
+      "sha256": "e55112dd9835ab97f7459a7d271d522ced7c53bdfdbd41a3c3f10577be989f58",
+      "observedAt": "2026-11-11T08:33:46.656Z"
+    },
+    {
+      "symbol": "SET:RCL",
+      "source": "https://www.set.or.th/api/set/stock/RCL/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/RCL-actions.json",
+      "sha256": "1ab5b7e847841f7a2e08f81452c4f6b3307fa9b2a16a2b143a7a1aea1d3f0218",
+      "observedAt": "2026-11-11T08:33:46.973Z"
+    },
+    {
+      "symbol": "SET:SAWAD",
+      "source": "https://www.set.or.th/api/set/stock/SAWAD/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SAWAD-actions.json",
+      "sha256": "9a64e5d05cda92a8ab8304795ce2eff3c95eb291198a4040e054e4a8f81af01a",
+      "observedAt": "2026-11-11T08:33:47.174Z"
+    },
+    {
+      "symbol": "SET:SCB",
+      "source": "https://www.set.or.th/api/set/stock/SCB/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SCB-actions.json",
+      "sha256": "11cae3787eb405a4451f2717d942d1e1bf0cb1452b1acdeef6bbba0d7e684c11",
+      "observedAt": "2026-11-11T08:33:47.603Z"
+    },
+    {
+      "symbol": "SET:SCC",
+      "source": "https://www.set.or.th/api/set/stock/SCC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SCC-actions.json",
+      "sha256": "8ddab59e16b5b28de224cb4e42d4018c68d82c96bbed263886b195362d9ca031",
+      "observedAt": "2026-11-11T08:33:47.760Z"
+    },
+    {
+      "symbol": "SET:SCGP",
+      "source": "https://www.set.or.th/api/set/stock/SCGP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SCGP-actions.json",
+      "sha256": "cd7837ce2a6ef27a35e2cc81d25360e138de7c27a2955eb2481f8b842ef730d4",
+      "observedAt": "2026-11-11T08:33:47.891Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "source": "https://www.set.or.th/api/set/stock/SIRI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SIRI-actions.json",
+      "sha256": "ea479bb8045c3fd2338cfbb3c3cafe806e1ba0ab0ee3936c54f147bbcbe6ed5a",
+      "observedAt": "2026-11-11T08:33:48.036Z"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "source": "https://www.set.or.th/api/set/stock/SPALI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SPALI-actions.json",
+      "sha256": "1a73d1e84ac94c81f90dd9f9e271f1b66c7f9a54680b46ddb5fbd1664024ef66",
+      "observedAt": "2026-11-11T08:33:48.210Z"
+    },
+    {
+      "symbol": "SET:SPRC",
+      "source": "https://www.set.or.th/api/set/stock/SPRC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/SPRC-actions.json",
+      "sha256": "f4dbdb76ee08760bfe915faadd701e904e1c3a7b415c15d7fd02d840035d4ba6",
+      "observedAt": "2026-11-11T08:33:48.346Z"
+    },
+    {
+      "symbol": "SET:STA",
+      "source": "https://www.set.or.th/api/set/stock/STA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/STA-actions.json",
+      "sha256": "65fc8074e83ca3272100b6d87c3351004a767376d96eb6fd02a22138123ccf82",
+      "observedAt": "2026-11-11T08:33:48.470Z"
+    },
+    {
+      "symbol": "SET:STECON",
+      "source": "https://www.set.or.th/api/set/stock/STECON/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/STECON-actions.json",
+      "sha256": "57f078f50dca06cdefde212f4b8065d3efbf9c1befd7ca7b9912fbf70f9fdd3f",
+      "observedAt": "2026-11-11T08:33:48.657Z"
+    },
+    {
+      "symbol": "SET:STGT",
+      "source": "https://www.set.or.th/api/set/stock/STGT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/STGT-actions.json",
+      "sha256": "836955868f198b5ed2d95c1ebcca0d302027fded63ec92b5eaad8d0d4da66b23",
+      "observedAt": "2026-11-11T08:33:48.815Z"
+    },
+    {
+      "symbol": "SET:TASCO",
+      "source": "https://www.set.or.th/api/set/stock/TASCO/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TASCO-actions.json",
+      "sha256": "fbe297096e41989fe52053f19cfedfa5cb15f72a9e9b32ba977a39dd52ff6b76",
+      "observedAt": "2026-11-11T08:33:48.959Z"
+    },
+    {
+      "symbol": "SET:TCAP",
+      "source": "https://www.set.or.th/api/set/stock/TCAP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TCAP-actions.json",
+      "sha256": "8343eeb057f621b464dbb455ededb04f36fdd8464da8f446de1fe48ce0c6d010",
+      "observedAt": "2026-11-11T08:33:49.081Z"
+    },
+    {
+      "symbol": "SET:TFG",
+      "source": "https://www.set.or.th/api/set/stock/TFG/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TFG-actions.json",
+      "sha256": "c1182d40431710a16db7341123a643b0d707843036cf4cb312849eedd82be18b",
+      "observedAt": "2026-11-11T08:33:49.238Z"
+    },
+    {
+      "symbol": "SET:THAI",
+      "source": "https://www.set.or.th/api/set/stock/THAI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/THAI-actions.json",
+      "sha256": "e52840e5cb560c4c93341d8b891844b99c84cc6280deba5a733b5c5f4a0bc1ae",
+      "observedAt": "2026-11-11T08:33:49.373Z"
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "source": "https://www.set.or.th/api/set/stock/TIDLOR/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TIDLOR-actions.json",
+      "sha256": "a23b6c52a27554e9a16b317e1a963eaf0966ffb69cbea426b1c10ec21c3bd7ad",
+      "observedAt": "2026-11-11T08:33:49.528Z"
+    },
+    {
+      "symbol": "SET:TISCO",
+      "source": "https://www.set.or.th/api/set/stock/TISCO/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TISCO-actions.json",
+      "sha256": "6b38a63eb988afedf9bb8dfbbe838a747d32afa57f062ec2c7720fa421046c8c",
+      "observedAt": "2026-11-11T08:33:49.653Z"
+    },
+    {
+      "symbol": "SET:TLI",
+      "source": "https://www.set.or.th/api/set/stock/TLI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TLI-actions.json",
+      "sha256": "98d4be91559d1f7d37ab2ce523c2a472fa0a5b67d2dcc205922e6a84ec053e66",
+      "observedAt": "2026-11-11T08:33:49.816Z"
+    },
+    {
+      "symbol": "SET:TOA",
+      "source": "https://www.set.or.th/api/set/stock/TOA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TOA-actions.json",
+      "sha256": "78e4e29c2ec75205579b2044f9eb17fd3f334479e6d09dee0149f20c6f9a7944",
+      "observedAt": "2026-11-11T08:33:49.985Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "source": "https://www.set.or.th/api/set/stock/TOP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TOP-actions.json",
+      "sha256": "3693f082c6a0ea20cc40f909f232300bdb865a671bc9f680f32b236f7140a4fa",
+      "observedAt": "2026-11-11T08:33:50.110Z"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "source": "https://www.set.or.th/api/set/stock/TRUE/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TRUE-actions.json",
+      "sha256": "8cce61a214f37e9ef5e9f785ffe15cc5a49aa8890bf23c3ba45a33b0fc914195",
+      "observedAt": "2026-11-11T08:33:50.240Z"
+    },
+    {
+      "symbol": "SET:TTB",
+      "source": "https://www.set.or.th/api/set/stock/TTB/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TTB-actions.json",
+      "sha256": "462b941372dabad7dc0ed112e22ddeed3772bfec5b982e451a25523a147329d5",
+      "observedAt": "2026-11-11T08:33:50.383Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "source": "https://www.set.or.th/api/set/stock/TU/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TU-actions.json",
+      "sha256": "be5adb5fd46b8f979d95e873c6fd6a0dc74a0878ec6d25809ea444f4cd906693",
+      "observedAt": "2026-11-11T08:33:50.527Z"
+    },
+    {
+      "symbol": "SET:VGI",
+      "source": "https://www.set.or.th/api/set/stock/VGI/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/VGI-actions.json",
+      "sha256": "c4cfd7a79ecbba4a4936bfc2b06a23531f635f79602d3a732a671eeb03072a17",
+      "observedAt": "2026-11-11T08:33:50.691Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "source": "https://www.set.or.th/api/set/stock/WHA/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/WHA-actions.json",
+      "sha256": "f7bb9412954f8eb3852ec7cce187e6d65bd51ac963b0aee04225374a8bc70908",
+      "observedAt": "2026-11-11T08:33:50.829Z"
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "source": "https://www.set.or.th/api/set/stock/WHAUP/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/WHAUP-actions.json",
+      "sha256": "63652cfbab0532ba892ad69c6d506d4ef9201fa6f3bd97f8a66567a80a2a2df4",
+      "observedAt": "2026-11-11T08:33:50.988Z"
+    },
+    {
+      "symbol": "SET:JAS",
+      "source": "https://www.set.or.th/api/set/stock/JAS/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/JAS-actions.json",
+      "sha256": "870ddf1b6737caa2d1c0046b589fd0150ce65e58a13ca44ee3744384aaf06958",
+      "observedAt": "2026-11-11T08:33:51.124Z"
+    },
+    {
+      "symbol": "SET:TVO",
+      "source": "https://www.set.or.th/api/set/stock/TVO/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TVO-actions.json",
+      "sha256": "e6e15fc35916b6dc9a3798a8e7702c0d4fd21b6ef3b100e84165f9feb53297a6",
+      "observedAt": "2026-11-11T08:33:51.413Z"
+    },
+    {
+      "symbol": "SET:MC",
+      "source": "https://www.set.or.th/api/set/stock/MC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/MC-actions.json",
+      "sha256": "f0517d220de131196f656f857ff1addcdfc7fe5ff9d975a629873f8704d26ae9",
+      "observedAt": "2026-11-11T08:33:51.688Z"
+    },
+    {
+      "symbol": "SET:TACC",
+      "source": "https://www.set.or.th/api/set/stock/TACC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TACC-actions.json",
+      "sha256": "eb134d8cc6952b760536ca80df90c0330c34b7684bf6a0a36a2f7dbf6588a606",
+      "observedAt": "2026-11-11T08:33:51.968Z"
+    },
+    {
+      "symbol": "SET:BKIH",
+      "source": "https://www.set.or.th/api/set/stock/BKIH/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/BKIH-actions.json",
+      "sha256": "4aa763b565e11826c59280a748ef156394e905abc5f759608f108498c7074f9b",
+      "observedAt": "2026-11-11T08:33:52.257Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "source": "https://www.set.or.th/api/set/stock/HTC/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/HTC-actions.json",
+      "sha256": "6c38e7210de505568a482750ce3d57ecd7422272a3084f3ffc384f512bfdbf1d",
+      "observedAt": "2026-11-11T08:33:52.578Z"
+    },
+    {
+      "symbol": "SET:TTW",
+      "source": "https://www.set.or.th/api/set/stock/TTW/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/TTW-actions.json",
+      "sha256": "5cb83c1114ab18d5e10d176e463db0e6fda58a815826941377262c384a32fe74",
+      "observedAt": "2026-11-11T08:33:53.088Z"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "source": "https://www.set.or.th/api/set/stock/KAMART/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/KAMART-actions.json",
+      "sha256": "5d69fa5eee7aeafdb258979539439ef993e1c41914758e2ff3caa383ea69be78",
+      "observedAt": "2026-11-11T08:33:53.356Z"
+    },
+    {
+      "symbol": "SET:CPNREIT",
+      "source": "https://www.set.or.th/api/set/stock/CPNREIT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/CPNREIT-actions.json",
+      "sha256": "213dd5cd39e692813346a89ca625610ca3b690cae84ccdb735b0cd8166f9f3da",
+      "observedAt": "2026-11-11T08:33:53.585Z"
+    },
+    {
+      "symbol": "SET:INETREIT",
+      "source": "https://www.set.or.th/api/set/stock/INETREIT/corporate-action?lang=en",
+      "evidenceFile": "data/dividend-evidence/INETREIT-actions.json",
+      "sha256": "19e5e15e7a61ec777a3333c9c61b2e22d0629698745987706033ed975dd7f98f",
+      "observedAt": "2026-11-11T08:33:53.730Z"
+    }
+  ]
+}

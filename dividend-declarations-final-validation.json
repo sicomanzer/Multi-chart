@@ -1,0 +1,106 @@
+{
+  "checkedAt": "2026-11-11T08:51:56.558Z",
+  "checked": 110,
+  "counts": {
+    "matched": 65,
+    "period-incomplete": 42,
+    "unavailable": 3
+  },
+  "unreviewed": [
+    "SET:DELTA",
+    "SET:COM7",
+    "SET:AMATA",
+    "SET:BBL",
+    "SET:BCH",
+    "SET:CHG",
+    "SET:CCET",
+    "SET:GLOBAL",
+    "SET:BCPG",
+    "SET:CRC",
+    "SET:BLA",
+    "SET:BCP",
+    "SET:ERW",
+    "SET:BGRIM",
+    "SET:DOHOME",
+    "SET:PRM",
+    "SET:PTTEP",
+    "SET:GULF",
+    "SET:PLANB",
+    "SET:PTT",
+    "SET:SAWAD",
+    "SET:OR",
+    "SET:GUNKUL",
+    "SET:RATCH",
+    "SET:GPSC",
+    "SET:PTTGC",
+    "SET:IRPC",
+    "SET:JMART",
+    "SET:SCB",
+    "SET:BKIH",
+    "SET:TCAP",
+    "SET:TASCO",
+    "SET:TOP",
+    "SET:SPRC",
+    "SET:TLI",
+    "SET:STGT",
+    "SET:STA",
+    "SET:TIDLOR"
+  ],
+  "critical": [],
+  "selected": [
+    {
+      "symbol": "SET:ADVANC",
+      "dps": 15.3,
+      "annual": 34.3,
+      "payout": 0.9503105590062111,
+      "special": true,
+      "classification": "issuer-verified",
+      "period": "matched"
+    },
+    {
+      "symbol": "SET:BDMS",
+      "dps": 0.75,
+      "annual": 1,
+      "payout": 0.75,
+      "special": true,
+      "classification": "issuer-verified",
+      "period": "matched"
+    },
+    {
+      "symbol": "SET:KTB",
+      "dps": 2.07,
+      "annual": 2.67,
+      "payout": 0.6,
+      "special": true,
+      "classification": "issuer-verified",
+      "period": "matched"
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "dps": 0.11,
+      "annual": 0.11,
+      "payout": 0.23913043478260868,
+      "special": false,
+      "classification": "issuer-verified",
+      "period": "matched"
+    },
+    {
+      "symbol": "SET:TFG",
+      "dps": 0.7,
+      "annual": 0.7,
+      "payout": 0.546875,
+      "special": false,
+      "classification": "issuer-verified",
+      "period": "matched"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "dps": 0.31,
+      "annual": 0.31,
+      "payout": 1.1481481481481481,
+      "special": false,
+      "classification": "issuer-verified",
+      "period": "matched"
+    }
+  ]
+}

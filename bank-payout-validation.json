@@ -1,0 +1,3549 @@
+{
+  "rows": [
+    {
+      "symbol": "SET:BBL",
+      "bare": "BBL",
+      "name": "Bangkok Bank Public Company Limited",
+      "currency": "THB",
+      "price": 181.5,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 8.24,
+      "pbv": 0.6,
+      "ttmEps": 22.024101162093856,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 308.388,
+      "score": 69,
+      "scoringYearCount": 10,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:BBL",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "consolidated",
+        "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001NWS260220261714037810E.pdf",
+        "availableFrom": "2026-02-27",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.21780000000000002,
+            "reportedPercent": 21.78,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Consolidated total capital / risk-weighted assets",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001NWS260220261714037810E.pdf",
+            "publishedAt": "2026-02-26",
+            "availableFrom": "2026-02-27",
+            "historicalAvailableFrom": "2026-02-27",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000003&searchSymbol=BBL&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/BBL-mda-register.html",
+            "releaseEvidenceSha256": "3e202da98c5f2b86116190fe9df24c8598ab6eca6e5f584c2cd24296f4a22866",
+            "evidenceFile": "data/bank-risk-evidence/BBL-2025-sec-mda.pdf",
+            "sha256": "449ef6bc08ddd4c338bab7b76a7259f5b72608ca4b1c2da25e351ab938f60dfd",
+            "pdfPage": 19,
+            "anchor": "Total capital 653,040 21.78%",
+            "evidenceTextFile": "data/bank-risk-evidence/BBL-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.03,
+            "reportedPercent": 3,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Gross NPL / total loans, including interbank and money-market lending",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001NWS260220261714037810E.pdf",
+            "publishedAt": "2026-02-26",
+            "availableFrom": "2026-02-27",
+            "historicalAvailableFrom": "2026-02-27",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000003&searchSymbol=BBL&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/BBL-mda-register.html",
+            "releaseEvidenceSha256": "3e202da98c5f2b86116190fe9df24c8598ab6eca6e5f584c2cd24296f4a22866",
+            "evidenceFile": "data/bank-risk-evidence/BBL-2025-sec-mda.pdf",
+            "sha256": "449ef6bc08ddd4c338bab7b76a7259f5b72608ca4b1c2da25e351ab938f60dfd",
+            "pdfPage": 16,
+            "anchor": "Gross NPL to total loans ratio /1 3.0%",
+            "evidenceTextFile": "data/bank-risk-evidence/BBL-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 3.241,
+            "reportedPercent": 324.1,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Reported consolidated ECL / gross NPL; includes disclosed interbank/money market and commitments/guarantees",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001NWS260220261714037810E.pdf",
+            "publishedAt": "2026-02-26",
+            "availableFrom": "2026-02-27",
+            "historicalAvailableFrom": "2026-02-27",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000003&searchSymbol=BBL&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/BBL-mda-register.html",
+            "releaseEvidenceSha256": "3e202da98c5f2b86116190fe9df24c8598ab6eca6e5f584c2cd24296f4a22866",
+            "evidenceFile": "data/bank-risk-evidence/BBL-2025-sec-mda.pdf",
+            "sha256": "449ef6bc08ddd4c338bab7b76a7259f5b72608ca4b1c2da25e351ab938f60dfd",
+            "pdfPage": 16,
+            "anchor": "Allowance for expected credit losses to NPL ratio /1 324.1%",
+            "evidenceTextFile": "data/bank-risk-evidence/BBL-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.21780000000000002,
+        "npl": 0.03,
+        "nplCoverage": 3.241
+      },
+      "coverage": 0.5675675675675675,
+      "dataCoverage": 1,
+      "passed": 9,
+      "failed": 3,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": false,
+          "value": 0.08180819350221834,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": false,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": false,
+          "value": 0.009867417943196635,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": true,
+          "value": 10,
+          "threshold": 8,
+          "of": 10
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 7.001513942033991,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.05509641873278237,
+          "threshold": 0.04,
+          "special": false,
+          "ttmYield": 0.05509641873278237,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": true,
+          "value": 0.4149071602020488,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": false
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": true,
+          "value": 0.4149071602020488,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 15,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.21780000000000002,
+          "threshold": 0.15,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNpl",
+          "pass": true,
+          "value": 0.03,
+          "threshold": 0.03,
+          "reportedDecimals": 1
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": true,
+          "value": 3.241,
+          "threshold": 1.5,
+          "reportedDecimals": 1
+        }
+      ],
+      "roe3": 0.08180819350221834,
+      "roa3": 0.009867417943196635,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 7.053300241152402,
+      "icr": null,
+      "dividendYield": 0.055099999999999996,
+      "recurringDividendYield": 0.05509641873278237,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.4149071602020488,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 24.10177735937424,
+        "dps": 10,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0001FIN250220261153470194E.zip",
+          "availableFrom": "2026-03-11",
+          "sha256": "e2148ed793dd282d807c8d2b4d5772286dfff6a397836e70d53cb69b17dfc657",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 15,
+      "ttmDps": 10,
+      "dps": 10,
+      "annualDps": 10,
+      "dividendFy": 2025,
+      "hasSpecialDividend": false,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 187.15416372560992,
+        "mos": 3.0211263340630725,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 10,
+        "terminalShare": 0.7608525253294616,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 193.6491584981329,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 224.91932679850632,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 271.82457924906646,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 165.62678193292697,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 187.15416372560992,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 217.29249823536597,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 144.62118899836076,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 160.18757257017967,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 180.94275066593812,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 390.92108085450633,
+        "mos": 53.57119150411053,
+        "eps": 22.024101162093856,
+        "bvps": 308.388
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.08707667455596292,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.10544044531313868,
+        "afterTaxCostOfDebt": 0.08519494288531967,
+        "taxRate": 0.1920088858473007,
+        "fcff": 152985950912.7046,
+        "fcffYears": 3,
+        "netDebt": 490667733000,
+        "cash": 47560267000,
+        "totalDebt": 538228000000,
+        "shares": 1908842894,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 870.2727352400194,
+        "mos": 79.14446900948326,
+        "eps": 22.024101162093856,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": true,
+        "missingInputs": [],
+        "reason": null,
+        "value": 288.8542017290411,
+        "mos": 37.16553232960912,
+        "bvps": 308.388,
+        "roe": 0.08180819350221834,
+        "payout": 0.4149071602020488,
+        "r": 0.09,
+        "growth": 0.04786538825495322,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 8.24,
+          "mean": 7.746773481610441,
+          "sd": 1.6402538772234194,
+          "z": 0.3007013275435631,
+          "levels": {
+            "plus2": 11.02728123605728,
+            "plus1": 9.38702735883386,
+            "mean": 7.746773481610441,
+            "minus1": 6.106519604387022,
+            "minus2": 4.466265727163602
+          },
+          "median": 7.038055937643283,
+          "min": 5.614183199662304,
+          "max": 11.368078175895766,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 0.6,
+          "mean": 0.5576851562348766,
+          "sd": 0.04975450832485357,
+          "z": 0.8504725539411294,
+          "levels": {
+            "plus2": 0.6571941728845837,
+            "plus1": 0.6074396645597302,
+            "mean": 0.5576851562348766,
+            "minus1": 0.507930647910023,
+            "minus2": 0.45817613958516945
+          },
+          "median": 0.5520433766412951,
+          "min": 0.4574020119875217,
+          "max": 0.6751696076775618,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "roe": 0,
+            "pe": 100,
+            "yield": 33,
+            "de": 17
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "roe": 0,
+            "pe": 100,
+            "yield": 33,
+            "de": 17
+          }
+        }
+      },
+      "pass": true,
+      "failReason": null
+    },
+    {
+      "symbol": "SET:TTB",
+      "bare": "TTB",
+      "name": "TMBThanachart Bank Public Company Limited",
+      "currency": "THB",
+      "price": 2.7,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 11.14,
+      "pbv": 1.01,
+      "ttmEps": 0.24244354103378093,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 2.533,
+      "score": 76,
+      "scoringYearCount": 10,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:TTB",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "consolidated",
+        "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068NWS170220261747581720E.pdf",
+        "availableFrom": "2026-02-18",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.195,
+            "reportedPercent": 19.5,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Consolidated Basel III total capital ratio, rounded to one decimal in MD&A",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068NWS170220261747581720E.pdf",
+            "publishedAt": "2026-02-17",
+            "availableFrom": "2026-02-18",
+            "historicalAvailableFrom": "2026-02-18",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000001104&searchSymbol=TTB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/TTB-mda-register.html",
+            "releaseEvidenceSha256": "8a0186ad8031cee866695014adc48e602ec7a4e538cd2f4a34ea07d1af24a123",
+            "evidenceFile": "data/bank-risk-evidence/TTB-2025-sec-mda.pdf",
+            "sha256": "57b7b36bf5fc8b64a0b381728bc5e2c48186118351a40f4de703abb71eb279ab",
+            "pdfPage": 21,
+            "anchor": "Capital Adequacy Ratio (CAR) 19.5%",
+            "evidenceTextFile": "data/bank-risk-evidence/TTB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.0287,
+            "reportedPercent": 2.87,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Consolidated Stage 3/NPL ratio excluding accrued interest receivables",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068NWS170220261747581720E.pdf",
+            "publishedAt": "2026-02-17",
+            "availableFrom": "2026-02-18",
+            "historicalAvailableFrom": "2026-02-18",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000001104&searchSymbol=TTB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/TTB-mda-register.html",
+            "releaseEvidenceSha256": "8a0186ad8031cee866695014adc48e602ec7a4e538cd2f4a34ea07d1af24a123",
+            "evidenceFile": "data/bank-risk-evidence/TTB-2025-sec-mda.pdf",
+            "sha256": "57b7b36bf5fc8b64a0b381728bc5e2c48186118351a40f4de703abb71eb279ab",
+            "pdfPage": 19,
+            "anchor": "NPL ratio stood at 2.8 7%",
+            "evidenceTextFile": "data/bank-risk-evidence/TTB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 1.52,
+            "reportedPercent": 152,
+            "reportedDecimals": 0,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Consolidated ECL / NPL, reported rounded percentage",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068NWS170220261747581720E.pdf",
+            "publishedAt": "2026-02-17",
+            "availableFrom": "2026-02-18",
+            "historicalAvailableFrom": "2026-02-18",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000001104&searchSymbol=TTB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/TTB-mda-register.html",
+            "releaseEvidenceSha256": "8a0186ad8031cee866695014adc48e602ec7a4e538cd2f4a34ea07d1af24a123",
+            "evidenceFile": "data/bank-risk-evidence/TTB-2025-sec-mda.pdf",
+            "sha256": "57b7b36bf5fc8b64a0b381728bc5e2c48186118351a40f4de703abb71eb279ab",
+            "pdfPage": 19,
+            "anchor": "coverage ratio stood at 152%",
+            "evidenceTextFile": "data/bank-risk-evidence/TTB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.195,
+        "npl": 0.0287,
+        "nplCoverage": 1.52
+      },
+      "coverage": 0.5675675675675675,
+      "dataCoverage": 1,
+      "passed": 10,
+      "failed": 2,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": false,
+          "value": 0.08656451707740646,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": false,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": true,
+          "value": 0.011317373816477289,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": true,
+          "value": 10,
+          "threshold": 8,
+          "of": 10
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 5.969730706795519,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.04962962962962963,
+          "threshold": 0.04,
+          "special": false,
+          "ttmYield": 0.05518518518518519,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": true,
+          "value": 0.6090909090909091,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": false
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": true,
+          "value": 0.6090909090909091,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 15,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.195,
+          "threshold": 0.15,
+          "reportedDecimals": 1
+        },
+        {
+          "id": "bankNpl",
+          "pass": true,
+          "value": 0.0287,
+          "threshold": 0.03,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": true,
+          "value": 1.52,
+          "threshold": 1.5,
+          "reportedDecimals": 0
+        }
+      ],
+      "roe3": 0.08656451707740646,
+      "roa3": 0.011317373816477289,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 6.246112741264587,
+      "icr": null,
+      "dividendYield": 0.0529,
+      "recurringDividendYield": 0.04962962962962963,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.6090909090909091,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 0.22,
+        "dps": 0.134,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0068FIN130220261641310338E.zip",
+          "availableFrom": "2026-03-24",
+          "sha256": "3e0c2b810e5f2e8036aa82302aa351b8d5c1fc090fc1e4cdb9048d6f5ff67526",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 15,
+      "ttmDps": 0.14900000000000002,
+      "dps": 0.134,
+      "annualDps": 0.134,
+      "dividendFy": 2025,
+      "hasSpecialDividend": false,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 2.5078657939231728,
+        "mos": -7.661263475198281,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.134,
+        "terminalShare": 0.7608525253294616,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 2.594898723874981,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 3.0139189790999845,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 3.6424493619374907,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 2.219398877901222,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 2.5078657939231728,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 2.911719476353904,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 1.9379239325780344,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 2.1465134724404074,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 2.4246328589235713,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 3.7171848907967653,
+        "mos": 27.36438785477618,
+        "eps": 0.24244354103378093,
+        "bvps": 2.533
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.10459355054660402,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.1379689224890504,
+        "afterTaxCostOfDebt": 0.1379689224890504,
+        "taxRate": 0,
+        "fcff": 34476698000,
+        "fcffYears": 3,
+        "netDebt": -29829893000,
+        "cash": 141847873000,
+        "totalDebt": 112017980000,
+        "shares": 94883155679,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 9.58005060201445,
+        "mos": 71.81643279178238,
+        "eps": 0.24244354103378093,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": true,
+        "missingInputs": [],
+        "reason": null,
+        "value": 2.469347371657797,
+        "mos": -9.34063109101392,
+        "bvps": 2.533,
+        "roe": 0.08656451707740646,
+        "payout": 0.6090909090909091,
+        "r": 0.09,
+        "growth": 0.03383885667571343,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 11.14,
+          "mean": 10.236663241222537,
+          "sd": 1.430934975219073,
+          "z": 0.6312912706876597,
+          "levels": {
+            "plus2": 13.098533191660684,
+            "plus1": 11.66759821644161,
+            "mean": 10.236663241222537,
+            "minus1": 8.805728266003465,
+            "minus2": 7.374793290784391
+          },
+          "median": 10.05964900317945,
+          "min": 8.04545445875688,
+          "max": 14.363636753775857,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 1.01,
+          "mean": 0.817020980636672,
+          "sd": 0.12104634946145737,
+          "z": 1.594257242964398,
+          "levels": {
+            "plus2": 1.0591136795595868,
+            "plus1": 0.9380673300981293,
+            "mean": 0.817020980636672,
+            "minus1": 0.6959746311752146,
+            "minus2": 0.5749282817137572
+          },
+          "median": 0.7823045808456193,
+          "min": 0.6222775739235777,
+          "max": 1.2278389028833863,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "roe": 40,
+            "pe": 83,
+            "yield": 17,
+            "de": 67
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "roe": 40,
+            "pe": 83,
+            "yield": 17,
+            "de": 67
+          }
+        }
+      },
+      "pass": true,
+      "failReason": null
+    },
+    {
+      "symbol": "SET:TISCO",
+      "bare": "TISCO",
+      "name": "TISCO Financial Group Public Company Limited",
+      "currency": "THB",
+      "price": 125,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 14.57,
+      "pbv": 2.36,
+      "ttmEps": 8.579302774069388,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 53.045,
+      "score": 92,
+      "scoringYearCount": 10,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:TISCO",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "consolidated",
+        "source": "https://www.tisco.co.th/wp-content/uploads/2025-group-annual-report-en.pdf",
+        "availableFrom": "2026-02-28",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.1897,
+            "reportedPercent": 18.97,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "regulatory-group",
+            "definition": "Financial Business Group total capital / risk assets in annual-report financial notes; excludes the projected MD&A 19.0% and standalone TISCO Bank 20.53%",
+            "asOf": "2025-12-31",
+            "source": "https://www.tisco.co.th/wp-content/uploads/2025-group-annual-report-en.pdf",
+            "publishedAt": null,
+            "availableFrom": "2026-11-11",
+            "historicalAvailableFrom": "2026-11-12",
+            "availabilityBasis": "first-observed-official-document",
+            "listingSource": null,
+            "releaseEvidenceFile": null,
+            "releaseEvidenceSha256": null,
+            "evidenceFile": "data/bank-risk-evidence/TISCO-2025-ar.pdf",
+            "sha256": "6758d58bd4322037dd56867f14c77a054a6e0ec8a4402cc9b67095f5f91e17fc",
+            "pdfPage": 319,
+            "anchor": "Total capital to risk assets 18.97",
+            "evidenceTextFile": "data/bank-risk-evidence/TISCO-2025-ar.pages.json",
+            "observedAt": "2026-11-11T03:09:46.026178+00:00",
+            "earliestPublicationVerified": false,
+            "dateNote": "Exact release date of this IR PDF is not independently confirmed. Live use begins on observation date; historical use begins next day. The unavailable SEC annual archive is not used to backdate this PDF.",
+            "rejectedAlternative": {
+              "reportedPercent": 19,
+              "status": "projected",
+              "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0999NWS270220261232398740E.pdf",
+              "pdfPage": 16
+            },
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.022799999999999997,
+            "reportedPercent": 2.28,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "group-loan-portfolio",
+            "definition": "TISCO Group NPL / loans excluding accrued interest under BOT guideline",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0999NWS270220261232398740E.pdf",
+            "publishedAt": "2026-02-27",
+            "availableFrom": "2026-02-28",
+            "historicalAvailableFrom": "2026-02-28",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000006887&searchSymbol=TISCO&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/TISCO-mda-register.html",
+            "releaseEvidenceSha256": "ffc150ec14925d6063d9f0c1c2ba69091a0d8f09e10248e0f5edde7f7d276e9c",
+            "evidenceFile": "data/bank-risk-evidence/TISCO-2025-sec-mda.pdf",
+            "sha256": "433dfc521744c248c37f2deaf7983d584a44f29ca717340ed7146c7a7024da9c",
+            "pdfPage": 12,
+            "anchor": "NPL ratio of 2.28%",
+            "evidenceTextFile": "data/bank-risk-evidence/TISCO-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 1.7209999999999999,
+            "reportedPercent": 172.1,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "group-loan-portfolio",
+            "definition": "TISCO Group expected credit loss allowance / NPL",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0999NWS270220261232398740E.pdf",
+            "publishedAt": "2026-02-27",
+            "availableFrom": "2026-02-28",
+            "historicalAvailableFrom": "2026-02-28",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000006887&searchSymbol=TISCO&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/TISCO-mda-register.html",
+            "releaseEvidenceSha256": "ffc150ec14925d6063d9f0c1c2ba69091a0d8f09e10248e0f5edde7f7d276e9c",
+            "evidenceFile": "data/bank-risk-evidence/TISCO-2025-sec-mda.pdf",
+            "sha256": "433dfc521744c248c37f2deaf7983d584a44f29ca717340ed7146c7a7024da9c",
+            "pdfPage": 12,
+            "anchor": "coverage ratio was at 172.1%",
+            "evidenceTextFile": "data/bank-risk-evidence/TISCO-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.1897,
+        "npl": 0.022799999999999997,
+        "nplCoverage": 1.7209999999999999
+      },
+      "coverage": 0.527027027027027,
+      "dataCoverage": 0.9285714285714286,
+      "passed": 9,
+      "failed": 2,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": true,
+          "value": 0.1622979117950218,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": true,
+          "value": 4,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": true,
+          "value": 10,
+          "threshold": 8,
+          "of": 10
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 5.701773981245684,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.062,
+          "threshold": 0.04,
+          "special": false,
+          "ttmYield": 0.062,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": false,
+          "value": 0.9314903846153846,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": false
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": false,
+          "value": 0.9314903846153846,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 15,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.1897,
+          "threshold": 0.15,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNpl",
+          "pass": true,
+          "value": 0.022799999999999997,
+          "threshold": 0.03,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": true,
+          "value": 1.7209999999999999,
+          "threshold": 1.5,
+          "reportedDecimals": 1
+        }
+      ],
+      "roe3": 0.1622979117950218,
+      "roa3": null,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 5.828464574530875,
+      "icr": null,
+      "dividendYield": 0.062,
+      "recurringDividendYield": 0.062,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.9314903846153846,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 8.32,
+        "dps": 7.75,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0999FIN270220260954350617E.zip",
+          "availableFrom": "2026-03-25",
+          "sha256": "079db01508d1d9c6f94b7be140ce359493b279c5750943a8e8a98b9f947e0d7f",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 15,
+      "ttmDps": 7.75,
+      "dps": 7.75,
+      "annualDps": 7.75,
+      "dividendFy": 2025,
+      "hasSpecialDividend": false,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 145.04447688734766,
+        "mos": 13.819538197869946,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 7.75,
+        "terminalShare": 0.7608525253294616,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 150.078097836053,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 174.31247826884237,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 210.66404891802648,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 128.36075599801842,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 145.04447688734766,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 168.4016861324086,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 112.08142147372959,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 124.1453687418892,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 140.23063176610202,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 101.19043977637656,
+        "mos": -23.5294562176435,
+        "eps": 8.579302774069388,
+        "bvps": 53.045
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.09967002537064734,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.2,
+        "afterTaxCostOfDebt": 0.1605909876638294,
+        "taxRate": 0.19704506168085298,
+        "fcff": 12081766631.411577,
+        "fcffYears": 3,
+        "netDebt": 14962330000,
+        "cash": 923743000,
+        "totalDebt": 15886073000,
+        "shares": 800655483,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 339.00740087827586,
+        "mos": 63.12764863653152,
+        "eps": 8.579302774069388,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": true,
+        "missingInputs": [],
+        "reason": null,
+        "value": 78.72507710884314,
+        "mos": -58.78040973802848,
+        "bvps": 53.045,
+        "roe": 0.1622979117950218,
+        "payout": 0.9314903846153846,
+        "r": 0.09,
+        "growth": 0.011118967514803181,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 14.57,
+          "mean": 11.777445560096453,
+          "sd": 1.4801875584871989,
+          "z": 1.8866220188728187,
+          "levels": {
+            "plus2": 14.73782067707085,
+            "plus1": 13.257633118583652,
+            "mean": 11.777445560096453,
+            "minus1": 10.297258001609254,
+            "minus2": 8.817070443122056
+          },
+          "median": 11.086474501108649,
+          "min": 9.92239467849224,
+          "max": 15.985576923076923,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 2.36,
+          "mean": 1.931893438885773,
+          "sd": 0.1670412520989425,
+          "z": 2.562879263265156,
+          "levels": {
+            "plus2": 2.265975943083658,
+            "plus1": 2.0989346909847155,
+            "mean": 1.931893438885773,
+            "minus1": 1.7648521867868303,
+            "minus2": 1.597810934687888
+          },
+          "median": 1.8623242794116113,
+          "min": 1.6747614759289104,
+          "max": 2.4550930567857154,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "roe": 100,
+            "pe": 0,
+            "yield": 67,
+            "de": 100
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "roe": 100,
+            "pe": 0,
+            "yield": 67,
+            "de": 100
+          }
+        }
+      },
+      "pass": false,
+      "failReason": "requires:payoutBand"
+    },
+    {
+      "symbol": "SET:KTB",
+      "bare": "KTB",
+      "name": "Krung Thai Bank Public Company Limited",
+      "currency": "THB",
+      "price": 42.5,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 11.76,
+      "pbv": 1.3,
+      "ttmEps": 3.5743475294228553,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 32.819,
+      "score": 87,
+      "scoringYearCount": 10,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:KTB",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "consolidated",
+        "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150NWS250220261953089120E.pdf",
+        "availableFrom": "2026-02-26",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.2212,
+            "reportedPercent": 22.12,
+            "reportedDecimals": 2,
+            "status": "reported-preliminary",
+            "scope": "regulatory-group",
+            "definition": "Financial Business Group; notes describe FY2025 regulatory capital data as preliminary; not the bank-only 21.32%",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150NWS250220261953089120E.pdf",
+            "publishedAt": "2026-02-25",
+            "availableFrom": "2026-02-26",
+            "historicalAvailableFrom": "2026-02-26",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000013&searchSymbol=KTB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KTB-mda-register.html",
+            "releaseEvidenceSha256": "ea8ab8d30b0f47a0716d467d54071ad0cdfc2286b24ee9072f7a2897d0719037",
+            "evidenceFile": "data/bank-risk-evidence/KTB-2025-sec-mda.pdf",
+            "sha256": "49f18834670ad8eaa2b2b8ee1617b905bb3c071a46665b805ec12815c273bd27",
+            "pdfPage": 18,
+            "anchor": "22.12% of its RWA",
+            "evidenceTextFile": "data/bank-risk-evidence/KTB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.028999999999999998,
+            "reportedPercent": 2.9,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Principal less deferred revenue, including interbank and money-market items",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150NWS250220261953089120E.pdf",
+            "publishedAt": "2026-02-25",
+            "availableFrom": "2026-02-26",
+            "historicalAvailableFrom": "2026-02-26",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000013&searchSymbol=KTB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KTB-mda-register.html",
+            "releaseEvidenceSha256": "ea8ab8d30b0f47a0716d467d54071ad0cdfc2286b24ee9072f7a2897d0719037",
+            "evidenceFile": "data/bank-risk-evidence/KTB-2025-sec-mda.pdf",
+            "sha256": "49f18834670ad8eaa2b2b8ee1617b905bb3c071a46665b805ec12815c273bd27",
+            "pdfPage": 14,
+            "anchor": "NPL Ratio 2.90%",
+            "evidenceTextFile": "data/bank-risk-evidence/KTB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 2.036,
+            "reportedPercent": 203.6,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Reported ECL including interbank, loans, commitments and guarantees / NPL",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150NWS250220261953089120E.pdf",
+            "publishedAt": "2026-02-25",
+            "availableFrom": "2026-02-26",
+            "historicalAvailableFrom": "2026-02-26",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000013&searchSymbol=KTB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KTB-mda-register.html",
+            "releaseEvidenceSha256": "ea8ab8d30b0f47a0716d467d54071ad0cdfc2286b24ee9072f7a2897d0719037",
+            "evidenceFile": "data/bank-risk-evidence/KTB-2025-sec-mda.pdf",
+            "sha256": "49f18834670ad8eaa2b2b8ee1617b905bb3c071a46665b805ec12815c273bd27",
+            "pdfPage": 14,
+            "anchor": "Coverage Ratio (3) 203.6%",
+            "evidenceTextFile": "data/bank-risk-evidence/KTB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.2212,
+        "npl": 0.028999999999999998,
+        "nplCoverage": 2.036
+      },
+      "coverage": 0.5675675675675675,
+      "dataCoverage": 1,
+      "passed": 10,
+      "failed": 1,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": true,
+          "value": 0.10336798769971349,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": false,
+          "value": 2,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": true,
+          "value": 0.01272482552518972,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": true,
+          "value": 10,
+          "threshold": 8,
+          "of": 10
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 7.076256921727468,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.06282352941176471,
+          "threshold": 0.04,
+          "special": false,
+          "ttmYield": 0.064,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": false,
+          "value": 0.773913043478261,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": true
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": true,
+          "value": 0.773913043478261,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 15,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.2212,
+          "threshold": 0.15,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNpl",
+          "pass": true,
+          "value": 0.028999999999999998,
+          "threshold": 0.03,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": true,
+          "value": 2.036,
+          "threshold": 1.5,
+          "reportedDecimals": 1
+        }
+      ],
+      "roe3": 0.10336798769971349,
+      "roa3": 0.01272482552518972,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 7.148536655157972,
+      "icr": null,
+      "dividendYield": 0.0636,
+      "recurringDividendYield": 0.06282352941176471,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.773913043478261,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 3.45,
+        "dps": 2.6700000000000004,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0150FIN250220261934260774E.zip",
+          "availableFrom": "2026-03-06",
+          "sha256": "4a3c23668d17e994744d4e977706eb11ab1e4639fbc30a0470833158d4953a14",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 15,
+      "ttmDps": 2.72,
+      "dps": 2.6700000000000004,
+      "annualDps": 2.6700000000000004,
+      "dividendFy": 2025,
+      "hasSpecialDividend": false,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 49.97016171473785,
+        "mos": 14.949244625987776,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 2.6700000000000004,
+        "terminalShare": 0.7608525253294616,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 51.704325319001484,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 60.053460255201195,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 72.57716265950076,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 44.22235077609151,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 49.97016171473785,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 58.01709702884272,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 38.61385746256233,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 42.77008187623797,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 48.31171442780549,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 51.37505727766049,
+        "mos": 17.275031402290324,
+        "eps": 3.5743475294228553,
+        "bvps": 32.819
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.08994686788204521,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.11193060831993609,
+        "afterTaxCostOfDebt": 0.08986226568710426,
+        "taxRate": 0.19716092822217982,
+        "fcff": 168291050995.74155,
+        "fcffYears": 3,
+        "netDebt": -55927691000,
+        "cash": 428962383000,
+        "totalDebt": 373034692000,
+        "shares": 13976061250,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 141.23878101700024,
+        "mos": 69.90911441321171,
+        "eps": 3.5743475294228553,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": true,
+        "missingInputs": [],
+        "reason": null,
+        "value": 35.89932736183281,
+        "mos": -18.38661925789965,
+        "bvps": 32.819,
+        "roe": 0.10336798769971349,
+        "payout": 0.773913043478261,
+        "r": 0.09,
+        "growth": 0.02337015374080478,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 11.76,
+          "mean": 8.337369950537022,
+          "sd": 1.7443942077204222,
+          "z": 1.9620737298455475,
+          "levels": {
+            "plus2": 11.826158365977866,
+            "plus1": 10.081764158257444,
+            "mean": 8.337369950537022,
+            "minus1": 6.5929757428166,
+            "minus2": 4.848581535096178
+          },
+          "median": 7.925311361605695,
+          "min": 6.0909092065059784,
+          "max": 13.18840579710145,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 1.3,
+          "mean": 0.8100957213305922,
+          "sd": 0.2094331999764126,
+          "z": 2.3391911059210444,
+          "levels": {
+            "plus2": 1.2289621212834174,
+            "plus1": 1.0195289213070047,
+            "mean": 0.8100957213305922,
+            "minus1": 0.6006625213541795,
+            "minus2": 0.39122932137776695
+          },
+          "median": 0.7236612105132699,
+          "min": 0.5609240371483349,
+          "max": 1.3698196288665165,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "roe": 80,
+            "pe": 33,
+            "yield": 83,
+            "de": 0
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "roe": 80,
+            "pe": 33,
+            "yield": 83,
+            "de": 0
+          }
+        }
+      },
+      "pass": false,
+      "failReason": "requires:payoutBand"
+    },
+    {
+      "symbol": "SET:KKP",
+      "bare": "KKP",
+      "name": "Kiatnakin Phatra Bank Public Company Limited",
+      "currency": "THB",
+      "price": 113.5,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 12.93,
+      "pbv": 1.41,
+      "ttmEps": 8.7382174905461,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 80.046,
+      "score": 67,
+      "scoringYearCount": 10,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:KKP",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "group-capital-and-reported-banking-portfolio",
+        "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121NWS240220261247230190E.pdf",
+        "availableFrom": "2026-02-25",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.1736,
+            "reportedPercent": 17.36,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Consolidated Basel III ratio, excluding not-yet-incorporated FY2025 profit; not bank-only 16.43% or hypothetical 18.58%",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121NWS240220261247230190E.pdf",
+            "publishedAt": "2026-02-24",
+            "availableFrom": "2026-02-25",
+            "historicalAvailableFrom": "2026-02-25",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000034&searchSymbol=KKP&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KKP-mda-register.html",
+            "releaseEvidenceSha256": "2abeb4edfddd909f2b1db5c03a61783fe771ca8e4831a77a9ea9cb50d784fd78",
+            "evidenceFile": "data/bank-risk-evidence/KKP-2025-sec-mda.pdf",
+            "sha256": "6ab081ec05078c9dc99a6bcb910b22a75dcc7a89dd475aef0f78511be7b8a9a9",
+            "pdfPage": 9,
+            "anchor": "was at 17.36%",
+            "evidenceTextFile": "data/bank-risk-evidence/KKP-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.044000000000000004,
+            "reportedPercent": 4.4,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "commercial-banking-portfolio",
+            "definition": "KKP disclosed banking-loan portfolio including POCI, cross-checked against its official financial highlights. Used only under the explicit banking-portfolio assessment profile, not labelled an accounting-consolidated IFRS Stage 3 ratio",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121NWS240220261247230190E.pdf",
+            "publishedAt": "2026-02-24",
+            "availableFrom": "2026-02-25",
+            "historicalAvailableFrom": "2026-02-25",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000034&searchSymbol=KKP&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KKP-mda-register.html",
+            "releaseEvidenceSha256": "2abeb4edfddd909f2b1db5c03a61783fe771ca8e4831a77a9ea9cb50d784fd78",
+            "evidenceFile": "data/bank-risk-evidence/KKP-2025-sec-mda.pdf",
+            "sha256": "6ab081ec05078c9dc99a6bcb910b22a75dcc7a89dd475aef0f78511be7b8a9a9",
+            "pdfPage": 12,
+            "anchor": "Total NPLs 15,133 4.4",
+            "evidenceTextFile": "data/bank-risk-evidence/KKP-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 1.3719999999999999,
+            "reportedPercent": 137.2,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "commercial-banking-portfolio",
+            "definition": "KKP issuer-reported banking-portfolio coverage, cross-checked against official financial highlights. The published ratio uses an NPL basis excluding POCI; the 4.4% NPL ratio includes POCI. Kept as two separately defined published metrics; no silent rebasing or claim of a common IFRS denominator",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121NWS240220261247230190E.pdf",
+            "publishedAt": "2026-02-24",
+            "availableFrom": "2026-02-25",
+            "historicalAvailableFrom": "2026-02-25",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000034&searchSymbol=KKP&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KKP-mda-register.html",
+            "releaseEvidenceSha256": "2abeb4edfddd909f2b1db5c03a61783fe771ca8e4831a77a9ea9cb50d784fd78",
+            "evidenceFile": "data/bank-risk-evidence/KKP-2025-sec-mda.pdf",
+            "sha256": "6ab081ec05078c9dc99a6bcb910b22a75dcc7a89dd475aef0f78511be7b8a9a9",
+            "pdfPage": 11,
+            "anchor": "increased to 137.2%",
+            "evidenceTextFile": "data/bank-risk-evidence/KKP-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.1736,
+        "npl": 0.044000000000000004,
+        "nplCoverage": 1.3719999999999999
+      },
+      "coverage": 0.3918918918918919,
+      "dataCoverage": 0.6904761904761905,
+      "passed": 6,
+      "failed": 2,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": null,
+          "value": 1,
+          "threshold": 3,
+          "of": 2,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": true,
+          "value": 10,
+          "threshold": 8,
+          "of": 10
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 6.485406197320993,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.050220264317180616,
+          "threshold": 0.04,
+          "special": false,
+          "ttmYield": 0.0656387665198238,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": false,
+          "value": 0.794979079497908,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": true
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": true,
+          "value": 0.794979079497908,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 15,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.1736,
+          "threshold": 0.15,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNpl",
+          "pass": false,
+          "value": 0.044000000000000004,
+          "threshold": 0.03,
+          "reportedDecimals": 1
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": false,
+          "value": 1.3719999999999999,
+          "threshold": 1.5,
+          "reportedDecimals": 1
+        }
+      ],
+      "roe3": null,
+      "roa3": null,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 6.601117223917125,
+      "icr": null,
+      "dividendYield": 0.048799999999999996,
+      "recurringDividendYield": 0.050220264317180616,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.794979079497908,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 7.17,
+        "dps": 5.7,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0121FIN240220261206130465E.zip",
+          "availableFrom": "2026-03-24",
+          "sha256": "bc05d3481209cdd5a78fa144e7b95ed9dc95e91f9eee845cecfc8a0f95eb984c",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 15,
+      "ttmDps": 7.45,
+      "dps": 5.7,
+      "annualDps": 5.7,
+      "dividendFy": 2025,
+      "hasSpecialDividend": false,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 106.67787332359765,
+        "mos": -6.395071877471765,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 5.7,
+        "terminalShare": 0.7608525253294616,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 110.38002034393574,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 128.2040162751486,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 154.94001017196788,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 94.40726570176838,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 106.67787332359765,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 123.85672399415861,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 82.43407772906565,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 91.3069163650024,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 103.13736787958473,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 125.45053024234572,
+        "mos": 9.526089861286078,
+        "eps": 8.7382174905461,
+        "bvps": 80.046
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.10649437193853437,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.2,
+        "afterTaxCostOfDebt": 0.1602535669769094,
+        "taxRate": 0.19873216511545308,
+        "fcff": 29023864259.373257,
+        "fcffYears": 3,
+        "netDebt": 23948627000,
+        "cash": 4323729000,
+        "totalDebt": 28272356000,
+        "shares": 811863680,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 345.2868464710935,
+        "mos": 67.12877969143783,
+        "eps": 8.7382174905461,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": false,
+        "missingInputs": [
+          "roe"
+        ],
+        "reason": "missing-input",
+        "value": null,
+        "mos": null,
+        "bvps": 80.046,
+        "roe": null,
+        "payout": 0.794979079497908,
+        "r": 0.09,
+        "growth": null,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 12.93,
+          "mean": 9.05082211248574,
+          "sd": 3.030077098984089,
+          "z": 1.2802241529810756,
+          "levels": {
+            "plus2": 15.110976310453918,
+            "plus1": 12.080899211469829,
+            "mean": 9.05082211248574,
+            "minus1": 6.020745013501651,
+            "minus2": 2.9906679145175623
+          },
+          "median": 8.087091757387247,
+          "min": 5.206013363028953,
+          "max": 16.875871687587168,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 1.41,
+          "mean": 0.8528880606106015,
+          "sd": 0.22707124090189865,
+          "z": 2.4534676305842136,
+          "levels": {
+            "plus2": 1.3070305424143989,
+            "plus1": 1.0799593015125002,
+            "mean": 0.8528880606106015,
+            "minus1": 0.6258168197087028,
+            "minus2": 0.3987455788068042
+          },
+          "median": 0.7797777346508663,
+          "min": 0.5208259936996344,
+          "max": 1.5166279335043704,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "pe": 17,
+            "yield": 0,
+            "de": 33
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "pe": 17,
+            "yield": 0,
+            "de": 33
+          }
+        }
+      },
+      "pass": false,
+      "failReason": "requires:bankNpl"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "bare": "KBANK",
+      "name": "Kasikornbank Public Company Limited",
+      "currency": "THB",
+      "price": 243,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 11.16,
+      "pbv": 0.99,
+      "ttmEps": 21.60951704241601,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 247.762,
+      "score": 64,
+      "scoringYearCount": 10,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:KBANK",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "consolidated",
+        "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016NWS260220262106107970E.pdf",
+        "availableFrom": "2026-02-27",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.20350000000000001,
+            "reportedPercent": 20.35,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "financial-conglomerate",
+            "definition": "KASIKORNBANK FINANCIAL CONGLOMERATE; capital base excludes unapproved period profit as disclosed",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016NWS260220262106107970E.pdf",
+            "publishedAt": "2026-02-26",
+            "availableFrom": "2026-02-27",
+            "historicalAvailableFrom": "2026-02-27",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000022&searchSymbol=KBANK&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KBANK-mda-register.html",
+            "releaseEvidenceSha256": "84aaae9d7355dee3b3a9785be3b34caefe7b26606b2ed18e56568cce49816c93",
+            "evidenceFile": "data/bank-risk-evidence/KBANK-2025-sec-mda.pdf",
+            "sha256": "c129022e1279f9ddd67346d7a5d88e9613812152ec9b523c449d2617f1d2b034",
+            "pdfPage": 61,
+            "anchor": "Capital Adequacy Ratio 12.00 20.35",
+            "evidenceTextFile": "data/bank-risk-evidence/KBANK-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.032,
+            "reportedPercent": 3.2,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Gross credit-impaired loans to customers and financial institutions; excludes accrued/undue interest as defined in note 6/7",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016NWS260220262106107970E.pdf",
+            "publishedAt": "2026-02-26",
+            "availableFrom": "2026-02-27",
+            "historicalAvailableFrom": "2026-02-27",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000022&searchSymbol=KBANK&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KBANK-mda-register.html",
+            "releaseEvidenceSha256": "84aaae9d7355dee3b3a9785be3b34caefe7b26606b2ed18e56568cce49816c93",
+            "evidenceFile": "data/bank-risk-evidence/KBANK-2025-sec-mda.pdf",
+            "sha256": "c129022e1279f9ddd67346d7a5d88e9613812152ec9b523c449d2617f1d2b034",
+            "pdfPage": 48,
+            "anchor": "NPLs gross6) to total loans7) 3.20",
+            "evidenceTextFile": "data/bank-risk-evidence/KBANK-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 1.6275,
+            "reportedPercent": 162.75,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "Total ECL including disclosed commitments, financial guarantees, financial institutions, investments and other financial assets / gross NPL",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016NWS260220262106107970E.pdf",
+            "publishedAt": "2026-02-26",
+            "availableFrom": "2026-02-27",
+            "historicalAvailableFrom": "2026-02-27",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000000022&searchSymbol=KBANK&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/KBANK-mda-register.html",
+            "releaseEvidenceSha256": "84aaae9d7355dee3b3a9785be3b34caefe7b26606b2ed18e56568cce49816c93",
+            "evidenceFile": "data/bank-risk-evidence/KBANK-2025-sec-mda.pdf",
+            "sha256": "c129022e1279f9ddd67346d7a5d88e9613812152ec9b523c449d2617f1d2b034",
+            "pdfPage": 48,
+            "anchor": "(Coverage ratio) 162.75",
+            "evidenceTextFile": "data/bank-risk-evidence/KBANK-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.20350000000000001,
+        "npl": 0.032,
+        "nplCoverage": 1.6275
+      },
+      "coverage": 0.5675675675675675,
+      "dataCoverage": 1,
+      "passed": 9,
+      "failed": 3,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": false,
+          "value": 0.08605267895477843,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": false,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": true,
+          "value": 0.01185631161627077,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": true,
+          "value": 10,
+          "threshold": 8,
+          "of": 10
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 5.765856316424413,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.04938271604938271,
+          "threshold": 0.04,
+          "special": true,
+          "ttmYield": 0.05761316872427984,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": true,
+          "value": 0.58167716917111,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": false
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": true,
+          "value": 0.58167716917111,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 15,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.20350000000000001,
+          "threshold": 0.15,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNpl",
+          "pass": false,
+          "value": 0.032,
+          "threshold": 0.03,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": true,
+          "value": 1.6275,
+          "threshold": 1.5,
+          "reportedDecimals": 2
+        }
+      ],
+      "roe3": 0.08605267895477843,
+      "roa3": 0.01185631161627077,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 5.8595755279692465,
+      "icr": null,
+      "dividendYield": 0.057699999999999994,
+      "recurringDividendYield": 0.04938271604938271,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.58167716917111,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 20.63,
+        "dps": 12,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/0016FIN260220262031024750E.zip",
+          "availableFrom": "2026-03-12",
+          "sha256": "2518c7fdeeb3401c17c50d6e3747b6e983aac3ee9f64dca3241e6636da63919f",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 15,
+      "ttmDps": 14,
+      "dps": 12,
+      "annualDps": 14,
+      "dividendFy": 2025,
+      "hasSpecialDividend": true,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 224.58499647073188,
+        "mos": -8.19956979257427,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 12,
+        "terminalShare": 0.7608525253294617,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 232.37899019775946,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 269.90319215820756,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 326.1894950988797,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 198.75213831951237,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 224.58499647073188,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 260.75099788243915,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 173.54542679803293,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 192.22508708421557,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 217.13130079912574,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 347.0812385204928,
+        "mos": 29.98757263981225,
+        "eps": 21.60951704241601,
+        "bvps": 247.762
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.08910667551635947,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.10798400237001926,
+        "afterTaxCostOfDebt": 0.08679802297685756,
+        "taxRate": 0.19619553756273628,
+        "fcff": 91081603486.18332,
+        "fcffYears": 3,
+        "netDebt": -164065688000,
+        "cash": 386848688000,
+        "totalDebt": 222783000000,
+        "shares": 2369327593,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 853.8906248799336,
+        "mos": 71.54202272285535,
+        "eps": 21.60951704241601,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": true,
+        "missingInputs": [],
+        "reason": null,
+        "value": 240.54724510408113,
+        "mos": -1.0196561988717028,
+        "bvps": 247.762,
+        "roe": 0.08605267895477843,
+        "payout": 0.58167716917111,
+        "r": 0.09,
+        "growth": 0.03599780026077256,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 11.16,
+          "mean": 8.865578474610379,
+          "sd": 1.1968731390751948,
+          "z": 1.9170131323713098,
+          "levels": {
+            "plus2": 11.259324752760769,
+            "plus1": 10.062451613685573,
+            "mean": 8.865578474610379,
+            "minus1": 7.668705335535184,
+            "minus2": 6.471832196459989
+          },
+          "median": 8.761840324763194,
+          "min": 6.968145620022754,
+          "max": 12.506059137178866,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 0.99,
+          "mean": 0.7013469267321683,
+          "sd": 0.12410780382207934,
+          "z": 2.3258253258726915,
+          "levels": {
+            "plus2": 0.949562534376327,
+            "plus1": 0.8254547305542476,
+            "mean": 0.7013469267321683,
+            "minus1": 0.5772391229100889,
+            "minus2": 0.4531313190880096
+          },
+          "median": 0.6668455851417663,
+          "min": 0.5445905611991091,
+          "max": 1.0518633786003506,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "roe": 20,
+            "pe": 67,
+            "yield": 50,
+            "de": 83
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "roe": 20,
+            "pe": 67,
+            "yield": 50,
+            "de": 83
+          }
+        }
+      },
+      "pass": false,
+      "failReason": "requires:bankNpl"
+    },
+    {
+      "symbol": "SET:SCB",
+      "bare": "SCB",
+      "name": "SCB X Public Company Limited",
+      "currency": "THB",
+      "price": 153,
+      "priceDate": "2026-11-11",
+      "priceSource": "quote",
+      "pe": 11.68,
+      "pbv": 1.05,
+      "ttmEps": 12.922647633152964,
+      "ttmEpsBasis": "attributable",
+      "ttmBvps": 143.849,
+      "score": 58,
+      "scoringYearCount": 4,
+      "qualityModel": "bank",
+      "bankRiskComplete": true,
+      "bankPolicy": {
+        "roe": 0.1,
+        "roa": 0.01,
+        "capitalAdequacy": 0.15,
+        "npl": 0.03,
+        "nplCoverage": 1.5
+      },
+      "bankRisk": {
+        "symbol": "SET:SCB",
+        "verified": true,
+        "fiscalYear": 2025,
+        "basis": "consolidated",
+        "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706NWS190220261240326960E.pdf",
+        "availableFrom": "2026-02-20",
+        "metrics": {
+          "capitalAdequacy": {
+            "value": 0.18899999999999997,
+            "reportedPercent": 18.9,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "regulatory-group",
+            "definition": "SCBX Financial Group consolidated regulatory ratio; not SCB Bank-only 19.0%",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706NWS190220261240326960E.pdf",
+            "publishedAt": "2026-02-19",
+            "availableFrom": "2026-02-20",
+            "historicalAvailableFrom": "2026-02-20",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/SCB-mda-register.html",
+            "releaseEvidenceSha256": "118b723525e4aa0f9c89b5c3ba496d7eb799d6cdfee1fb184b5ed76ce8eb4b28",
+            "evidenceFile": "data/bank-risk-evidence/SCB-2025-sec-mda.pdf",
+            "sha256": "2cb905cf44f39292bd479bf0c9ec0866934a916219fb380cd21e45b0d84d34c8",
+            "pdfPage": 19,
+            "anchor": "Capital Adequacy Ratio 18.9%",
+            "evidenceTextFile": "data/bank-risk-evidence/SCB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "npl": {
+            "value": 0.0329,
+            "reportedPercent": 3.29,
+            "reportedDecimals": 2,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "SCBX consolidated NPL ratio; not SCB Bank-only 3.12% or a product-level ratio",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706NWS190220261240326960E.pdf",
+            "publishedAt": "2026-02-19",
+            "availableFrom": "2026-02-20",
+            "historicalAvailableFrom": "2026-02-20",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/SCB-mda-register.html",
+            "releaseEvidenceSha256": "118b723525e4aa0f9c89b5c3ba496d7eb799d6cdfee1fb184b5ed76ce8eb4b28",
+            "evidenceFile": "data/bank-risk-evidence/SCB-2025-sec-mda.pdf",
+            "sha256": "2cb905cf44f39292bd479bf0c9ec0866934a916219fb380cd21e45b0d84d34c8",
+            "pdfPage": 20,
+            "anchor": "NPL ratio 3.29%",
+            "evidenceTextFile": "data/bank-risk-evidence/SCB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          },
+          "nplCoverage": {
+            "value": 1.608,
+            "reportedPercent": 160.8,
+            "reportedDecimals": 1,
+            "status": "reported",
+            "scope": "consolidated",
+            "definition": "SCBX consolidated allowance including interbank, commitments and guarantees / NPL",
+            "asOf": "2025-12-31",
+            "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706NWS190220261240326960E.pdf",
+            "publishedAt": "2026-02-19",
+            "availableFrom": "2026-02-20",
+            "historicalAvailableFrom": "2026-02-20",
+            "availabilityBasis": "sec-mda-announcement-next-day",
+            "listingSource": "https://market.sec.or.th/public/idisc/en/ViewMore/fs-mda?uniqueIDReference=0000033250&searchSymbol=SCB&dateFrom=20250101&dateTo=20261111",
+            "releaseEvidenceFile": "data/bank-risk-evidence/SCB-mda-register.html",
+            "releaseEvidenceSha256": "118b723525e4aa0f9c89b5c3ba496d7eb799d6cdfee1fb184b5ed76ce8eb4b28",
+            "evidenceFile": "data/bank-risk-evidence/SCB-2025-sec-mda.pdf",
+            "sha256": "2cb905cf44f39292bd479bf0c9ec0866934a916219fb380cd21e45b0d84d34c8",
+            "pdfPage": 20,
+            "anchor": "(Coverage ratio) 160.8%",
+            "evidenceTextFile": "data/bank-risk-evidence/SCB-2025-sec-mda.pages.json",
+            "observedAt": "2026-11-11T03:30:24.310827+00:00",
+            "earliestPublicationVerified": false,
+            "integrityVerified": true,
+            "eligible": true,
+            "reason": null
+          }
+        },
+        "capitalAdequacy": 0.18899999999999997,
+        "npl": 0.0329,
+        "nplCoverage": 1.608
+      },
+      "coverage": 0.527027027027027,
+      "dataCoverage": 0.9285714285714286,
+      "passed": 7,
+      "failed": 3,
+      "checks": [
+        {
+          "id": "roeLevel",
+          "pass": false,
+          "value": 0.09336776600425171,
+          "threshold": 0.1
+        },
+        {
+          "id": "roeConsistency",
+          "pass": false,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 3
+        },
+        {
+          "id": "roaLevel",
+          "pass": true,
+          "value": 0.013028525416497431,
+          "threshold": 0.01
+        },
+        {
+          "id": "npmLevel",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "na": true
+        },
+        {
+          "id": "npmTrend",
+          "pass": null,
+          "value": null,
+          "threshold": 0,
+          "na": true
+        },
+        {
+          "id": "npmPositive",
+          "pass": true,
+          "value": 3,
+          "threshold": 3,
+          "of": 3
+        },
+        {
+          "id": "epsGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.1,
+          "years": 3,
+          "buyback": false,
+          "na": true
+        },
+        {
+          "id": "revenueGrowth",
+          "pass": null,
+          "value": null,
+          "threshold": 0.05,
+          "years": 5,
+          "na": true
+        },
+        {
+          "id": "earningsStability",
+          "pass": null,
+          "value": 4,
+          "threshold": 8,
+          "of": 4
+        },
+        {
+          "id": "debtLevel",
+          "pass": null,
+          "value": 6.276616679518645,
+          "threshold": 1,
+          "warn": false,
+          "na": true
+        },
+        {
+          "id": "interestCoverage",
+          "pass": null,
+          "value": null,
+          "threshold": 3,
+          "na": true
+        },
+        {
+          "id": "cfoPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 3,
+          "na": true
+        },
+        {
+          "id": "cfoBeatsEarnings",
+          "pass": null,
+          "value": 0,
+          "threshold": 2,
+          "of": 3,
+          "oneOff": false,
+          "na": true
+        },
+        {
+          "id": "fcfPositive",
+          "pass": null,
+          "value": 0,
+          "threshold": 3,
+          "of": 4,
+          "minYears": 4,
+          "na": true
+        },
+        {
+          "id": "dividendYield",
+          "pass": true,
+          "value": 0.07372549019607842,
+          "threshold": 0.04,
+          "special": false,
+          "ttmYield": 0.07372549019607842,
+          "fy": 2025
+        },
+        {
+          "id": "payoutBand",
+          "pass": false,
+          "value": 0.7998017642797186,
+          "threshold": 0.4,
+          "upper": 0.7,
+          "warn": true
+        },
+        {
+          "id": "payoutCeiling",
+          "pass": true,
+          "value": 0.7998017642797186,
+          "threshold": 0.8
+        },
+        {
+          "id": "dividendStreak",
+          "pass": true,
+          "value": 5,
+          "threshold": 5
+        },
+        {
+          "id": "bankCapitalAdequacy",
+          "pass": true,
+          "value": 0.18899999999999997,
+          "threshold": 0.15,
+          "reportedDecimals": 1
+        },
+        {
+          "id": "bankNpl",
+          "pass": false,
+          "value": 0.0329,
+          "threshold": 0.03,
+          "reportedDecimals": 2
+        },
+        {
+          "id": "bankNplCoverage",
+          "pass": true,
+          "value": 1.608,
+          "threshold": 1.5,
+          "reportedDecimals": 1
+        }
+      ],
+      "roe3": 0.09336776600425171,
+      "roa3": 0.013028525416497431,
+      "npm3": null,
+      "epsCagr3": null,
+      "de": 6.555653437124198,
+      "icr": null,
+      "dividendYield": 0.0747,
+      "recurringDividendYield": 0.07372549019607842,
+      "qualityRatioSource": "sec-reviewed-bank",
+      "qualityRatiosStale": false,
+      "payout": 0.7998017642797186,
+      "payoutEvidence": {
+        "fiscalYear": 2025,
+        "eps": 14.103494770555406,
+        "dps": 11.28,
+        "basis": "model-dividend-per-share / published-basic-EPS",
+        "statement": {
+          "source": "https://market.sec.or.th/public/idisc/Download?FILEID=dat/news/202602/1706FIN190220261234280721E.zip",
+          "availableFrom": "2026-03-10",
+          "sha256": "505ddfc92a5893520cf90b3fad03411cfc477463fb262f22774c339a458ed195",
+          "scope": "audited-consolidated-current-year"
+        }
+      },
+      "streak": 5,
+      "ttmDps": 11.28,
+      "dps": 11.28,
+      "annualDps": 11.28,
+      "dividendFy": 2025,
+      "hasSpecialDividend": false,
+      "ddm": {
+        "ok": true,
+        "reason": null,
+        "intrinsic": 211.10989668248794,
+        "mos": 27.525898878102335,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 11.28,
+        "terminalShare": 0.7608525253294616,
+        "sensitivity": [
+          {
+            "r": 0.08,
+            "g2": 0.019999999999999997,
+            "intrinsic": 218.4362507858939,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.03,
+            "intrinsic": 253.7090006287151,
+            "reason": null
+          },
+          {
+            "r": 0.08,
+            "g2": 0.04,
+            "intrinsic": 306.6181253929469,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.019999999999999997,
+            "intrinsic": 186.82701002034162,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.03,
+            "intrinsic": 211.10989668248794,
+            "reason": null
+          },
+          {
+            "r": 0.09,
+            "g2": 0.04,
+            "intrinsic": 245.10593800949277,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.019999999999999997,
+            "intrinsic": 163.13270119015095,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.03,
+            "intrinsic": 180.69158185916262,
+            "reason": null
+          },
+          {
+            "r": 0.09999999999999999,
+            "g2": 0.04,
+            "intrinsic": 204.1034227511782,
+            "reason": null
+          }
+        ]
+      },
+      "ddmScenario": null,
+      "ddmScenarioFlat": null,
+      "graham": {
+        "ok": true,
+        "reason": null,
+        "value": 204.5127713275676,
+        "mos": 25.188046200332266,
+        "eps": 12.922647633152964,
+        "bvps": 143.849
+      },
+      "dcf": {
+        "ok": false,
+        "reason": "not-applicable-financial",
+        "value": null,
+        "mos": null,
+        "wacc": 0.07475347498066183,
+        "costOfEquity": 0.09,
+        "costOfDebt": 0.06833163347469,
+        "afterTaxCostOfDebt": 0.05367206191969341,
+        "taxRate": 0.21453565222359983,
+        "fcff": 1833598856.1626015,
+        "fcffYears": 3,
+        "netDebt": -203110685000,
+        "cash": 575690685000,
+        "totalDebt": 372580000000,
+        "shares": 3367107286,
+        "terminalShare": null,
+        "impliedGrowth": null,
+        "g1": 0.05,
+        "g2": 0.03,
+        "years": 5
+      },
+      "grahamGrowth": {
+        "ok": true,
+        "reason": null,
+        "value": 510.6327754071123,
+        "mos": 70.03717595721942,
+        "eps": 12.922647633152964,
+        "g": 0.05,
+        "gCapped": false,
+        "aaaYield": 0.0206,
+        "aaaYieldSource": "Fixed scenario assumption: AAA 5-year yield 2.06%, Q3/2026 reference; not a live ThaiBMA feed",
+        "aaaYieldAsOf": "2026-Q3"
+      },
+      "residualIncome": {
+        "ok": true,
+        "missingInputs": [],
+        "reason": null,
+        "value": 147.18914607634713,
+        "mos": -3.947882081358619,
+        "bvps": 143.849,
+        "roe": 0.09336776600425171,
+        "payout": 0.7998017642797186,
+        "r": 0.09,
+        "growth": 0.01869206202719526,
+        "years": 10
+      },
+      "bands": {
+        "basis": 4,
+        "pe": {
+          "current": 11.68,
+          "mean": 9.568745920362318,
+          "sd": 0.8345588859188076,
+          "z": 2.5297844349392995,
+          "levels": {
+            "plus2": 11.237863692199934,
+            "plus1": 10.403304806281126,
+            "mean": 9.568745920362318,
+            "minus1": 8.73418703444351,
+            "minus2": 7.899628148524703
+          },
+          "median": 9.532374100719425,
+          "min": 7.77262180974478,
+          "max": 11.68,
+          "skipped": 0,
+          "cap": 100
+        },
+        "pbv": {
+          "current": 1.05,
+          "mean": 0.8503247214406089,
+          "sd": 0.09616476987405051,
+          "z": 2.076387005562547,
+          "levels": {
+            "plus2": 1.04265426118871,
+            "plus1": 0.9464894913146594,
+            "mean": 0.8503247214406089,
+            "minus1": 0.7541599515665584,
+            "minus2": 0.6579951816925078
+          },
+          "median": 0.8285785432176928,
+          "min": 0.7008241422810441,
+          "max": 1.077472789204376,
+          "skipped": 0,
+          "cap": 50
+        }
+      },
+      "yearCount": 4,
+      "ratioSource": "set.or.th",
+      "ratioAsOf": "2026-11-10",
+      "ratioFinancialAsOf": "2026-06-30",
+      "ratiosStale": false,
+      "sector": "Finance",
+      "peers": {
+        "universe": {
+          "size": 7,
+          "values": {
+            "roe": 60,
+            "pe": 50,
+            "yield": 100,
+            "de": 50
+          }
+        },
+        "sector": {
+          "name": "Finance",
+          "size": 7,
+          "values": {
+            "roe": 60,
+            "pe": 50,
+            "yield": 100,
+            "de": 50
+          }
+        }
+      },
+      "pass": false,
+      "failReason": "requires:bankNpl"
+    }
+  ],
+  "matched": 2,
+  "errors": [],
+  "presetRanks": {},
+  "meta": {
+    "preset": "dividend",
+    "presetLabel": "dividend",
+    "requested": 7,
+    "screened": 7,
+    "failed": 0,
+    "tookMs": 2378,
+    "asOf": "2026-11-11T07:35:06.055Z",
+    "overrides": {
+      "r": 0.09,
+      "g1": 0.05,
+      "g2": 0.03
+    }
+  }
+}

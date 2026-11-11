@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {scoreQuality,applyPreset} from '../server/screener.js';
 import {isBankSymbol,BANK_POLICY} from '../server/business-models.js';
-import {loadStatementVersions,bankScoringYears} from '../server/statement-versions.js';
+import {loadStatementVersions,bankScoringYears,selectStatementVersions} from '../server/statement-versions.js';
 import {summariseBacktest} from '../server/backtest.js';
 const years=[2023,2024,2025].map(fiscalYear=>({fiscalYear,roe:.11,roa:.012,npm:.3,netIncome:100,de:8,operatingCashFlow:-100,freeCashFlow:-100}));
 const args={years,dividends:[],price:10,asOf:new Date('2026-11-11'),isBank:true};
@@ -27,6 +27,18 @@ assert.equal(applyPreset({...failed,ddm:{}},{requires:[],minScore:0}).reason,'re
 assert.equal(isBankSymbol('SET:AEONTS'),false);
 assert.equal(isBankSymbol('SET:KTC'),false);
 const versions=await loadStatementVersions();
+assert.equal(selectStatementVersions(versions,'SET:KBANK','2026-11-11').at(-1).regularDividend,null);
+assert.equal(selectStatementVersions(versions,'SET:KBANK','2026-11-12').at(-1).regularDividend.regularDps,12);
+assert.equal(bankScoringYears(versions,'SET:KBANK','2026-11-11').at(-1).regularDividend.regularDps,12);
+for(const [symbol,dps,eps] of [['KBANK',14,20.63],['BBL',10,24.10177735937424],['KTB',2.67,3.45],['TTB',.134,.22],['KKP',5.7,7.17],['TISCO',7.75,8.32],['SCB',11.28,14.103494770555406]]){
+ const ys=bankScoringYears(versions,'SET:'+symbol,'2026-11-11');
+ assert.equal(ys.at(-1).payoutEps,eps);
+ assert.equal(ys.at(-1).eps,null); // payout review does not certify historical EPS growth
+ const q=scoreQuality({...args,years:ys,history:{years:ys},dividends:[{date:'2026-05-15',amount:dps}],asOf:new Date('2026-11-11')});
+ assert.ok(Math.abs(q.payout-(symbol==='KBANK'?12:dps)/eps)<1e-10,symbol);
+ const unknown=scoreQuality({...args,years:ys.map(y=>({...y,payoutEps:null})),ttmEps:99,dividends:[{date:'2026-05-15',amount:dps}],asOf:new Date('2026-11-11')});
+ assert.equal(unknown.payout,null); // no TTM or other-year fallback
+}
 assert.equal(versions.filter(r=>r.statementModel==='bank'&&r.scope==='audited-consolidated-current-year').length,64);
 assert.ok(versions.filter(r=>r.symbol==='SET:SCB').every(r=>r.fiscalYear>=2022));
 const latest=bankScoringYears(versions,'SET:KBANK','2026-11-11').at(-1);

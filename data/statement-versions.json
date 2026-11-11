@@ -1954,7 +1954,8 @@
         "totalNetIncome": 46365774000,
         "revenue": 178498234000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 24.10177735937424
       },
       "cells": {
         "assets": {
@@ -2010,8 +2011,16 @@
           "cell": "H20",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "Income",
+          "cell": "H96",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
-      }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification"
     },
     {
       "symbol": "SET:BCP",
@@ -5522,7 +5531,8 @@
         "totalNetIncome": 55768390000,
         "revenue": 211055911000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 20.63
       },
       "cells": {
         "assets": {
@@ -5578,7 +5588,27 @@
           "cell": "G21",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "COMPREHENSIVE INCOME",
+          "cell": "G59",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification",
+      "regularDividend": {
+        "regularDps": 12.0,
+        "totalDps": 14.0,
+        "fiscalYear": 2025,
+        "availableFrom": "2026-11-12",
+        "liveAvailableFrom": "2026-11-11",
+        "availabilityBasis": "first-observed-next-day",
+        "source": "https://www.kasikornbank.com/en/IR/FinanInfoReports/financialReports/y2025-onereport-en.pdf",
+        "evidenceFile": "data/bank-risk-evidence/KBANK-2025-ar.pdf",
+        "sha256": "04bfb668214c9ef26b6f10bf493b403b31427edd07fb42bd5685bc367b17e15a",
+        "pdfPage": 4
       }
     },
     {
@@ -7966,7 +7996,8 @@
         "totalNetIncome": 5969338000,
         "revenue": 25473456000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 7.17
       },
       "cells": {
         "assets": {
@@ -8022,8 +8053,16 @@
           "cell": "D26",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "Comprehensive income 7-8",
+          "cell": "D104",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
-      }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification"
     },
     {
       "symbol": "SET:KTB",
@@ -9237,7 +9276,8 @@
         "totalNetIncome": 52221048000,
         "revenue": 160627865000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 3.45
       },
       "cells": {
         "assets": {
@@ -9293,8 +9333,16 @@
           "cell": "F21",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "PL (E)",
+          "cell": "F86",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
-      }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification"
     },
     {
       "symbol": "SET:MINT",
@@ -14018,7 +14066,8 @@
         "totalNetIncome": 48220397000,
         "revenue": 171583286000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 14.103494770555406
       },
       "cells": {
         "assets": {
@@ -14074,8 +14123,16 @@
           "cell": "D24",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "PL",
+          "cell": "D78",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
-      }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification"
     },
     {
       "symbol": "SET:TISCO",
@@ -15346,7 +15403,8 @@
         "totalNetIncome": 6659276000,
         "revenue": 19655471000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 8.32
       },
       "cells": {
         "assets": {
@@ -15402,8 +15460,16 @@
           "cell": "D24",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "PL & CF",
+          "cell": "D79",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
-      }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification"
     },
     {
       "symbol": "SET:TTB",
@@ -16702,7 +16768,8 @@
         "totalNetIncome": 20639416000,
         "revenue": 65677095000,
         "ebit": null,
-        "operatingCashFlow": null
+        "operatingCashFlow": null,
+        "payoutEps": 0.22
       },
       "cells": {
         "assets": {
@@ -16758,8 +16825,16 @@
           "cell": "E18",
           "scale": 1000,
           "label": "total operating income"
+        },
+        "payoutEps": {
+          "sheet": "PL 8-9",
+          "cell": "E70",
+          "scale": 1,
+          "label": "FY2025 consolidated basic EPS, THB per ordinary share; payout use only"
         }
-      }
+      },
+      "payoutEpsVerified": true,
+      "payoutEpsBasis": "current-year-reported-basic-EPS; same-year-payout-only; no historical split-adjusted growth certification"
     }
   ],
   "revisionEvents": [

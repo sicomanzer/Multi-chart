@@ -1,0 +1,15 @@
+{
+  "records": [
+    {
+      "symbol": "SET:KTB",
+      "fiscalYear": 2025,
+      "regularDps": 2.07,
+      "totalDps": 2.67,
+      "specialDps": 0.6,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102712700&symbol=KTB",
+      "evidenceFile": "data/dividend-evidence/KTB-2025-announcement.html",
+      "sha256": "2b6b418813d35a03ee54436ab4f1068c45944a2236d4dfcd6a05804df7acd532",
+      "observedAt": "2026-11-11T08:33:54.363Z"
+    }
+  ]
+}

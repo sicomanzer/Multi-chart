@@ -8,6 +8,7 @@
 data/bank-risk-evidence/** binary
 data/filing-evidence/** binary
 data/statement-evidence/** binary
+data/dividend-evidence/** binary
 *.pdf binary
 *.xls binary
 *.xlsx binary

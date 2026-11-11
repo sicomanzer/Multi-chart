@@ -1,0 +1,3906 @@
+{
+  "version": 1,
+  "rows": [
+    {
+      "symbol": "SET:KTB",
+      "fiscalYear": 2025,
+      "regularDps": 2.07,
+      "totalDps": 2.67,
+      "specialDps": 0.6,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102712700&symbol=KTB",
+      "evidenceFile": "data/dividend-evidence/KTB-2025-announcement.html",
+      "sha256": "2b6b418813d35a03ee54436ab4f1068c45944a2236d4dfcd6a05804df7acd532",
+      "observedAt": "2026-11-11T08:33:54.363Z",
+      "reviewed": true,
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "availabilityBasis": "first-observed-next-day",
+      "anchors": [
+        "2.0700",
+        "2.6700",
+        "0.60",
+        "2025",
+        "Common shareholders"
+      ]
+    },
+    {
+      "symbol": "SET:BH",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BH",
+        "source": "https://www.set.or.th/api/set/stock/BH/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BH-actions.json",
+        "sha256": "111ae71d4dd2321364901278014010362fbd7b565c71645ec049a2b33203bf0b",
+        "observedAt": "2026-11-11T08:33:34.800Z"
+      },
+      "regularDps": 11,
+      "specialDps": 0,
+      "totalDps": 11,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101261400&symbol=BH",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:25.866Z",
+      "components": [
+        {
+          "regularDps": 9,
+          "specialDps": 0,
+          "totalDps": 9,
+          "paymentDate": "2026-05-12",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 9.00",
+            "Payment date                             : 12-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101261400",
+          "publishedAt": "2026-02-19",
+          "headline": "Notification of resolutions setting forth the General Meeting of Shareholders No. 33 in the year 2026 and payment of dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101261400&symbol=BH",
+          "evidenceFile": "data/dividend-evidence/notices/BH-101261400.html",
+          "sha256": "d624acf3622587f018b717bfbb7f41a2ce2b5d44c76cbc1cfacd332289702f01",
+          "observedAt": "2026-11-11T08:43:25.475Z"
+        },
+        {
+          "regularDps": 2,
+          "specialDps": 0,
+          "totalDps": 2,
+          "paymentDate": "2025-08-29",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.00",
+            "Payment date                             : 29-Aug-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97768000",
+          "publishedAt": "2025-07-31",
+          "headline": "Notification of interim dividend declaration",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97768000&symbol=BH",
+          "evidenceFile": "data/dividend-evidence/notices/BH-97768000.html",
+          "sha256": "f8dca8c50b85f021d401f176509e2058265a4d8cb940e4dda2cbc2af0846127e",
+          "observedAt": "2026-11-11T08:43:25.866Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:BDMS",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BDMS",
+        "source": "https://www.set.or.th/api/set/stock/BDMS/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BDMS-actions.json",
+        "sha256": "1cd94c539b69b0c49f6da3da705bf321155aac9921c770b4c25f2a2326ff7c82",
+        "observedAt": "2026-11-11T08:33:34.131Z"
+      },
+      "regularDps": 0.75,
+      "specialDps": 0.25,
+      "totalDps": 1,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101749600&symbol=BDMS",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:42:38.730Z",
+      "components": [
+        {
+          "regularDps": 0.4,
+          "specialDps": 0.25,
+          "totalDps": 0.65,
+          "paymentDate": "2026-04-24",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "explicit cash and special fields",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.40",
+            "Payment date                             : 24-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025",
+            "Special dividend (baht per share)        : 0.25"
+          ],
+          "id": "101749600",
+          "publishedAt": "2026-02-26",
+          "headline": "Notice of 2026 Electronic Annual General Meeting of Shareholders and Dividend Payment (edited)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101749600&symbol=BDMS",
+          "evidenceFile": "data/dividend-evidence/notices/BDMS-101749600.html",
+          "sha256": "a7258a4f438afde49b7d406c48758ee485daf8bd1cda649f6ecbd7bc5fed44ea",
+          "observedAt": "2026-11-11T08:42:36.180Z"
+        },
+        {
+          "regularDps": 0.35,
+          "specialDps": 0,
+          "totalDps": 0.35,
+          "paymentDate": "2025-09-25",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.35",
+            "Payment date                             : 25-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98688300",
+          "publishedAt": "2025-08-27",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98688300&symbol=BDMS",
+          "evidenceFile": "data/dividend-evidence/notices/BDMS-98688300.html",
+          "sha256": "8d6ef91a73112a556aa366b115af7a3a56459bdd95eb675a627296ba32394986",
+          "observedAt": "2026-11-11T08:42:38.730Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:ADVANC",
+        "source": "https://www.set.or.th/api/set/stock/ADVANC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/ADVANC-actions.json",
+        "sha256": "4e305aa78e91f3928391efd59be386b60f479099bf9f6a454a5209789e5636b7",
+        "observedAt": "2026-11-11T08:33:31.557Z"
+      },
+      "regularDps": 15.3,
+      "specialDps": 19,
+      "totalDps": 34.3,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101000400&symbol=ADVANC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:06.772Z",
+      "components": [
+        {
+          "regularDps": 8.41,
+          "specialDps": 19,
+          "totalDps": 27.41,
+          "paymentDate": "2026-04-30",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "explicit cash and special fields",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 8.41",
+            "Payment date                             : 30-Apr-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025",
+            "Special dividend (baht per share)        : 19.00"
+          ],
+          "id": "101000400",
+          "publishedAt": "2026-02-03",
+          "headline": "Notification on the Board of Directors' resolutions on annual and special dividend payment, and schedule of 2026 AGM",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101000400&symbol=ADVANC",
+          "evidenceFile": "data/dividend-evidence/notices/ADVANC-101000400.html",
+          "sha256": "5c7d9c3b386bcd51229055ef00cbad5e2870528b665d54fceeec17ca04b375b2",
+          "observedAt": "2026-11-11T08:41:05.567Z"
+        },
+        {
+          "regularDps": 6.89,
+          "specialDps": 0,
+          "totalDps": 6.89,
+          "paymentDate": "2025-09-03",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 6.89",
+            "Payment date                             : 03-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97859100",
+          "publishedAt": "2025-08-06",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97859100&symbol=ADVANC",
+          "evidenceFile": "data/dividend-evidence/notices/ADVANC-97859100.html",
+          "sha256": "73bc008cc86f094f5ef465005d8ce0db7caae0bd9565f34eab31cc12b9a6a6dc",
+          "observedAt": "2026-11-11T08:41:06.772Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:CPN",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:CPN",
+        "source": "https://www.set.or.th/api/set/stock/CPN/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/CPN-actions.json",
+        "sha256": "19c4e6976c6825c82523114a5e14216aa72b109c58b8d54ff8ba58b78d0a2fbd",
+        "observedAt": "2026-11-11T08:33:38.024Z"
+      },
+      "regularDps": 2.4,
+      "specialDps": 0,
+      "totalDps": 2.4,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101398300&symbol=CPN",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:53.428Z",
+      "components": [
+        {
+          "regularDps": 2.4,
+          "specialDps": 0,
+          "totalDps": 2.4,
+          "paymentDate": "2026-05-19",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.40",
+            "Payment date                             : 19-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101398300",
+          "publishedAt": "2026-02-23",
+          "headline": "The Dividend Payment and the 2026 AGM Date (Update Template)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101398300&symbol=CPN",
+          "evidenceFile": "data/dividend-evidence/notices/CPN-101398300.html",
+          "sha256": "76efa76ee6bcf129d4b2b6501ddec21e9c8f36d8371bde7c640329fdd2f5fef3",
+          "observedAt": "2026-11-11T08:43:53.428Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:CBG",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:CBG",
+        "source": "https://www.set.or.th/api/set/stock/CBG/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/CBG-actions.json",
+        "sha256": "64c7f4b903968b53b706c7807197e79bd9b973e53d3b5978344ca63c32521b15",
+        "observedAt": "2026-11-11T08:33:35.728Z"
+      },
+      "regularDps": 1.2999999999999998,
+      "specialDps": 0,
+      "totalDps": 1.2999999999999998,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101364800&symbol=CBG",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:38.640Z",
+      "components": [
+        {
+          "regularDps": 0.6,
+          "specialDps": 0,
+          "totalDps": 0.6,
+          "paymentDate": "2026-05-15",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.60",
+            "Payment date                             : 15-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101364800",
+          "publishedAt": "2026-02-20",
+          "headline": "Resolutions of the Board of Directors' Meeting, the date of Annual General Meeting of Shareholders for the year 2026 and dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101364800&symbol=CBG",
+          "evidenceFile": "data/dividend-evidence/notices/CBG-101364800.html",
+          "sha256": "e1c08f0b9e8a5bd4092dd570ab8ba81a13b863e48168d60b2154feeca355a333",
+          "observedAt": "2026-11-11T08:43:37.402Z"
+        },
+        {
+          "regularDps": 0.7,
+          "specialDps": 0,
+          "totalDps": 0.7,
+          "paymentDate": "2025-09-05",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.70",
+            "Payment date                             : 05-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97952600",
+          "publishedAt": "2025-08-08",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97952600&symbol=CBG",
+          "evidenceFile": "data/dividend-evidence/notices/CBG-97952600.html",
+          "sha256": "3f6b8e5408916347e42a335ccb0d45fd908529b40a2a35800e0a9b87cafc8bb3",
+          "observedAt": "2026-11-11T08:43:38.640Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:CPALL",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:CPALL",
+        "source": "https://www.set.or.th/api/set/stock/CPALL/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/CPALL-actions.json",
+        "sha256": "ffae4ba26ddc6b91a5c4087e969531cfe9aac3ab50dc1441472a66c73c2c51db",
+        "observedAt": "2026-11-11T08:33:37.724Z"
+      },
+      "regularDps": 1.65,
+      "specialDps": 0,
+      "totalDps": 1.65,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101610600&symbol=CPALL",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:49.100Z",
+      "components": [
+        {
+          "regularDps": 1.65,
+          "specialDps": 0,
+          "totalDps": 1.65,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.65",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101610600",
+          "publishedAt": "2026-02-25",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting No. 2/2026, Schedule for Annual General Meeting of Shareholders 2026, and Cash Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101610600&symbol=CPALL",
+          "evidenceFile": "data/dividend-evidence/notices/CPALL-101610600.html",
+          "sha256": "1c2bec774a88f4a187d3ef755dad21173c2d8c440f253d98996dd8d0a979b345",
+          "observedAt": "2026-11-11T08:43:49.100Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:BA",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BA",
+        "source": "https://www.set.or.th/api/set/stock/BA/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BA-actions.json",
+        "sha256": "3d12253b3e0e4b7d41b9ad91271ee5b8f6972ed3ed045506803bde7c1fdae900",
+        "observedAt": "2026-11-11T08:33:32.718Z"
+      },
+      "regularDps": 1.2,
+      "specialDps": 0,
+      "totalDps": 1.2,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101780900&symbol=BA",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:55.945Z",
+      "components": [
+        {
+          "regularDps": 0.7,
+          "specialDps": 0,
+          "totalDps": 0.7,
+          "paymentDate": "2026-04-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.70",
+            "Payment date                             : 22-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101780900",
+          "publishedAt": "2026-02-26",
+          "headline": "Schedule of Annual General Meeting of Shareholders 2026 and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101780900&symbol=BA",
+          "evidenceFile": "data/dividend-evidence/notices/BA-101780900.html",
+          "sha256": "70c161da63af3d45f53d61b00f48ecea9bbf6a874341f75cb7abf890054e7bf2",
+          "observedAt": "2026-11-11T08:41:55.557Z"
+        },
+        {
+          "regularDps": 0.5,
+          "specialDps": 0,
+          "totalDps": 0.5,
+          "paymentDate": "2025-09-26",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.50",
+            "Payment date                             : 26-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98707400",
+          "publishedAt": "2025-08-28",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98707400&symbol=BA",
+          "evidenceFile": "data/dividend-evidence/notices/BA-98707400.html",
+          "sha256": "a79cfad09919d39daa8d8a81766b688419f8aa074f56012a75ced55bb30c2399",
+          "observedAt": "2026-11-11T08:41:55.945Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:GFPT",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:GFPT",
+        "source": "https://www.set.or.th/api/set/stock/GFPT/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/GFPT-actions.json",
+        "sha256": "15a02ea2ead10105c65e54b70ba379eb88d36fa8ae94ba2249506d9c6ddf748b",
+        "observedAt": "2026-11-11T08:33:39.582Z"
+      },
+      "regularDps": 0.2,
+      "specialDps": 0,
+      "totalDps": 0.2,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101271200&symbol=GFPT",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:06.819Z",
+      "components": [
+        {
+          "regularDps": 0.2,
+          "specialDps": 0,
+          "totalDps": 0.2,
+          "paymentDate": "2026-04-23",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.20",
+            "Payment date                             : 23-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101271200",
+          "publishedAt": "2026-02-19",
+          "headline": "Dividend Payment for the year 2025 and Agenda of the 2026 Annual General Meeting of Shareholders (AGM)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101271200&symbol=GFPT",
+          "evidenceFile": "data/dividend-evidence/notices/GFPT-101271200.html",
+          "sha256": "6c057fa59677db9ec339cd5d97358ecf833ced9391a5c3455530306b149c5a59",
+          "observedAt": "2026-11-11T08:44:06.819Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:AOT",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-09-30",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:AOT",
+        "source": "https://www.set.or.th/api/set/stock/AOT/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/AOT-actions.json",
+        "sha256": "cd72b4151054a32a91c35e15c9a2663729d82ab9305b8d8022b6fbb41a29d196",
+        "observedAt": "2026-11-11T08:33:32.137Z"
+      },
+      "regularDps": 0.81,
+      "specialDps": 0,
+      "totalDps": 0.81,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100314100&symbol=AOT",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:27.423Z",
+      "components": [
+        {
+          "regularDps": 0.81,
+          "specialDps": 0,
+          "totalDps": 0.81,
+          "paymentDate": "2026-02-05",
+          "beginOperation": "2024-10-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.81",
+            "Payment date                             : 05-Feb-2026",
+            "Operating period from 01-Oct-2024 to 30-Sep-2025"
+          ],
+          "id": "100314100",
+          "publishedAt": "2025-11-28",
+          "headline": "Date and Agenda for the 2025 Annual General Meeting of Shareholders and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100314100&symbol=AOT",
+          "evidenceFile": "data/dividend-evidence/notices/AOT-100314100.html",
+          "sha256": "83d9f1c7c3acdfc515a2e6feec4938dd3c4c400692062c6027defbe176b22bee",
+          "observedAt": "2026-11-11T08:41:27.423Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:AURA",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:AURA",
+        "source": "https://www.set.or.th/api/set/stock/AURA/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/AURA-actions.json",
+        "sha256": "ca0152c21d2a1c11cf96583a04d570e4210b6c7c44ba496c5ff0240488d56f38",
+        "observedAt": "2026-11-11T08:33:32.430Z"
+      },
+      "regularDps": 0.56,
+      "specialDps": 0,
+      "totalDps": 0.56,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101796000&symbol=AURA",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:38.055Z",
+      "components": [
+        {
+          "regularDps": 0.56,
+          "specialDps": 0,
+          "totalDps": 0.56,
+          "paymentDate": "2026-05-21",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.56",
+            "Payment date                             : 21-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101796000",
+          "publishedAt": "2026-02-26",
+          "headline": "The Resolutions of the Board of Directors' Meeting no.2/2026 Schedule of 2026 AGM / Dividend Payment / Amendment to the Articles of Association regarding the Company's Objectives / The increase of the issuance and offering of the debentures",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101796000&symbol=AURA",
+          "evidenceFile": "data/dividend-evidence/notices/AURA-101796000.html",
+          "sha256": "54d7e25b4f22ac87b1f5bc9ebc0fe7a76cd7c84fe228766ce2af5673951fc1ea",
+          "observedAt": "2026-11-11T08:41:38.055Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:CPF",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:CPF",
+        "source": "https://www.set.or.th/api/set/stock/CPF/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/CPF-actions.json",
+        "sha256": "986cff86ab78e54e55f883eb4fac9bf4b10cd1e64ab8231474ae0c05295d4a75",
+        "observedAt": "2026-11-11T08:33:37.871Z"
+      },
+      "regularDps": 1.25,
+      "specialDps": 0,
+      "totalDps": 1.25,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101749800&symbol=CPF",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:52.516Z",
+      "components": [
+        {
+          "regularDps": 0.25,
+          "specialDps": 0,
+          "totalDps": 0.25,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.25",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101749800",
+          "publishedAt": "2026-02-26",
+          "headline": "Schedule and agenda for Annual General Shareholders' Meeting No. 1/2026, the dividend payment, the appointment of directors to replace those retiring by rotation, and the increase of debenture issuance amount",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101749800&symbol=CPF",
+          "evidenceFile": "data/dividend-evidence/notices/CPF-101749800.html",
+          "sha256": "fd37b5b9dbb83be71ae2ca1f62ff126c2d6915d811bcd67dd07cadc15ce6c378",
+          "observedAt": "2026-11-11T08:43:52.006Z"
+        },
+        {
+          "regularDps": 1,
+          "specialDps": 0,
+          "totalDps": 1,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.00",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98345200",
+          "publishedAt": "2025-08-14",
+          "headline": "Interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98345200&symbol=CPF",
+          "evidenceFile": "data/dividend-evidence/notices/CPF-98345200.html",
+          "sha256": "ff43ce29862647879dbedd2b3b195c3def1608b90e7e74f24734e77a2d8352a7",
+          "observedAt": "2026-11-11T08:43:52.516Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:CENTEL",
+        "source": "https://www.set.or.th/api/set/stock/CENTEL/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/CENTEL-actions.json",
+        "sha256": "937252a0d92e8cd5a845c012eb79d41d758281beb19c2d4655e17a722f2827c8",
+        "observedAt": "2026-11-11T08:33:36.175Z"
+      },
+      "regularDps": 0.67,
+      "specialDps": 0,
+      "totalDps": 0.67,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101510700&symbol=CENTEL",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:41.967Z",
+      "components": [
+        {
+          "regularDps": 0.67,
+          "specialDps": 0,
+          "totalDps": 0.67,
+          "paymentDate": "2026-05-21",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.67",
+            "Payment date                             : 21-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101510700",
+          "publishedAt": "2026-02-24",
+          "headline": "Notification on the Resolutions of the Board of Directors' meeting No.2/2026 regarding the schedule and agenda item of the 2026 Annual General Meeting of Shareholders and dividend payment for 2025 performance",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101510700&symbol=CENTEL",
+          "evidenceFile": "data/dividend-evidence/notices/CENTEL-101510700.html",
+          "sha256": "79fe37a3eadfbe558a248792057b918be3ebc1bc06fa80321d40dffea7f283e5",
+          "observedAt": "2026-11-11T08:43:41.967Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:AP",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:AP",
+        "source": "https://www.set.or.th/api/set/stock/AP/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/AP-actions.json",
+        "sha256": "1f36d5653e79e2fcc8aa37c4c104be95d751abffcd136fe6c69a2364d6ba1869",
+        "observedAt": "2026-11-11T08:33:32.294Z"
+      },
+      "regularDps": 0.52,
+      "specialDps": 0,
+      "totalDps": 0.52,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101721200&symbol=AP",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:32.329Z",
+      "components": [
+        {
+          "regularDps": 0.52,
+          "specialDps": 0,
+          "totalDps": 0.52,
+          "paymentDate": "2026-05-21",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.52",
+            "Payment date                             : 21-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101721200",
+          "publishedAt": "2026-02-26",
+          "headline": "To report the BOD resolution on the AGM 2026 of the company, the annual dividend payment proposal and the change of directors.",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101721200&symbol=AP",
+          "evidenceFile": "data/dividend-evidence/notices/AP-101721200.html",
+          "sha256": "192abf1394ae4a61788b33d2951615a7ebabd085eb39ea617ef75f1f82723723",
+          "observedAt": "2026-11-11T08:41:32.329Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:BTG",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BTG",
+        "source": "https://www.set.or.th/api/set/stock/BTG/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BTG-actions.json",
+        "sha256": "b751ed8f0c32ab7bf920c12c30efc044622c8a1e238d872d36af871887aea091",
+        "observedAt": "2026-11-11T08:33:35.462Z"
+      },
+      "regularDps": 1.5,
+      "specialDps": 0,
+      "totalDps": 1.5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101495700&symbol=BTG",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:33.696Z",
+      "components": [
+        {
+          "regularDps": 1.5,
+          "specialDps": 0,
+          "totalDps": 1.5,
+          "paymentDate": "2026-05-20",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.50",
+            "Payment date                             : 20-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101495700",
+          "publishedAt": "2026-02-24",
+          "headline": "Schedule of the 2026 Annual General Meeting of Shareholders and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101495700&symbol=BTG",
+          "evidenceFile": "data/dividend-evidence/notices/BTG-101495700.html",
+          "sha256": "2bdc7c7062a52955e2fc4d56bb85cda736a1177c66cfb273ba3d7231d613928b",
+          "observedAt": "2026-11-11T08:43:33.696Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "fiscalYear": 2026,
+      "fiscalEnd": "2026-02-28",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:AEONTS",
+        "source": "https://www.set.or.th/api/set/stock/AEONTS/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/AEONTS-actions.json",
+        "sha256": "90b1edd88bb01f1721a6606382ca48c15c1ce64c3c5cd133964d6c7a9ff377c5",
+        "observedAt": "2026-11-11T08:33:31.698Z"
+      },
+      "regularDps": 5.5,
+      "specialDps": 0,
+      "totalDps": 5.5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=103210700&symbol=AEONTS",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:12.898Z",
+      "components": [
+        {
+          "regularDps": 2.95,
+          "specialDps": 0,
+          "totalDps": 2.95,
+          "paymentDate": "2026-07-17",
+          "beginOperation": "2025-09-01",
+          "endOperation": "2026-02-28",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.95",
+            "Payment date                             : 17-Jul-2026",
+            "Operating period from 01-Sep-2025 to 28-Feb-2026"
+          ],
+          "id": "103210700",
+          "publishedAt": "2026-04-07",
+          "headline": "Notification of the Board of Directors Meeting No. 4/2026: Dividend Payment/Annual General meeting of Shareholders 2026",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=103210700&symbol=AEONTS",
+          "evidenceFile": "data/dividend-evidence/notices/AEONTS-103210700.html",
+          "sha256": "1e0ea8dc95ac3eb3998294e9c8a4791e38c6bc6a3a525d158b637c4c5bd54e3e",
+          "observedAt": "2026-11-11T08:41:12.458Z"
+        },
+        {
+          "regularDps": 2.55,
+          "specialDps": 0,
+          "totalDps": 2.55,
+          "paymentDate": "2025-11-06",
+          "beginOperation": "2025-03-01",
+          "endOperation": "2025-08-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.55",
+            "Payment date                             : 06-Nov-2025",
+            "Operating period from 01-Mar-2025 to 31-Aug-2025"
+          ],
+          "id": "99109100",
+          "publishedAt": "2025-10-08",
+          "headline": "Resolution of the Board of Directors' No. 10/2025 Interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99109100&symbol=AEONTS",
+          "evidenceFile": "data/dividend-evidence/notices/AEONTS-99109100.html",
+          "sha256": "4fc15b744c0116ec67e6f3dd6a985643c96feb16b29c7a7c14212466f0996a5e",
+          "observedAt": "2026-11-11T08:41:12.898Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:AWC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:AWC",
+        "source": "https://www.set.or.th/api/set/stock/AWC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/AWC-actions.json",
+        "sha256": "3d21215367b0cf918a00d4d589211a95ee4dd404a495621aed6a6e1f97672533",
+        "observedAt": "2026-11-11T08:33:32.581Z"
+      },
+      "regularDps": 0.08,
+      "specialDps": 0,
+      "totalDps": 0.08,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101864200&symbol=AWC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:41:47.628Z",
+      "components": [
+        {
+          "regularDps": 0.08,
+          "specialDps": 0,
+          "totalDps": 0.08,
+          "paymentDate": "2026-05-28",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.08",
+            "Payment date                             : 28-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101864200",
+          "publishedAt": "2026-02-27",
+          "headline": "Notification of the resolution of the Board of Directors Meeting No. 2/2026, Dividend Payment, the Schedule of the 2026 Annual General Meeting of Shareholders, and the refusal to execute the right under ROFO/ROFR Agreement",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101864200&symbol=AWC",
+          "evidenceFile": "data/dividend-evidence/notices/AWC-101864200.html",
+          "sha256": "aaacb3037dcc92a9e88c86908fb0b9ee3dcd63939052ac73dcf0828111930f82",
+          "observedAt": "2026-11-11T08:41:47.628Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:EGCO",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:EGCO",
+        "source": "https://www.set.or.th/api/set/stock/EGCO/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/EGCO-actions.json",
+        "sha256": "2eb14469ebba3f6f8c737b8667853703a241ff6ca50149d74e9c80a6db630c01",
+        "observedAt": "2026-11-11T08:33:39.279Z"
+      },
+      "regularDps": 6.5,
+      "specialDps": 0,
+      "totalDps": 6.5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101989900&symbol=EGCO",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:04.268Z",
+      "components": [
+        {
+          "regularDps": 3.25,
+          "specialDps": 0,
+          "totalDps": 3.25,
+          "paymentDate": "2026-04-28",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 3.25",
+            "Payment date                             : 28-Apr-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101989900",
+          "publishedAt": "2026-02-27",
+          "headline": "Dividend Payment and the Shareholders' Annual General Meeting for Year 2026",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101989900&symbol=EGCO",
+          "evidenceFile": "data/dividend-evidence/notices/EGCO-101989900.html",
+          "sha256": "f3acc5c47d28efe47ef8b37fb8c89d3ce40e274e6e866a9398d3032ec4f28e4a",
+          "observedAt": "2026-11-11T08:44:03.714Z"
+        },
+        {
+          "regularDps": 3.25,
+          "specialDps": 0,
+          "totalDps": 3.25,
+          "paymentDate": "2025-09-19",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 3.25",
+            "Payment date                             : 19-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98640800",
+          "publishedAt": "2025-08-22",
+          "headline": "The Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98640800&symbol=EGCO",
+          "evidenceFile": "data/dividend-evidence/notices/EGCO-98640800.html",
+          "sha256": "2ace95632342a351f525a6ec73915a6b40ee5475ca6500873f68c6af25b8c2a4",
+          "observedAt": "2026-11-11T08:44:04.268Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:BEM",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BEM",
+        "source": "https://www.set.or.th/api/set/stock/BEM/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BEM-actions.json",
+        "sha256": "d136ecd8f84b28025b30e88e041c019b90d4b301c98d02ce30a04f956563d489",
+        "observedAt": "2026-11-11T08:33:34.309Z"
+      },
+      "regularDps": 0.15,
+      "specialDps": 0,
+      "totalDps": 0.15,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101588800&symbol=BEM",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:42:43.145Z",
+      "components": [
+        {
+          "regularDps": 0.15,
+          "specialDps": 0,
+          "totalDps": 0.15,
+          "paymentDate": "2026-05-07",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.15",
+            "Payment date                             : 07-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101588800",
+          "publishedAt": "2026-02-25",
+          "headline": "Schedule for the 2026 Annual Ordinary General Meeting of Shareholders and Declaration of Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101588800&symbol=BEM",
+          "evidenceFile": "data/dividend-evidence/notices/BEM-101588800.html",
+          "sha256": "bd025cf0871977c1c013b5a38d543411fe080951ac5f5318460ea4cd6f5676e4",
+          "observedAt": "2026-11-11T08:42:43.145Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:BAM",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BAM",
+        "source": "https://www.set.or.th/api/set/stock/BAM/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BAM-actions.json",
+        "sha256": "44a2e8005882964fbd1f71dd50244a88465d200901c2f425fa9d406459ae3134",
+        "observedAt": "2026-11-11T08:33:33.050Z"
+      },
+      "regularDps": 0.5,
+      "specialDps": 0,
+      "totalDps": 0.5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101839100&symbol=BAM",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:42:01.507Z",
+      "components": [
+        {
+          "regularDps": 0.5,
+          "specialDps": 0,
+          "totalDps": 0.5,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.50",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101839100",
+          "publishedAt": "2026-02-26",
+          "headline": "Notification of Resolution of the Board of Directors' Meeting Regarding Convening of the 2026 AGM of Shareholders and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101839100&symbol=BAM",
+          "evidenceFile": "data/dividend-evidence/notices/BAM-101839100.html",
+          "sha256": "04301b1131660bbadf7e5dbca88d846c190c379bb05e8f5de0cad2fd3196db2a",
+          "observedAt": "2026-11-11T08:42:01.507Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:BJC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:BJC",
+        "source": "https://www.set.or.th/api/set/stock/BJC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/BJC-actions.json",
+        "sha256": "b79da27da4cc675abbb2484ef5c929054d31cea63723ae12c8b4aa7ec4abcd16",
+        "observedAt": "2026-11-11T08:33:34.961Z"
+      },
+      "regularDps": 0.51,
+      "specialDps": 0,
+      "totalDps": 0.51,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101634900&symbol=BJC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:29.478Z",
+      "components": [
+        {
+          "regularDps": 0.36,
+          "specialDps": 0,
+          "totalDps": 0.36,
+          "paymentDate": "2026-05-21",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.36",
+            "Payment date                             : 21-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101634900",
+          "publishedAt": "2026-02-25",
+          "headline": "Fixing date and agendas for Annual General Meeting of Shareholders for the year 2026, dividend payment for the fiscal year 2025, acquisition and disposal transactions, and related party transactions. (Revised Head New)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101634900&symbol=BJC",
+          "evidenceFile": "data/dividend-evidence/notices/BJC-101634900.html",
+          "sha256": "6b6bb7fc1d0fb421c1cb5f03196c21d4a1bb470f1cbbf256beb7146dfc3b6569",
+          "observedAt": "2026-11-11T08:43:28.810Z"
+        },
+        {
+          "regularDps": 0.15,
+          "specialDps": 0,
+          "totalDps": 0.15,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.15",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98208300",
+          "publishedAt": "2025-08-13",
+          "headline": "Payment of Interim Dividend for Year 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98208300&symbol=BJC",
+          "evidenceFile": "data/dividend-evidence/notices/BJC-98208300.html",
+          "sha256": "6f4bc80cef8be2c84ce6c9ba7f072fee8df8510f73d62e3f7e3bce16818570ba",
+          "observedAt": "2026-11-11T08:43:29.478Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:CK",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:CK",
+        "source": "https://www.set.or.th/api/set/stock/CK/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/CK-actions.json",
+        "sha256": "675804f72e0a522047b51ec19041312f274bc93d21507afb6ccb8c87368a9387",
+        "observedAt": "2026-11-11T08:33:36.919Z"
+      },
+      "regularDps": 0.45,
+      "specialDps": 0,
+      "totalDps": 0.45,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101775800&symbol=CK",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:43:46.249Z",
+      "components": [
+        {
+          "regularDps": 0.25,
+          "specialDps": 0,
+          "totalDps": 0.25,
+          "paymentDate": "2026-04-28",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.25",
+            "Payment date                             : 28-Apr-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101775800",
+          "publishedAt": "2026-02-26",
+          "headline": "Scheduling of the 2026 Annual Ordinary General Meeting of Shareholders, Declaration of Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101775800&symbol=CK",
+          "evidenceFile": "data/dividend-evidence/notices/CK-101775800.html",
+          "sha256": "9ed49fc86297cdce263debff838a8bf4b8421c5697628504025aeb6fb561ad16",
+          "observedAt": "2026-11-11T08:43:45.023Z"
+        },
+        {
+          "regularDps": 0.2,
+          "specialDps": 0,
+          "totalDps": 0.2,
+          "paymentDate": "2025-09-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.20",
+            "Payment date                             : 11-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98376900",
+          "publishedAt": "2025-08-14",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98376900&symbol=CK",
+          "evidenceFile": "data/dividend-evidence/notices/CK-98376900.html",
+          "sha256": "27d95627e3b98f0c4877b402a6aaf1a2751ee0529289e6a0b6999d455c5a0997",
+          "observedAt": "2026-11-11T08:43:46.249Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:ICHI",
+        "source": "https://www.set.or.th/api/set/stock/ICHI/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/ICHI-actions.json",
+        "sha256": "a59dfb81f6572137342671635a9b56bdbbf7eef7b99f992485402ef467cdc0ed",
+        "observedAt": "2026-11-11T08:33:41.343Z"
+      },
+      "regularDps": 1.1,
+      "specialDps": 0,
+      "totalDps": 1.1,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102123500&symbol=ICHI",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:25.893Z",
+      "components": [
+        {
+          "regularDps": 0.55,
+          "specialDps": 0,
+          "totalDps": 0.55,
+          "paymentDate": "2026-05-21",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.55",
+            "Payment date                             : 21-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "102123500",
+          "publishedAt": "2026-03-04",
+          "headline": "Resolutions of the Board of Directors regarding to Dividend Payment and The 2026 Annual General Meeting of Shareholders Date (Reduction of Dividend Payment Rate) (Revised Template)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102123500&symbol=ICHI",
+          "evidenceFile": "data/dividend-evidence/notices/ICHI-102123500.html",
+          "sha256": "ea651b9ef9b8134609cc371bf5e96e4590bfb875f4615f5d2ca3dd1c6713cb88",
+          "observedAt": "2026-11-11T08:44:23.762Z"
+        },
+        {
+          "regularDps": 0.55,
+          "specialDps": 0,
+          "totalDps": 0.55,
+          "paymentDate": "2025-09-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.55",
+            "Payment date                             : 11-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98385500",
+          "publishedAt": "2025-08-14",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98385500&symbol=ICHI",
+          "evidenceFile": "data/dividend-evidence/notices/ICHI-98385500.html",
+          "sha256": "57180d0c5ead796ee2da572be4f992b6a8009dd733270a3197a65f54c658e6cc",
+          "observedAt": "2026-11-11T08:44:25.893Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:OSP",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:OSP",
+        "source": "https://www.set.or.th/api/set/stock/OSP/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/OSP-actions.json",
+        "sha256": "3607ffd8ee2caf3840b921229890692aec00dd4a1660d04a7899daa710d7c91a",
+        "observedAt": "2026-11-11T08:33:45.064Z"
+      },
+      "regularDps": 0.8,
+      "specialDps": 0,
+      "totalDps": 0.8,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101661800&symbol=OSP",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:03.413Z",
+      "components": [
+        {
+          "regularDps": 0.4,
+          "specialDps": 0,
+          "totalDps": 0.4,
+          "paymentDate": "2026-05-28",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.40",
+            "Payment date                             : 28-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101661800",
+          "publishedAt": "2026-02-25",
+          "headline": "Notification of Dividend Payment for the Year 2025 Performance and Convening Agenda Items of the 2026 Annual General Meeting of Shareholders",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101661800&symbol=OSP",
+          "evidenceFile": "data/dividend-evidence/notices/OSP-101661800.html",
+          "sha256": "c98342097baa1053d81e4ad45befc9f9591a14d60744f5985681483a4fc44f6d",
+          "observedAt": "2026-11-11T08:45:02.728Z"
+        },
+        {
+          "regularDps": 0.4,
+          "specialDps": 0,
+          "totalDps": 0.4,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.40",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98123200",
+          "publishedAt": "2025-08-13",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98123200&symbol=OSP",
+          "evidenceFile": "data/dividend-evidence/notices/OSP-98123200.html",
+          "sha256": "c2e1a15f1d2f6b8e0c2619fe46583c772aa36c1e3a757355ee64a3d6fa83fa3e",
+          "observedAt": "2026-11-11T08:45:03.413Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:MOSHI",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:MOSHI",
+        "source": "https://www.set.or.th/api/set/stock/MOSHI/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/MOSHI-actions.json",
+        "sha256": "6a84e1defb711fb0805c4ee83714544add07f982ebab3eebf65296d504a2b6d3",
+        "observedAt": "2026-11-11T08:33:44.277Z"
+      },
+      "regularDps": 1.22,
+      "specialDps": 0,
+      "totalDps": 1.22,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101465500&symbol=MOSHI",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:53.692Z",
+      "components": [
+        {
+          "regularDps": 1.22,
+          "specialDps": 0,
+          "totalDps": 1.22,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.22",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101465500",
+          "publishedAt": "2026-02-24",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting No.1/2026 Re: Approval of Dividend Payment and Determination of the 2026 Annual General Meeting of Shareholders (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101465500&symbol=MOSHI",
+          "evidenceFile": "data/dividend-evidence/notices/MOSHI-101465500.html",
+          "sha256": "9ac0d787ef35b982336c86eb093a585a0c73c35e39ca7e5cd3c34e6e3970da04",
+          "observedAt": "2026-11-11T08:44:53.692Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:MEGA",
+        "source": "https://www.set.or.th/api/set/stock/MEGA/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/MEGA-actions.json",
+        "sha256": "35985218d71085d9a78ec98b7ffb297ca245548bd1608b55007bb1b73bad466b",
+        "observedAt": "2026-11-11T08:33:43.916Z"
+      },
+      "regularDps": 1.6,
+      "specialDps": 0,
+      "totalDps": 1.6,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101522000&symbol=MEGA",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:51.186Z",
+      "components": [
+        {
+          "regularDps": 0.8,
+          "specialDps": 0,
+          "totalDps": 0.8,
+          "paymentDate": "2026-04-24",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.80",
+            "Payment date                             : 24-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101522000",
+          "publishedAt": "2026-02-24",
+          "headline": "Resolutions of the Board of Directors' meeting regarding the dividend payment proposal for the year ended December 31, 2025, and the date and agenda items of the Annual General Meeting of Shareholders of 2026",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101522000&symbol=MEGA",
+          "evidenceFile": "data/dividend-evidence/notices/MEGA-101522000.html",
+          "sha256": "e19a055e7601d2f5f169bdae47a5bb8a572b5304617fa0985b4ca424495f5421",
+          "observedAt": "2026-11-11T08:44:50.470Z"
+        },
+        {
+          "regularDps": 0.8,
+          "specialDps": 0,
+          "totalDps": 0.8,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.80",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98377900",
+          "publishedAt": "2025-08-14",
+          "headline": "Declaration of interim dividend of 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98377900&symbol=MEGA",
+          "evidenceFile": "data/dividend-evidence/notices/MEGA-98377900.html",
+          "sha256": "6293c52a65dfda9a7b85c7e28f4848c65f054224acca3999a1f54246a6e560d4",
+          "observedAt": "2026-11-11T08:44:51.186Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:KTC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:KTC",
+        "source": "https://www.set.or.th/api/set/stock/KTC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/KTC-actions.json",
+        "sha256": "44dbd74f1c5d06a2090b46dc673af767f357bfef13323c0dab2206cb0062239f",
+        "observedAt": "2026-11-11T08:33:43.489Z"
+      },
+      "regularDps": 1.77,
+      "specialDps": 0,
+      "totalDps": 1.77,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101169100&symbol=KTC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:43.254Z",
+      "components": [
+        {
+          "regularDps": 1.77,
+          "specialDps": 0,
+          "totalDps": 1.77,
+          "paymentDate": "2026-04-30",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.77",
+            "Payment date                             : 30-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101169100",
+          "publishedAt": "2026-02-13",
+          "headline": "Notification of Resolutions of the Board of Directors' Meeting No.02/2026 approving the Dividend Payment, and the Convening of the 2026 Annual General Shareholders' Meeting",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101169100&symbol=KTC",
+          "evidenceFile": "data/dividend-evidence/notices/KTC-101169100.html",
+          "sha256": "f03fa7fa6b53c97e2f7d0810b27e1ee702b96fe5a4b08bc8c9ec7f8648eb678d",
+          "observedAt": "2026-11-11T08:44:43.254Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:PR9",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:PR9",
+        "source": "https://www.set.or.th/api/set/stock/PR9/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/PR9-actions.json",
+        "sha256": "8e55ceba7d1269b614b774217706ca5d47c04cc0738a549fbdbbd5789fe0d6eb",
+        "observedAt": "2026-11-11T08:33:45.393Z"
+      },
+      "regularDps": 0.5,
+      "specialDps": 0,
+      "totalDps": 0.5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101212600&symbol=PR9",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:07.546Z",
+      "components": [
+        {
+          "regularDps": 0.3,
+          "specialDps": 0,
+          "totalDps": 0.3,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.30",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101212600",
+          "publishedAt": "2026-02-18",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting regarding Dividend Payment, and convening the 2026 Annual General Meeting of Shareholders, through an electronic media (e-AGM) only",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101212600&symbol=PR9",
+          "evidenceFile": "data/dividend-evidence/notices/PR9-101212600.html",
+          "sha256": "3f4f488cbbcf7bc9dcfb65444af8276d0066c2852e0de1822d4ad744ce010cf9",
+          "observedAt": "2026-11-11T08:45:06.822Z"
+        },
+        {
+          "regularDps": 0.2,
+          "specialDps": 0,
+          "totalDps": 0.2,
+          "paymentDate": "2025-12-04",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.20",
+            "Payment date                             : 04-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "99465900",
+          "publishedAt": "2025-11-07",
+          "headline": "Payment of Interim Dividend for the first half year operations of 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99465900&symbol=PR9",
+          "evidenceFile": "data/dividend-evidence/notices/PR9-99465900.html",
+          "sha256": "36a43692e5fe0fba055bcc5f06487f470ad18e89091388f850599d19d7fe396d",
+          "observedAt": "2026-11-11T08:45:07.546Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:MTC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:MTC",
+        "source": "https://www.set.or.th/api/set/stock/MTC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/MTC-actions.json",
+        "sha256": "e70079de3dcde9cb6f3cebfa5eca5d2eeb8017ae556ecaae2ffbc2244520e15c",
+        "observedAt": "2026-11-11T08:33:44.761Z"
+      },
+      "regularDps": 0.29,
+      "specialDps": 0,
+      "totalDps": 0.29,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101219600&symbol=MTC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:58.285Z",
+      "components": [
+        {
+          "regularDps": 0.29,
+          "specialDps": 0,
+          "totalDps": 0.29,
+          "paymentDate": "2026-05-15",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.29",
+            "Payment date                             : 15-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101219600",
+          "publishedAt": "2026-02-17",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting regarding Dividend Payment and Schedule for Annual General Meeting of Shareholders for 2026",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101219600&symbol=MTC",
+          "evidenceFile": "data/dividend-evidence/notices/MTC-101219600.html",
+          "sha256": "c14ebb59d56c628a2c6fd2b25ec65701a95667053b1e217f12dd5c528e27e98b",
+          "observedAt": "2026-11-11T08:44:58.285Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:HMPRO",
+        "source": "https://www.set.or.th/api/set/stock/HMPRO/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/HMPRO-actions.json",
+        "sha256": "3de732b20c94d0468a3caff7d269a6f6e2faf19e9eb75292bef1b896d9c4145e",
+        "observedAt": "2026-11-11T08:33:41.205Z"
+      },
+      "regularDps": 0.38,
+      "specialDps": 0,
+      "totalDps": 0.38,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101518500&symbol=HMPRO",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:22.029Z",
+      "components": [
+        {
+          "regularDps": 0.22,
+          "specialDps": 0,
+          "totalDps": 0.22,
+          "paymentDate": "2026-05-07",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.22",
+            "Payment date                             : 07-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101518500",
+          "publishedAt": "2026-02-25",
+          "headline": "Resolutions of the Board of Directors' Meeting No.2/2026 on dividend payment for the year 2025 and 2026 Annual General Meeting of Shareholders.",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101518500&symbol=HMPRO",
+          "evidenceFile": "data/dividend-evidence/notices/HMPRO-101518500.html",
+          "sha256": "811af4582966317b4752e0b72ef1364af4c70b2b59bf16f3af1f11a5fb571246",
+          "observedAt": "2026-11-11T08:44:21.649Z"
+        },
+        {
+          "regularDps": 0.16,
+          "specialDps": 0,
+          "totalDps": 0.16,
+          "paymentDate": "2025-09-24",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.16",
+            "Payment date                             : 24-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98672500",
+          "publishedAt": "2025-08-26",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98672500&symbol=HMPRO",
+          "evidenceFile": "data/dividend-evidence/notices/HMPRO-98672500.html",
+          "sha256": "2d2b764aa107b8a2ed2d5ba52e99ccbc6057a6ec558100099268aa5b501fa6d5",
+          "observedAt": "2026-11-11T08:44:22.029Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:RCL",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:RCL",
+        "source": "https://www.set.or.th/api/set/stock/RCL/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/RCL-actions.json",
+        "sha256": "1ab5b7e847841f7a2e08f81452c4f6b3307fa9b2a16a2b143a7a1aea1d3f0218",
+        "observedAt": "2026-11-11T08:33:46.973Z"
+      },
+      "regularDps": 2.5,
+      "specialDps": 0,
+      "totalDps": 2.5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101330400&symbol=RCL",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:25.641Z",
+      "components": [
+        {
+          "regularDps": 1.5,
+          "specialDps": 0,
+          "totalDps": 1.5,
+          "paymentDate": "2026-05-15",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.50",
+            "Payment date                             : 15-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101330400",
+          "publishedAt": "2026-02-20",
+          "headline": "Schedule for the 47th Annual General Meeting of Shareholders 2026 via Hybrid Meeting and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101330400&symbol=RCL",
+          "evidenceFile": "data/dividend-evidence/notices/RCL-101330400.html",
+          "sha256": "14703dd8654849595d73e558cbc5f534830b0f0da5f78ecc395232ad75d95c1b",
+          "observedAt": "2026-11-11T08:45:24.230Z"
+        },
+        {
+          "regularDps": 0.5,
+          "specialDps": 0,
+          "totalDps": 0.5,
+          "paymentDate": "2025-12-04",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.50",
+            "Payment date                             : 04-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Sep-2025"
+          ],
+          "id": "99444100",
+          "publishedAt": "2025-11-07",
+          "headline": "The Interim Dividend Payment No. 2/2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99444100&symbol=RCL",
+          "evidenceFile": "data/dividend-evidence/notices/RCL-99444100.html",
+          "sha256": "9e844b24e5f4bcb738b5bdad7ec0923fadd64cd4c46d5eaf76556dcd51a26247",
+          "observedAt": "2026-11-11T08:45:25.081Z"
+        },
+        {
+          "regularDps": 0.5,
+          "specialDps": 0,
+          "totalDps": 0.5,
+          "paymentDate": "2025-09-05",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.50",
+            "Payment date                             : 05-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97936700",
+          "publishedAt": "2025-08-08",
+          "headline": "The Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97936700&symbol=RCL",
+          "evidenceFile": "data/dividend-evidence/notices/RCL-97936700.html",
+          "sha256": "c798e05e24cb2040add64dd826df198ef37645e073d28af53399ae28a2c21517",
+          "observedAt": "2026-11-11T08:45:25.641Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:M",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:M",
+        "source": "https://www.set.or.th/api/set/stock/M/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/M-actions.json",
+        "sha256": "768a03cc4f3035f9c7678fa05529c2d95a6225d1901155b6e11b429b682eb396",
+        "observedAt": "2026-11-11T08:33:43.764Z"
+      },
+      "regularDps": 1,
+      "specialDps": 0,
+      "totalDps": 1,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102125100&symbol=M",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:47.256Z",
+      "components": [
+        {
+          "regularDps": 0.5,
+          "specialDps": 0,
+          "totalDps": 0.5,
+          "paymentDate": "2026-05-26",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.50",
+            "Payment date                             : 26-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "102125100",
+          "publishedAt": "2026-03-04",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting No. 1/2026 in respect of the recommendation for the dividend payment and the date for calling the 2026 Annual General Meeting of Shareholders (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102125100&symbol=M",
+          "evidenceFile": "data/dividend-evidence/notices/M-102125100.html",
+          "sha256": "31ce76f75adc0fb180eae671ca44bef9b774ac6f93cf012e5ac0a681a7ca9451",
+          "observedAt": "2026-11-11T08:44:46.827Z"
+        },
+        {
+          "regularDps": 0.5,
+          "specialDps": 0,
+          "totalDps": 0.5,
+          "paymentDate": "2025-09-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.50",
+            "Payment date                             : 11-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98137400",
+          "publishedAt": "2025-08-13",
+          "headline": "Cash dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98137400&symbol=M",
+          "evidenceFile": "data/dividend-evidence/notices/M-98137400.html",
+          "sha256": "1b97300f232ceada22499952215e41fa3e0d81ef9ba5a5bbf3942fa96c2289af",
+          "observedAt": "2026-11-11T08:44:47.256Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:QH",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:QH",
+        "source": "https://www.set.or.th/api/set/stock/QH/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/QH-actions.json",
+        "sha256": "46a4299e2256da350a3ac0f50398f911fb024d44e15fb1295c5759c146ed6681",
+        "observedAt": "2026-11-11T08:33:46.484Z"
+      },
+      "regularDps": 0.09000000000000001,
+      "specialDps": 0,
+      "totalDps": 0.09000000000000001,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101513400&symbol=QH",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:20.282Z",
+      "components": [
+        {
+          "regularDps": 0.07,
+          "specialDps": 0,
+          "totalDps": 0.07,
+          "paymentDate": "2026-05-19",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.07",
+            "Payment date                             : 19-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101513400",
+          "publishedAt": "2026-02-24",
+          "headline": "Scheduled of 2026 Annual General Meeting of Shareholders and Dividend Payment for the year 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101513400&symbol=QH",
+          "evidenceFile": "data/dividend-evidence/notices/QH-101513400.html",
+          "sha256": "fdb914a862a456551f72d1ceb7244e93b10241c592e55fbff7908cb123daf0d6",
+          "observedAt": "2026-11-11T08:45:19.649Z"
+        },
+        {
+          "regularDps": 0.02,
+          "specialDps": 0,
+          "totalDps": 0.02,
+          "paymentDate": "2025-09-15",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.02",
+            "Payment date                             : 15-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98562100",
+          "publishedAt": "2025-08-15",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98562100&symbol=QH",
+          "evidenceFile": "data/dividend-evidence/notices/QH-98562100.html",
+          "sha256": "2873ef964929ce9a942979ed3e1c136945720b88d21851c7b58b84b37eeaaf50",
+          "observedAt": "2026-11-11T08:45:20.282Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:SCGP",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:SCGP",
+        "source": "https://www.set.or.th/api/set/stock/SCGP/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/SCGP-actions.json",
+        "sha256": "cd7837ce2a6ef27a35e2cc81d25360e138de7c27a2955eb2481f8b842ef730d4",
+        "observedAt": "2026-11-11T08:33:47.891Z"
+      },
+      "regularDps": 0.6,
+      "specialDps": 0,
+      "totalDps": 0.6,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100891100&symbol=SCGP",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:32.797Z",
+      "components": [
+        {
+          "regularDps": 0.35,
+          "specialDps": 0,
+          "totalDps": 0.35,
+          "paymentDate": "2026-04-21",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.35",
+            "Payment date                             : 21-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "100891100",
+          "publishedAt": "2026-01-27",
+          "headline": "Board of Directors' Resolutions on Dividend Payment, Schedule for 2026 Annual General Meeting of Shareholders and  Disclosure of the Notice on SCGP's Website",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100891100&symbol=SCGP",
+          "evidenceFile": "data/dividend-evidence/notices/SCGP-100891100.html",
+          "sha256": "e8e99a3b409ebb57bba9acbf9e434ebb95a8002f45f808c05f3117c2999dd148",
+          "observedAt": "2026-11-11T08:45:32.445Z"
+        },
+        {
+          "regularDps": 0.25,
+          "specialDps": 0,
+          "totalDps": 0.25,
+          "paymentDate": "2025-08-27",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.25",
+            "Payment date                             : 27-Aug-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97737500",
+          "publishedAt": "2025-07-29",
+          "headline": "Interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97737500&symbol=SCGP",
+          "evidenceFile": "data/dividend-evidence/notices/SCGP-97737500.html",
+          "sha256": "2f38dbb6ef974d3ec8ca325a8d2a1464c9ed2b8b1dd0e1db7b0414eb69a6009f",
+          "observedAt": "2026-11-11T08:45:32.797Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:KCE",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:KCE",
+        "source": "https://www.set.or.th/api/set/stock/KCE/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/KCE-actions.json",
+        "sha256": "827daa991710bcdc5e92841471df346eb546ef764a7b88480d9146ea041822a8",
+        "observedAt": "2026-11-11T08:33:42.796Z"
+      },
+      "regularDps": 1.2,
+      "specialDps": 0,
+      "totalDps": 1.2,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102298600&symbol=KCE",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:39.719Z",
+      "components": [
+        {
+          "regularDps": 0.6,
+          "specialDps": 0,
+          "totalDps": 0.6,
+          "paymentDate": "2026-05-08",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.60",
+            "Payment date                             : 08-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "102298600",
+          "publishedAt": "2026-03-11",
+          "headline": "A resolution to convene the 2026 Annual General Meeting of Shareholders. Hybrid Meeting (E-AGM) and Dividend Payment  (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102298600&symbol=KCE",
+          "evidenceFile": "data/dividend-evidence/notices/KCE-102298600.html",
+          "sha256": "fae6e3851454be7fb8f8b09bba8b6d5dbc92db32fce3971fd01bcefcee56a358",
+          "observedAt": "2026-11-11T08:44:38.900Z"
+        },
+        {
+          "regularDps": 0.6,
+          "specialDps": 0,
+          "totalDps": 0.6,
+          "paymentDate": "2025-09-10",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.60",
+            "Payment date                             : 10-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98119600",
+          "publishedAt": "2025-08-13",
+          "headline": "Payment of Interim Dividend for the first half year operations of 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98119600&symbol=KCE",
+          "evidenceFile": "data/dividend-evidence/notices/KCE-98119600.html",
+          "sha256": "a1fdd00f380d539da23788b238d2ea24a308f8500a9be2145fff2eded34783d8",
+          "observedAt": "2026-11-11T08:44:39.719Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:SIRI",
+        "source": "https://www.set.or.th/api/set/stock/SIRI/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/SIRI-actions.json",
+        "sha256": "ea479bb8045c3fd2338cfbb3c3cafe806e1ba0ab0ee3936c54f147bbcbe6ed5a",
+        "observedAt": "2026-11-11T08:33:48.036Z"
+      },
+      "regularDps": 0.13,
+      "specialDps": 0,
+      "totalDps": 0.13,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101752600&symbol=SIRI",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:36.437Z",
+      "components": [
+        {
+          "regularDps": 0.08,
+          "specialDps": 0,
+          "totalDps": 0.08,
+          "paymentDate": "2026-05-20",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.08",
+            "Payment date                             : 20-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101752600",
+          "publishedAt": "2026-02-27",
+          "headline": "Dividend payment, Convening of the Annual General Meeting of Shareholders No. 31/2026, and Extension of the allotment of the newly issued shares in General Mandate.",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101752600&symbol=SIRI",
+          "evidenceFile": "data/dividend-evidence/notices/SIRI-101752600.html",
+          "sha256": "d21291cbe3fe8920ba2e89752a9d3c8c955ca5cbde73e6dba2358ce12d67cbc5",
+          "observedAt": "2026-11-11T08:45:36.437Z"
+        },
+        {
+          "regularDps": 0.05,
+          "specialDps": 0,
+          "totalDps": 0.05,
+          "paymentDate": "2025-09-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.05",
+            "Payment date                             : 11-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98093200",
+          "publishedAt": "2025-08-14",
+          "headline": "Cash dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98093200&symbol=SIRI",
+          "evidenceFile": "data/dividend-evidence/notices/SIRI-98093200.html",
+          "sha256": "509317590579cc2f3a6a8cb083bce535e3cd7624d472f8ef29b3847d0ed27798",
+          "observedAt": "2026-11-11T08:45:36.341Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:JMT",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:JMT",
+        "source": "https://www.set.or.th/api/set/stock/JMT/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/JMT-actions.json",
+        "sha256": "2121bce002b030295501ccf0ac97238b1004f005e3c6874bcfc042e694e3dd6b",
+        "observedAt": "2026-11-11T08:33:42.253Z"
+      },
+      "regularDps": 0.6699999999999999,
+      "specialDps": 0,
+      "totalDps": 0.6699999999999999,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101098100&symbol=JMT",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:36.080Z",
+      "components": [
+        {
+          "regularDps": 0.43,
+          "specialDps": 0,
+          "totalDps": 0.43,
+          "paymentDate": "2026-05-06",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.43",
+            "Payment date                             : 06-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101098100",
+          "publishedAt": "2026-02-11",
+          "headline": "Notification of the resolutions of the Board of Directors' Meeting No. 1/2026 regarding interim dividend payment, approval of the 2025 dividend, and the date and agenda of the 2026 AGM to be held in a hybrid format",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101098100&symbol=JMT",
+          "evidenceFile": "data/dividend-evidence/notices/JMT-101098100.html",
+          "sha256": "0b8d6f959c248ebc5ac02815fa312aa6df737dba4668e417aa14af647edb02bb",
+          "observedAt": "2026-11-11T08:44:34.944Z"
+        },
+        {
+          "regularDps": 0.24,
+          "specialDps": 0,
+          "totalDps": 0.24,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.24",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98245800",
+          "publishedAt": "2025-08-13",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98245800&symbol=JMT",
+          "evidenceFile": "data/dividend-evidence/notices/JMT-98245800.html",
+          "sha256": "b6b02acb7cfed717f19a6e8ab5f95d7051e5a3fa8e311b8d808b75dd455b6899",
+          "observedAt": "2026-11-11T08:44:36.080Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:PTG",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:PTG",
+        "source": "https://www.set.or.th/api/set/stock/PTG/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/PTG-actions.json",
+        "sha256": "c545b3fb81d323c6ea094723aa9f98049a70649b5db74a0eaa4d336d99930292",
+        "observedAt": "2026-11-11T08:33:45.928Z"
+      },
+      "regularDps": 0.35,
+      "specialDps": 0,
+      "totalDps": 0.35,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101676400&symbol=PTG",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:10.746Z",
+      "components": [
+        {
+          "regularDps": 0.35,
+          "specialDps": 0,
+          "totalDps": 0.35,
+          "paymentDate": "2026-05-15",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.35",
+            "Payment date                             : 15-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101676400",
+          "publishedAt": "2026-02-25",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting, Dividend Payment and Determination of the Date of the Annual General Meeting of Shareholders for the Year 2026",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101676400&symbol=PTG",
+          "evidenceFile": "data/dividend-evidence/notices/PTG-101676400.html",
+          "sha256": "f4a66891f412d05368030f7c5aec58117d7ae9e632c4a368415eccb35478d12a",
+          "observedAt": "2026-11-11T08:45:10.746Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:MINT",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:MINT",
+        "source": "https://www.set.or.th/api/set/stock/MINT/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/MINT-actions.json",
+        "sha256": "756e10600390a21f60262ddbf9f21367670559fa575a797c768e5f0e8154b15c",
+        "observedAt": "2026-11-11T08:33:44.083Z"
+      },
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101536000&symbol=MINT",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:51.140Z",
+      "components": [
+        {
+          "regularDps": 0.4,
+          "specialDps": 0,
+          "totalDps": 0.4,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.40",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101536000",
+          "publishedAt": "2026-02-24",
+          "headline": "To fix the date for Annual General Shareholders' Meeting and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101536000&symbol=MINT",
+          "evidenceFile": "data/dividend-evidence/notices/MINT-101536000.html",
+          "sha256": "213a07417d7792717d4e31246452ef52d8ce433d1b4155e2493aae72cfd92337",
+          "observedAt": "2026-11-11T08:44:50.812Z"
+        },
+        {
+          "regularDps": 0.3,
+          "specialDps": 0,
+          "totalDps": 0.3,
+          "paymentDate": "2025-09-17",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.30",
+            "Payment date                             : 17-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98594100",
+          "publishedAt": "2025-08-19",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98594100&symbol=MINT",
+          "evidenceFile": "data/dividend-evidence/notices/MINT-98594100.html",
+          "sha256": "dfaf5c684adcdcba88a5f5e80c5b31d2d43a91010d0bda901cfe5507f79cc1e9",
+          "observedAt": "2026-11-11T08:44:51.140Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:HANA",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:HANA",
+        "source": "https://www.set.or.th/api/set/stock/HANA/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/HANA-actions.json",
+        "sha256": "7b15e2170227dadd199ad842a012e8cc1de5646b44b28055ed403cb9d293d72f",
+        "observedAt": "2026-11-11T08:33:41.064Z"
+      },
+      "regularDps": 1,
+      "specialDps": 0,
+      "totalDps": 1,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101918700&symbol=HANA",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:17.599Z",
+      "components": [
+        {
+          "regularDps": 0.75,
+          "specialDps": 0,
+          "totalDps": 0.75,
+          "paymentDate": "2026-05-19",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.75",
+            "Payment date                             : 19-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101918700",
+          "publishedAt": "2026-02-27",
+          "headline": "Board Resolutions on Dividend Payments, 2026 AGM Schedule, and Meeting Agendas",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101918700&symbol=HANA",
+          "evidenceFile": "data/dividend-evidence/notices/HANA-101918700.html",
+          "sha256": "99a2b819dfd680159704cf5cea733438282310fba1a129bc644c4628fe3c8ede",
+          "observedAt": "2026-11-11T08:44:17.038Z"
+        },
+        {
+          "regularDps": 0.25,
+          "specialDps": 0,
+          "totalDps": 0.25,
+          "paymentDate": "2025-12-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.25",
+            "Payment date                             : 12-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Sep-2025"
+          ],
+          "id": "99702900",
+          "publishedAt": "2025-11-12",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99702900&symbol=HANA",
+          "evidenceFile": "data/dividend-evidence/notices/HANA-99702900.html",
+          "sha256": "782e9ab0dd0e9076f1ebca682ddc38adc0e4b91e9aa1ba69070b7b53483ee8c9",
+          "observedAt": "2026-11-11T08:44:17.599Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:SCC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:SCC",
+        "source": "https://www.set.or.th/api/set/stock/SCC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/SCC-actions.json",
+        "sha256": "8ddab59e16b5b28de224cb4e42d4018c68d82c96bbed263886b195362d9ca031",
+        "observedAt": "2026-11-11T08:33:47.760Z"
+      },
+      "regularDps": 5,
+      "specialDps": 0,
+      "totalDps": 5,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100927800&symbol=SCC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:33.017Z",
+      "components": [
+        {
+          "regularDps": 2.5,
+          "specialDps": 0,
+          "totalDps": 2.5,
+          "paymentDate": "2026-04-21",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.50",
+            "Payment date                             : 21-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "100927800",
+          "publishedAt": "2026-01-28",
+          "headline": "Board of Directors' Resolutions on Dividend Payment, Schedule for 2026 Annual General Meeting of Shareholders and Disclosure of the Notice on the Company's Website",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100927800&symbol=SCC",
+          "evidenceFile": "data/dividend-evidence/notices/SCC-100927800.html",
+          "sha256": "a3feff64543fdf5560b56ebf9114661dc3ebc3065490371a00884cb12dcabfea",
+          "observedAt": "2026-11-11T08:45:32.258Z"
+        },
+        {
+          "regularDps": 2.5,
+          "specialDps": 0,
+          "totalDps": 2.5,
+          "paymentDate": "2025-08-28",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.50",
+            "Payment date                             : 28-Aug-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97758300",
+          "publishedAt": "2025-07-30",
+          "headline": "Interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97758300&symbol=SCC",
+          "evidenceFile": "data/dividend-evidence/notices/SCC-97758300.html",
+          "sha256": "c7336045a8955019694d0d86af4840165fb38c6072fb9421537d6bbef4630bfe",
+          "observedAt": "2026-11-11T08:45:33.017Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:LH",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:LH",
+        "source": "https://www.set.or.th/api/set/stock/LH/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/LH-actions.json",
+        "sha256": "957380d19e5bf82ee3bc5a1f3ea4bc84a04bb9175a5ea9609f2806db795647ac",
+        "observedAt": "2026-11-11T08:33:43.638Z"
+      },
+      "regularDps": 0.25,
+      "specialDps": 0,
+      "totalDps": 0.25,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102054300&symbol=LH",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:47.788Z",
+      "components": [
+        {
+          "regularDps": 0.12,
+          "specialDps": 0,
+          "totalDps": 0.12,
+          "paymentDate": "2026-05-20",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.12",
+            "Payment date                             : 20-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "102054300",
+          "publishedAt": "2026-03-02",
+          "headline": "Dividend Payment, and Set Shareholders' Meeting Date (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102054300&symbol=LH",
+          "evidenceFile": "data/dividend-evidence/notices/LH-102054300.html",
+          "sha256": "344494cc526dd6c930763e6732bd565c545a49e9fc22e3e3011ac1d4c63b0e8f",
+          "observedAt": "2026-11-11T08:44:46.625Z"
+        },
+        {
+          "regularDps": 0.13,
+          "specialDps": 0,
+          "totalDps": 0.13,
+          "paymentDate": "2025-10-29",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.13",
+            "Payment date                             : 29-Oct-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "99042200",
+          "publishedAt": "2025-10-01",
+          "headline": "Interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99042200&symbol=LH",
+          "evidenceFile": "data/dividend-evidence/notices/LH-99042200.html",
+          "sha256": "79d78e8b3c32cf844a7a14c693f14cb7ae43e101619ba6453dadda99acf165fc",
+          "observedAt": "2026-11-11T08:44:47.788Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:IVL",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:IVL",
+        "source": "https://www.set.or.th/api/set/stock/IVL/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/IVL-actions.json",
+        "sha256": "92792a4c83aa5fb09e84c84a49ec25f557dc6780ccf650a3165cd72959bf09ec",
+        "observedAt": "2026-11-11T08:33:41.926Z"
+      },
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102024600&symbol=IVL",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:31.739Z",
+      "components": [
+        {
+          "regularDps": 0.175,
+          "specialDps": 0,
+          "totalDps": 0.175,
+          "paymentDate": "2026-05-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.175",
+            "Payment date                             : 22-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "102024600",
+          "publishedAt": "2026-03-02",
+          "headline": "Determination of the date and agenda for the Annual General Meeting of Shareholders No. 1/2026; and the dividend payment for the Year 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102024600&symbol=IVL",
+          "evidenceFile": "data/dividend-evidence/notices/IVL-102024600.html",
+          "sha256": "5e15ed7a34f75e0944ec99b2cfdadba7cefe642c78a4c04c2fb92bddaa1c28bd",
+          "observedAt": "2026-11-11T08:44:30.744Z"
+        },
+        {
+          "regularDps": 0.175,
+          "specialDps": 0,
+          "totalDps": 0.175,
+          "paymentDate": "2025-12-11",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.175",
+            "Payment date                             : 11-Dec-2025",
+            "Operating period from 01-Jul-2025 to 30-Sep-2025"
+          ],
+          "id": "99678100",
+          "publishedAt": "2025-11-12",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99678100&symbol=IVL",
+          "evidenceFile": "data/dividend-evidence/notices/IVL-99678100.html",
+          "sha256": "269f3560f476ba65b7904643de3038f69d929c39489d8f80b4d8e72a43b7ed9c",
+          "observedAt": "2026-11-11T08:44:31.088Z"
+        },
+        {
+          "regularDps": 0.175,
+          "specialDps": 0,
+          "totalDps": 0.175,
+          "paymentDate": "2025-09-11",
+          "beginOperation": "2025-04-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.175",
+            "Payment date                             : 11-Sep-2025",
+            "Operating period from 01-Apr-2025 to 30-Jun-2025"
+          ],
+          "id": "98360100",
+          "publishedAt": "2025-08-14",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98360100&symbol=IVL",
+          "evidenceFile": "data/dividend-evidence/notices/IVL-98360100.html",
+          "sha256": "6a1d93e01bcba953116882d361a44bb9646a458ddba0dad5e449f8b5806b1e89",
+          "observedAt": "2026-11-11T08:44:31.370Z"
+        },
+        {
+          "regularDps": 0.175,
+          "specialDps": 0,
+          "totalDps": 0.175,
+          "paymentDate": "2025-06-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-03-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.175",
+            "Payment date                             : 12-Jun-2025",
+            "Operating period from 01-Jan-2025 to 31-Mar-2025"
+          ],
+          "id": "96712000",
+          "publishedAt": "2025-05-14",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=96712000&symbol=IVL",
+          "evidenceFile": "data/dividend-evidence/notices/IVL-96712000.html",
+          "sha256": "a56381d45494cd99258b3c06bb81acfff2c2fe354ca21e2ee3e9a89205be0ab5",
+          "observedAt": "2026-11-11T08:44:31.739Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:KKP",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:KKP",
+        "source": "https://www.set.or.th/api/set/stock/KKP/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/KKP-actions.json",
+        "sha256": "64e4ac6a41411c173202a6c50f25ca19b0a7d5c5582a1940c741b2dd825c4e23",
+        "observedAt": "2026-11-11T08:33:42.919Z"
+      },
+      "regularDps": 5.7,
+      "specialDps": 0,
+      "totalDps": 5.7,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101469100&symbol=KKP",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:40.110Z",
+      "components": [
+        {
+          "regularDps": 4.2,
+          "specialDps": 0,
+          "totalDps": 4.2,
+          "paymentDate": "2026-05-21",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 4.20",
+            "Payment date                             : 21-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101469100",
+          "publishedAt": "2026-02-24",
+          "headline": "Notification of the Board of Directors' Resolutions on the Dividend Payment and Schedule for the 2026 Annual General Meeting of Shareholders",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101469100&symbol=KKP",
+          "evidenceFile": "data/dividend-evidence/notices/KKP-101469100.html",
+          "sha256": "280aee49f34c3830b1a8c100d7cb76f800846cd5d8cc0fa3c94583048e964536",
+          "observedAt": "2026-11-11T08:44:39.672Z"
+        },
+        {
+          "regularDps": 1.5,
+          "specialDps": 0,
+          "totalDps": 1.5,
+          "paymentDate": "2025-09-25",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.50",
+            "Payment date                             : 25-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98702800",
+          "publishedAt": "2025-08-28",
+          "headline": "Notification of the Board of Directors' Resolutions on the Share Repurchase Project for Financial Management Purposes and Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98702800&symbol=KKP",
+          "evidenceFile": "data/dividend-evidence/notices/KKP-98702800.html",
+          "sha256": "d32ab4e5bffcfbe7ca3692165f0253a7112b2e90d8427ed1c5e8602ea7ef6c0e",
+          "observedAt": "2026-11-11T08:44:40.110Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TOA",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TOA",
+        "source": "https://www.set.or.th/api/set/stock/TOA/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TOA-actions.json",
+        "sha256": "78e4e29c2ec75205579b2044f9eb17fd3f334479e6d09dee0149f20c6f9a7944",
+        "observedAt": "2026-11-11T08:33:49.985Z"
+      },
+      "regularDps": 0.75,
+      "specialDps": 0,
+      "totalDps": 0.75,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101928200&symbol=TOA",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:05.529Z",
+      "components": [
+        {
+          "regularDps": 0.39,
+          "specialDps": 0,
+          "totalDps": 0.39,
+          "paymentDate": "2026-05-26",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.39",
+            "Payment date                             : 26-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101928200",
+          "publishedAt": "2026-03-02",
+          "headline": "Resolutions of the Board of Directors' Meeting No. 2/2026 regarding the appointment of directors,  dividend payment,and the schedule and agenda items of 2026 Annual General Meeting of Shareholders via Electronic Means (E-AGM).",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101928200&symbol=TOA",
+          "evidenceFile": "data/dividend-evidence/notices/TOA-101928200.html",
+          "sha256": "8455057e7b90583f0150372fc41a2695b3f62fc106e223f602ff5130a79b5a02",
+          "observedAt": "2026-11-11T08:46:04.490Z"
+        },
+        {
+          "regularDps": 0.36,
+          "specialDps": 0,
+          "totalDps": 0.36,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.36",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98410000",
+          "publishedAt": "2025-08-14",
+          "headline": "Notification of interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98410000&symbol=TOA",
+          "evidenceFile": "data/dividend-evidence/notices/TOA-98410000.html",
+          "sha256": "548e6a58fa7f2d85f7a12e9098cc631cbf7e01bf15b30fd0423069ce540c1e66",
+          "observedAt": "2026-11-11T08:46:05.529Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:KAMART",
+        "source": "https://www.set.or.th/api/set/stock/KAMART/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/KAMART-actions.json",
+        "sha256": "5d69fa5eee7aeafdb258979539439ef993e1c41914758e2ff3caa383ea69be78",
+        "observedAt": "2026-11-11T08:33:53.356Z"
+      },
+      "regularDps": 0.44,
+      "specialDps": 0,
+      "totalDps": 0.44,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101860400&symbol=KAMART",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:39.210Z",
+      "components": [
+        {
+          "regularDps": 0.11,
+          "specialDps": 0,
+          "totalDps": 0.11,
+          "paymentDate": "2026-05-26",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.11",
+            "Payment date                             : 26-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101860400",
+          "publishedAt": "2026-02-27",
+          "headline": "Notification of Dividend Payment and Convening of the Annual General Meeting of Shareholders for the Year 2026",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101860400&symbol=KAMART",
+          "evidenceFile": "data/dividend-evidence/notices/KAMART-101860400.html",
+          "sha256": "8a85bdf45e4cfcd9d76b09f42e018c44a2fa5fc5c6b6c2a77005e0d093dae4de",
+          "observedAt": "2026-11-11T08:46:38.009Z"
+        },
+        {
+          "regularDps": 0.11,
+          "specialDps": 0,
+          "totalDps": 0.11,
+          "paymentDate": "2025-12-11",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.11",
+            "Payment date                             : 11-Dec-2025",
+            "Operating period from 01-Jul-2025 to 30-Sep-2025"
+          ],
+          "id": "99562100",
+          "publishedAt": "2025-11-12",
+          "headline": "Announcement of interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99562100&symbol=KAMART",
+          "evidenceFile": "data/dividend-evidence/notices/KAMART-99562100.html",
+          "sha256": "ba12873f172a2e25317f627b8f607cc09cfd913ff3d35e34728d1b9083db26ec",
+          "observedAt": "2026-11-11T08:46:38.592Z"
+        },
+        {
+          "regularDps": 0.11,
+          "specialDps": 0,
+          "totalDps": 0.11,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-04-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.11",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Apr-2025 to 30-Jun-2025"
+          ],
+          "id": "98125500",
+          "publishedAt": "2025-08-13",
+          "headline": "Announcement of interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98125500&symbol=KAMART",
+          "evidenceFile": "data/dividend-evidence/notices/KAMART-98125500.html",
+          "sha256": "ffc773c1800dae3568c55e44e1d3331663d8aec2e398aeb2b9f4f857928045a2",
+          "observedAt": "2026-11-11T08:46:38.693Z"
+        },
+        {
+          "regularDps": 0.11,
+          "specialDps": 0,
+          "totalDps": 0.11,
+          "paymentDate": "2025-06-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-03-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.11",
+            "Payment date                             : 12-Jun-2025",
+            "Operating period from 01-Jan-2025 to 31-Mar-2025"
+          ],
+          "id": "96524000",
+          "publishedAt": "2025-05-13",
+          "headline": "Announcement of interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=96524000&symbol=KAMART",
+          "evidenceFile": "data/dividend-evidence/notices/KAMART-96524000.html",
+          "sha256": "bf23dea8dd333a2e7d570c3aca80752dfc8866a13764becd8a98b562729ca219",
+          "observedAt": "2026-11-11T08:46:39.210Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TISCO",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TISCO",
+        "source": "https://www.set.or.th/api/set/stock/TISCO/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TISCO-actions.json",
+        "sha256": "6b38a63eb988afedf9bb8dfbbe838a747d32afa57f062ec2c7720fa421046c8c",
+        "observedAt": "2026-11-11T08:33:49.653Z"
+      },
+      "regularDps": 7.75,
+      "specialDps": 0,
+      "totalDps": 7.75,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102177800&symbol=TISCO",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:00.987Z",
+      "components": [
+        {
+          "regularDps": 5.75,
+          "specialDps": 0,
+          "totalDps": 5.75,
+          "paymentDate": "2026-05-19",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 5.75",
+            "Payment date                             : 19-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "102177800",
+          "publishedAt": "2026-03-04",
+          "headline": "Dividend Payment and the Schedule of the Annual General Meeting of Shareholders for the year 2026 (Additional Information about Directors)  (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102177800&symbol=TISCO",
+          "evidenceFile": "data/dividend-evidence/notices/TISCO-102177800.html",
+          "sha256": "c473766051d24d4df0a91b0af716daa255fa201e3a9b5446e8c87508e24d05e8",
+          "observedAt": "2026-11-11T08:45:59.797Z"
+        },
+        {
+          "regularDps": 2,
+          "specialDps": 0,
+          "totalDps": 2,
+          "paymentDate": "2025-09-25",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 2.00",
+            "Payment date                             : 25-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98702400",
+          "publishedAt": "2025-08-28",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98702400&symbol=TISCO",
+          "evidenceFile": "data/dividend-evidence/notices/TISCO-98702400.html",
+          "sha256": "982302f91a89b4c448730570301c89e07f919296c25c91f233c3964d3cd59c04",
+          "observedAt": "2026-11-11T08:46:00.987Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:MC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-06-30",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:MC",
+        "source": "https://www.set.or.th/api/set/stock/MC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/MC-actions.json",
+        "sha256": "f0517d220de131196f656f857ff1addcdfc7fe5ff9d975a629873f8704d26ae9",
+        "observedAt": "2026-11-11T08:33:51.688Z"
+      },
+      "regularDps": 0.96,
+      "specialDps": 0,
+      "totalDps": 0.96,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98719500&symbol=MC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:28.619Z",
+      "components": [
+        {
+          "regularDps": 0.41,
+          "specialDps": 0,
+          "totalDps": 0.41,
+          "paymentDate": "2025-11-25",
+          "beginOperation": "2024-07-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.41",
+            "Payment date                             : 25-Nov-2025",
+            "Operating period from 01-Jul-2024 to 30-Jun-2025"
+          ],
+          "id": "98719500",
+          "publishedAt": "2025-08-29",
+          "headline": "Board of Directors' Resolutions on Dividend Payment and Schedule for the 2025 Annual General Meeting of Shareholders",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98719500&symbol=MC",
+          "evidenceFile": "data/dividend-evidence/notices/MC-98719500.html",
+          "sha256": "b395be2280abab370ab0e38c15765a6947ad1841f0efe1276a7a93db1085dd94",
+          "observedAt": "2026-11-11T08:46:28.075Z"
+        },
+        {
+          "regularDps": 0.55,
+          "specialDps": 0,
+          "totalDps": 0.55,
+          "paymentDate": "2025-03-13",
+          "beginOperation": "2024-07-01",
+          "endOperation": "2024-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.55",
+            "Payment date                             : 13-Mar-2025",
+            "Operating period from 01-Jul-2024 to 31-Dec-2024"
+          ],
+          "id": "93521600",
+          "publishedAt": "2025-02-14",
+          "headline": "Notification of the Board of Directors' Resolution regarding the Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=93521600&symbol=MC",
+          "evidenceFile": "data/dividend-evidence/notices/MC-93521600.html",
+          "sha256": "1bf6e65176d8128b80976c8866a9cf3735fd54119936a479c25c7ae790176a83",
+          "observedAt": "2026-11-11T08:46:28.619Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TTW",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TTW",
+        "source": "https://www.set.or.th/api/set/stock/TTW/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TTW-actions.json",
+        "sha256": "5cb83c1114ab18d5e10d176e463db0e6fda58a815826941377262c384a32fe74",
+        "observedAt": "2026-11-11T08:33:53.088Z"
+      },
+      "regularDps": 0.6,
+      "specialDps": 0,
+      "totalDps": 0.6,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101504200&symbol=TTW",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:36.875Z",
+      "components": [
+        {
+          "regularDps": 0.3,
+          "specialDps": 0,
+          "totalDps": 0.3,
+          "paymentDate": "2026-04-28",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.30",
+            "Payment date                             : 28-Apr-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101504200",
+          "publishedAt": "2026-02-24",
+          "headline": "Dividend Payment and Schedule for the 2026 Annual Ordinary General Meeting of Shareholders",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101504200&symbol=TTW",
+          "evidenceFile": "data/dividend-evidence/notices/TTW-101504200.html",
+          "sha256": "28eadd60c318c7c6156e9c234d2f6cf19132cb8b62e312e2e2da22508bf8a010",
+          "observedAt": "2026-11-11T08:46:36.325Z"
+        },
+        {
+          "regularDps": 0.3,
+          "specialDps": 0,
+          "totalDps": 0.3,
+          "paymentDate": "2025-09-26",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.30",
+            "Payment date                             : 26-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98707000",
+          "publishedAt": "2025-08-28",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98707000&symbol=TTW",
+          "evidenceFile": "data/dividend-evidence/notices/TTW-98707000.html",
+          "sha256": "d5b4ed9d2ebd3771422b3227b6a37d9cd6b4b36feea4c36635021105b9b84777",
+          "observedAt": "2026-11-11T08:46:36.875Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TVO",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TVO",
+        "source": "https://www.set.or.th/api/set/stock/TVO/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TVO-actions.json",
+        "sha256": "e6e15fc35916b6dc9a3798a8e7702c0d4fd21b6ef3b100e84165f9feb53297a6",
+        "observedAt": "2026-11-11T08:33:51.413Z"
+      },
+      "regularDps": 1.97,
+      "specialDps": 0,
+      "totalDps": 1.97,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101984000&symbol=TVO",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:24.966Z",
+      "components": [
+        {
+          "regularDps": 1.17,
+          "specialDps": 0,
+          "totalDps": 1.17,
+          "paymentDate": "2026-05-15",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 1.17",
+            "Payment date                             : 15-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101984000",
+          "publishedAt": "2026-02-27",
+          "headline": "Dividend Payment, Declaration of the Schedule and Agenda of the 2026 Electronic Annual General Meeting of Shareholders (e-AGM)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101984000&symbol=TVO",
+          "evidenceFile": "data/dividend-evidence/notices/TVO-101984000.html",
+          "sha256": "f1e41efa1a10fb1b0f0287f58192f717df7ffc5ab69acca23ec5014398b3669e",
+          "observedAt": "2026-11-11T08:46:24.293Z"
+        },
+        {
+          "regularDps": 0.8,
+          "specialDps": 0,
+          "totalDps": 0.8,
+          "paymentDate": "2025-09-05",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.80",
+            "Payment date                             : 05-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97965400",
+          "publishedAt": "2025-08-08",
+          "headline": "Announcement of the Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97965400&symbol=TVO",
+          "evidenceFile": "data/dividend-evidence/notices/TVO-97965400.html",
+          "sha256": "914eab21bbffbec33bbaf0612717cc432bb2a4cf65059e8d2f7c04a016c41b3a",
+          "observedAt": "2026-11-11T08:46:24.966Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TACC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TACC",
+        "source": "https://www.set.or.th/api/set/stock/TACC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TACC-actions.json",
+        "sha256": "eb134d8cc6952b760536ca80df90c0330c34b7684bf6a0a36a2f7dbf6588a606",
+        "observedAt": "2026-11-11T08:33:51.968Z"
+      },
+      "regularDps": 0.42,
+      "specialDps": 0,
+      "totalDps": 0.42,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102672100&symbol=TACC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:30.123Z",
+      "components": [
+        {
+          "regularDps": 0.21,
+          "specialDps": 0,
+          "totalDps": 0.21,
+          "paymentDate": "2026-05-06",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.21",
+            "Payment date                             : 06-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "102672100",
+          "publishedAt": "2026-03-24",
+          "headline": "Notification of the Resolutions of the Board of Directors' Meeting No.1/2026 Schedule for 2026 Annual General Meeting of Shareholders, and Cash Dividend Payment (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102672100&symbol=TACC",
+          "evidenceFile": "data/dividend-evidence/notices/TACC-102672100.html",
+          "sha256": "8550dbeb5bfe392ba8e084e1a9d128876621037a9701f06a897a668e0ba0c32b",
+          "observedAt": "2026-11-11T08:46:28.125Z"
+        },
+        {
+          "regularDps": 0.21,
+          "specialDps": 0,
+          "totalDps": 0.21,
+          "paymentDate": "2025-09-05",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.21",
+            "Payment date                             : 05-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97949900",
+          "publishedAt": "2025-08-08",
+          "headline": "Interim Dividend Payment for period Jan 1- Jun 30, 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97949900&symbol=TACC",
+          "evidenceFile": "data/dividend-evidence/notices/TACC-97949900.html",
+          "sha256": "c3516a6889bdd21f95d13d68e9fbf1ee45b98d64d74ddef7a07cbf9a1ac0da67",
+          "observedAt": "2026-11-11T08:46:30.123Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TTB",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TTB",
+        "source": "https://www.set.or.th/api/set/stock/TTB/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TTB-actions.json",
+        "sha256": "462b941372dabad7dc0ed112e22ddeed3772bfec5b982e451a25523a147329d5",
+        "observedAt": "2026-11-11T08:33:50.383Z"
+      },
+      "regularDps": 0.134,
+      "specialDps": 0,
+      "totalDps": 0.134,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102947800&symbol=TTB",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:12.004Z",
+      "components": [
+        {
+          "regularDps": 0.068,
+          "specialDps": 0,
+          "totalDps": 0.068,
+          "paymentDate": "2026-05-20",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.068",
+            "Payment date                             : 20-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "102947800",
+          "publishedAt": "2026-03-30",
+          "headline": "Determination of Date and Agenda of 2026 AGM via an Electronic Meeting (e-AGM), Dividend Payment, Expansion of Budget, and Project Period of Share Repurchase Project for Financial Management Purposes (Final Amount of Dividend per Share) (Update)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102947800&symbol=TTB",
+          "evidenceFile": "data/dividend-evidence/notices/TTB-102947800.html",
+          "sha256": "1d27566e38103abba7f997fc234e8fad8c960eb70e04edf083c6e402b1c20517",
+          "observedAt": "2026-11-11T08:46:11.023Z"
+        },
+        {
+          "regularDps": 0.066,
+          "specialDps": 0,
+          "totalDps": 0.066,
+          "paymentDate": "2025-10-22",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.066",
+            "Payment date                             : 22-Oct-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98934300",
+          "publishedAt": "2025-09-23",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98934300&symbol=TTB",
+          "evidenceFile": "data/dividend-evidence/notices/TTB-98934300.html",
+          "sha256": "a8c664f9cce1ac0720e413eb5b1c089ad51f907b76273e11b189086096830900",
+          "observedAt": "2026-11-11T08:46:12.004Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:HTC",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:HTC",
+        "source": "https://www.set.or.th/api/set/stock/HTC/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/HTC-actions.json",
+        "sha256": "6c38e7210de505568a482750ce3d57ecd7422272a3084f3ffc384f512bfdbf1d",
+        "observedAt": "2026-11-11T08:33:52.578Z"
+      },
+      "regularDps": 0.99,
+      "specialDps": 0,
+      "totalDps": 0.99,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102168800&symbol=HTC",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:34.075Z",
+      "components": [
+        {
+          "regularDps": 0.54,
+          "specialDps": 0,
+          "totalDps": 0.54,
+          "paymentDate": "2026-05-20",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.54",
+            "Payment date                             : 20-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "102168800",
+          "publishedAt": "2026-03-04",
+          "headline": "Notification of Dividend Payment and Schedule of 2026 AGM (Hybrid Meeting (Physical and e-AGM))",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=102168800&symbol=HTC",
+          "evidenceFile": "data/dividend-evidence/notices/HTC-102168800.html",
+          "sha256": "3a47ded44278720f8d43cb25420f0b472f729d028457ad05cfec0d4467239e69",
+          "observedAt": "2026-11-11T08:46:33.411Z"
+        },
+        {
+          "regularDps": 0.45,
+          "specialDps": 0,
+          "totalDps": 0.45,
+          "paymentDate": "2025-09-24",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.45",
+            "Payment date                             : 24-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98677900",
+          "publishedAt": "2025-08-26",
+          "headline": "Cash dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98677900&symbol=HTC",
+          "evidenceFile": "data/dividend-evidence/notices/HTC-98677900.html",
+          "sha256": "cc51b57c1cc28364e5762f81c96652990bdac4e27ee02d6d1a98adf8fce35256",
+          "observedAt": "2026-11-11T08:46:34.075Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:WHA",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:WHA",
+        "source": "https://www.set.or.th/api/set/stock/WHA/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/WHA-actions.json",
+        "sha256": "f7bb9412954f8eb3852ec7cce187e6d65bd51ac963b0aee04225374a8bc70908",
+        "observedAt": "2026-11-11T08:33:50.829Z"
+      },
+      "regularDps": 0.2107,
+      "specialDps": 0,
+      "totalDps": 0.2107,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101658000&symbol=WHA",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:19.713Z",
+      "components": [
+        {
+          "regularDps": 0.1438,
+          "specialDps": 0,
+          "totalDps": 0.1438,
+          "paymentDate": "2026-05-28",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.1438",
+            "Payment date                             : 28-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101658000",
+          "publishedAt": "2026-02-26",
+          "headline": "Notification of the Board of Directors' Meeting Resolutions regarding the 2026 Annual General Meeting of Shareholders, Dividend Payment and Appointment of a New Director",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101658000&symbol=WHA",
+          "evidenceFile": "data/dividend-evidence/notices/WHA-101658000.html",
+          "sha256": "d480437eb581ddef9dd6ee59854fd526bbd74a3ac72a7a33d294a3a3b29542ea",
+          "observedAt": "2026-11-11T08:46:19.713Z"
+        },
+        {
+          "regularDps": 0.0669,
+          "specialDps": 0,
+          "totalDps": 0.0669,
+          "paymentDate": "2025-12-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.0669",
+            "Payment date                             : 12-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Sep-2025"
+          ],
+          "id": "100043400",
+          "publishedAt": "2025-11-14",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100043400&symbol=WHA",
+          "evidenceFile": "data/dividend-evidence/notices/WHA-100043400.html",
+          "sha256": "9acfdf8ee4e0077ef136617e7c9ed9c1ce6c1cad7ae32826b64aad55a0d05deb",
+          "observedAt": "2026-11-11T08:46:19.625Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:WHAUP",
+        "source": "https://www.set.or.th/api/set/stock/WHAUP/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/WHAUP-actions.json",
+        "sha256": "63652cfbab0532ba892ad69c6d506d4ef9201fa6f3bd97f8a66567a80a2a2df4",
+        "observedAt": "2026-11-11T08:33:50.988Z"
+      },
+      "regularDps": 0.2525,
+      "specialDps": 0,
+      "totalDps": 0.2525,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101593500&symbol=WHAUP",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:20.811Z",
+      "components": [
+        {
+          "regularDps": 0.1925,
+          "specialDps": 0,
+          "totalDps": 0.1925,
+          "paymentDate": "2026-05-18",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.1925",
+            "Payment date                             : 18-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101593500",
+          "publishedAt": "2026-02-25",
+          "headline": "Notification of Resolutions of the Board of Directors' Meeting in relation to 2026 Annual General Meeting of Shareholders and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101593500&symbol=WHAUP",
+          "evidenceFile": "data/dividend-evidence/notices/WHAUP-101593500.html",
+          "sha256": "47d8dc79aa75a135f2191cf34cc2c1dbafb89e94dd0a8148bb39c0ebd99684d8",
+          "observedAt": "2026-11-11T08:46:20.811Z"
+        },
+        {
+          "regularDps": 0.06,
+          "specialDps": 0,
+          "totalDps": 0.06,
+          "paymentDate": "2025-12-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.06",
+            "Payment date                             : 11-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Sep-2025"
+          ],
+          "id": "100057900",
+          "publishedAt": "2025-11-14",
+          "headline": "Interim Dividend 2025",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=100057900&symbol=WHAUP",
+          "evidenceFile": "data/dividend-evidence/notices/WHAUP-100057900.html",
+          "sha256": "263a9a9b4e946507e12d441cbc3798fd89c07b9bb6c542c1c9a271cd7dba1f1d",
+          "observedAt": "2026-11-11T08:46:20.616Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:THAI",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:THAI",
+        "source": "https://www.set.or.th/api/set/stock/THAI/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/THAI-actions.json",
+        "sha256": "e52840e5cb560c4c93341d8b891844b99c84cc6280deba5a733b5c5f4a0bc1ae",
+        "observedAt": "2026-11-11T08:33:49.373Z"
+      },
+      "regularDps": 0.21,
+      "specialDps": 0,
+      "totalDps": 0.21,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101704400&symbol=THAI",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:52.890Z",
+      "components": [
+        {
+          "regularDps": 0.21,
+          "specialDps": 0,
+          "totalDps": 0.21,
+          "paymentDate": "2026-05-18",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.21",
+            "Payment date                             : 18-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101704400",
+          "publishedAt": "2026-02-26",
+          "headline": "Determination of the date and agenda for the 2026 Annual General Meeting of Shareholders and the payment of dividends for the operating results of the year 2025 of Thai Airways International Public Company Limited",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101704400&symbol=THAI",
+          "evidenceFile": "data/dividend-evidence/notices/THAI-101704400.html",
+          "sha256": "5aa8e8a4da308af45852310f05dac758cea22f33b623a8887669a92b45e5b2bf",
+          "observedAt": "2026-11-11T08:45:52.890Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:SPALI",
+        "source": "https://www.set.or.th/api/set/stock/SPALI/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/SPALI-actions.json",
+        "sha256": "1a73d1e84ac94c81f90dd9f9e271f1b66c7f9a54680b46ddb5fbd1664024ef66",
+        "observedAt": "2026-11-11T08:33:48.210Z"
+      },
+      "regularDps": 1.25,
+      "specialDps": 0,
+      "totalDps": 1.25,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101507300&symbol=SPALI",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:37.968Z",
+      "components": [
+        {
+          "regularDps": 0.7,
+          "specialDps": 0,
+          "totalDps": 0.7,
+          "paymentDate": "2026-05-19",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.70",
+            "Payment date                             : 19-May-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101507300",
+          "publishedAt": "2026-02-24",
+          "headline": "Notification of the 2026 Annual General Meeting of Shareholders and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101507300&symbol=SPALI",
+          "evidenceFile": "data/dividend-evidence/notices/SPALI-101507300.html",
+          "sha256": "3ee5de8aed39240260160e44acf563aa2e78b95aaff93bcb740d55d82cad9eb8",
+          "observedAt": "2026-11-11T08:45:37.382Z"
+        },
+        {
+          "regularDps": 0.55,
+          "specialDps": 0,
+          "totalDps": 0.55,
+          "paymentDate": "2025-09-12",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.55",
+            "Payment date                             : 12-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98200400",
+          "publishedAt": "2025-08-13",
+          "headline": "Notification of interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98200400&symbol=SPALI",
+          "evidenceFile": "data/dividend-evidence/notices/SPALI-98200400.html",
+          "sha256": "e9a89b884fec4e037d845c9a2e00aa12b88850a36b65694ebbb370bd30b5bb24",
+          "observedAt": "2026-11-11T08:45:37.968Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TU",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TU",
+        "source": "https://www.set.or.th/api/set/stock/TU/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TU-actions.json",
+        "sha256": "be5adb5fd46b8f979d95e873c6fd6a0dc74a0878ec6d25809ea444f4cd906693",
+        "observedAt": "2026-11-11T08:33:50.527Z"
+      },
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101246600&symbol=TU",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:14.941Z",
+      "components": [
+        {
+          "regularDps": 0.35,
+          "specialDps": 0,
+          "totalDps": 0.35,
+          "paymentDate": "2026-04-24",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.35",
+            "Payment date                             : 24-Apr-2026",
+            "Operating period from 01-Jul-2025 to 31-Dec-2025"
+          ],
+          "id": "101246600",
+          "publishedAt": "2026-02-18",
+          "headline": "Resolutions of the Board of Directors Meeting No. 1/2026 Set up the 2026 Annual General Meeting of Shareholders and Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101246600&symbol=TU",
+          "evidenceFile": "data/dividend-evidence/notices/TU-101246600.html",
+          "sha256": "2959ef5f3fb13e5e37c678c7d1cf92ead52200446ad594816e8f3b1e29580ebd",
+          "observedAt": "2026-11-11T08:46:13.787Z"
+        },
+        {
+          "regularDps": 0.35,
+          "specialDps": 0,
+          "totalDps": 0.35,
+          "paymentDate": "2025-09-01",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.35",
+            "Payment date                             : 01-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "97804200",
+          "publishedAt": "2025-08-04",
+          "headline": "Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=97804200&symbol=TU",
+          "evidenceFile": "data/dividend-evidence/notices/TU-97804200.html",
+          "sha256": "726ff0655b97e38bfcd71a273db1394b135443df2efdd39c4f9d9176c14b53f8",
+          "observedAt": "2026-11-11T08:46:14.941Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:STECON",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:STECON",
+        "source": "https://www.set.or.th/api/set/stock/STECON/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/STECON-actions.json",
+        "sha256": "57f078f50dca06cdefde212f4b8065d3efbf9c1befd7ca7b9912fbf70f9fdd3f",
+        "observedAt": "2026-11-11T08:33:48.657Z"
+      },
+      "regularDps": 0.55,
+      "specialDps": 0,
+      "totalDps": 0.55,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101476800&symbol=STECON",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:44.511Z",
+      "components": [
+        {
+          "regularDps": 0.55,
+          "specialDps": 0,
+          "totalDps": 0.55,
+          "paymentDate": "2026-05-25",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.55",
+            "Payment date                             : 25-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101476800",
+          "publishedAt": "2026-02-24",
+          "headline": "Payment of Dividends, Request for Approval for the Issuance and Offering of Debentures, and Determination of the Date of the 2026 Annual General Meeting  of Shareholders of Stecon Group Public Company Limited (Revised agenda 3)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101476800&symbol=STECON",
+          "evidenceFile": "data/dividend-evidence/notices/STECON-101476800.html",
+          "sha256": "5614a6401355f1e464b3f6033d14cfd1d3cdecfc758cd3b0242a8e37c61dd9cf",
+          "observedAt": "2026-11-11T08:45:44.511Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:MRDIYT",
+        "source": "https://www.set.or.th/api/set/stock/MRDIYT/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/MRDIYT-actions.json",
+        "sha256": "5d6d01cdc2c83fdcae36d4c89f4ff8b5a3f338d81b684c3d54748410593705ca",
+        "observedAt": "2026-11-11T08:33:44.630Z"
+      },
+      "regularDps": 0.11,
+      "specialDps": 0,
+      "totalDps": 0.11,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101808700&symbol=MRDIYT",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:44:56.929Z",
+      "components": [
+        {
+          "regularDps": 0.06,
+          "specialDps": 0,
+          "totalDps": 0.06,
+          "paymentDate": "2026-05-27",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.06",
+            "Payment date                             : 27-May-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101808700",
+          "publishedAt": "2026-02-27",
+          "headline": "Notification of the Resolutions of the Board of Directors regarding the Dividend Payment for the Year 2025 and Determination of the Date and Agenda of the 2026 Annual General Meeting of Shareholders",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101808700&symbol=MRDIYT",
+          "evidenceFile": "data/dividend-evidence/notices/MRDIYT-101808700.html",
+          "sha256": "9af0c3fc717284d96df4e82595407e1ba3ca14a9aa47fb1afc80b2bfcb942da0",
+          "observedAt": "2026-11-11T08:44:56.299Z"
+        },
+        {
+          "regularDps": 0.05,
+          "specialDps": 0,
+          "totalDps": 0.05,
+          "paymentDate": "2025-12-12",
+          "beginOperation": "2025-07-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.05",
+            "Payment date                             : 12-Dec-2025",
+            "Operating period from 01-Jul-2025 to 30-Sep-2025"
+          ],
+          "id": "99983500",
+          "publishedAt": "2025-11-14",
+          "headline": "Announce the Interim Dividend Payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99983500&symbol=MRDIYT",
+          "evidenceFile": "data/dividend-evidence/notices/MRDIYT-99983500.html",
+          "sha256": "a876354744836afd524098a006dfda2705081a5eec03e122827f187abef98bda",
+          "observedAt": "2026-11-11T08:44:56.929Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TFG",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TFG",
+        "source": "https://www.set.or.th/api/set/stock/TFG/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TFG-actions.json",
+        "sha256": "c1182d40431710a16db7341123a643b0d707843036cf4cb312849eedd82be18b",
+        "observedAt": "2026-11-11T08:33:49.238Z"
+      },
+      "regularDps": 0.7,
+      "specialDps": 0,
+      "totalDps": 0.7,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101260000&symbol=TFG",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:45:54.192Z",
+      "components": [
+        {
+          "regularDps": 0.3,
+          "specialDps": 0,
+          "totalDps": 0.3,
+          "paymentDate": "2026-04-24",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.30",
+            "Payment date                             : 24-Apr-2026",
+            "Operating period from 01-Jan-2025 to 31-Dec-2025"
+          ],
+          "id": "101260000",
+          "publishedAt": "2026-02-19",
+          "headline": "Notification of the resolutions of the Board of Directors' Meeting Re: The Approval of the 2025 Financial Statements, Payment of Dividend in Cash, the Appointment of New Directors, and Calling for the 2026 AGM (Revised)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101260000&symbol=TFG",
+          "evidenceFile": "data/dividend-evidence/notices/TFG-101260000.html",
+          "sha256": "69fabfec2108a0237e71ce9c61cfbc4cde35151e8137615f14c298e89960d761",
+          "observedAt": "2026-11-11T08:45:52.440Z"
+        },
+        {
+          "regularDps": 0.1,
+          "specialDps": 0,
+          "totalDps": 0.1,
+          "paymentDate": "2025-12-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.10",
+            "Payment date                             : 11-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Sep-2025"
+          ],
+          "id": "99757300",
+          "publishedAt": "2025-11-12",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99757300&symbol=TFG",
+          "evidenceFile": "data/dividend-evidence/notices/TFG-99757300.html",
+          "sha256": "2076d3425e3d52f58ace3c1ac1e618d4c7c0976f2924c12db3433582f623f8e1",
+          "observedAt": "2026-11-11T08:45:53.730Z"
+        },
+        {
+          "regularDps": 0.225,
+          "specialDps": 0,
+          "totalDps": 0.225,
+          "paymentDate": "2025-09-05",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-06-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.225",
+            "Payment date                             : 05-Sep-2025",
+            "Operating period from 01-Jan-2025 to 30-Jun-2025"
+          ],
+          "id": "98006300",
+          "publishedAt": "2025-08-08",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=98006300&symbol=TFG",
+          "evidenceFile": "data/dividend-evidence/notices/TFG-98006300.html",
+          "sha256": "de453bb6962baa624a80a46446ae43c6c04130937f05e4b734920fbda2d76f38",
+          "observedAt": "2026-11-11T08:45:53.717Z"
+        },
+        {
+          "regularDps": 0.075,
+          "specialDps": 0,
+          "totalDps": 0.075,
+          "paymentDate": "2025-06-11",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-03-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.075",
+            "Payment date                             : 11-Jun-2025",
+            "Operating period from 01-Jan-2025 to 31-Mar-2025"
+          ],
+          "id": "96619000",
+          "publishedAt": "2025-05-13",
+          "headline": "Payment of Interim Dividend",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=96619000&symbol=TFG",
+          "evidenceFile": "data/dividend-evidence/notices/TFG-96619000.html",
+          "sha256": "9b361e5fbed268a98ede677623b846c05db5bafd636459db92d80732306c9aa1",
+          "observedAt": "2026-11-11T08:45:54.192Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "fiscalYear": 2025,
+      "fiscalEnd": "2025-12-31",
+      "periodVerified": true,
+      "actionEvidence": {
+        "symbol": "SET:TRUE",
+        "source": "https://www.set.or.th/api/set/stock/TRUE/corporate-action?lang=en",
+        "evidenceFile": "data/dividend-evidence/TRUE-actions.json",
+        "sha256": "8cce61a214f37e9ef5e9f785ffe15cc5a49aa8890bf23c3ba45a33b0fc914195",
+        "observedAt": "2026-11-11T08:33:50.240Z"
+      },
+      "regularDps": 0.31,
+      "specialDps": 0,
+      "totalDps": 0.31,
+      "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101304100&symbol=TRUE",
+      "reviewed": true,
+      "reviewMethod": "matched-structured-common-cash-v1",
+      "liveAvailableFrom": "2026-11-11",
+      "availableFrom": "2026-11-12",
+      "observedAt": "2026-11-11T08:46:09.658Z",
+      "components": [
+        {
+          "regularDps": 0.12,
+          "specialDps": 0,
+          "totalDps": 0.12,
+          "paymentDate": "2026-05-26",
+          "beginOperation": "2025-10-01",
+          "endOperation": "2025-12-31",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.12",
+            "Payment date                             : 26-May-2026",
+            "Operating period from 01-Oct-2025 to 31-Dec-2025"
+          ],
+          "id": "101304100",
+          "publishedAt": "2026-02-19",
+          "headline": "Notification of Resolutions of the Board of Directors Meeting, the Date fixed for the 2026 Annual General Meeting of the Shareholders and Divedend Payment (Revised Subject)",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=101304100&symbol=TRUE",
+          "evidenceFile": "data/dividend-evidence/notices/TRUE-101304100.html",
+          "sha256": "852ed5310dd138be1490ad06a4f54cd559bd9b7e26c792f120cca97aaf583301",
+          "observedAt": "2026-11-11T08:46:09.252Z"
+        },
+        {
+          "regularDps": 0.19,
+          "specialDps": 0,
+          "totalDps": 0.19,
+          "paymentDate": "2025-12-03",
+          "beginOperation": "2025-01-01",
+          "endOperation": "2025-09-30",
+          "classificationBasis": "structured common cash field, explicit operating period; not a guarantee of recurrence",
+          "anchors": [
+            "Cash dividend payment (baht per share)   : 0.19",
+            "Payment date                             : 03-Dec-2025",
+            "Operating period from 01-Jan-2025 to 30-Sep-2025"
+          ],
+          "id": "99359900",
+          "publishedAt": "2025-11-04",
+          "headline": "Notification of the interim dividend payment",
+          "source": "https://www.set.or.th/en/market/news-and-alert/newsdetails?id=99359900&symbol=TRUE",
+          "evidenceFile": "data/dividend-evidence/notices/TRUE-99359900.html",
+          "sha256": "a8dde07895608710e10f3e277790891835328f41ccc141060b4e5edb99be49be",
+          "observedAt": "2026-11-11T08:46:09.658Z"
+        }
+      ],
+      "availabilityBasis": "first-observed-next-day"
+    }
+  ]
+}

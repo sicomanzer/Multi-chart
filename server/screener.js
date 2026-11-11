@@ -167,6 +167,12 @@ export function sustainableDividend({ years, dividends, asOf = new Date(), ttmEp
   // 3.25 was paid in March 2026, after that window closed. There the trailing
   // record is the only figure that knows a dividend was paid at all.
   const annual = fy && fy.amount > 0 ? fy.amount : ttm;
+  const verified=years.find(y=>y.fiscalYear===fy?.fiscalYear)?.regularDividend;
+  if(verified&&Number.isFinite(verified.regularDps)&&verified.regularDps>=0
+    &&Number.isFinite(verified.totalDps)&&(verified.periodVerified||Math.abs(annual-verified.totalDps)<1e-6)){
+    return {d0:verified.regularDps,ttm,annual:verified.totalDps,inferredAnnual:annual,fiscalYear:fy.fiscalYear,fromStatement:null,
+      hasSpecial:verified.regularDps<verified.totalDps,source:verified.source,sources:verified.components?.map(c=>c.source)??[verified.source]};
+  }
   // The same window a year earlier, so a one-off can be told from a new rate.
   const prior = fy
     ? sumDividends(dividends, addMonths(fy.from, -12), addMonths(fy.to, -12))
@@ -1024,10 +1030,11 @@ export function scoreQuality({
   // FY2025 one (0.96 on EPS 0.96). Reading the stub made the payout null and
   // the name "unknown" when the answer — 100%, over the ceiling — was known.
   const payoutYear = dividend.fiscalYear != null
-    ? years.find((y) => y.fiscalYear === dividend.fiscalYear) ?? last
+    ? years.find((y) => y.fiscalYear === dividend.fiscalYear)
     : last;
-  const payout = payoutYear?.eps > 0 && dividend.d0 > 0
-    ? dividend.d0 / payoutYear.eps
+  const payoutEps=isBank?payoutYear?.payoutEps:(payoutYear?.payoutEps??payoutYear?.eps);
+  const payout = payoutEps > 0 && dividend.d0 > 0
+    ? dividend.d0 / payoutEps
     : null;
   const payoutOk = payout != null ? payout >= 0.40 && payout <= 0.70 : null;
   // Only the shoulder above the band is a warning: 70–80% is still covered but
@@ -1118,6 +1125,8 @@ export function scoreQuality({
     icr,
     dividendYield,
     payout,
+    payoutEvidence:payoutEps>0?{fiscalYear:payoutYear.fiscalYear,eps:payoutEps,dps:dividend.d0,
+      basis:'model-dividend-per-share / same-fiscal-year-EPS',epsSource:isBank?'sec-reviewed-bank':payoutYear.payoutEpsSource??'provider-unverified',statement:payoutYear.statementSnapshot}:null,
     streak,
     dividend,
     growth,

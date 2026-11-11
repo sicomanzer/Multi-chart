@@ -28,7 +28,9 @@ for(const row of raw){
   sourceContentChanged:row.sourceContentChanged??false,
   reviewMethod:'issuer-and-period-and-unit-headers; labelled-cells; balance-sheet-reconciliation',
   revenueBasis:bank?'net-interest-plus-non-interest-operating-income':row.symbol==='SET:PTT'?'sales-and-service-income':row.symbol==='SET:BCP'?'sales-and-service-income':'reported-total-revenue-or-income',
-  fields:{...row.fields,...(old?.fields.reportedEps!=null?{reportedEps:old.fields.reportedEps}:{})},cells:row.fieldEvidence};
+  payoutEpsVerified:old?.payoutEpsVerified??false,
+  ...(old?.regularDividend?{regularDividend:old.regularDividend}:{}),
+  fields:{...row.fields,...(old?.fields.reportedEps!=null?{reportedEps:old.fields.reportedEps}:{}),...(old?.payoutEpsVerified?{payoutEps:old.fields.payoutEps}:{})},cells:{...row.fieldEvidence,...(old?.payoutEpsVerified?{payoutEps:old.cells.payoutEps}:{})}};
  versions.push(base);
  const prior=raw.find(r=>r.symbol===row.symbol&&r.fiscalYear===row.fiscalYear-1);
  if(!prior || prior.availableFrom>row.availableFrom)continue;

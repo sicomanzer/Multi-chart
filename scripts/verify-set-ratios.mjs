@@ -31,6 +31,15 @@ for (const id of ['roeLevel','roeConsistency','roaLevel','npmLevel','npmTrend','
 const official = [{fiscalYear:2025,asOf:'2025-12-31',roe:.1,roa:.0643,npm:.0435,de:.9786}];
 const fixed = reconcileYears([{fiscalYear:2025,netIncome:100,roe:.2,roa:.0269,npm:.03,de:99}],[],official)[0];
 assert.equal(fixed.roa,.0643);
+const officialEps=parseSetFundamentals(symbol,trading,[{...statements[0],quarter:'Q9',year:2025,asOfDate:'2025-12-31',fsType:'C',eps:9.45}]);
+assert.equal(officialEps.annualYears[0].payoutEps,9.45);
+const epsYear=reconcileYears([{fiscalYear:2025,asOf:'2025-12-31',eps:8.66}],[],officialEps.annualYears)[0];
+assert.equal(epsYear.eps,8.66); // do not rewrite historical EPS growth/share units
+assert.equal(epsYear.payoutEps,9.45);
+const payout=scoreQuality({years:[epsYear],dividends:[{date:'2026-05-01',amount:1}],price:20,asOf:new Date('2026-11-11')});
+assert.ok(Math.abs(payout.payout-1/9.45)<1e-12);
+assert.equal(payout.payoutEvidence.epsSource,'set.or.th');
+assert.equal(parseSetFundamentals(symbol,trading,[{...statements[0],quarter:'Q9',year:2025,fsType:'S',eps:9.45}]).annualYears[0].payoutEps,null);
 assert.equal(fixed.de,.9786);
 assert.equal(fixed.ratioSource,'set.or.th');
 assert.deepEqual(currentMultiples({officialMultiples:{pe:12.72,pbv:1.46}}),{peCurrent:12.72,pbvCurrent:1.46});

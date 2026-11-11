@@ -1,0 +1,656 @@
+{
+  "checkedAt": "2026-11-11T08:24:39.931Z",
+  "rows": [
+    {
+      "symbol": "SET:BH",
+      "year": 2025,
+      "modelEPS": 8.66,
+      "setEPS": 9.45,
+      "withinPrintedPrecision": false
+    },
+    {
+      "symbol": "SET:BDMS",
+      "year": 2025,
+      "modelEPS": 1,
+      "setEPS": 1,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "year": 2025,
+      "modelEPS": 16.1,
+      "setEPS": 16.1,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CPN",
+      "year": 2025,
+      "modelEPS": 4.2,
+      "setEPS": 4.2,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:DELTA",
+      "year": 2025,
+      "modelEPS": 1.99,
+      "setEPS": 1.99,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CBG",
+      "year": 2025,
+      "modelEPS": 2.32,
+      "setEPS": 2.32,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CPALL",
+      "year": 2025,
+      "modelEPS": 3.1,
+      "setEPS": 3.1,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:COM7",
+      "year": 2025,
+      "modelEPS": 1.71,
+      "setEPS": 1.71,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BA",
+      "year": 2025,
+      "modelEPS": 1.69,
+      "setEPS": 1.69,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AMATA",
+      "year": 2025,
+      "modelEPS": 2.74,
+      "setEPS": 2.74,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BBL",
+      "year": 2025,
+      "modelEPS": 24.10177735937424,
+      "setEPS": 24.1,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BCH",
+      "year": 2025,
+      "modelEPS": 0.53,
+      "setEPS": 0.53,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CHG",
+      "year": 2025,
+      "modelEPS": 0.0845,
+      "setEPS": 0.08,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:GFPT",
+      "year": 2025,
+      "modelEPS": 1.95,
+      "setEPS": 1.95,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AOT",
+      "year": 2025,
+      "modelEPS": 1.27,
+      "setEPS": 1.27,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AURA",
+      "year": 2025,
+      "modelEPS": 1.09,
+      "setEPS": 1.09,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CCET",
+      "year": 2025,
+      "modelEPS": 0.2,
+      "setEPS": 0.2,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CPF",
+      "year": 2025,
+      "modelEPS": 3.12,
+      "setEPS": 3.12,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:GLOBAL",
+      "year": 2025,
+      "modelEPS": 0.350614,
+      "setEPS": 0.36,
+      "withinPrintedPrecision": false
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "year": 2025,
+      "modelEPS": 1.48,
+      "setEPS": 1.48,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AWC",
+      "year": 2025,
+      "modelEPS": 0.1993,
+      "setEPS": 0.2,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AAV",
+      "year": 2025,
+      "modelEPS": 0.1818,
+      "setEPS": 0.18,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AP",
+      "year": 2025,
+      "modelEPS": 1.37,
+      "setEPS": 1.37,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BTG",
+      "year": 2025,
+      "modelEPS": 3.46,
+      "setEPS": 3.46,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BCPG",
+      "year": 2025,
+      "modelEPS": 0.29,
+      "setEPS": 0.29,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "year": 2026,
+      "modelEPS": 12.44,
+      "setEPS": 12.44,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CRC",
+      "year": 2025,
+      "modelEPS": 1.23,
+      "setEPS": 1.23,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:EGCO",
+      "year": 2025,
+      "modelEPS": 8.98,
+      "setEPS": 8.98,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BLA",
+      "year": 2025,
+      "modelEPS": 4.08,
+      "setEPS": 4.08,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BEM",
+      "year": 2025,
+      "modelEPS": 0.25,
+      "setEPS": 0.25,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BCP",
+      "year": 2025,
+      "modelEPS": 2.08,
+      "setEPS": 2.08,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:ERW",
+      "year": 2025,
+      "modelEPS": 0.1715,
+      "setEPS": 0.17,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BJC",
+      "year": 2025,
+      "modelEPS": 1,
+      "setEPS": 1,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "year": 2025,
+      "modelEPS": 0.29,
+      "setEPS": 0.29,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:CK",
+      "year": 2025,
+      "modelEPS": 1.98,
+      "setEPS": 1.98,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "year": 2025,
+      "modelEPS": 0.173077,
+      "setEPS": 0.18,
+      "withinPrintedPrecision": false
+    },
+    {
+      "symbol": "SET:ICHI",
+      "year": 2025,
+      "modelEPS": 1.02,
+      "setEPS": 1.02,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:PRM",
+      "year": 2025,
+      "modelEPS": 0.96,
+      "setEPS": 0.96,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:OSP",
+      "year": 2025,
+      "modelEPS": 1.22,
+      "setEPS": 1.22,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:KTB",
+      "year": 2025,
+      "modelEPS": 3.45,
+      "setEPS": 3.45,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:MEGA",
+      "year": 2025,
+      "modelEPS": 2.19,
+      "setEPS": 2.19,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "year": 2025,
+      "modelEPS": 15.18,
+      "setEPS": 15.18,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:KTC",
+      "year": 2025,
+      "modelEPS": 3.02,
+      "setEPS": 3.02,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:GULF",
+      "year": 2024,
+      "modelEPS": 1.55,
+      "setEPS": 1.43,
+      "withinPrintedPrecision": false
+    },
+    {
+      "symbol": "SET:PLANB",
+      "year": 2025,
+      "modelEPS": 0.25,
+      "setEPS": 0.25,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:MTC",
+      "year": 2025,
+      "modelEPS": 3.17,
+      "setEPS": 3.17,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:PTT",
+      "year": 2025,
+      "modelEPS": 3.15,
+      "setEPS": 3.15,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SAWAD",
+      "year": 2025,
+      "modelEPS": 3.02,
+      "setEPS": 3.02,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "year": 2025,
+      "modelEPS": 0.46,
+      "setEPS": 0.46,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:OR",
+      "year": 2025,
+      "modelEPS": 0.94,
+      "setEPS": 0.94,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:RCL",
+      "year": 2025,
+      "modelEPS": 9.85,
+      "setEPS": 9.85,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "year": 2025,
+      "modelEPS": 0.46,
+      "setEPS": 0.46,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "year": 2025,
+      "modelEPS": 0.21,
+      "setEPS": 0.2,
+      "withinPrintedPrecision": false
+    },
+    {
+      "symbol": "SET:M",
+      "year": 2025,
+      "modelEPS": 0.93,
+      "setEPS": 0.93,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:QH",
+      "year": 2025,
+      "modelEPS": 0.16,
+      "setEPS": 0.16,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SCGP",
+      "year": 2025,
+      "modelEPS": 0.95,
+      "setEPS": 0.95,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:RATCH",
+      "year": 2025,
+      "modelEPS": 2.86,
+      "setEPS": 2.86,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:KCE",
+      "year": 2025,
+      "modelEPS": 0.7,
+      "setEPS": 0.7,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SIRI",
+      "year": 2025,
+      "modelEPS": 0.239,
+      "setEPS": 0.24,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:JMT",
+      "year": 2025,
+      "modelEPS": 0.71,
+      "setEPS": 0.71,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:GPSC",
+      "year": 2025,
+      "modelEPS": 2.27,
+      "setEPS": 2.27,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:PTG",
+      "year": 2025,
+      "modelEPS": 0.61,
+      "setEPS": 0.61,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:MINT",
+      "year": 2025,
+      "modelEPS": 1.29,
+      "setEPS": 1.29,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:HANA",
+      "year": 2025,
+      "modelEPS": 0.76,
+      "setEPS": 0.76,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SCC",
+      "year": 2025,
+      "modelEPS": 11.73,
+      "setEPS": 11.73,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:GST",
+      "year": 2025,
+      "modelEPS": 0.04,
+      "setEPS": 0.04,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:LH",
+      "year": 2025,
+      "modelEPS": 0.31,
+      "setEPS": 0.31,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:KKP",
+      "year": 2025,
+      "modelEPS": 7.17,
+      "setEPS": 7.17,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:KBANK",
+      "year": 2025,
+      "modelEPS": 20.63,
+      "setEPS": 20.63,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SCB",
+      "year": 2025,
+      "modelEPS": 14.103494770555406,
+      "setEPS": 14.1,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TOA",
+      "year": 2025,
+      "modelEPS": 1.5,
+      "setEPS": 1.5,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:KAMART",
+      "year": 2025,
+      "modelEPS": 0.55,
+      "setEPS": 0.55,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TISCO",
+      "year": 2025,
+      "modelEPS": 8.32,
+      "setEPS": 8.32,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:MC",
+      "year": 2025,
+      "modelEPS": 0.96,
+      "setEPS": 0.96,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TFG",
+      "year": 2025,
+      "modelEPS": 1.26,
+      "setEPS": 1.28,
+      "withinPrintedPrecision": false
+    },
+    {
+      "symbol": "SET:TTW",
+      "year": 2025,
+      "modelEPS": 0.82,
+      "setEPS": 0.82,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TVO",
+      "year": 2025,
+      "modelEPS": 2.46,
+      "setEPS": 2.46,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TACC",
+      "year": 2025,
+      "modelEPS": 0.5,
+      "setEPS": 0.5,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TTB",
+      "year": 2025,
+      "modelEPS": 0.22,
+      "setEPS": 0.22,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:HTC",
+      "year": 2025,
+      "modelEPS": 1.41,
+      "setEPS": 1.41,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:WHA",
+      "year": 2025,
+      "modelEPS": 0.3436,
+      "setEPS": 0.34,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:BKIH",
+      "year": 2025,
+      "modelEPS": 29.45,
+      "setEPS": 29.45,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TCAP",
+      "year": 2025,
+      "modelEPS": 7.39,
+      "setEPS": 7.39,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TASCO",
+      "year": 2025,
+      "modelEPS": 0.72,
+      "setEPS": 0.72,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "year": 2025,
+      "modelEPS": 0.27,
+      "setEPS": 0.27,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:THAI",
+      "year": 2025,
+      "modelEPS": 1.09,
+      "setEPS": 1.09,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SPALI",
+      "year": 2025,
+      "modelEPS": 2.09,
+      "setEPS": 2.09,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TOP",
+      "year": 2025,
+      "modelEPS": 6.53,
+      "setEPS": 6.53,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:SPRC",
+      "year": 2025,
+      "modelEPS": 0.59,
+      "setEPS": 0.59,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TU",
+      "year": 2025,
+      "modelEPS": 1.16,
+      "setEPS": 1.16,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:STECON",
+      "year": 2025,
+      "modelEPS": 1.3,
+      "setEPS": 1.3,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "year": 2025,
+      "modelEPS": 1.7,
+      "setEPS": 1.7,
+      "withinPrintedPrecision": true
+    },
+    {
+      "symbol": "SET:TRUE",
+      "year": 2025,
+      "modelEPS": 0.27,
+      "setEPS": 0.27,
+      "withinPrintedPrecision": true
+    }
+  ]
+}
