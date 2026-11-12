@@ -31,6 +31,8 @@ const SUITES = [
   { name: 'statement versions', file: 'verify-statement-versions.mjs', needsServer: false },
   { name: 'SET ratios', file: 'verify-set-ratios.mjs', needsServer: false },
   { name: 'free source fallback', file: 'verify-free-data-fallback.mjs', needsServer: false },
+  { name: 'API failure messages', file: 'verify-api-errors.mjs', needsServer: false },
+  { name: 'business classification parity', file: 'verify-business-classification.mjs', needsServer: false },
   { name: 'units', file: 'verify-units.mjs', needsServer: false },
   { name: 'screener', file: 'verify-screener.mjs', needsServer: true },
   { name: 'status', file: 'verify-status.mjs', needsServer: true },

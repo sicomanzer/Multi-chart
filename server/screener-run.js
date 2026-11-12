@@ -10,7 +10,7 @@
  */
 import { loadFinancials } from './fin.js';
 import { getSetFundamentals } from './set-fundamentals.js';
-import {isBankSymbol} from './business-models.js';
+import {isBankSymbol,applyReviewedBusinessModel} from './business-models.js';
 import {loadStatementVersions,bankScoringYears,selectStatementVersions} from './statement-versions.js';
 import {chooseFreeSources,applyFreeHeadlineFallback} from './free-data-fallback.js';
 import {loadBankRisk,selectBankRisk} from './bank-risk.js';
@@ -28,13 +28,12 @@ async function attachOfficialHistory(fin) {
   const bankYears=isBankSymbol(fin.symbol)
     ? bankScoringYears(versions,fin.symbol,at.toISOString().slice(0,10)):null;
   const bankRisk=bankYears?selectBankRisk(await loadBankRisk({symbols:[fin.symbol]}),fin.symbol,bankYears.at(-1)?.fiscalYear,new Date()):null;
-  return { ...fin, ...sourcePlan,
+  return { ...applyReviewedBusinessModel(fin), ...sourcePlan,
     dividendEvidence,
     ...(bankYears?{bankScoreYears:bankYears}:{}),
     bankRisk,
     officialAnnualStale: Boolean(official?.stale),
-    isFinancial: fin.isFinancial || isBankSymbol(fin.symbol) || official?.accountFormId === '1',
-    ...(official?.accountFormId === '5' ? { dataIssue: 'reit-framework-not-supported' } : {}) };
+  };
 }
 
 async function applyOfficialRatios(row,fin) {
@@ -229,6 +228,7 @@ function buildGrowthHistory(trusted, history) {
  */
 function unknownRow(fin, reason) {
   return {
+    businessClassification:fin.businessClassification??null,
     symbol: fin.symbol,
     bare: fin.bare,
     name: fin.name,
@@ -545,6 +545,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     dividendYield: quality.dividendYield,
     recurringDividendYield: quality.dividendYield,
     qualityRatioSource:isBankSymbol(fin.symbol)?'sec-reviewed-bank':fin.qualitySource??(fin.officialAnnual?'set.or.th':'statement-model'),
+    businessClassification:fin.businessClassification??null,
     sourceFallback:fin.sourceFallback??false,
     sourceFallbackReason:fin.sourceFallbackReason??null,
     qualityFinancialAsOf:scoringYears.at(-1)?.asOf??null,

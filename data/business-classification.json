@@ -1,0 +1,995 @@
+{
+  "checkedAt": "2026-11-11T08:23:10.990Z",
+  "rows": [
+    {
+      "symbol": "SET:AAV",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/AAV/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:41.467Z"
+    },
+    {
+      "symbol": "SET:ADVANC",
+      "sector": "ICT",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/ADVANC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:41.684Z"
+    },
+    {
+      "symbol": "SET:AEONTS",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "2",
+      "source": "https://www.set.or.th/api/set/stock/AEONTS/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:41.905Z"
+    },
+    {
+      "symbol": "SET:AMATA",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/AMATA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:42.123Z"
+    },
+    {
+      "symbol": "SET:AOT",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/AOT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:42.338Z"
+    },
+    {
+      "symbol": "SET:AP",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/AP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:42.635Z"
+    },
+    {
+      "symbol": "SET:AURA",
+      "sector": "FASHION",
+      "industry": "CONSUMP",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/AURA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:42.836Z"
+    },
+    {
+      "symbol": "SET:AWC",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/AWC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:43.040Z"
+    },
+    {
+      "symbol": "SET:BA",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:43.492Z"
+    },
+    {
+      "symbol": "SET:BAM",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/BAM/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:43.740Z"
+    },
+    {
+      "symbol": "SET:BANPU",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BANPU/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:44.054Z"
+    },
+    {
+      "symbol": "SET:BBL",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/BBL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:44.255Z"
+    },
+    {
+      "symbol": "SET:BCH",
+      "sector": "HELTH",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BCH/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:44.490Z"
+    },
+    {
+      "symbol": "SET:BCP",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BCP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:44.715Z"
+    },
+    {
+      "symbol": "SET:BCPG",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BCPG/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:45.102Z"
+    },
+    {
+      "symbol": "SET:BDMS",
+      "sector": "HELTH",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BDMS/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:45.324Z"
+    },
+    {
+      "symbol": "SET:BEM",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BEM/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:45.683Z"
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BGRIM/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:45.893Z"
+    },
+    {
+      "symbol": "SET:BH",
+      "sector": "HELTH",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BH/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:46.103Z"
+    },
+    {
+      "symbol": "SET:BJC",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BJC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:46.426Z"
+    },
+    {
+      "symbol": "SET:BLA",
+      "sector": "INSUR",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "4",
+      "source": "https://www.set.or.th/api/set/stock/BLA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:46.874Z"
+    },
+    {
+      "symbol": "SET:BTG",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BTG/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:47.064Z"
+    },
+    {
+      "symbol": "SET:BTS",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/BTS/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:47.421Z"
+    },
+    {
+      "symbol": "SET:CBG",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CBG/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:47.908Z"
+    },
+    {
+      "symbol": "SET:CCET",
+      "sector": "ETRON",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CCET/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:48.165Z"
+    },
+    {
+      "symbol": "SET:CENTEL",
+      "sector": "TOURISM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CENTEL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:48.648Z"
+    },
+    {
+      "symbol": "SET:CHG",
+      "sector": "HELTH",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CHG/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:48.837Z"
+    },
+    {
+      "symbol": "SET:CK",
+      "sector": "CONS",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CK/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:49.031Z"
+    },
+    {
+      "symbol": "SET:COM7",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/COM7/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:49.225Z"
+    },
+    {
+      "symbol": "SET:CPALL",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CPALL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:49.487Z"
+    },
+    {
+      "symbol": "SET:CPF",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CPF/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:49.690Z"
+    },
+    {
+      "symbol": "SET:CPN",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CPN/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:49.948Z"
+    },
+    {
+      "symbol": "SET:CRC",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/CRC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:50.201Z"
+    },
+    {
+      "symbol": "SET:DELTA",
+      "sector": "ETRON",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/DELTA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:50.409Z"
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/DOHOME/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:50.674Z"
+    },
+    {
+      "symbol": "SET:EA",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/EA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:50.882Z"
+    },
+    {
+      "symbol": "SET:EGCO",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/EGCO/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:51.216Z"
+    },
+    {
+      "symbol": "SET:ERW",
+      "sector": "TOURISM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/ERW/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:51.556Z"
+    },
+    {
+      "symbol": "SET:GFPT",
+      "sector": "AGRI",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/GFPT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:51.997Z"
+    },
+    {
+      "symbol": "SET:GLOBAL",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/GLOBAL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:52.215Z"
+    },
+    {
+      "symbol": "SET:GPSC",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/GPSC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:52.463Z"
+    },
+    {
+      "symbol": "SET:GST",
+      "sector": "ICT",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/GST/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:52.773Z"
+    },
+    {
+      "symbol": "SET:GULF",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/GULF/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:52.982Z"
+    },
+    {
+      "symbol": "SET:GUNKUL",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/GUNKUL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:53.211Z"
+    },
+    {
+      "symbol": "SET:HANA",
+      "sector": "ETRON",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/HANA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:53.462Z"
+    },
+    {
+      "symbol": "SET:HMPRO",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/HMPRO/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:53.713Z"
+    },
+    {
+      "symbol": "SET:ICHI",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/ICHI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:53.963Z"
+    },
+    {
+      "symbol": "SET:IRPC",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/IRPC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:54.405Z"
+    },
+    {
+      "symbol": "SET:IVL",
+      "sector": "PETRO",
+      "industry": "INDUS",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/IVL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:54.671Z"
+    },
+    {
+      "symbol": "SET:JMART",
+      "sector": "ICT",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/JMART/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:54.892Z"
+    },
+    {
+      "symbol": "SET:JMT",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "2",
+      "source": "https://www.set.or.th/api/set/stock/JMT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:55.093Z"
+    },
+    {
+      "symbol": "SET:KBANK",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/KBANK/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:55.408Z"
+    },
+    {
+      "symbol": "SET:KCE",
+      "sector": "ETRON",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/KCE/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:55.614Z"
+    },
+    {
+      "symbol": "SET:KKP",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/KKP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:55.814Z"
+    },
+    {
+      "symbol": "SET:KTB",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/KTB/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:56.016Z"
+    },
+    {
+      "symbol": "SET:KTC",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "2",
+      "source": "https://www.set.or.th/api/set/stock/KTC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:56.292Z"
+    },
+    {
+      "symbol": "SET:LH",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/LH/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:56.488Z"
+    },
+    {
+      "symbol": "SET:M",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/M/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:56.775Z"
+    },
+    {
+      "symbol": "SET:MEGA",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/MEGA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:57.022Z"
+    },
+    {
+      "symbol": "SET:MINT",
+      "sector": "TOURISM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/MINT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:57.237Z"
+    },
+    {
+      "symbol": "SET:MOSHI",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/MOSHI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:57.489Z"
+    },
+    {
+      "symbol": "SET:MRDIYT",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/MRDIYT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:57.746Z"
+    },
+    {
+      "symbol": "SET:MTC",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "2",
+      "source": "https://www.set.or.th/api/set/stock/MTC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:57.963Z"
+    },
+    {
+      "symbol": "SET:OR",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/OR/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:58.161Z"
+    },
+    {
+      "symbol": "SET:OSP",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/OSP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:58.450Z"
+    },
+    {
+      "symbol": "SET:PLANB",
+      "sector": "MEDIA",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PLANB/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:58.703Z"
+    },
+    {
+      "symbol": "SET:PR9",
+      "sector": "HELTH",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PR9/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:59.097Z"
+    },
+    {
+      "symbol": "SET:PRM",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PRM/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:59.395Z"
+    },
+    {
+      "symbol": "SET:PTG",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PTG/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:22:59.847Z"
+    },
+    {
+      "symbol": "SET:PTT",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PTT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:00.059Z"
+    },
+    {
+      "symbol": "SET:PTTEP",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PTTEP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:00.260Z"
+    },
+    {
+      "symbol": "SET:PTTGC",
+      "sector": "PETRO",
+      "industry": "INDUS",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/PTTGC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:00.487Z"
+    },
+    {
+      "symbol": "SET:QH",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/QH/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:00.787Z"
+    },
+    {
+      "symbol": "SET:RATCH",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/RATCH/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:01.048Z"
+    },
+    {
+      "symbol": "SET:RCL",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/RCL/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:01.268Z"
+    },
+    {
+      "symbol": "SET:SAWAD",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "2",
+      "source": "https://www.set.or.th/api/set/stock/SAWAD/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:01.520Z"
+    },
+    {
+      "symbol": "SET:SCB",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/SCB/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:01.712Z"
+    },
+    {
+      "symbol": "SET:SCC",
+      "sector": "CONMAT",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/SCC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:02.032Z"
+    },
+    {
+      "symbol": "SET:SCGP",
+      "sector": "PKG",
+      "industry": "INDUS",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/SCGP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:02.508Z"
+    },
+    {
+      "symbol": "SET:SIRI",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/SIRI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:02.768Z"
+    },
+    {
+      "symbol": "SET:SPALI",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/SPALI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:03.024Z"
+    },
+    {
+      "symbol": "SET:SPRC",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/SPRC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:03.324Z"
+    },
+    {
+      "symbol": "SET:STA",
+      "sector": "AGRI",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/STA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:03.535Z"
+    },
+    {
+      "symbol": "SET:STECON",
+      "sector": "CONS",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/STECON/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:03.874Z"
+    },
+    {
+      "symbol": "SET:STGT",
+      "sector": "PERSON",
+      "industry": "CONSUMP",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/STGT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:04.097Z"
+    },
+    {
+      "symbol": "SET:TASCO",
+      "sector": "CONMAT",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TASCO/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:04.387Z"
+    },
+    {
+      "symbol": "SET:TCAP",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/TCAP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:04.589Z"
+    },
+    {
+      "symbol": "SET:TFG",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TFG/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:04.868Z"
+    },
+    {
+      "symbol": "SET:THAI",
+      "sector": "TRANS",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/THAI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:05.072Z"
+    },
+    {
+      "symbol": "SET:TIDLOR",
+      "sector": "FIN",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "2",
+      "source": "https://www.set.or.th/api/set/stock/TIDLOR/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:05.273Z"
+    },
+    {
+      "symbol": "SET:TISCO",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/TISCO/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:05.474Z"
+    },
+    {
+      "symbol": "SET:TLI",
+      "sector": "INSUR",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "4",
+      "source": "https://www.set.or.th/api/set/stock/TLI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:05.696Z"
+    },
+    {
+      "symbol": "SET:TOA",
+      "sector": "CONMAT",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TOA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:05.903Z"
+    },
+    {
+      "symbol": "SET:TOP",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TOP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:06.095Z"
+    },
+    {
+      "symbol": "SET:TRUE",
+      "sector": "ICT",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TRUE/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:06.364Z"
+    },
+    {
+      "symbol": "SET:TTB",
+      "sector": "BANK",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "1",
+      "source": "https://www.set.or.th/api/set/stock/TTB/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:06.654Z"
+    },
+    {
+      "symbol": "SET:TU",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TU/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:06.858Z"
+    },
+    {
+      "symbol": "SET:VGI",
+      "sector": "MEDIA",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/VGI/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:07.122Z"
+    },
+    {
+      "symbol": "SET:WHA",
+      "sector": "PROP",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/WHA/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:07.353Z"
+    },
+    {
+      "symbol": "SET:WHAUP",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/WHAUP/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:07.581Z"
+    },
+    {
+      "symbol": "SET:JAS",
+      "sector": "ICT",
+      "industry": "TECH",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/JAS/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:07.886Z"
+    },
+    {
+      "symbol": "SET:TVO",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TVO/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:08.336Z"
+    },
+    {
+      "symbol": "SET:MC",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/MC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:08.541Z"
+    },
+    {
+      "symbol": "SET:TACC",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TACC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:08.815Z"
+    },
+    {
+      "symbol": "SET:BKIH",
+      "sector": "INSUR",
+      "industry": "FINCIAL",
+      "asOf": "2026-11-10",
+      "accountFormId": "4",
+      "source": "https://www.set.or.th/api/set/stock/BKIH/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:09.208Z"
+    },
+    {
+      "symbol": "SET:HTC",
+      "sector": "FOOD",
+      "industry": "AGRO",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/HTC/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:09.496Z"
+    },
+    {
+      "symbol": "SET:TTW",
+      "sector": "ENERG",
+      "industry": "RESOURC",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/TTW/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:09.708Z"
+    },
+    {
+      "symbol": "SET:KAMART",
+      "sector": "COMM",
+      "industry": "SERVICE",
+      "asOf": "2026-11-10",
+      "accountFormId": "6",
+      "source": "https://www.set.or.th/api/set/stock/KAMART/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:09.970Z"
+    },
+    {
+      "symbol": "SET:CPNREIT",
+      "sector": "PF&REIT",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "5",
+      "source": "https://www.set.or.th/api/set/stock/CPNREIT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:10.237Z"
+    },
+    {
+      "symbol": "SET:INETREIT",
+      "sector": "PF&REIT",
+      "industry": "PROPCON",
+      "asOf": "2026-11-10",
+      "accountFormId": "5",
+      "source": "https://www.set.or.th/api/set/stock/INETREIT/company-highlight/trading-stat?lang=en",
+      "checkedAt": "2026-11-11T08:23:10.823Z"
+    }
+  ]
+}

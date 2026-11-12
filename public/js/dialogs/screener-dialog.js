@@ -326,6 +326,7 @@ async function runScreen(state, render, { background = false } = {}) {
 
 async function openDetail(state, render, symbol) {
   state.detailSymbol = symbol;
+  state.detailTab = 'overview';
   state.overrides = { r: 0.09, g1: 0.05, g2: 0.03, years: 5, aaaYield: 0.0206 };
   render();
   await refreshDetail(state, render);
@@ -357,6 +358,7 @@ function paint(body, state, board, setAuto) {
   const rerender = () => paint(body, state, board, setAuto);
   body.innerHTML = '';
   body.classList.add('screener-body');
+  body.classList.toggle('scr-detail-page',Boolean(state.detailSymbol));
 
   if (state.detailSymbol) {
     paintDetail(body, state, board, rerender);
@@ -1750,16 +1752,68 @@ function paintDetail(body, state, board, rerender) {
     return;
   }
 
-  const grid = document.createElement('div');
-  grid.className = 'scr-detail-grid';
-  grid.appendChild(scorecard(detail));
-  grid.appendChild(calculator(detail, state, rerender));
-  body.appendChild(grid);
+  body.appendChild(detailMetrics(detail));
+  const tabs=document.createElement('div');tabs.className='scr-detail-tabs';tabs.setAttribute('role','tablist');
+  tabs.setAttribute('aria-label',isThai()?'ส่วนข้อมูลหุ้น':'Stock analysis sections');
+  const pane=document.createElement('div');pane.className='scr-detail-pane';pane.setAttribute('role','tabpanel');pane.id='scr-detail-panel';
+  const sections=[['overview','ภาพรวม','Overview'],['quality','คุณภาพกิจการ','Quality'],['valuation','ประเมินมูลค่า','Valuation'],['history','กราฟและงบการเงิน','Financial history'],['comparison','เทียบมูลค่า','Comparison']];
+  for(const [id,th,en] of sections){
+    const button=document.createElement('button');button.type='button';button.className='scr-detail-tab';button.textContent=isThai()?th:en;
+    button.id=`scr-detail-tab-${id}`;button.setAttribute('role','tab');button.setAttribute('aria-controls',pane.id);
+    const selected=(state.detailTab??'overview')===id;
+    button.setAttribute('aria-selected',String(selected));button.tabIndex=selected?0:-1;
+    button.addEventListener('click',()=>{state.detailTab=id;rerender();body.querySelector(`#scr-detail-tab-${id}`)?.focus({preventScroll:true});});
+    button.addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      event.preventDefault();const index=sections.findIndex(s=>s[0]===id);
+      state.detailTab=sections[event.key==='Home'?0:event.key==='End'?sections.length-1:(index+(event.key==='ArrowRight'?1:-1)+sections.length)%sections.length][0];
+      rerender();body.querySelector(`#scr-detail-tab-${state.detailTab}`)?.focus({preventScroll:true});
+    });tabs.appendChild(button);
+  }
+  pane.setAttribute('aria-labelledby',`scr-detail-tab-${state.detailTab??'overview'}`);
+  body.append(tabs,pane);
+  switch(state.detailTab??'overview'){
+    case 'quality':pane.appendChild(scorecard(detail));break;
+    case 'valuation':pane.appendChild(calculator(detail,state,rerender));break;
+    case 'history':pane.append(chartBlock(detail),financialsBlock(detail));break;
+    case 'comparison':pane.append(bandsBlock(detail),peerBlock(detail));break;
+    default:pane.appendChild(detailOverview(detail));
+  }
+}
 
-  body.appendChild(bandsBlock(detail));
-  body.appendChild(peerBlock(detail));
-  body.appendChild(chartBlock(detail));
-  body.appendChild(financialsBlock(detail));
+function detailMetrics(detail){
+  const box=document.createElement('div');box.className='scr-detail-metrics';
+  const values=[
+    [isThai()?'ราคาหุ้น':'Share price',`${money(detail.price)} ${detail.currency??''}`,detail.priceDate??'—'],
+    [isThai()?'มูลค่าจาก DDM':'DDM value',detail.ddm?.ok?money(detail.ddm.intrinsic):'—',isThai()?'ตามสมมติฐานของแบบจำลอง':'Based on model assumptions'],
+    [isThai()?'ส่วนเผื่อความปลอดภัย':'Margin of safety',detail.ddm?.mos!=null?`${detail.ddm.mos.toFixed(1)}%`:'—',isThai()?'เทียบราคากับมูลค่า DDM':'Price versus DDM value'],
+    [isThai()?'ยีลด์ปันผลปกติ':'Recurring dividend yield',percent(detail.recurringDividendYield),isThai()?'ไม่รวมปันผลพิเศษ':'Excludes special dividends'],
+  ];
+  for(const [label,value,hint] of values){const card=document.createElement('div');card.className='scr-metric';
+    card.innerHTML=`<span>${escape(label)}</span><strong>${escape(value)}</strong><small>${escape(hint)}</small>`;box.appendChild(card);}
+  return box;
+}
+
+function detailOverview(detail){
+  const grid=document.createElement('div');grid.className='scr-overview-grid';
+  const quality=document.createElement('section');quality.className='scr-overview-card';
+  quality.appendChild(section(isThai()?'คุณภาพธุรกิจโดยสรุป':'Quality at a glance',isThai()?'ดูเกณฑ์ครบทุกข้อในแท็บคุณภาพกิจการ':'See every rule in the Quality tab'));
+  for(const id of ['roeLevel','roaLevel','earningsStability','dividendYield','payoutCeiling','dividendStreak']){
+    const check=detail.checks.find(c=>c.id===id);if(!check)continue;
+    const row=document.createElement('div');row.className='scr-overview-rule';
+    const label=detail.qualityModel==='bank'&&['roeLevel','roaLevel'].includes(id)?`scr.bank.${id}`:`scr.check.${id}`;
+    row.innerHTML=`<span>${escape(t(label,null,id))}</span><b class="${check.na?'':check.pass===true?'is-positive':check.pass===false?'is-negative':''}">${escape(check.na? (isThai()?'ไม่ใช้เกณฑ์นี้':'Not applicable'):check.pass===true?(isThai()?'ผ่าน':'Pass'):check.pass===false?(isThai()?'ไม่ผ่าน':'Fail'):(isThai()?'ข้อมูลไม่พอ':'Unknown'))}</b>`;quality.appendChild(row);
+  }
+  const evidence=document.createElement('section');evidence.className='scr-overview-card';
+  evidence.appendChild(section(isThai()?'ข้อมูลและข้อควรพิจารณา':'Data and interpretation',isThai()?'คะแนนคุณภาพและมูลค่าประเมินตอบคนละคำถาม':'Quality and valuation measure different things'));
+  const notes=[
+    `${isThai()?'คะแนนคุณภาพ':'Quality score'}: ${detail.score??'—'}/100 · ${isThai()?'ข้อมูลที่ประเมินได้':'Data coverage'} ${percent(detail.dataCoverage)}`,
+    `${isThai()?'แหล่งอัตราส่วน':'Ratio source'}: ${detail.ratioSource??'—'} · ${detail.ratioAsOf??'—'}`,
+    detail.ddm?.mos<0?(isThai()?'ราคาสูงกว่ามูลค่า DDM ตามสมมติฐานปัจจุบัน แม้คุณภาพกิจการจะผ่านเกณฑ์':'Price exceeds the current DDM estimate even if business quality passes.'):(isThai()?'มูลค่า DDM เปลี่ยนตามอัตราคิดลดและการเติบโตที่กำหนด ปรับได้ในแท็บประเมินมูลค่า':'DDM depends on discount and growth assumptions. Adjust them in Valuation.'),
+    isThai()?'ข้อมูลครบไม่ได้หมายความว่าตรวจรับรองงบทั้งหมดแล้ว อ่านข้อจำกัดและหลักฐานในแท็บคุณภาพกิจการ':'Data coverage is not independent certification of every filing. Review evidence in Quality.',
+  ];
+  for(const note of notes){const p=document.createElement('p');p.textContent=note;evidence.appendChild(p);}
+  grid.append(quality,evidence);return grid;
 }
 
 function headline(detail, board) {
@@ -1842,6 +1896,16 @@ function scorecard(detail) {
     }
   }
 
+  if(detail.businessClassification){
+    const identity=detail.businessClassification;
+    const note=document.createElement('p');note.className='section__hint';
+    note.textContent=`${isThai()?'ประเภทกิจการที่ตรวจสอบ':'Reviewed business type'}: ${identity.model} · ${identity.evidence?.sector??'—'} · ${identity.evidence?.asOf??'—'}`;
+    box.appendChild(note);
+    if(identity.evidence?.source?.startsWith('https://')){
+      const link=document.createElement('a');link.href=identity.evidence.source;link.target='_blank';link.rel='noopener noreferrer';
+      link.textContent=isThai()?'แหล่งข้อมูลประเภทกิจการ (SET)':'Business classification source (SET)';box.appendChild(link);
+    }
+  }
   if(detail.sourceFallback){
     const note=document.createElement('p');note.className='section__hint';
     note.textContent=isThai()

@@ -877,6 +877,8 @@ const EN = {
   'scr.dataIssue.eps-sign-conflict': 'the reporting currency could not be converted without reversing a profit or loss',
   'scr.dataIssue.fx-invalid': 'the currency conversion rate was not usable',
   'scr.dataIssue.no-annual-statements': 'no usable annual statements are available for scoring',
+  'scr.dataIssue.business-classification-unknown': 'business classification is not verified; no ordinary-company score is assigned',
+  'scr.dataIssue.financial-framework-not-supported': 'financial business requires a dedicated model; excluded from ordinary-company scoring and presets',
   'scr.priceAsOf': 'price as of',
 
   'scr.filter.button': 'Filters',
@@ -1897,6 +1899,8 @@ const TH = {
   'scr.dataIssue.eps-sign-conflict': 'แปลงสกุลเงินไม่ได้โดยไม่กลับเครื่องหมายกำไร/ขาดทุน',
   'scr.dataIssue.fx-invalid': 'อัตราแปลงสกุลเงินใช้ไม่ได้',
   'scr.dataIssue.no-annual-statements': 'ไม่มีงบรายปีที่ใช้ประเมินคะแนนได้',
+  'scr.dataIssue.business-classification-unknown': 'ยังไม่ยืนยันประเภทกิจการ จึงไม่ให้คะแนนแบบบริษัททั่วไป',
+  'scr.dataIssue.financial-framework-not-supported': 'ธุรกิจการเงินต้องใช้เกณฑ์เฉพาะ จึงยังไม่ให้คะแนนหรือจัดเข้า preset แบบบริษัททั่วไป',
   'scr.priceAsOf': 'ราคา ณ',
 
   'scr.filter.button': 'ตัวกรอง',

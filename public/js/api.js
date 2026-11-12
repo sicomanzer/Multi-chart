@@ -29,10 +29,17 @@ async function request(path, { method = 'GET', body, signal, keepalive = false }
 
   if (!res.ok) {
     const err = payload?.error ?? {};
-    const error = new ApiError(err.code ?? `HTTP_${res.status}`, err.message ?? res.statusText, res.status);
+    const message = (typeof err.message === 'string' && err.message.trim())
+      || res.statusText?.trim() || `HTTP ${res.status}`;
+    const error = new ApiError(err.code ?? `HTTP_${res.status}`, message, res.status);
     // A revision conflict carries the server's copy so the caller can recover.
     error.current = payload?.current ?? null;
     throw error;
+  }
+  // A proxy restart/login page can return HTML with status 200. Never treat
+  // that as a successful API response and replace the last table with it.
+  if (payload == null || typeof payload !== 'object') {
+    throw new ApiError('INVALID_RESPONSE', 'Invalid server response; please retry', res.status);
   }
   return payload;
 }

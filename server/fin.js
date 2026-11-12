@@ -24,6 +24,7 @@
  */
 import { toYahooSymbol, normalizeSymbol, bareSymbol } from './symbols.js';
 import { profile } from './quotes.js';
+import {businessClassification} from './business-models.js';
 // The test a gross margin has to pass before it is one. It lives with the long
 // history because that is where the rule was written — the short reading
 // omits the cost-of-sales line for the same names it leaves out.
@@ -608,10 +609,11 @@ async function convert(base, quote) {
  * EBIT and it still has to meet the industrial tests.
  */
 async function isFinancial(base) {
+  if(base.symbol?.startsWith('SET:'))return businessClassification(base.symbol).isFinancial;
   const last3 = base.years.slice(-3);
   if (last3.length === 0 || last3.some((y) => y.ebit != null)) return false;
   const p = await profile(base.yahoo);
-  return /financial/i.test(p?.sector ?? '');
+  return p?.sector ? /financial/i.test(p.sector) : null;
 }
 
 /** Load one symbol's statements, dividend record and daily closes. */
