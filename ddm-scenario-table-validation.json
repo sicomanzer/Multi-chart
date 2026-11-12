@@ -1,0 +1,323 @@
+{
+  "checkedAt": "2026-11-11T09:30:22.518Z",
+  "checked": 110,
+  "blockedPayers": 15,
+  "scenarioPayers": 15,
+  "rows": [
+    {
+      "symbol": "SET:BH",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 205.8695800981709,
+        "mos": 3.579732418289601,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 11,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:DELTA",
+      "reason": "yield-too-low",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 11.229249823536591,
+        "mos": -1627.6309909267009,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.6,
+        "scenario": true,
+        "baseReason": "yield-too-low",
+        "bypassedConstraints": [
+          "yield-too-low"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:BCPG",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 6.550395730396346,
+        "mos": -3.8105219879372223,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.35,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:CRC",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 33.874903634335396,
+        "mos": 8.486824539395624,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 1.81,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:BGRIM",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 7.710751545495127,
+        "mos": -195.6910213676967,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.41200000000000003,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:DOHOME",
+      "reason": "yield-too-low",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 0.08317131035966102,
+        "mos": -4060.0883586392756,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.004444,
+        "scenario": true,
+        "baseReason": "yield-too-low",
+        "bypassedConstraints": [
+          "yield-too-low"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:ICHI",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 20.586958009817092,
+        "mos": 30.05280336641664,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 1.1,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:MTC",
+      "reason": "yield-too-low",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 5.427470748042685,
+        "mos": -448.1374544621687,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.29,
+        "scenario": true,
+        "baseReason": "yield-too-low",
+        "bypassedConstraints": [
+          "yield-too-low"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:M",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 18.715416372560988,
+        "mos": -6.8637726346412675,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 1,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:KCE",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 22.458499647073182,
+        "mos": -163.81993869177066,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 1.2,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:HANA",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 18.715416372560988,
+        "mos": -112.39174811134951,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 1,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:IRPC",
+      "reason": "yield-too-low",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 0.1871541637256099,
+        "mos": -1246.4835351964798,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.01,
+        "scenario": true,
+        "baseReason": "yield-too-low",
+        "bypassedConstraints": [
+          "yield-too-low"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:MC",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 17.966799717658546,
+        "mos": 38.21938144559801,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.96,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:TASCO",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 18.715416372560988,
+        "mos": 10.768749850074547,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 1,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    },
+    {
+      "symbol": "SET:TRUE",
+      "reason": "payout-not-funded",
+      "base": null,
+      "baseMos": null,
+      "scenario": {
+        "ok": true,
+        "intrinsic": 5.801779075493907,
+        "mos": -124.0692006855381,
+        "g1": 0.05,
+        "g2": 0.03,
+        "r": 0.09,
+        "years": 5,
+        "d0": 0.31,
+        "scenario": true,
+        "baseReason": "payout-not-funded",
+        "bypassedConstraints": [
+          "payout-not-funded"
+        ]
+      }
+    }
+  ]
+}

@@ -122,6 +122,17 @@ check('a yield at the DDM floor is still valued',
 const unfundedScenario = ddm({
   d0: 1, g1: 0.05, g2: 0.03, r: 0.09, years: 5, payout: 1, allowUnfunded: true,
 });
+const lowYieldScenario=ddm({d0:1,g1:.05,g2:.03,r:.09,yieldRate:.0026,allowLowYield:true});
+check('low-yield scenario calculates only with explicit opt-in and keeps a warning',
+  lowYieldScenario.ok&&lowYieldScenario.scenario&&lowYieldScenario.scenarioReasons.includes('yield-too-low'));
+check('low-yield scenario uses the same dividend discount arithmetic',
+  near(lowYieldScenario.intrinsic,18.715416372560988,1e-9));
+check('scenario opt-ins cannot invent a dividend',
+  ddm({d0:0,g1:.05,g2:.03,r:.09,allowUnfunded:true,allowLowYield:true}).reason==='no-dividend');
+check('scenario opt-ins cannot allow a divergent terminal value',
+  ddm({d0:1,g1:.05,g2:.09,r:.09,allowUnfunded:true,allowLowYield:true}).reason==='r-not-above-g2');
+check('combined scenario records both bypassed constraints',
+  ddm({d0:1,g1:.05,g2:.03,r:.09,payout:2,yieldRate:.0026,allowUnfunded:true,allowLowYield:true}).scenarioReasons.length===2);
 check('an explicit unfunded scenario is labelled as a scenario',
   unfundedScenario.ok === true && unfundedScenario.scenario === true,
   unfundedScenario);
@@ -1125,6 +1136,12 @@ const growthFin = {
   dataIssue: null,
 };
 const growthRow = buildRow(growthFin, { history: { years: growthFile } });
+const lowYieldRow=buildRow({...growthFin,price:10000},{history:{years:growthFile}});
+check('table scenario does not replace the missing base value or margin of safety',
+  lowYieldRow.ddm.reason==='yield-too-low'&&lowYieldRow.ddm.intrinsic===null&&lowYieldRow.ddm.mos===null
+  &&lowYieldRow.ddmScenario?.ok&&lowYieldRow.ddmScenario.intrinsic>0&&Number.isFinite(lowYieldRow.ddmScenario.mos));
+check('a favourable assumption cannot qualify a stock for a base-MOS preset',
+  applyPreset({...lowYieldRow,ddmScenario:{...lowYieldRow.ddmScenario,mos:90}},presetById('value')).pass===false);
 const missingAnnual=buildRow({...growthFin,years:[]},{history:{years:[]}});
 check('missing annual statements produce no score, not a poor score',
   missingAnnual.score===null&&missingAnnual.dataIssue==='no-annual-statements'

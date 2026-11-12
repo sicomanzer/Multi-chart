@@ -1375,6 +1375,9 @@ select {
 .scr-score.is-good { background: rgba(38, 166, 154, 0.18); color: var(--up); }
 .scr-score.is-ok { background: rgba(247, 166, 0, 0.16); color: var(--warn); }
 .scr-score.is-poor { background: rgba(239, 83, 80, 0.16); color: var(--down); }
+.scr-scenario { color: var(--text); }
+.scr-scenario .scr-valuation-note:first-of-type { border: 1px solid var(--warn); border-radius: 4px; padding: 1px 4px; background: rgba(247, 166, 0, 0.12); }
+.scr-valuation-note { display: block; font-size: 10px; font-weight: 400; line-height: 1.4; margin-top: 3px; max-width: 160px; white-space: normal; }
 
 .scr-flag { color: var(--warn); font-style: normal; margin-left: 2px; cursor: help; }
 

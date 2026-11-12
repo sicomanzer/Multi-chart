@@ -2,6 +2,11 @@
 
 ## Latest desktop workflow
 
+- Dividend payers blocked by payout/yield DDM conditions now show a clearly
+  labelled scenario value/MOS and reason in the table. Base valuation fields
+  remain unavailable and scenarios do not qualify a name for value ranking
+  or MOS filters. [Behavior and validation](DDM-SCENARIO-TABLE-2026-11-11.md).
+
 - Dividend source review now retains 1,354 SET notices across all 110 active
   screening symbols. Cash components/specials are source-backed for 63 issuers;
   38 positive-dividend models still need period or declaration evidence. KTB,

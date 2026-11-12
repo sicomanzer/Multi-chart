@@ -335,9 +335,9 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   });
   const mos = valuation.ok ? marginOfSafety(valuation.intrinsic, fin.price) : null;
 
-  // When the only blocker is an unfunded payout, stock detail can show a
-  // clearly labelled scenario. It is never used by the screener, presets or
-  // backtest; it exists so the reader can compare assumptions instead of
+  // For a payout/yield restriction, show a clearly labelled assumption in
+  // the table/detail. It is never used by preset gates, value ranking or
+  // backtest selection; it exists so the reader can compare assumptions instead of
   // being handed a blank box.
   const scenarioFor = (value) => (value?.ok
     ? {
@@ -350,18 +350,22 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
       years: value.inputs.years,
       d0,
       scenario: true,
+      baseReason:valuation.reason,
+      bypassedConstraints:value.scenarioReasons??[],
     }
     : null);
-  const unfundedScenario = !valuation.ok && valuation.reason === 'payout-not-funded'
+  const scenarioEligible=!valuation.ok&&['payout-not-funded','yield-too-low'].includes(valuation.reason);
+  const valuationScenario = scenarioEligible
     ? scenarioFor(ddm({
       d0, g1, g2, r, years, payout: quality.payout, yieldRate: quality.dividendYield,
       allowUnfunded: true,
+      allowLowYield: true,
     }))
     : null;
-  const flatScenario = !valuation.ok && valuation.reason === 'payout-not-funded'
+  const flatScenario = scenarioEligible
     ? scenarioFor(ddm({
       d0, g1: 0.05, g2: 0.05, r, years, payout: quality.payout,
-      yieldRate: quality.dividendYield, allowUnfunded: true,
+      yieldRate: quality.dividendYield, allowUnfunded: true,allowLowYield:true,
     }))
     : null;
 
@@ -572,7 +576,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
       terminalShare: valuation.ok ? valuation.terminalValue / valuation.intrinsic : null,
       sensitivity: ddmSensitivity({ d0, g1, g2, r, years, payout: quality.payout, yieldRate: quality.dividendYield }),
     },
-    ddmScenario: unfundedScenario,
+    ddmScenario: valuationScenario,
     ddmScenarioFlat: flatScenario,
     // A second, much blunter opinion. It uses today's EPS and book value and
     // no growth forecast; it is a cross-check, not a replacement for the DDM.

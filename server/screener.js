@@ -334,6 +334,7 @@ export const MIN_DDM_YIELD = 0.01;
 export function ddm({
   d0, g1, g2 = 0.03, r = 0.09, years = 5, payout = null, yieldRate = null,
   allowUnfunded = false,
+  allowLowYield = false,
 }) {
   const safe = {
     d0: Number(d0),
@@ -361,7 +362,8 @@ export function ddm({
   // error in the return, and the terminal value does almost all of the work;
   // printing a target price there would overstate how much the model knows.
   const y = yieldRate == null ? null : Number(yieldRate);
-  if (y != null && Number.isFinite(y) && y > 0 && y < MIN_DDM_YIELD) {
+  const lowYield=y != null && Number.isFinite(y) && y > 0 && y < MIN_DDM_YIELD;
+  if (!allowLowYield && lowYield) {
     return { ok: false, reason: 'yield-too-low', intrinsic: null, mos: null };
   }
 
@@ -383,9 +385,10 @@ export function ddm({
     presentValue: present,
     terminalValue: terminal,
     inputs: safe,
-    // True only when the caller explicitly asked to bypass the payout guard.
+    // True only when an explicitly permitted model guard was bypassed.
     // The number is an assumption stress-test, not the base valuation.
-    scenario: Boolean(allowUnfunded && payoutRatio != null && payoutRatio >= 1),
+    scenario: Boolean((allowUnfunded && payoutRatio != null && payoutRatio >= 1)||(allowLowYield&&lowYield)),
+    scenarioReasons:[...(allowUnfunded&&payoutRatio!=null&&payoutRatio>=1?['payout-not-funded']:[]),...(allowLowYield&&lowYield?['yield-too-low']:[])],
   };
 }
 

@@ -1666,6 +1666,14 @@ function buildTable(rows, state, rerender) {
     // The medal of the ranking: first, second, third, and nothing after that.
     const medal = row.pass && rank < 3 ? MEDALS[rank] : '';
     if (row.pass) rank += 1;
+    const scenario=!row.ddm?.ok&&row.ddmScenario?.ok?row.ddmScenario:null;
+    const shown=scenario??row.ddm;
+    const reason=row.ddm?.reason??'not-computable';
+    const reasons=scenario?.bypassedConstraints?.length?scenario.bypassedConstraints:[reason];
+    const reasonText=reasons.map(r=>t(`scr.ddm.${r}`,null,t(`scr.dataIssue.${r}`,null,r))).join(' ');
+    const reasonShort=reasons.map(r=>t(`scr.ddm.short.${r}`,null,reasonText)).join(' · ');
+    const scenarioLabel=scenario?`<small class="scr-valuation-note">${escape(t('scr.ddm.scenarioBadge'))}</small>`:'';
+    const valuationNote=!row.ddm?.ok?`<small class="scr-valuation-note">${escape(reasonShort)}</small>`:'';
     tr.innerHTML = `
       <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span>${!row.pass&&row.failReason?`<span class="scr-reject">${escape(t('scr.rejected',{reason:rejectReason(row)}))}</span>`:''}</td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
@@ -1674,8 +1682,8 @@ function buildTable(rows, state, rerender) {
       <td class="num">${row.de == null ? '—' : row.de.toFixed(2)}${peerBadge(row, 'de')}</td>
       <td class="num" title="${escape(row.ratioSource === 'set.or.th' ? `SET · ${row.ratioAsOf ?? '—'}` : specialTitle)}">${percent(row.dividendYield)}${peerBadge(row, 'yield')}${row.recurringDividendYield != null ? `<br><small>${escape(t('scr.recurringYield'))}: ${percent(row.recurringDividendYield)}</small>` : ''}</td>
       <td class="num">${row.pe == null ? '—' : row.pe.toFixed(1)}${peerBadge(row, 'pe')}</td>
-      <td class="num">${row.ddm.intrinsic == null ? '—' : row.ddm.intrinsic.toFixed(2)}</td>
-      <td class="num ${row.ddm.mos > 0 ? 'is-up' : 'is-down'}">${row.ddm.mos == null ? '—' : `${row.ddm.mos.toFixed(0)}%`}</td>`;
+      <td class="num ${scenario?'scr-scenario':''}"${!row.ddm?.ok?` title="${escape(reasonText)}"`:''}>${shown?.intrinsic == null ? '—' : shown.intrinsic.toFixed(2)}${scenarioLabel}${valuationNote}</td>
+      <td class="num ${scenario?'scr-scenario':row.ddm.mos > 0 ? 'is-up' : 'is-down'}"${!row.ddm?.ok?` title="${escape(reasonText)}"`:''}>${shown?.mos == null ? '—' : `${shown.mos.toFixed(0)}%`}${scenarioLabel}</td>`;
     tr.addEventListener('click', () => openDetail(state, rerender, row.symbol));
     tbody.appendChild(tr);
   }
