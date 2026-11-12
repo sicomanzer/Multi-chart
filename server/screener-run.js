@@ -11,7 +11,8 @@
 import { loadFinancials } from './fin.js';
 import { getSetFundamentals } from './set-fundamentals.js';
 import {isBankSymbol} from './business-models.js';
-import {loadStatementVersions,bankScoringYears} from './statement-versions.js';
+import {loadStatementVersions,bankScoringYears,selectStatementVersions} from './statement-versions.js';
+import {chooseFreeSources,applyFreeHeadlineFallback} from './free-data-fallback.js';
 import {loadBankRisk,selectBankRisk} from './bank-risk.js';
 import {auditScreeningRow} from './screener-audit.js';
 import {loadDividendEvidence,compareDividendPeriod} from './dividend-evidence.js';
@@ -20,36 +21,28 @@ async function attachOfficialHistory(fin) {
   if (!fin.symbol?.startsWith('SET:')) return fin;
   const result = await getSetFundamentals([fin.symbol]);
   const official = result.data[fin.symbol];
+  const at=new Date();
+  const versions=await loadStatementVersions({symbols:[fin.symbol]});
+  const sourcePlan=chooseFreeSources(fin,official,selectStatementVersions(versions,fin.symbol,at.toISOString().slice(0,10)),at);
   const dividendEvidence=await loadDividendEvidence(fin.symbol);
   const bankYears=isBankSymbol(fin.symbol)
-    ? bankScoringYears(await loadStatementVersions({symbols:[fin.symbol]}),fin.symbol,new Date().toISOString().slice(0,10)):null;
+    ? bankScoringYears(versions,fin.symbol,at.toISOString().slice(0,10)):null;
   const bankRisk=bankYears?selectBankRisk(await loadBankRisk({symbols:[fin.symbol]}),fin.symbol,bankYears.at(-1)?.fiscalYear,new Date()):null;
-  return { ...fin, officialAnnual: official?.annualYears ?? [],
+  return { ...fin, ...sourcePlan,
     dividendEvidence,
     ...(bankYears?{bankScoreYears:bankYears}:{}),
     bankRisk,
-    officialMultiples: { pe: official?.pe?.value ?? null, pbv: official?.pbv?.value ?? null },
     officialAnnualStale: Boolean(official?.stale),
     isFinancial: fin.isFinancial || isBankSymbol(fin.symbol) || official?.accountFormId === '1',
     ...(official?.accountFormId === '5' ? { dataIssue: 'reit-framework-not-supported' } : {}) };
 }
 
-async function applyOfficialRatios(row) {
+async function applyOfficialRatios(row,fin) {
   if (!row.symbol?.startsWith('SET:')) return row;
-  const result = await getSetFundamentals([row.symbol]);
-  const official = result.data[row.symbol];
+  const official = fin.officialSnapshot;
   // Headline ratios use SET's published basis. Valuation models and historical
   // quality checks continue to use their explicitly modelled statement series.
-  row.pe = official?.pe?.value ?? null;
-  row.pbv = official?.pbv?.value ?? null;
-  row.de = official?.de?.value ?? null;
-  row.dividendYield = official?.dividendYield?.value == null ? null : official.dividendYield.value / 100;
-  row.ratioSource = 'set.or.th';
-  row.ratioAsOf = official?.asOf ?? null;
-  row.ratioFinancialAsOf = official?.financialAsOf ?? null;
-  row.ratiosStale = Boolean(official?.stale);
-  if (official?.reitProfile) row.reitProfile = official.reitProfile;
-  return row;
+  return applyFreeHeadlineFallback(row,fin,official);
 }
 import {
   AAA_YIELD,
@@ -123,6 +116,10 @@ function clampInput(value, fallback, { min, max }) {
  */
 export function currentMultiples(fin) {
   if (fin.officialMultiples) return { peCurrent: fin.officialMultiples.pe, pbvCurrent: fin.officialMultiples.pbv };
+  if(fin.sourceFallback && fin.symbol?.startsWith('SET:')) {
+    const ratios=applyFreeHeadlineFallback({},fin,null);
+    return {peCurrent:ratios.pe,pbvCurrent:ratios.pbv};
+  }
   const last = fin.years.at(-1);
   const ttmEps = fin.ttm?.eps ?? null;
   const ttmBvps = fin.ttm?.bvps ?? null;
@@ -286,7 +283,7 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
   const ttmEps = fin.ttm?.eps ?? null;
   const withDividendReviews=years=>years.map(y=>({...y,regularDividend:
     fin.dividendEvidence?.reviews.find(r=>r.fiscalYear===y.fiscalYear&&r.liveAvailableFrom<=asOf.toISOString().slice(0,10))??y.regularDividend}));
-  const trusted = withDividendReviews(reconcileYears(fin.years, history?.years ?? [], fin.officialAnnual ?? null));
+  const trusted = withDividendReviews(fin.reviewedScoreYears??reconcileYears(fin.years, history?.years ?? [], fin.officialAnnual ?? null));
   // Growth needs a longer run than the four annual statement rows Yahoo keeps.
   // The tracked history supplies the older revenue and profit, but its EPS is
   // not trustworthy for every name: several rows mix core earnings with the
@@ -547,7 +544,11 @@ export function buildRow(fin, { overrides = {}, asOf = new Date(), history = nul
     icr: quality.icr,
     dividendYield: quality.dividendYield,
     recurringDividendYield: quality.dividendYield,
-    qualityRatioSource:isBankSymbol(fin.symbol)?'sec-reviewed-bank':fin.officialAnnual ? 'set.or.th' : 'statement-model',
+    qualityRatioSource:isBankSymbol(fin.symbol)?'sec-reviewed-bank':fin.qualitySource??(fin.officialAnnual?'set.or.th':'statement-model'),
+    sourceFallback:fin.sourceFallback??false,
+    sourceFallbackReason:fin.sourceFallbackReason??null,
+    qualityFinancialAsOf:scoringYears.at(-1)?.asOf??null,
+    qualityEvidence:fin.reviewedScoreYears?.map(y=>({fiscalYear:y.fiscalYear,...y.statementSnapshot}))??[],
     qualityRatiosStale: Boolean(fin.officialAnnualStale),
     payout: quality.payout,
     payoutEvidence: quality.payoutEvidence,
@@ -628,7 +629,7 @@ export async function loadDetail(tvSymbol, options = {}) {
   const fin = await attachOfficialHistory(await loadFinancials(symbol, { quote: quotes.get(yahoo) ?? null }));
   // The same history the charts draw also judges the growth rules, so the
   // scorecard in the deep dive and the score in the table agree.
-  const row = await applyOfficialRatios(buildRow(fin, { ...options, history }));
+  const row = await applyOfficialRatios(buildRow(fin, { ...options, history }),fin);
   row.dataAudit=auditScreeningRow(row);
   // Where the name sits against its peers, from the last screen — a percentile
   // needs the other names, and screening the universe again for one company
@@ -733,7 +734,8 @@ export async function runScreen(rawSymbols, { preset = 'all', overrides = {}, as
         loadFinancials(symbol, { quote: quotes.get(toYahooSymbol(symbol)) ?? null }),
         annualHistory(symbol, { live: false }),
       ]);
-      return { ok: true, row: await applyOfficialRatios(buildRow(await attachOfficialHistory(fin), { overrides, asOf, history })) };
+      const sourced=await attachOfficialHistory(fin);
+      return { ok: true, row: await applyOfficialRatios(buildRow(sourced, { overrides, asOf, history }),sourced) };
     } catch (err) {
       return {
         ok: false,

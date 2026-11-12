@@ -30,6 +30,7 @@ const SUITES = [
   { name: 'bank model', file: 'verify-bank-model.mjs', needsServer: false },
   { name: 'statement versions', file: 'verify-statement-versions.mjs', needsServer: false },
   { name: 'SET ratios', file: 'verify-set-ratios.mjs', needsServer: false },
+  { name: 'free source fallback', file: 'verify-free-data-fallback.mjs', needsServer: false },
   { name: 'units', file: 'verify-units.mjs', needsServer: false },
   { name: 'screener', file: 'verify-screener.mjs', needsServer: true },
   { name: 'status', file: 'verify-status.mjs', needsServer: true },

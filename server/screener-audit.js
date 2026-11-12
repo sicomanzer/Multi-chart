@@ -2,6 +2,7 @@
  * Consistency is separate from independently reviewed issuer evidence. */
 export function auditScreeningRow(row){
  const issues=[];const add=(code,severity='review')=>issues.push({code,severity});
+ if(row.sourceFallback)add('alternative-source');
  if(row.score!=null&&row.scoringYearCount===0)add('score-without-statements','error');
  const missing=(row.checks??[]).filter(c=>!c.na&&c.pass===null).map(c=>c.id);
  if(missing.length)add('incomplete-checks');

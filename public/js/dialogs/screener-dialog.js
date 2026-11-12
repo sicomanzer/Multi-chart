@@ -1675,7 +1675,7 @@ function buildTable(rows, state, rerender) {
     const scenarioLabel=scenario?`<small class="scr-valuation-note">${escape(t('scr.ddm.scenarioBadge'))}</small>`:'';
     const valuationNote=!row.ddm?.ok?`<small class="scr-valuation-note">${escape(reasonShort)}</small>`:'';
     tr.innerHTML = `
-      <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span>${!row.pass&&row.failReason?`<span class="scr-reject">${escape(t('scr.rejected',{reason:rejectReason(row)}))}</span>`:''}</td>
+      <td>${medal ? `<span class="scr-medal" title="${escape(t('scr.rank', { n: rank }))}">${medal}</span>` : ''}<b>${escape(row.bare)}</b><span class="scr-name">${escape(row.name ?? '')}</span>${row.sourceFallback?`<span class="scr-name">${escape(t('scr.fallbackSource'))}</span>`:''}${!row.pass&&row.failReason?`<span class="scr-reject">${escape(t('scr.rejected',{reason:rejectReason(row)}))}</span>`:''}</td>
       <td class="num">${row.price == null ? '—' : row.price.toFixed(2)}</td>
       <td class="num"${coverageTitle ? ` title="${escape(coverageTitle)}"` : ''}><span class="scr-score is-${scoreTone(row.score)}">${row.score == null ? '—' : row.score}</span>${coverage!=null?`<small class="scr-coverage">${escape(t('scr.coverageShort',{n:Math.round(coverage*100)}))}</small>`:''}${row.qualityModel==='bank'?`<small class="scr-coverage">${escape(t('scr.bankModelLabel'))}</small>`:''}</td>
       <td class="num">${percent(row.roe3)}${peerBadge(row, 'roe')}</td>
@@ -1842,6 +1842,18 @@ function scorecard(detail) {
     }
   }
 
+  if(detail.sourceFallback){
+    const note=document.createElement('p');note.className='section__hint';
+    note.textContent=isThai()
+      ? `แหล่งสำรอง: อัตราส่วน ${detail.ratioSource??'—'} · วันที่ราคา ${detail.ratioAsOf??'ไม่ทราบ'} · งบสำหรับคะแนน ${detail.qualityRatioSource??'—'} ณ ${detail.qualityFinancialAsOf??'ไม่ทราบ'} ค่าคำนวณเองอาจต่างจาก SET; ช่องว่างหมายถึงข้อมูลไม่พอ`
+      : `Fallback: ratios ${detail.ratioSource??'—'}; price date ${detail.ratioAsOf??'unknown'}; scoring statements ${detail.qualityRatioSource??'—'} as of ${detail.qualityFinancialAsOf??'unknown'}. Calculated values may differ from SET; missing inputs remain blank.`;
+    box.appendChild(note);
+    for(const evidence of detail.qualityEvidence??[]){
+      if(!evidence.source?.startsWith('https://'))continue;
+      const link=document.createElement('a');link.href=evidence.source;link.target='_blank';link.rel='noopener noreferrer';
+      link.textContent=` ${evidence.fiscalYear} · ${evidence.availableFrom??'—'} `;box.appendChild(link);
+    }
+  }
   if (detail.qualityRatioSource === 'set.or.th') {
     const basis = document.createElement('p');
     basis.className = 'muted';
